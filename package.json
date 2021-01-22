@@ -1,7 +1,7 @@
 {
-  "name": "@coderscamp2020/project-typescript-chess",
+  "name": "@coderscamp2020/project-typescript-super-farmer",
   "version": "1.0.0",
-  "description": ".CodersChess - 2nd group project @CodersCamp2020 by Fron znad zatoki",
+  "description": "Super Farmer - 2nd group project @CodersCamp2020 by Front Znad Zatoki",
   "main": "index.ts",
   "scripts": {
     "build": "rimraf dist && parcel build index.html --public-url ./",
@@ -18,11 +18,11 @@
     "url": ""
   },
   "keywords": [
-    "chess",
+    "SuperFarmer",
     "CodersCamp",
     "FrontZnadZatoki"
   ],
-  "author": "Front znad zatoki @CodersCamp2020",
+  "author": "Front Znad Zatoki @CodersCamp2020",
   "license": "ISC",
   "homepage": "",
   "bugs": {
