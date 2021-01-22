@@ -1,7 +1,7 @@
 {
-  "name": "@coderscamp2020/project-typescript-super-farmer",
+  "name": "@coderscamp2020/project-typescript",
   "version": "1.0.0",
-  "description": "Super Farmer - 2nd group project @CodersCamp2020 by Front Znad Zatoki",
+  "description": "Typescript Game - 2nd group project @CodersCamp2020 by Front Znad Zatoki",
   "main": "index.ts",
   "scripts": {
     "build": "rimraf dist && parcel build index.html --public-url ./",
@@ -18,7 +18,6 @@
     "url": ""
   },
   "keywords": [
-    "SuperFarmer",
     "CodersCamp",
     "FrontZnadZatoki"
   ],
