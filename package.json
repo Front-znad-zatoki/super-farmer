@@ -6,9 +6,9 @@
   "scripts": {
     "build": "rimraf dist && parcel build index.html --public-url ./",
     "clean": "rimraf .cache && rimraf coverage && rimraf dist && rimraf node_modules",
-    "format": "prettier --config .prettierrc --write \"src/**/*.ts\" \"styles/**/*.scss\" \"test/**/*.ts\" \"**/*.json\"",
+    "format": "prettier --config .prettierrc --write \"src/**/*.ts\" \"styles/**/*.scss\" \"test/**/*.ts\" \"**/*.json\" && postcss ./styles/**/*.scss --replace --config package.json",
     "lint": "eslint . --ext .ts",
-    "start:dev": "parcel -p 8765 watch index.html",
+    "start": "parcel -p 8765 watch index.html",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage"
@@ -39,6 +39,7 @@
     "@typescript-eslint/parser": "^4.14.0",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.6.3",
+    "css-declaration-sorter": "^6.0.0",
     "cypress": "6.3.0",
     "eslint": "^7.18.0",
     "eslint-config-prettier": "^7.2.0",
@@ -47,6 +48,9 @@
     "jest": "^26.6.3",
     "lodash": "^4.17.20",
     "parcel-bundler": "^1.12.4",
+    "postcss": "8.2.4",
+    "postcss-cli": "^8.3.1",
+    "postcss-scss": "3.0.2",
     "prettier": "^2.2.1",
     "rimraf": "^3.0.2",
     "sass": "^1.32.4",
@@ -68,5 +72,14 @@
     "collectCoverageFrom": [
       "./src/**"
     ]
+  },
+  "postcss": {
+    "syntax": "postcss-scss",
+    "map": false,
+    "plugins": {
+      "css-declaration-sorter": {
+        "order": "smacss"
+      }
+    }
   }
 }
