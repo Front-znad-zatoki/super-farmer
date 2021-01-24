@@ -1,0 +1,6 @@
+{
+  "hooks": {
+    "pre-commit": "npm run format && npm run eslint",
+    "pre-push": "npm run test && npm run test:cov"
+  }
+}
