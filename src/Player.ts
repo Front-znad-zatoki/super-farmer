@@ -1,3 +1,5 @@
+import { Herd } from './Herd';
+
 class Player {
   protected name: string;
   protected avatar: string;
