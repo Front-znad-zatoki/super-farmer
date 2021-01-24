@@ -1,5 +1,5 @@
-import App from './app/App';
+import { App } from './app/App';
 
 window.onload = () => {
-  new App()._init();
+  new App().init();
 };
