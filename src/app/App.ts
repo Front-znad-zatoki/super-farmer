@@ -1,6 +1,5 @@
-import { Calculator } from "./Calculator";
+import { Calculator } from './Calculator';
 
 export class App {
-  init() {
-  }
+  init() {}
 }
