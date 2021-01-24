@@ -25,6 +25,15 @@ export abstract class Animal {
     return this.roles;
   }
 
+  get theValue(): number {
+    if (this.value) return this.value;
+    throw new TypeError(`Value of ${this.name} is undefined`);
+  }
+
+  set theValue(value: number) {
+    this.value = value;
+  }
+
   /**
    * @param role - one role or more to push to the roles
    * @returns new lenght of the array
@@ -41,12 +50,6 @@ export abstract class Animal {
     return _.pull(this.roles, ...role);
   }
 
-  get theValue(): number {
-    if (this.value) return this.value;
-    throw new TypeError(`Value of ${this.name} is undefined`);
-  }
-
-  set theValue(value: number) {
-    this.value = value;
-  }
+  hasRole = (role: AnimalRoles): boolean =>
+    this.roles.indexOf(role) !== -1;
 }
