@@ -94,3 +94,29 @@ describe('removeRole', () => {
     expect(actualResult).toStrictEqual(expectedResult);
   });
 });
+
+describe('hasRole', () => {
+  it('should return true', () => {
+    const dummyAnimal = new DummyAnimal(
+      AnimalNames.PIG,
+      undefined,
+      AnimalRoles.LIVESTOCK,
+    );
+
+    const actualResult = dummyAnimal.hasRole(AnimalRoles.LIVESTOCK);
+    const expectedResult = true;
+    expect(actualResult).toBe(expectedResult);
+  });
+
+  it('should return false', () => {
+    const dummyAnimal = new DummyAnimal(
+      AnimalNames.PIG,
+      undefined,
+      AnimalRoles.LIVESTOCK,
+    );
+
+    const actualResult = dummyAnimal.hasRole(AnimalRoles.GUARDIAN);
+    const expectedResult = false;
+    expect(actualResult).toBe(expectedResult);
+  });
+});
