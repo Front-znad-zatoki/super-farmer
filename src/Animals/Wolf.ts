@@ -8,7 +8,7 @@ export class Wolf extends Animal implements AttackHerdInterface {
   }
 
   // TODO: implement when herd is ready
-  attackHerd(herd: Herd): boolean {
-    return true;
+  attackHerd(): string {
+    return `${this.name}: Auuuuuu! I ate all animals in the herd except horses and small dog. Grrrrr!`;
   }
 }

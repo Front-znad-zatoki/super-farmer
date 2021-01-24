@@ -8,7 +8,7 @@ export class Fox extends Animal implements AttackHerdInterface {
   }
 
   // TODO: implement when herd is ready
-  attackHerd(herd: Herd): boolean {
-    return true;
+  attackHerd(): string {
+    return `${this.name}: Ring-ding-ding-ding-dingeringeding! I ate all rabbits in the herd. Wa-pa-pa-pa-pa-pa-pow!`;
   }
 }

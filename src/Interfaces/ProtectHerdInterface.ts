@@ -1,3 +1,4 @@
 export interface ProtectHerdInterface {
-  protectHerd(herd: Herd): void;
+  // TODO: tweak when herd is ready
+  protectHerd(): string;
 }

@@ -1,3 +1,4 @@
 export interface AttackHerdInterface {
-  attackHerd(herd: Herd): boolean;
+  // TODO: tweak when herd is ready
+  attackHerd(): string;
 }
