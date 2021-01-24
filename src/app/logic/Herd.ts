@@ -1,16 +1,15 @@
-import { Fox } from "../../../build/dist/src.f10117fe";
 
 class Herd {
   protected animals: [Animal, number][];
   //OR protected rabbit: [new Rabbit(), number]
   constructor(
-    numberOfRabbits: number,
-    numberOfSheep: number,
-    numberOfPigs: number,
-    numberOfCows: number,
-    numberOfHorses: number,
-    numberOfSmallDogs: number,
-    numberOfBigDogs: number,
+    numberOfRabbits = 0,
+    numberOfSheep = 0,
+    numberOfPigs = 0,
+    numberOfCows = 0,
+    numberOfHorses = 0,
+    numberOfSmallDogs = 0,
+    numberOfBigDogs = 0,
   ) {
     this.animals = [
       [new Rabbit(), numberOfRabbits],
@@ -22,6 +21,10 @@ class Herd {
       [new BigDog(), numberOfBigDogs],
     ];
   }
+
+  // changeAnimalsState(animalName, newNumber):void {
+
+  // }
 
   addAnimals(animalName: AnimalNames, numberToAdd: number): void {
     //TODO REFACTOR CODE
@@ -36,10 +39,10 @@ class Herd {
   get theAnimals() {
     return this.animals;
   }
-  get animalData(animalName: AnimalNames): [Animal, number] {
+  // get animalData(animalName: AnimalNames): [Animal, number] {
     // TODO get the tuple with data
     // return [Animal, number]
-  }
+  // }
 
   get animalNumber(animalName: AnimalNames): number {
     //TODO REFACTOR CODE
@@ -65,7 +68,7 @@ class Herd {
           // return;
         }
         this.addAnimals('smallDog', -1);
-        // TODO - get the small dog object from animals and fire the method protect herd
+        // TODO - get the small dog object from animals and fire the method protect herd 'WOOF WOOF'
         break;
       }
       case 'wolf': {
@@ -77,8 +80,8 @@ class Herd {
           // TODO - get all the animals in animals and change to zero except for horse
           // return;
         }
-        this.addAnimals('smallDog', -1);
-        // TODO - get the big dog object from animals and fire the method protect herd
+        this.addAnimals('bigDog', -1);
+        // TODO - get the big dog object from animals and fire the method protect herd (WOOOOOF WOOOOOF)
       }
     }
   }
