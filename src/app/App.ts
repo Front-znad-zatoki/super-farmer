@@ -1,5 +1,5 @@
 export class App {
-  init(): void {
-    return;
+  init() {
+    return 'hello world';
   }
 }
