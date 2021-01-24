@@ -11,5 +11,3 @@ class App {
      console.log(example);
   }
 }
-
-export default App;
