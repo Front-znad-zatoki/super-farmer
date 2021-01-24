@@ -1,4 +1,4 @@
-import { AnimalNames } from '../Enums/enumAnimalNames';
+import { AnimalNames } from '../Enums/AnimalNamesEnum';
 import { Animal } from './Animal';
 
 export class Rabbit extends Animal {

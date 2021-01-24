@@ -1,5 +1,10 @@
+import { AnimalNames } from '../Enums/AnimalNamesEnum';
+
 export abstract class Animal {
-  constructor(protected name: string, protected value?: number) {}
+  constructor(
+    protected name: AnimalNames,
+    protected value?: number,
+  ) {}
 
   get theName(): string {
     return this.name;
