@@ -1,3 +1,5 @@
 export class App {
-  init() {}
+  init(): void {
+    return;
+  }
 }
