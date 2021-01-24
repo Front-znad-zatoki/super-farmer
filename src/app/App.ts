@@ -1,7 +1,6 @@
-class App {
-  _init() {
-    console.log('start');
+import { Calculator } from "./Calculator";
+
+export class App {
+  init() {
   }
 }
-
-export default App;
