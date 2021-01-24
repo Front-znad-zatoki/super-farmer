@@ -8,5 +8,7 @@ export class SmallDog extends Animal implements ProtectHerdInterface {
   }
 
   // TODO: implement when herd is ready
-  protectHerd(herd: Herd): void {}
+  protectHerd(): string {
+    return `${this.name}: Woof! Woof! I'm saved all rabbits in the herd! Woof! Woof!`;
+  }
 }
