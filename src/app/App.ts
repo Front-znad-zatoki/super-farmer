@@ -1,7 +1,5 @@
-class App {
-  _init() {
-    console.log('start');
+export class App {
+  init() {
+    return 'hello world';
   }
 }
-
-export default App;
