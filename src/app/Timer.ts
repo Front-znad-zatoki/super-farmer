@@ -23,4 +23,8 @@ export class Timer {
   reduceTime(): void {
     this.turnTimeLeft -= 1;
   }
+
+  resetTurn(): void {
+    this.turnTimeLeft = this.maxTurnTime;
+  }
 }
