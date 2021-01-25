@@ -5,7 +5,7 @@ const smallDog = new SmallDog();
 describe('should return proper string', function () {
   it('should pass', function () {
     expect(smallDog.protectHerd()).toBe(
-      `${smallDog.theName}: Woof! Woof! I'm saved all rabbits in the herd! Woof! Woof!`,
+      `${smallDog.theName}: Woof! Woof! I'm protecting all rabbits in the herd! Woof! Woof!`,
     );
   });
 });
