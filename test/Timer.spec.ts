@@ -18,4 +18,13 @@ describe('Test timer class', () => {
     timer.reduceTime();
     expect(timer.theTurnTimeLeft).toBe(4);
   });
+
+  it('Should reset turn time on trigger', () => {
+    const turnTimer = 5;
+    const timer = new Timer(turnTimer);
+    timer.reduceTime();
+    timer.reduceTime();
+    timer.resetTurn();
+    expect(timer.theTurnTimeLeft).toBe(turnTimer);
+  });
 });
