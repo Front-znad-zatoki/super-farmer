@@ -2,14 +2,16 @@ import { AnimalNames } from '../Enums/AnimalNamesEnum';
 import { AnimalRoles } from '../Enums/AnimalRolesEnum';
 import _ from 'lodash';
 
+type Value = 1 | 6 | 12 | 36 | 72;
+
 export abstract class Animal {
   protected name: AnimalNames;
   protected roles: AnimalRoles[];
-  protected value?: number;
+  protected value?: Value;
 
   constructor(
     name: AnimalNames,
-    value?: number,
+    value?: Value,
     ...roles: AnimalRoles[]
   ) {
     this.name = name;
@@ -25,12 +27,12 @@ export abstract class Animal {
     return this.roles;
   }
 
-  get theValue(): number {
+  get theValue(): Value {
     if (this.value) return this.value;
     throw new TypeError(`Value of ${this.name} is undefined`);
   }
 
-  set theValue(value: number) {
+  set theValue(value: Value) {
     this.value = value;
   }
 
