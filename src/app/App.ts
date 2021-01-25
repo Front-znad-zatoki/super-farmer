@@ -1,5 +1,5 @@
 export class App {
-  init() {
+  init(): string {
     return 'hello world';
   }
 }
