@@ -11,17 +11,9 @@ import { Wolf } from '../../Animals/Wolf';
 import { AnimalNames } from '../../Enums/AnimalNamesEnum';
 
 export class Herd {
-  // protected animals: [
   protected animals: [Animal, number][];
-  // [Rabbit, number],
-  // [Sheep, number],
-  // [Pig, number],
-  // [Cow, number],
-  // [Horse, number],
-  // [SmallDog, number],
-  // [BigDog, number],
-  // ];
   //OR protected rabbit: [new Rabbit(), number]
+  // protected sheep: [new Sheep(), number] etc.
   //OR new Map()?
   constructor(
     numberOfRabbits = 0,
@@ -85,7 +77,6 @@ export class Herd {
   cullAnimals(attackingAnimal: Fox | Wolf): void {
     //TODO REFACTOR CODE
     switch (attackingAnimal.theName) {
-      //TODO CHECK IF PASSED ANIMAL IS AN OBJECT, ADJUST CASES ACCORDINGLY (EX.: CASE )
       case AnimalNames.FOX: {
         const hasSmallDog =
           this.getAnimalNumber(AnimalNames.SMALL_DOG) > 0;
@@ -97,7 +88,7 @@ export class Herd {
         }
         this.addAnimals(AnimalNames.SMALL_DOG, -1);
         // this.animals[5][0].protectHerd();
-
+        // TODO - MAKE THE DOG BARK
         break;
       }
       case AnimalNames.WOLF: {
