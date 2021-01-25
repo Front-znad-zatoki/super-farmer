@@ -5,8 +5,7 @@ import { sample } from 'lodash';
 export class Dice implements GetRandomValue {
   constructor(private diceSides: AnimalNames[]) {}
   getRandomValue(): AnimalNames {
-    return sample(this.diceSides);
-    // return this.diceSides[Math.floor(Math.random() * 12)];
+    return sample(Object.values(AnimalNames)) as AnimalNames;
   }
 }
 
