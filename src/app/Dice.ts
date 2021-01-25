@@ -1,14 +1,16 @@
-import { GetRandomValue } from './Interfaces/DiceInterface';
-import { AnimalNames } from './Enums/AnimalNamesEnum';
+import { GetRandomValue } from '../Interfaces/DiceInterface';
+import { AnimalNames } from '../Enums/AnimalNamesEnum';
+import { sample } from 'lodash';
 
-class Dice implements GetRandomValue {
+export class Dice implements GetRandomValue {
   constructor(private diceSides: AnimalNames[]) {}
   getRandomValue(): AnimalNames {
-    return this.diceSides[Math.floor(Math.random() * 12)];
+    return sample(this.diceSides);
+    // return this.diceSides[Math.floor(Math.random() * 12)];
   }
 }
 
-class FirstDice extends Dice {
+export class FirstDice extends Dice {
   constructor() {
     super([
       AnimalNames.RABBIT,
@@ -27,7 +29,7 @@ class FirstDice extends Dice {
   }
 }
 
-class SecondDice extends Dice {
+export class SecondDice extends Dice {
   constructor() {
     super([
       AnimalNames.RABBIT,
