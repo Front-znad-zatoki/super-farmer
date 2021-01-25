@@ -1,9 +1,7 @@
 export class Timer {
-  private maxTurnTime: number;
   private turnTimeLeft: number;
 
-  constructor(turnTime = 15) {
-    this.maxTurnTime = turnTime;
+  constructor(private maxTurnTime = 15) {
     this.turnTimeLeft = this.maxTurnTime;
   }
 
