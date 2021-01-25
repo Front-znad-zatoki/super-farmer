@@ -50,6 +50,9 @@ export abstract class Animal {
     return _.pull(this.roles, ...role);
   }
 
+  /**
+   * Checks if animal has the given role and return boolean
+   */
   hasRole = (role: AnimalRoles): boolean =>
     this.roles.indexOf(role) !== -1;
 }
