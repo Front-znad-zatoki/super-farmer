@@ -87,7 +87,7 @@ export class Herd {
           return;
         }
         this.addAnimals(AnimalNames.SMALL_DOG, -1);
-        // this.animals[5][0].protectHerd();
+        (this.animals[5][0] as SmallDog).protectHerd();
         // TODO - MAKE THE DOG BARK
         break;
       }
@@ -107,7 +107,7 @@ export class Herd {
         }
         this.addAnimals(AnimalNames.BIG_DOG, -1);
         // TODO - REFACTOR get the big dog object from animals and fire the method protect herd (WOOOOOF WOOOOOF)
-        // this.animals[6][0].protectHerd();
+        (this.animals[6][0] as BigDog).protectHerd();
       }
     }
   }
