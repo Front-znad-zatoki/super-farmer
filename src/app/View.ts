@@ -34,10 +34,10 @@ export class View {
       className: 'player__name',
       innerHTML: '<p>Kornel</p>',
     });
-    const  playerAvatar = Render.elementFactory('img', {
+    const playerAvatar = Render.elementFactory('img', {
       className: 'back__avatar',
     });
-    const remainingTime =Render.elementFactory('div', {
+    const remainingTime = Render.elementFactory('div', {
       className: 'remainig-time__counter',
       textContent: 'Time Left : 02 m 00 s',
     });
