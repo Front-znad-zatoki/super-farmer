@@ -14,11 +14,11 @@ export class Player {
     this.score = 0;
   }
 
-  get theName() {
+  get theName(): string {
     return this.name;
   }
 
-  get theAvatar() {
+  get theAvatar(): string {
     return this.avatar;
   }
 
@@ -26,7 +26,7 @@ export class Player {
     this.avatar = avatar;
   }
 
-  get theHerd() {
+  get theHerd(): Herd {
     return this.herd;
   }
 
@@ -34,11 +34,11 @@ export class Player {
     this.herd = herd;
   }
 
-  get theScore() {
+  get theScore(): number {
     return this.score;
   }
 
-  updateScore() {
+  updateScore(): void {
     // TODO: count value of all animals from herd when it's ready
     const newScore = 0;
     this.score = newScore;
