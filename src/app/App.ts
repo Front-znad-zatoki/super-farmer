@@ -1,7 +1,5 @@
-class App {
-  _init() {
+export class App {
+  init(): string {
     return 'hello world';
   }
 }
-
-export default App;

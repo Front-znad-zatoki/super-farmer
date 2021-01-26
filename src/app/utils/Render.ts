@@ -1,5 +1,8 @@
 export class Render {
-  static childrenInjector = (parentElem: Element, children: (Element|string)[]) =>
+  static childrenInjector = (
+    parentElem: Element,
+    ...children: (HTMLElement | string)[]
+  ): void =>
     children.forEach((child) => {
       if (typeof child === 'string') {
         parentElem.appendChild(document.createTextNode(child));
@@ -8,11 +11,14 @@ export class Render {
       }
     });
 
-  static render = (query: string, ...children: (Element|string)[]) => {
+  static render = (
+    query: string,
+    ...children: (HTMLElement | string)[]
+  ): void => {
     if (children.length === 0 || !query) {
       throw new Error(
         'Required query and at least one child in arguments',
-      )
+      );
     }
     const parentElem = document.querySelector(query);
 
@@ -20,10 +26,14 @@ export class Render {
       throw new Error(`Not found element by query ${query}`);
     }
 
-    Render.childrenInjector(parentElem, children);
+    Render.childrenInjector(parentElem, ...children);
   };
 
-  static elementFactory = (tag: string, attributes: object, ...children: (Element|string)[]): HTMLElement => {
+  static elementFactory = (
+    tag: string,
+    attributes: Record<string, string>,
+    ...children: (HTMLElement | string)[]
+  ): HTMLElement => {
     const newElement = document.createElement(tag);
 
     Object.entries(attributes).forEach(([key, value]) => {
@@ -34,7 +44,7 @@ export class Render {
       }
     });
 
-    Render.childrenInjector(newElement, children);
+    Render.childrenInjector(newElement, ...children);
 
     return newElement;
   };
