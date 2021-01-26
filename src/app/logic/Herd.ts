@@ -12,7 +12,6 @@ import { AnimalNames } from '../../Enums/AnimalNamesEnum';
 
 export class Herd {
   protected animals: [Animal, number][];
-  // protected animals: { animalObject: Animal; inStock: number };
   //OR protected rabbit: [new Rabbit(), number]
   // protected sheep: [new Sheep(), number] etc.
   //OR new Map()?
