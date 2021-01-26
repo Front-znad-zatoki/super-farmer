@@ -6,6 +6,9 @@ export enum AnimalNames {
   HORSE = 'horse',
   SMALL_DOG = 'small dog',
   BIG_DOG = 'big dog',
+}
+
+export enum Predators {
   FOX = 'fox',
   WOLF = 'wolf',
 }

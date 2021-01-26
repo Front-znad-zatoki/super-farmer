@@ -1,4 +1,4 @@
-import { Herd } from './Herd';
+import { Herd } from './app/logic/Herd';
 
 export class Player {
   protected name: string;
