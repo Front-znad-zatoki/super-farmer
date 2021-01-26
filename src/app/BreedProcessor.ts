@@ -1,15 +1,12 @@
 import { GetRandomValue } from '../Interfaces/DiceInterface';
-import { FirstDice, SecondDice } from './Dice';
+import { FirstDice } from './FirstDice';
+import { SecondDice } from './SecondDice';
 import { Player } from '../Player';
 import { Animal } from '../Animals/Animal';
 import { AnimalNames } from '../Enums/AnimalNamesEnum';
-import { Cow } from '../Animals/Cow';
 import { Fox } from '../Animals/Fox';
-import { Horse } from '../Animals/Horse';
-import { Pig } from '../Animals/Pig';
-import { Rabbit } from '../Animals/Rabbit';
-import { Sheep } from '../Animals/Sheep';
 import { Wolf } from '../Animals/Wolf';
+import { Render } from './utils/Render';
 
 export class BreedProcessor {
   randomResultInterfaceWolf: GetRandomValue;
@@ -27,26 +24,30 @@ export class BreedProcessor {
     const fox = this.getRandomResult(
       this.randomResultInterfaceFox.getRandomValue(),
     );
+    const herd = player.theHerd;
+    if (typeof fox !== 'object') {
+      this.breedAnimals(fox, herd);
+    } else if (typeof wolf !== 'object') {
+      this.breedAnimals(wolf, herd);
+    } else {
+      this.breedAnimals(wolf.theName as AnimalNames, herd);
+    }
   }
 
-  private getRandomResult(animalName: AnimalNames): Animal {
+  private getRandomResult(
+    animalName: AnimalNames,
+  ): Animal | AnimalNames {
     switch (animalName) {
-      case AnimalNames.COW:
-        return new Cow();
       case AnimalNames.FOX:
         return new Fox();
-      case AnimalNames.HORSE:
-        return new Horse();
-      case AnimalNames.PIG:
-        return new Pig();
-      case AnimalNames.RABBIT:
-        return new Rabbit();
-      case AnimalNames.SHEEP:
-        return new Sheep();
       case AnimalNames.WOLF:
         return new Wolf();
       default:
-        throw Error(`unknown animal name: ${animalName}`);
+        return animalName;
     }
+  }
+
+  private breedAnimals(animalName: AnimalNames, herd: Herd) {
+    console.log('do smth');
   }
 }
