@@ -1,6 +1,6 @@
 import { Herd } from './Herd';
 
-class Player {
+export class Player {
   protected name: string;
   protected avatar: string;
   protected herd: Herd;
