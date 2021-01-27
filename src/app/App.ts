@@ -1,4 +1,4 @@
-import { Render } from "./utils/Render";
+import { Render } from './utils/Render';
 
 export class App {
   init(): string {
