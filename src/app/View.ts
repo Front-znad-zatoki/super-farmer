@@ -42,17 +42,27 @@ export class View {
       startGameButton,
       ...avatarsElements,
     );
+    let playersChosenAvatarPath = '';
     avatarsElements.forEach((el) => {
       el.addEventListener('click', (e): void => {
-        const playersChosenAvatarPath = (e.target as any).src;
+        playersChosenAvatarPath = (e.target as any).src;
         console.log(playersChosenAvatarPath);
       });
     });
-    inputName.addEventListener('input', (e): void => {
-      const playersChosenName = (e.target as any).value;
-      return playersChosenName;
-    });
-    // startGameButton.addEventListener('click', this.renderGameView);
+    // inputName.addEventListener('input', (e): void => {
+    // const playersChosenName = (e.target as any).value;
+    // return playersChosenName;
+    // });
+
+    const handleClick = () => {
+      const inputValue = (<HTMLInputElement>inputName).value;
+      const newPlayer = new Player(
+        inputValue,
+        playersChosenAvatarPath,
+      );
+      this.renderGameView(inputValue, playersChosenAvatarPath);
+    };
+    startGameButton.addEventListener('click', handleClick);
   }
 
   renderGameView(

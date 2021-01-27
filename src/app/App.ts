@@ -1,7 +1,7 @@
-import { View } from './View';
+// import { View } from './View';
 
 export class App {
-  init(): string {
+  /*init(): string {
     {
       const vieew = new View().renderGameView(
         'AJAJAJ',
@@ -9,7 +9,7 @@ export class App {
       );
       console.log(vieew);
       return 'hello world';
-    }
-    //view = new View().renderMenuView();
-  }
+    }*/
+  // view = new View().renderMenuView();
+  // }
 }
