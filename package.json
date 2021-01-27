@@ -84,8 +84,8 @@
   "staticFiles": {
     "staticPath": [
       {
-        "staticPath": "static",
-        "staticOutDir": "static"
+        "staticPath": "resources",
+        "staticOutDir": "resources"
       }
     ]
   }

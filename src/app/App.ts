@@ -5,7 +5,7 @@ export class App {
     Render.render(
       '#sf-app',
       Render.elementFactory('img', {
-        src: '/static/assets/images/avatars/sheep.png',
+        src: '/resources/images/avatars/sheep.png',
         alt: 'avatar',
       }),
     );
