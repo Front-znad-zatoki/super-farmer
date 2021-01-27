@@ -1,2 +1,1 @@
-import { Render } from "../utils/Render";
-
+import { Render } from '../utils/Render';
