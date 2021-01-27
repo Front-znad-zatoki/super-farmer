@@ -1,43 +1,43 @@
 //MODAL
 .modal {
-    // Positioning /
-    position: absolute;
-    left: 0;
-    top: 0;
-    z-index: 1;
-    // Display & Box Model /
-    width: 100%;
-    height: 100%;
+  // Positioning /
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  display: flex;
+  // Display & Box Model /
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  // Color /
+  background-color: rgba(0, 0, 0, 0.8);
+  &__container {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 80%;
+    // Display & Box Model /
+    height: 80%;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 48px;
     // Color /
-    background-color: rgba(0, 0, 0, 0.8);
-    &__container {
-      // Display & Box Model /
-      height: 80%;
-      width: 80%;
-      border-radius: 16px;
-      padding: 48px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      // Color /
-      background: #ffffff;
-      // Text /
-      text-align: center;
-    }
-    &__heading {
-      text-transform: uppercase;
-    }
-    &__text {
-        color: #aabbaa;
-    }
-    &__buttons {
-        display: flex;
-        justify-content: space-between;
-    }
-    &__button {
-        min-width: max-content;
-    }
+    background: #ffffff;
+    border-radius: 16px;
+    // Text /
+    text-align: center;
+  }
+  &__heading {
+    text-transform: uppercase;
+  }
+  &__text {
+    color: #aabbaa;
+  }
+  &__buttons {
+    display: flex;
+    justify-content: space-between;
+  }
+  &__button {
+    min-width: max-content;
+  }
 }
