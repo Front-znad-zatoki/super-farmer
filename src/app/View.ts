@@ -1,13 +1,13 @@
 import { Render } from './utils/Render';
 import { Timer } from './Timer';
-import { AnimalNames, Predators } from '../Enums/AnimalNamesEnum';
+import { AnimalNames } from '../Enums/AnimalNamesEnum';
 import { Player } from '../Player';
-// import { Herd } from './logic/Herd';
+
 export class View {
   renderMenuView(): void {
     const inputName = Render.elementFactory('input', {
       className: 'input__name',
-      placeholder: 'Please fill your name',
+      placeholder: 'Carlos Santana',
     });
     const startGameButton = Render.elementFactory(
       'button',
@@ -16,32 +16,25 @@ export class View {
       },
       'Start Game',
     );
-    // TO FIND OUT:  WHAT ARE THE PLAYERS POSSIBLE AVATARS ?
     const avatarsElements = Object.values(AnimalNames).map(
       (animalName) => {
-        // TODO: RENDER JUST ONE DOG IF AVATARS ARE ANIMALS
         if (animalName === AnimalNames.BIG_DOG) {
           return Render.elementFactory('img', {
-            src: `../../resources/images/avatars/dog.png`,
-            //TODO: ADD CLASSES
+            src: `./static/images/avatars/dog.png`,
           });
         }
-        // TODO: REMOVE UNDEFINED ITEM FROM TARGET ARRAY
-        // if (animalName === AnimalNames.SMALL_DOG) {
-        //   return;
-        // }
         return Render.elementFactory('img', {
-          src: `../../resources/images/avatars/${animalName}.png`,
+          src: `./static/images/avatars/${animalName}.png`,
         });
       },
     );
-    console.log(avatarsElements);
     Render.render(
       '#sf-app',
       inputName,
       startGameButton,
       ...avatarsElements,
     );
+
     let playersChosenAvatarPath = '';
     avatarsElements.forEach((el) => {
       el.addEventListener('click', (e): void => {
@@ -49,13 +42,12 @@ export class View {
         console.log(playersChosenAvatarPath);
       });
     });
-    // inputName.addEventListener('input', (e): void => {
-    // const playersChosenName = (e.target as any).value;
-    // return playersChosenName;
-    // });
 
     const handleClick = () => {
-      const inputValue = (<HTMLInputElement>inputName).value;
+      const inputValue =
+        (<HTMLInputElement>inputName).value === ''
+          ? 'Carlos Santana'
+          : (<HTMLInputElement>inputName).value;
       const newPlayer = new Player(
         inputValue,
         playersChosenAvatarPath,
@@ -69,8 +61,6 @@ export class View {
     playersChosenName: string,
     playersChosenAvatarPath: string,
   ): void {
-    // TODO: CREATE PLAYER
-    // TODO: SEND INFO TO PLAYER ABOUT NAME AND AVATAR
     const newPlayer = new Player(
       playersChosenName,
       playersChosenAvatarPath,
@@ -93,11 +83,10 @@ export class View {
       {
         className: 'remainig-time__counter',
       },
-      //TODO: RENDER TIMER
+
       `Time Left : ${newTimer.theTurnTimeLeft} s`,
     );
-    // TODO: SET INTERVAL TO CHECK TIMER EACH SECOND
-    // newTimer.countdown();
+
     const backToMenuButton = Render.elementFactory(
       'button',
       {
@@ -112,14 +101,7 @@ export class View {
       },
       'Roll a dice',
     );
-    console.log(Predators);
-    // TODO: RENDER FARM ANIMALS WITH NUMBER IN STOCK
-    newPlayer.theHerd.theAnimals.forEach((animal) => {
-      console.log(animal);
-      // animal[0] => object of animal
-      // animal[1] => how many
-      //TODO: RENDER ANIMAL'S AVATAR AND NUMBER IN STOCK
-    });
+    backToMenuButton.addEventListener('click', this.renderMenuView);
 
     Render.render(
       '#sf-app',

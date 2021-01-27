@@ -1,15 +1,14 @@
-// import { View } from './View';
+import { Render } from './utils/Render';
+import { View } from './View';
 
 export class App {
-  /*init(): string {
-    {
-      const vieew = new View().renderGameView(
-        'AJAJAJ',
-        `../../resources/images/avatars/dog.png`,
-      );
-      console.log(vieew);
-      return 'hello world';
-    }*/
-  // view = new View().renderMenuView();
-  // }
+  init(): string {
+    /*const vieew = new View().renderGameView(
+      'AJAJAJ',
+      `../../resources/images/avatars/dog.png`,
+    );*/
+    const view = new View().renderMenuView();
+
+    return 'hello world';
+  }
 }
