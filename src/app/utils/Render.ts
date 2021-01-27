@@ -73,4 +73,12 @@ export class Render {
     const parentElem = document.querySelector('parent');
     if (parentElem) parentElem.textContent = '';
   };
+
+  /**
+   * Looks for element by query in the DOM and removes it.
+   */
+  static removeElement = (query: string): void => {
+    const el = document.querySelector(query);
+    if (el) el.remove();
+  };
 }
