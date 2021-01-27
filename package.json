@@ -79,5 +79,13 @@
     "collectCoverageFrom": [
       "./src/**"
     ]
+  },
+  "staticFiles": {
+    "staticPath": [
+      {
+        "staticPath": "static",
+        "staticOutDir": "static"
+      }
+    ]
   }
 }
