@@ -16,7 +16,6 @@ export class View {
       },
       'Start Game',
     );
-
     // TO FIND OUT:  WHAT ARE THE PLAYERS POSSIBLE AVATARS ?
     const avatarsElements = Object.values(AnimalNames).map(
       (animalName) => {
@@ -43,6 +42,16 @@ export class View {
       startGameButton,
       ...avatarsElements,
     );
+    avatarsElements.forEach((el) => {
+      el.addEventListener('click', (e): void => {
+        const playersChosenAvatarPath = (e.target as any).src;
+        console.log(playersChosenAvatarPath);
+      });
+    });
+    inputName.addEventListener('input', (e): void => {
+      const playersChosenName = (e.target as any).value;
+      return playersChosenName;
+    });
     // startGameButton.addEventListener('click', this.renderGameView);
   }
 
@@ -57,6 +66,7 @@ export class View {
       playersChosenAvatarPath,
     );
     const newTimer = new Timer(15);
+    console.log(newTimer);
     const playerName = Render.elementFactory(
       'h3',
       {

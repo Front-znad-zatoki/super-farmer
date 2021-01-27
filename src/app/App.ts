@@ -9,4 +9,5 @@ export class App {
     console.log(vieew);
     return 'hello world';
   }
+  //view = new View().renderMenuView();
 }
