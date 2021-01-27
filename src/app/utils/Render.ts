@@ -15,7 +15,7 @@ export class Render {
     });
 
   /**
-   * Looking for element by the query in the DOM and injects children into.
+   * Looks for element by the query in the DOM and injects children into.
    * Throws an Error when element is not found.
    */
   static render = (
@@ -58,5 +58,19 @@ export class Render {
     Render.childrenInjector(newElement, ...children);
 
     return newElement;
+  };
+
+  /**
+   * Argument can be parent element as HTMLElement or query as string.
+   * In case of HTMLElement it removes all it's children.
+   * In case of string it looks for element by it with .querySelector in the DOM and removes all it's children.
+   */
+  static removeAllChildren = (parent: HTMLElement | string): void => {
+    if (parent instanceof HTMLElement) {
+      parent.textContent = '';
+      return;
+    }
+    const parentElem = document.querySelector('parent');
+    if (parentElem) parentElem.textContent = '';
   };
 }
