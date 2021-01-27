@@ -62,4 +62,20 @@ describe('Does elementFactory returns correct element', function () {
     expect(example.hasAttribute('zupa')).toBe(false);
     expect(example.getAttribute('href')).toBe('http://example.com');
   });
+
+  describe('removeAllChildren', function () {
+    it('should remove all children from the given HTMLElement', function () {
+      const parentElement = Render.elementFactory(
+        'div',
+        {},
+        'zupa',
+        Render.elementFactory('p'),
+        Render.elementFactory('p'),
+        'z trupa',
+        Render.elementFactory('div', {}, Render.elementFactory('h1')),
+      );
+      Render.removeAllChildren(parentElement);
+      expect(parentElement.hasChildNodes()).toBe(false);
+    });
+  });
 });
