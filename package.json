@@ -4,7 +4,7 @@
   "description": "Typescript Game - 2nd group project @CodersCamp2020 by Front Znad Zatoki",
   "main": "index.ts",
   "scripts": {
-    "build": "rimraf dist && tsc --noEmit && parcel build index.html",
+    "build": "rimraf dist && tsc --noEmit && parcel build index.html --public-url ./",
     "clean": "rimraf .cache && rimraf coverage && rimraf dist && rimraf node_modules",
     "format": "prettier --config .prettierrc --write \"src/**/*.ts\" \"styles/**/*.scss\" \"test/**/*.ts\" \"**/*.json\" && stylelint --fix \"styles/**/*.{css,scss}\"",
     "eslint": "eslint . --ext .ts",
