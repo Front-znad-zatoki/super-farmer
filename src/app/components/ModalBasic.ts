@@ -2,19 +2,16 @@ import { Render } from '../utils/Render';
 import { Button } from './Button';
 
 export class ModalBasic {
+  modal: HTMLElement;
+  constructor() {
+    this.modal = Render.elementFactory('div', { className: 'modal' });
+  }
   renderBasicModal(
     heading: string,
     text: string,
     modalContent?: HTMLElement,
-  ): HTMLElement {
-    const handleModalClose = () => {
-      //TODO: WRITE LOGIC
-      Render.removeElement('.modal');
-    };
-    const handlePlayGame = () => {
-      //TODO: WRITE LOGIC
-      Render.removeElement('.modal');
-    };
+    buttonsRow?: HTMLElement,
+  ): ModalBasic {
     // CREATE MAIN ELEMENTS
     const modalHeader = Render.elementFactory(
       'h2',
@@ -28,12 +25,7 @@ export class ModalBasic {
       },
       text,
     );
-    const buttonsRow = this.renderBottomButtons(
-      'GO BACK',
-      handleModalClose,
-      'PLAY',
-      handlePlayGame,
-    );
+
     const modalContainer = Render.elementFactory(
       'div',
       {
@@ -42,14 +34,11 @@ export class ModalBasic {
       modalHeader,
       modalText,
       modalContent ? modalContent : '',
-      buttonsRow,
+      buttonsRow ? buttonsRow : '',
     );
-    const modal = Render.elementFactory(
-      'div',
-      { className: 'modal' },
-      modalContainer,
-    );
-    return modal;
+    console.log(this.modal);
+    Render.childrenInjector(this.modal, modalContainer);
+    return this;
   }
 
   renderBottomButtons(
