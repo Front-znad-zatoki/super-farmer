@@ -1,0 +1,42 @@
+.input__name {
+  display: block;
+  width: 150px;
+  height: 40px;
+  padding: 10px;
+  margin: 20px auto 0;
+}
+.container-img {
+  display: flex;
+  width: 700px;
+  justify-content: space-around;
+  margin: 50px auto;
+  &__avatar {
+    width: 70px;
+    height: 70px;
+    cursor: pointer;
+  }
+}
+.container-game {
+  display: flex;
+  height: 300px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  padding: 50px;
+}
+.container-buttons {
+  display: flex;
+  width: 350px;
+  justify-content: space-between;
+}
+.button {
+  display: block;
+  width: 120px;
+  height: 30px;
+  margin: 0 auto;
+  background: rgb(250, 250, 250);
+  cursor: pointer;
+  &:hover {
+    background: rgb(250, 0, 0);
+  }
+}
