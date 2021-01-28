@@ -30,7 +30,7 @@ export class Render {
     const parentElem = document.querySelector(query);
 
     if (!parentElem) {
-      throw new Error(`Not found element by query ${query}`);
+      throw new Error(`Not found element by query '${query}'`);
     }
 
     Render.childrenInjector(parentElem, ...children);
@@ -70,15 +70,21 @@ export class Render {
       parent.textContent = '';
       return;
     }
-    const parentElem = document.querySelector('parent');
-    if (parentElem) parentElem.textContent = '';
+    const parentElem = document.querySelector(parent);
+    if (!parentElem) {
+      throw new Error(`Not found element by query '${parent}'`);
+    }
+    parentElem.textContent = '';
   };
 
   /**
-   * Looks for element by query in the DOM and removes it.
+   * Looks for element by given query in the DOM and removes it.
    */
   static removeElement = (query: string): void => {
     const el = document.querySelector(query);
-    if (el) el.remove();
+    if (!el) {
+      throw new Error(`Not found element by query '${query}'`);
+    }
+    el.remove();
   };
 }
