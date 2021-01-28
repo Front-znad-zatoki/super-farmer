@@ -18,28 +18,31 @@ export class View {
     );
     const avatarsElements = Object.values(AnimalNames).map(
       (animalName) => {
-        if (animalName === AnimalNames.BIG_DOG) {
+        if (
+          animalName === AnimalNames.BIG_DOG ||
+          animalName === AnimalNames.SMALL_DOG
+        ) {
           return Render.elementFactory('img', {
             src: `./static/images/avatars/dog.png`,
           });
         }
+
         return Render.elementFactory('img', {
           src: `./static/images/avatars/${animalName}.png`,
         });
       },
     );
+    avatarsElements.splice(5, 1);
     Render.render(
       '#sf-app',
       inputName,
       startGameButton,
       ...avatarsElements,
     );
-
     let playersChosenAvatarPath = '';
     avatarsElements.forEach((el) => {
       el.addEventListener('click', (e): void => {
         playersChosenAvatarPath = (e.target as any).src;
-        console.log(playersChosenAvatarPath);
       });
     });
 
@@ -48,10 +51,12 @@ export class View {
         (<HTMLInputElement>inputName).value === ''
           ? 'Carlos Santana'
           : (<HTMLInputElement>inputName).value;
-      const newPlayer = new Player(
-        inputValue,
-        playersChosenAvatarPath,
-      );
+      playersChosenAvatarPath =
+        playersChosenAvatarPath === ''
+          ? `./static/images/avatars/sheep.png`
+          : playersChosenAvatarPath;
+
+      Render.removeAllChildren('#sf-app');
       this.renderGameView(inputValue, playersChosenAvatarPath);
     };
     startGameButton.addEventListener('click', handleClick);
@@ -66,7 +71,6 @@ export class View {
       playersChosenAvatarPath,
     );
     const newTimer = new Timer(15);
-    console.log(newTimer);
     const playerName = Render.elementFactory(
       'h3',
       {
@@ -101,7 +105,6 @@ export class View {
       },
       'Roll a dice',
     );
-    backToMenuButton.addEventListener('click', this.renderMenuView);
 
     Render.render(
       '#sf-app',
@@ -111,5 +114,10 @@ export class View {
       backToMenuButton,
       rollADiceButton,
     );
+    const handleBackClick = () => {
+      Render.removeAllChildren('#sf-app');
+      this.renderMenuView();
+    };
+    backToMenuButton.addEventListener('click', handleBackClick);
   }
 }
