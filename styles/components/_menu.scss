@@ -1,55 +1,53 @@
 .page__container {
-    width: 100vw;
-    height: 100vh;
-    text-align: center;
-    padding: 32px;
+  width: 100vw;
+  height: 100vh;
+
+  text-align: center;
 }
 
 .menu-window {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  &__header {
+    position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    &__header{
-        display: flex;
-        flex-direction: column;
-        position: relative;
+    padding: 32px;
+  }
+  &__logo {
+    width: 100%;
+    height: auto;
+    &-container {
+      position: absolute;
+      z-index: -1;
+      width: 32px;
     }
-    &__logo{
-        width: 100%;
-        height: auto;
-        &-container{
-            width: 32px;
-            position: absolute;
-            z-index: -1;
-        }
-    }
-    &__heading {
-
-    }
-    &__description {
-    }
+  }
+  &__heading {
+  }
+  &__description {
+  }
 }
 
 .menu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  &__image {
+    width: 100%;
+    height: auto;
+    &-container {
+    }
+  }
+  &__buttons {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    &__image {
-        width: 100%;
-        height: auto;
-        &-container{
-
-        }
-    }
-    &__buttons{
-        display: flex;
-        flex-direction: column;
-    }
-    &__button {
-
-    }
+    flex-direction: column;
+  }
+  &__button {
+  }
 }
 
 .footer {
-
+  background-color: cadetblue;
 }
