@@ -70,7 +70,7 @@ export class Render {
       parent.textContent = '';
       return;
     }
-    const parentElem = document.querySelector('parent');
+    const parentElem = document.querySelector(parent);
     if (parentElem) parentElem.textContent = '';
   };
 
