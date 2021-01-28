@@ -5,26 +5,35 @@ import { Timer } from './Timer';
 
 export class GameController {
   private currentPlayer: Player;
-  constructor(
-    private player: Player,
-    private timer: Timer,
-    private breedProcessor: BreedProcessor,
-  ) {
+  private player: Player;
+  private timer: Timer;
+  private breedProcessor: BreedProcessor;
+  constructor(playerName: string) {
+    this.player = new Player(playerName);
+    this.timer = new Timer();
+    this.breedProcessor = new BreedProcessor();
     this.currentPlayer = this.player;
   }
+
+  get theCurrentPlayer(): Player {
+    return this.currentPlayer;
+  }
+
+  get theTimer(): Timer {
+    return this.timer;
+  }
+
   startTurn(): void {
     this.timer.countdown();
   }
 
   breed(): [AnimalNames, AnimalNames] | undefined {
     if (this.timer.theTurnTimeLeft === 0) {
-      alert('Your time is up!');
       return;
     }
     const rollResult = this.breedProcessor.processBreedPhase(
       this.currentPlayer,
     );
-    console.log(this.player.theHerd);
     return rollResult;
   }
 

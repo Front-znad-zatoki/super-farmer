@@ -1,11 +1,7 @@
 import { Render } from './utils/Render';
 import { Timer } from './Timer';
 import { AnimalNames } from '../Enums/AnimalNamesEnum';
-import { Player } from '../Player';
 import { GameController } from './GameController';
-import { BreedProcessor } from './BreedProcessor';
-import { count } from 'console';
-// import { Herd } from './logic/Herd';
 export class View {
   renderMenuView(): void {
     const inputName = Render.elementFactory('input', {
@@ -71,11 +67,6 @@ export class View {
     playersChosenName: string,
     playersChosenAvatarPath: string,
   ): void {
-    const newPlayer = new Player(
-      playersChosenName,
-      playersChosenAvatarPath,
-    );
-    const newTimer = new Timer(15);
     const playerName = Render.elementFactory(
       'h3',
       {
@@ -87,28 +78,20 @@ export class View {
       className: 'player__avatar',
       src: playersChosenAvatarPath,
     });
+    const gameController = new GameController(playersChosenName);
     const remainingTime = Render.elementFactory(
       'div',
       {
         className: 'remainig-time__counter',
       },
 
-      `Time Left : ${newTimer.theTurnTimeLeft} s`,
+      `Time Left : ${gameController.theTimer.theTurnTimeLeft} s`,
     );
-
-    const gameController = new GameController(
-      newPlayer,
-      newTimer,
-      new BreedProcessor(),
-    );
-
     const herdView = Render.elementFactory('div');
-
     const rollResultView = Render.elementFactory('div');
     rollResultView.addEventListener('click', () => {
       gameController.breed();
     });
-
     const backToMenuButton = Render.elementFactory(
       'button',
       {
@@ -129,23 +112,28 @@ export class View {
     const containerGame = Render.elementFactory('div', {
       className: 'container-game',
     });
+    const timerUpdate = setInterval(() => {
+      remainingTime.innerText = `Time Left : ${gameController.theTimer.theTurnTimeLeft} s`;
+      if (gameController.theTimer.theTurnTimeLeft === 0) {
+        alert('Your time is up!');
+        gameController.nextPlayer();
+        gameController.startTurn();
+      }
+    }, 1000);
 
     rollADiceButton.addEventListener('click', () => {
       const rollResult = gameController.breed();
       herdView.innerText = JSON.stringify(
-        newPlayer.theHerd.theAnimals.map(([animal, count]) => [
-          animal.theName,
-          count,
-        ]),
+        gameController.theCurrentPlayer.theHerd.theAnimals.map(
+          ([animal, count]) => [animal.theName, count],
+        ),
       );
       rollResultView.innerText = JSON.stringify(rollResult);
       gameController.nextPlayer();
-      gameController.startTurn();
+      setTimeout(() => gameController.startTurn(), 1000);
     });
-    // TODO find a solution for the Timer - now it's not working right
-    setInterval(() => {
-      remainingTime.innerText = `Time Left : ${newTimer.theTurnTimeLeft} s`;
-    }, 1000);
+    // FIX find a solution for the Timer - now it's not working right
+
     gameController.startTurn();
 
     Render.childrenInjector(
@@ -166,6 +154,8 @@ export class View {
     const handleBackClick = () => {
       Render.removeAllChildren('#sf-app');
       this.renderMenuView();
+      gameController.theTimer.resetTurn();
+      clearInterval(timerUpdate);
     };
     backToMenuButton.addEventListener('click', handleBackClick);
   }
