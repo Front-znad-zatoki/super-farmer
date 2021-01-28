@@ -16,13 +16,11 @@ export class BreedProcessor {
     this.randomResultInterfaceFox = new FirstDice();
   }
 
-  processBreedPhase({ theHerd }: Player): void {
-    const wolf = this.getRandomResult(
-      this.randomResultInterfaceWolf.getRandomValue(),
-    );
-    const fox = this.getRandomResult(
-      this.randomResultInterfaceFox.getRandomValue(),
-    );
+  processBreedPhase({ theHerd }: Player): [AnimalNames, AnimalNames] {
+    const wolfResult = this.randomResultInterfaceWolf.getRandomValue();
+    const wolf = this.getRandomResult(wolfResult);
+    const foxResult = this.randomResultInterfaceFox.getRandomValue();
+    const fox = this.getRandomResult(foxResult);
     if (typeof fox !== 'object') {
       if (typeof wolf !== 'object') {
         this.breedAnimals(fox, wolf, theHerd);
@@ -39,6 +37,7 @@ export class BreedProcessor {
         theHerd.cullAnimals(wolf);
       }
     }
+    return [wolfResult, foxResult];
   }
 
   private getRandomResult(

@@ -2,10 +2,12 @@ import { Render } from './utils/Render';
 import { Timer } from './Timer';
 import { AnimalNames } from '../Enums/AnimalNamesEnum';
 import { Player } from '../Player';
-
+import { GameController } from './GameController';
+import { BreedProcessor } from './BreedProcessor';
+import { count } from 'console';
+// import { Herd } from './logic/Herd';
 export class View {
   renderMenuView(): void {
-    //create elements
     const inputName = Render.elementFactory('input', {
       className: 'input__name',
       placeholder: 'Carlos Santana',
@@ -39,11 +41,9 @@ export class View {
       },
       'Start Game',
     );
-    //render elements
     Render.childrenInjector(container, ...avatarsElements);
     Render.render('#sf-app', inputName, container, startGameButton);
 
-    //adding events and handlers
     let playersChosenAvatarPath = '';
     avatarsElements.forEach((el) => {
       el.addEventListener('click', (e): void => {
@@ -75,7 +75,6 @@ export class View {
       playersChosenName,
       playersChosenAvatarPath,
     );
-
     const newTimer = new Timer(15);
     const playerName = Render.elementFactory(
       'h3',
@@ -84,7 +83,6 @@ export class View {
       },
       playersChosenName,
     );
-    //create elements
     const playerAvatar = Render.elementFactory('img', {
       className: 'player__avatar',
       src: playersChosenAvatarPath,
@@ -97,6 +95,19 @@ export class View {
 
       `Time Left : ${newTimer.theTurnTimeLeft} s`,
     );
+
+    const gameController = new GameController(
+      newPlayer,
+      newTimer,
+      new BreedProcessor(),
+    );
+
+    const herdView = Render.elementFactory('div');
+
+    const rollResultView = Render.elementFactory('div');
+    rollResultView.addEventListener('click', () => {
+      gameController.breed();
+    });
 
     const backToMenuButton = Render.elementFactory(
       'button',
@@ -118,7 +129,25 @@ export class View {
     const containerGame = Render.elementFactory('div', {
       className: 'container-game',
     });
-    //render elements
+
+    rollADiceButton.addEventListener('click', () => {
+      const rollResult = gameController.breed();
+      herdView.innerText = JSON.stringify(
+        newPlayer.theHerd.theAnimals.map(([animal, count]) => [
+          animal.theName,
+          count,
+        ]),
+      );
+      rollResultView.innerText = JSON.stringify(rollResult);
+      gameController.nextPlayer();
+      gameController.startTurn();
+    });
+    // TODO find a solution for the Timer - now it's not working right
+    setInterval(() => {
+      remainingTime.innerText = `Time Left : ${newTimer.theTurnTimeLeft} s`;
+    }, 1000);
+    gameController.startTurn();
+
     Render.childrenInjector(
       containerButtons,
       backToMenuButton,
@@ -130,13 +159,14 @@ export class View {
       playerAvatar,
       remainingTime,
       containerButtons,
+      rollResultView,
+      herdView,
     );
     Render.render('#sf-app', containerGame);
     const handleBackClick = () => {
       Render.removeAllChildren('#sf-app');
       this.renderMenuView();
     };
-    //adding event
     backToMenuButton.addEventListener('click', handleBackClick);
   }
 }

@@ -1,5 +1,6 @@
 export class Timer {
   private turnTimeLeft: number;
+  private isRunning = false;
 
   constructor(private maxTurnTime = 15) {
     this.turnTimeLeft = this.maxTurnTime;
@@ -10,9 +11,10 @@ export class Timer {
   }
 
   countdown(): void {
+    this.isRunning = true;
     const countdownInterval = setInterval(() => {
       this.reduceTime();
-      if (this.theTurnTimeLeft === 0) {
+      if (this.theTurnTimeLeft === 0 || !this.isRunning) {
         clearInterval(countdownInterval);
       }
     }, 1000);
@@ -24,5 +26,6 @@ export class Timer {
 
   resetTurn(): void {
     this.turnTimeLeft = this.maxTurnTime;
+    this.isRunning = false;
   }
 }
