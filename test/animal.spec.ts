@@ -9,6 +9,7 @@ describe('addRole', () => {
     const dummyAnimal = new DummyAnimal(
       AnimalNames.PIG,
       undefined,
+      undefined,
       AnimalRoles.LIVESTOCK,
     );
 
@@ -24,6 +25,7 @@ describe('addRole', () => {
   it('should push new elements to the array', () => {
     const dummyAnimal = new DummyAnimal(
       AnimalNames.PIG,
+      undefined,
       undefined,
       AnimalRoles.LIVESTOCK,
     );
@@ -42,6 +44,7 @@ describe('addRole', () => {
     const dummyAnimal = new DummyAnimal(
       AnimalNames.PIG,
       undefined,
+      undefined,
       AnimalRoles.LIVESTOCK,
     );
     const actualResult = dummyAnimal.addRole(AnimalRoles.GUARDIAN);
@@ -55,6 +58,7 @@ describe('removeRole', () => {
     const dummyAnimal = new DummyAnimal(
       AnimalNames.PIG,
       undefined,
+      undefined,
       AnimalRoles.LIVESTOCK,
     );
 
@@ -67,6 +71,7 @@ describe('removeRole', () => {
   it('should remove given elements from the array', () => {
     const dummyAnimal = new DummyAnimal(
       AnimalNames.PIG,
+      undefined,
       undefined,
       AnimalRoles.LIVESTOCK,
       AnimalRoles.PREDATOR,
@@ -85,6 +90,7 @@ describe('removeRole', () => {
     const dummyAnimal = new DummyAnimal(
       AnimalNames.PIG,
       undefined,
+      undefined,
       AnimalRoles.LIVESTOCK,
     );
     const actualResult = dummyAnimal.removeRole(
@@ -100,6 +106,7 @@ describe('hasRole', () => {
     const dummyAnimal = new DummyAnimal(
       AnimalNames.PIG,
       undefined,
+      undefined,
       AnimalRoles.LIVESTOCK,
     );
 
@@ -111,6 +118,7 @@ describe('hasRole', () => {
   it('should return false', () => {
     const dummyAnimal = new DummyAnimal(
       AnimalNames.PIG,
+      undefined,
       undefined,
       AnimalRoles.LIVESTOCK,
     );
