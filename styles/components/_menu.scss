@@ -1,0 +1,55 @@
+.page__container {
+    width: 100vw;
+    height: 100vh;
+    text-align: center;
+    padding: 32px;
+}
+
+.menu-window {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    &__header{
+        display: flex;
+        flex-direction: column;
+        position: relative;
+    }
+    &__logo{
+        width: 100%;
+        height: auto;
+        &-container{
+            width: 32px;
+            position: absolute;
+            z-index: -1;
+        }
+    }
+    &__heading {
+
+    }
+    &__description {
+    }
+}
+
+.menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    &__image {
+        width: 100%;
+        height: auto;
+        &-container{
+
+        }
+    }
+    &__buttons{
+        display: flex;
+        flex-direction: column;
+    }
+    &__button {
+
+    }
+}
+
+.footer {
+
+}
