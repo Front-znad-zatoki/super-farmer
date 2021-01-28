@@ -1,4 +1,5 @@
 import { Render } from '../utils/Render';
+import { Button } from './Button';
 
 export class ModalBasic {
   renderBasicModal(
@@ -57,20 +58,10 @@ export class ModalBasic {
     rightButtonText: string,
     rightButtonAction: () => void,
   ): HTMLElement {
-    const leftButton = Render.elementFactory(
-      'button',
-      {
-        className: 'button modal__button',
-        type: 'button',
-      },
+    const leftButton: HTMLElement = new Button().create(
       leftButtonText,
     );
-    const rightButton = Render.elementFactory(
-      'button',
-      {
-        className: 'button modal__button',
-        type: 'button',
-      },
+    const rightButton: HTMLElement = new Button().create(
       rightButtonText,
     );
     leftButton.addEventListener('click', leftButtonAction);
