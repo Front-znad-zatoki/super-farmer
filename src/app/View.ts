@@ -5,17 +5,14 @@ import { Player } from '../Player';
 
 export class View {
   renderMenuView(): void {
+    //create elements
     const inputName = Render.elementFactory('input', {
       className: 'input__name',
       placeholder: 'Carlos Santana',
     });
-    const startGameButton = Render.elementFactory(
-      'button',
-      {
-        className: 'button__start button',
-      },
-      'Start Game',
-    );
+    const container = Render.elementFactory('div', {
+      className: 'container-img',
+    });
     const avatarsElements = Object.values(AnimalNames).map(
       (animalName) => {
         if (
@@ -23,22 +20,30 @@ export class View {
           animalName === AnimalNames.SMALL_DOG
         ) {
           return Render.elementFactory('img', {
+            className: 'container-img__avatar',
             src: `./static/images/avatars/dog.png`,
           });
         }
 
         return Render.elementFactory('img', {
+          className: 'container-img__avatar',
           src: `./static/images/avatars/${animalName}.png`,
         });
       },
     );
     avatarsElements.splice(5, 1);
-    Render.render(
-      '#sf-app',
-      inputName,
-      startGameButton,
-      ...avatarsElements,
+    const startGameButton = Render.elementFactory(
+      'button',
+      {
+        className: 'button__start button',
+      },
+      'Start Game',
     );
+    //render elements
+    Render.childrenInjector(container, ...avatarsElements);
+    Render.render('#sf-app', inputName, container, startGameButton);
+
+    //adding events and handlers
     let playersChosenAvatarPath = '';
     avatarsElements.forEach((el) => {
       el.addEventListener('click', (e): void => {
@@ -70,6 +75,7 @@ export class View {
       playersChosenName,
       playersChosenAvatarPath,
     );
+
     const newTimer = new Timer(15);
     const playerName = Render.elementFactory(
       'h3',
@@ -78,6 +84,7 @@ export class View {
       },
       playersChosenName,
     );
+    //create elements
     const playerAvatar = Render.elementFactory('img', {
       className: 'player__avatar',
       src: playersChosenAvatarPath,
@@ -105,19 +112,31 @@ export class View {
       },
       'Roll a dice',
     );
-
-    Render.render(
-      '#sf-app',
-      playerName,
-      playerAvatar,
-      remainingTime,
+    const containerButtons = Render.elementFactory('div', {
+      className: 'container-buttons',
+    });
+    const containerGame = Render.elementFactory('div', {
+      className: 'container-game',
+    });
+    //render elements
+    Render.childrenInjector(
+      containerButtons,
       backToMenuButton,
       rollADiceButton,
     );
+    Render.childrenInjector(
+      containerGame,
+      playerName,
+      playerAvatar,
+      remainingTime,
+      containerButtons,
+    );
+    Render.render('#sf-app', containerGame);
     const handleBackClick = () => {
       Render.removeAllChildren('#sf-app');
       this.renderMenuView();
     };
+    //adding event
     backToMenuButton.addEventListener('click', handleBackClick);
   }
 }
