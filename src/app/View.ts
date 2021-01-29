@@ -29,6 +29,7 @@ export class View {
         });
       },
     );
+    console.log(avatarsElements);
     avatarsElements.splice(5, 1);
     const startGameButton = Render.elementFactory(
       'button',
