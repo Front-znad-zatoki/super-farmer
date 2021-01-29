@@ -4,6 +4,11 @@ import { Animal } from './Animal';
 
 export class Horse extends Animal {
   constructor() {
-    super(AnimalNames.HORSE, 72, AnimalRoles.LIVESTOCK);
+    super(
+      AnimalNames.HORSE,
+      '/static/images/avatars/horse.png',
+      72,
+      AnimalRoles.LIVESTOCK,
+    );
   }
 }

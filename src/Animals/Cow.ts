@@ -3,9 +3,12 @@ import { AnimalRoles } from '../Enums/AnimalRolesEnum';
 import { Animal } from './Animal';
 
 export class Cow extends Animal {
-  // path: string;
   constructor() {
-    super(AnimalNames.COW, 36, AnimalRoles.LIVESTOCK);
-    // this.path = '../...'
+    super(
+      AnimalNames.COW,
+      '/static/images/avatars/cow.png',
+      36,
+      AnimalRoles.LIVESTOCK,
+    );
   }
 }

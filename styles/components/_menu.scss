@@ -1,0 +1,54 @@
+.page__container {
+  width: 100vw;
+  height: 100vh;
+  text-align: center;
+}
+
+.menu-window {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  &__header {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 32px;
+  }
+  &__heading {
+  }
+  &__description {
+  }
+}
+
+.menu {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 32px;
+  &__graphic {
+    &-container {
+      width: 30vw;
+      height: 50vh;
+      background-color: cadetblue;
+    }
+  }
+  &__buttons {
+    display: flex;
+    flex-direction: column;
+  }
+  &__button {
+    &--rules {
+      position: absolute;
+      right: 32px;
+      bottom: -16px;
+      width: 32px;
+      height: 32px;
+    }
+  }
+}
+
+.footer {
+  padding: 32px;
+  background-color: cadetblue;
+}
