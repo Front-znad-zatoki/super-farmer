@@ -14,12 +14,19 @@ export class ModalBasic {
       this.modalContainer,
     );
   }
+
+  /**
+   * Creates and appends the main modal structure.
+   * @param {string} heading Heading to be render inside the modal.
+   * @param {string} text Additional description or text to be inserted below heading.
+   * @param {HTMLElement} modalContent Content of modal to render below heading and description.
+   * @return {ModalBasic} The modal object.
+   */
   renderBasicModal(
     heading: string,
     text: string,
     modalContent?: HTMLElement,
   ): ModalBasic {
-    // CREATE MAIN ELEMENTS
     const modalHeader = Render.elementFactory(
       'h2',
       { className: 'modal__heading' },
@@ -41,17 +48,30 @@ export class ModalBasic {
     return this;
   }
 
-  addModalContent(content: string | HTMLElement): HTMLElement {
+  /**
+   * Creates and appends the modal content.
+   * @param { string | HTMLElement } content Content of modal to render below heading and description.
+   * @return {ModalBasic} The model's object.
+   */
+  addModalContent(content: string | HTMLElement): ModalBasic {
     Render.childrenInjector(this.modalContainer, content);
-    return this.modal;
+    return this;
   }
 
+  /**
+   * Creates and appends the buttons row on the bottom of the modal.
+   * @param {string} leftButtonText Text to be rendered in the left button.
+   * @param {function} leftButtonAction Function to be added to the click listener of the left button.
+   * @param {string} rightButtonText Text to be rendered in the right button.
+   * @param {function} rigthButtonAction Function to be added to the click listener of the right button.
+   * @return {ModalBasic} The model's object.
+   */
   createAndAppendButtonsRow(
     leftButtonText: string,
     leftButtonAction: () => void,
     rightButtonText: string,
     rightButtonAction: () => void,
-  ): void {
+  ): ModalBasic {
     const leftButton: HTMLElement = new Button().create(
       leftButtonText,
     );
@@ -68,6 +88,7 @@ export class ModalBasic {
       leftButton,
       rightButton,
     );
-    return Render.childrenInjector(this.modalContainer, buttonsRow);
+    Render.childrenInjector(this.modalContainer, buttonsRow);
+    return this;
   }
 }
