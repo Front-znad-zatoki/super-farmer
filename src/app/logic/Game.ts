@@ -22,7 +22,6 @@ export class Game implements GameConfigInterface {
   }
 
   init(): void {
-    // const numberOfPlayers = this.playersConfig.numberOfPlayers;
     const players = this.playersConfig.players;
     const playersObjectsArray: Player[] = players.map((player) => {
       return new Player(player.name, player.path);

@@ -7,11 +7,7 @@ import { View } from './View';
 
 export class App {
   init(): string {
-    /*const vieew = new View().renderGameView(
-      'AJAJAJ',
-      `../../resources/images/avatars/dog.png`,
-    );*/
-    // const view = new View().renderMenuView();
+    const view = new View().renderMenuView();
 
     new Game(mockGameConfiguration).init();
     return 'hello world';
