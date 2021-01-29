@@ -1,6 +1,9 @@
 import { Render } from '../utils/Render';
 
 export class MenuWindow {
+  /**
+   * Returns menu window, a landing page where a player can find out more info about the game and start to play.
+   */
   renderMenuWindow(): HTMLElement {
     const menuWindowHeading: HTMLElement = Render.elementFactory(
       'h1',
