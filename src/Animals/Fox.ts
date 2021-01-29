@@ -6,7 +6,12 @@ import { SmallDog } from './SmallDog';
 
 export class Fox extends Animal implements AttackHerdInterface {
   constructor() {
-    super(AnimalNames.FOX, undefined, AnimalRoles.PREDATOR);
+    super(
+      AnimalNames.FOX,
+      '/static/images/avatars/fox.png',
+      undefined,
+      AnimalRoles.PREDATOR,
+    );
   }
 
   // TODO: implement when herd is ready
