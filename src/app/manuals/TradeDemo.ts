@@ -1,6 +1,8 @@
-import { AnimalNames } from '~src/Enums/AnimalNamesEnum';
-import { Player } from '~src/Player';
-import { Trade } from './Trade';
+import { AnimalNames } from '../../Enums/AnimalNamesEnum';
+import { Player } from '../../Player';
+import { Trade } from '../Trade';
+
+// To run this demo add TradeDemo.playDemo() in App.ts
 
 export class TradeDemo {
   static playDemo(): void {
