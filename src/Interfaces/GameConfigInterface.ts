@@ -5,11 +5,7 @@ export interface GameConfigInterface {
   mode: GameModes;
   roundTimeInSeconds: number;
   totalGameTimeInSeconds: number;
-  playersConfig: PlayersConfigInterface;
+  playersConfig: { name: string; path: string }[];
   bankConfig?: [AnimalNames, number][];
-}
-
-export interface PlayersConfigInterface {
-  numberOfPlayers: number;
-  players: { name: string; path: string }[];
+  farmAnimalsConfig?: [AnimalNames, number][];
 }
