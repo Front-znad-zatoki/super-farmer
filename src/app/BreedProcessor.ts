@@ -16,29 +16,34 @@ export class BreedProcessor {
     this.randomResultInterfaceFox = new FirstDice();
   }
 
-  processBreedPhase({ theHerd }: Player): void {
-    const wolf = this.getRandomResult(
-      this.randomResultInterfaceWolf.getRandomValue(),
-    );
-    const fox = this.getRandomResult(
-      this.randomResultInterfaceFox.getRandomValue(),
-    );
-    if (typeof fox !== 'object') {
-      if (typeof wolf !== 'object') {
-        this.breedAnimals(fox, wolf, theHerd);
+  processBreedPhase({ theHerd }: Player): [AnimalNames, AnimalNames] {
+    const wolfDiceResult = this.randomResultInterfaceWolf.getRandomValue();
+    const foxDiceResult = this.randomResultInterfaceFox.getRandomValue();
+    if (foxDiceResult !== AnimalNames.FOX) {
+      if (wolfDiceResult !== AnimalNames.WOLF) {
+        this.breedAnimals(foxDiceResult, wolfDiceResult, theHerd);
       } else {
-        this.breedAnimals(fox, undefined, theHerd);
-        theHerd.cullAnimals(wolf);
+        this.breedAnimals(foxDiceResult, undefined, theHerd);
+        theHerd.cullAnimals(
+          this.getRandomResult(wolfDiceResult) as Wolf,
+        );
       }
     } else {
-      if (typeof wolf !== 'object') {
-        this.breedAnimals(undefined, wolf, theHerd);
-        theHerd.cullAnimals(fox);
+      if (wolfDiceResult !== AnimalNames.WOLF) {
+        this.breedAnimals(undefined, wolfDiceResult, theHerd);
+        theHerd.cullAnimals(
+          this.getRandomResult(foxDiceResult) as Fox,
+        );
       } else {
-        theHerd.cullAnimals(fox);
-        theHerd.cullAnimals(wolf);
+        theHerd.cullAnimals(
+          this.getRandomResult(foxDiceResult) as Fox,
+        );
+        theHerd.cullAnimals(
+          this.getRandomResult(wolfDiceResult) as Wolf,
+        );
       }
     }
+    return [wolfDiceResult, foxDiceResult];
   }
 
   private getRandomResult(

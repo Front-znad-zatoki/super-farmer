@@ -1,11 +1,9 @@
 import { Render } from './utils/Render';
-import { Timer } from './Timer';
 import { AnimalNames } from '../Enums/AnimalNamesEnum';
-import { Player } from '../Player';
+import { GameController } from './GameController';
 
 export class View {
   renderMenuView(): void {
-    //create elements
     const inputName = Render.elementFactory('input', {
       className: 'input__name',
       placeholder: 'Carlos Santana',
@@ -39,11 +37,9 @@ export class View {
       },
       'Start Game',
     );
-    //render elements
     Render.childrenInjector(container, ...avatarsElements);
     Render.render('#sf-app', inputName, container, startGameButton);
 
-    //adding events and handlers
     let playersChosenAvatarPath = '';
     avatarsElements.forEach((el) => {
       el.addEventListener('click', (e): void => {
@@ -71,12 +67,6 @@ export class View {
     playersChosenName: string,
     playersChosenAvatarPath: string,
   ): void {
-    const newPlayer = new Player(
-      playersChosenName,
-      playersChosenAvatarPath,
-    );
-
-    const newTimer = new Timer(15);
     const playerName = Render.elementFactory(
       'h3',
       {
@@ -84,20 +74,24 @@ export class View {
       },
       playersChosenName,
     );
-    //create elements
     const playerAvatar = Render.elementFactory('img', {
       className: 'player__avatar',
       src: playersChosenAvatarPath,
     });
-    const remainingTime = Render.elementFactory(
-      'div',
-      {
-        className: 'remainig-time__counter',
-      },
-
-      `Time Left : ${newTimer.theTurnTimeLeft} s`,
+    const gameController = new GameController(this);
+    gameController.initializePlayer(
+      playersChosenName,
+      playersChosenAvatarPath,
     );
-
+    const remainingTime = Render.elementFactory('div', {
+      id: 'time-remaining',
+      className: 'remainig-time__counter',
+    });
+    const herdView = Render.elementFactory('div');
+    const rollResultView = Render.elementFactory('div');
+    rollResultView.addEventListener('click', () => {
+      gameController.breed();
+    });
     const backToMenuButton = Render.elementFactory(
       'button',
       {
@@ -118,7 +112,21 @@ export class View {
     const containerGame = Render.elementFactory('div', {
       className: 'container-game',
     });
-    //render elements
+
+    rollADiceButton.addEventListener('click', () => {
+      const rollResult = gameController.breed();
+      herdView.innerText = JSON.stringify(
+        gameController.theCurrentPlayer.theHerd.theAnimals.map(
+          ([animal, count]) => [animal.theName, count],
+        ),
+      );
+      rollResultView.innerText = JSON.stringify(rollResult);
+      gameController.nextPlayer();
+      setTimeout(() => gameController.startTurn(), 50);
+    });
+
+    gameController.startTurn();
+
     Render.childrenInjector(
       containerButtons,
       backToMenuButton,
@@ -130,13 +138,26 @@ export class View {
       playerAvatar,
       remainingTime,
       containerButtons,
+      rollResultView,
+      herdView,
     );
     Render.render('#sf-app', containerGame);
     const handleBackClick = () => {
-      Render.removeAllChildren('#sf-app');
-      this.renderMenuView();
+      gameController.stopTurn();
+      setTimeout(() => {
+        Render.removeAllChildren('#sf-app');
+        this.renderMenuView();
+      }, 20);
     };
-    //adding event
     backToMenuButton.addEventListener('click', handleBackClick);
+  }
+
+  updateRemainingTime(timeLeft: number): void {
+    Render.removeAllChildren('#time-remaining');
+    Render.render('#time-remaining', `Time Left : ${timeLeft} s`);
+  }
+
+  displayAlert(name: string): void {
+    alert(`${name}'s turn has passed!`);
   }
 }
