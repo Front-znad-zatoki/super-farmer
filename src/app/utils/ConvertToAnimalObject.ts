@@ -1,3 +1,5 @@
+import { Fox } from '~src/Animals/Fox';
+import { Wolf } from '~src/Animals/Wolf';
 import { Animal } from '../../Animals/Animal';
 import { BigDog } from '../../Animals/BigDog';
 import { Cow } from '../../Animals/Cow';
@@ -30,6 +32,10 @@ export class ConvertToAnimalObject {
         return new SmallDog();
       case AnimalNames.BIG_DOG:
         return new BigDog();
+      case AnimalNames.FOX:
+        return new Fox();
+      case AnimalNames.WOLF:
+        return new Wolf();
       default:
         throw Error(`Animal name is unknown: ${animal}`);
     }
