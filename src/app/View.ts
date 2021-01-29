@@ -25,7 +25,7 @@ export class View {
 
         return Render.elementFactory('img', {
           className: 'container-img__avatar',
-          src: `./static/images/avatars/${animalName}.png`,
+          src: `./static/images/avatars/${animalName.toLowerCase()}.png`,
         });
       },
     );
