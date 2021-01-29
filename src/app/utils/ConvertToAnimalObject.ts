@@ -1,5 +1,5 @@
-import { Fox } from '~src/Animals/Fox';
-import { Wolf } from '~src/Animals/Wolf';
+import { Fox } from '../../Animals/Fox';
+import { Wolf } from '../../Animals/Wolf';
 import { Animal } from '../../Animals/Animal';
 import { BigDog } from '../../Animals/BigDog';
 import { Cow } from '../../Animals/Cow';
