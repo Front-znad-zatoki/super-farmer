@@ -3,14 +3,21 @@ import { Button } from './Button';
 
 export class ModalBasic {
   modal: HTMLElement;
+  modalContainer: HTMLElement;
   constructor() {
-    this.modal = Render.elementFactory('div', { className: 'modal' });
+    this.modalContainer = Render.elementFactory('div', {
+      className: 'modal__container',
+    });
+    this.modal = Render.elementFactory(
+      'div',
+      { className: 'modal' },
+      this.modalContainer,
+    );
   }
   renderBasicModal(
     heading: string,
     text: string,
     modalContent?: HTMLElement,
-    buttonsRow?: HTMLElement,
   ): ModalBasic {
     // CREATE MAIN ELEMENTS
     const modalHeader = Render.elementFactory(
@@ -25,28 +32,26 @@ export class ModalBasic {
       },
       text,
     );
-
-    const modalContainer = Render.elementFactory(
-      'div',
-      {
-        className: 'modal__container',
-      },
+    Render.childrenInjector(
+      this.modalContainer,
       modalHeader,
       modalText,
       modalContent ? modalContent : '',
-      buttonsRow ? buttonsRow : '',
     );
-    console.log(this.modal);
-    Render.childrenInjector(this.modal, modalContainer);
     return this;
   }
 
-  renderBottomButtons(
+  addModalContent(content: string | HTMLElement): HTMLElement {
+    Render.childrenInjector(this.modalContainer, content);
+    return this.modal;
+  }
+
+  createAndAppendButtonsRow(
     leftButtonText: string,
     leftButtonAction: () => void,
     rightButtonText: string,
     rightButtonAction: () => void,
-  ): HTMLElement {
+  ): void {
     const leftButton: HTMLElement = new Button().create(
       leftButtonText,
     );
@@ -63,6 +68,6 @@ export class ModalBasic {
       leftButton,
       rightButton,
     );
-    return buttonsRow;
+    return Render.childrenInjector(this.modalContainer, buttonsRow);
   }
 }
