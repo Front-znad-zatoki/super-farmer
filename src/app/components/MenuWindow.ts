@@ -7,14 +7,6 @@ export class MenuWindow {
       { className: 'menu-window__heading heading' },
       'FARM TYCOON',
     );
-    const menuWindowLogo: HTMLElement = Render.elementFactory(
-      'div',
-      { className: 'menu-window__logo-container' },
-      Render.elementFactory('img', {
-        src: '../../../static/images/ui/favicon.png',
-        className: 'menu-window__logo',
-      }),
-    );
     const menuWindowDescription: HTMLElement = Render.elementFactory(
       'h2',
       { className: 'menu-window__description text' },
@@ -23,27 +15,27 @@ export class MenuWindow {
     const header: HTMLElement = Render.elementFactory(
       'header',
       { className: 'menu-window__header' },
-      menuWindowLogo,
       menuWindowHeading,
       menuWindowDescription,
     );
 
-    const menuImageLeft: HTMLElement = Render.elementFactory(
-      'div',
-      { className: 'menu__image-container' },
-      Render.elementFactory('img', {
-        src: '../../../static/images/avatars/dog.png',
-        className: 'menu__image',
-      }),
+    const rulesButton = Render.elementFactory(
+      'button',
+      { type: 'button', className: 'menu__button--rules button' },
+      'i',
     );
 
-    const menuImageRight: HTMLElement = Render.elementFactory(
+    //TODO: ADD ANIMATED GRAPHICS
+    const menuGraphicLeft: HTMLElement = Render.elementFactory(
       'div',
-      { className: 'menu__image-container' },
-      Render.elementFactory('img', {
-        src: '../../../static/images/avatars/cow.png',
-        className: 'menu__image',
-      }),
+      { className: 'menu__graphic-container' },
+      'Animated Graphics',
+    );
+
+    const menuGraphicRight: HTMLElement = Render.elementFactory(
+      'div',
+      { className: 'menu__graphic-container' },
+      'Animated Graphics',
     );
 
     const menuButtonsContainer: HTMLElement = Render.elementFactory(
@@ -54,11 +46,6 @@ export class MenuWindow {
         'button',
         { type: 'button', className: 'menu__button button' },
         'PLAY',
-      ),
-      Render.elementFactory(
-        'button',
-        { type: 'button', className: 'menu__button button' },
-        'RULES',
       ),
       Render.elementFactory(
         'button',
@@ -75,9 +62,10 @@ export class MenuWindow {
     const menu: HTMLElement = Render.elementFactory(
       'main',
       { className: 'menu' },
-      menuImageLeft,
+      menuGraphicLeft,
       menuButtonsContainer,
-      menuImageRight,
+      menuGraphicRight,
+      rulesButton,
     );
 
     const footer: HTMLElement = Render.elementFactory(

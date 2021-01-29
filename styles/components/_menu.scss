@@ -15,15 +15,6 @@
     flex-direction: column;
     padding: 32px;
   }
-  &__logo {
-    width: 100%;
-    height: auto;
-    &-container {
-      position: absolute;
-      z-index: -1;
-      width: 32px;
-    }
-  }
   &__heading {
   }
   &__description {
@@ -31,13 +22,16 @@
 }
 
 .menu {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  &__image {
-    width: 100%;
-    height: auto;
+  padding: 32px;
+  &__graphic {
     &-container {
+      background-color: cadetblue;
+      width: 30vw;
+      height: 50vh;
     }
   }
   &__buttons {
@@ -45,9 +39,17 @@
     flex-direction: column;
   }
   &__button {
+    &--rules{
+      position: absolute;
+      right: 32px;
+      bottom: -16px;
+      height: 32px;
+      width: 32px;
+    }
   }
 }
 
 .footer {
+  padding: 32px;
   background-color: cadetblue;
 }
