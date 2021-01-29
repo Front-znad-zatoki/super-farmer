@@ -29,9 +29,9 @@
   padding: 32px;
   &__graphic {
     &-container {
-      background-color: cadetblue;
       width: 30vw;
       height: 50vh;
+      background-color: cadetblue;
     }
   }
   &__buttons {
@@ -39,12 +39,12 @@
     flex-direction: column;
   }
   &__button {
-    &--rules{
+    &--rules {
       position: absolute;
       right: 32px;
       bottom: -16px;
-      height: 32px;
       width: 32px;
+      height: 32px;
     }
   }
 }
