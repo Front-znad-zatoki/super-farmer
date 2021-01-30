@@ -1,7 +1,7 @@
 import { Render } from './utils/Render';
-import { Timer } from './Timer';
 import { AnimalNames } from '../Enums/AnimalNamesEnum';
 import { GameController } from './GameController';
+
 export class View {
   renderMenuView(): void {
     const inputName = Render.elementFactory('input', {
@@ -25,7 +25,7 @@ export class View {
 
         return Render.elementFactory('img', {
           className: 'container-img__avatar',
-          src: `./static/images/avatars/${animalName}.png`,
+          src: `./static/images/avatars/${animalName.toLowerCase()}.png`,
         });
       },
     );
@@ -79,15 +79,15 @@ export class View {
       className: 'player__avatar',
       src: playersChosenAvatarPath,
     });
-    const gameController = new GameController(playersChosenName);
-    const remainingTime = Render.elementFactory(
-      'div',
-      {
-        className: 'remainig-time__counter',
-      },
-
-      `Time Left : ${gameController.theTimer.theTurnTimeLeft} s`,
+    const gameController = new GameController(this);
+    gameController.initializePlayer(
+      playersChosenName,
+      playersChosenAvatarPath,
     );
+    const remainingTime = Render.elementFactory('div', {
+      id: 'time-remaining',
+      className: 'remainig-time__counter',
+    });
     const herdView = Render.elementFactory('div');
     const rollResultView = Render.elementFactory('div');
     rollResultView.addEventListener('click', () => {
@@ -113,14 +113,6 @@ export class View {
     const containerGame = Render.elementFactory('div', {
       className: 'container-game',
     });
-    const timerUpdate = setInterval(() => {
-      remainingTime.innerText = `Time Left : ${gameController.theTimer.theTurnTimeLeft} s`;
-      if (gameController.theTimer.theTurnTimeLeft === 0) {
-        alert('Your time is up!');
-        gameController.nextPlayer();
-        gameController.startTurn();
-      }
-    }, 1000);
 
     rollADiceButton.addEventListener('click', () => {
       const rollResult = gameController.breed();
@@ -131,9 +123,8 @@ export class View {
       );
       rollResultView.innerText = JSON.stringify(rollResult);
       gameController.nextPlayer();
-      setTimeout(() => gameController.startTurn(), 1000);
+      setTimeout(() => gameController.startTurn(), 50);
     });
-    // FIX find a solution for the Timer - now it's not working right
 
     gameController.startTurn();
 
@@ -153,11 +144,21 @@ export class View {
     );
     Render.render('#sf-app', containerGame);
     const handleBackClick = () => {
-      Render.removeAllChildren('#sf-app');
-      this.renderMenuView();
-      gameController.theTimer.resetTurn();
-      clearInterval(timerUpdate);
+      gameController.stopTurn();
+      setTimeout(() => {
+        Render.removeAllChildren('#sf-app');
+        this.renderMenuView();
+      }, 20);
     };
     backToMenuButton.addEventListener('click', handleBackClick);
+  }
+
+  updateRemainingTime(timeLeft: number): void {
+    Render.removeAllChildren('#time-remaining');
+    Render.render('#time-remaining', `Time Left : ${timeLeft} s`);
+  }
+
+  displayAlert(name: string): void {
+    alert(`${name}'s turn has passed!`);
   }
 }
