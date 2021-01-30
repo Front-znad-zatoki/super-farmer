@@ -1,5 +1,6 @@
 import { Render } from '../utils/Render';
 import { GameController } from '../GameController';
+import { flatten } from 'lodash';
 
 export class PlayersBoard {
   renderPlayersBoard(
@@ -31,42 +32,95 @@ export class PlayersBoard {
       src: playersChosenAvatarPath,
     });
     const gameController = new GameController(playersChosenName);
+    const remainingTime = Render.elementFactory(
+      'div',
+      {
+        className: 'remainig-time__counter',
+      },
+
+      `Time Left : ${gameController.theTimer.theTurnTimeLeft} s`,
+    );
     const herdView = Render.elementFactory('div');
     const rollResultView = Render.elementFactory('div');
-    let diceImages: any[] = [];
     rollResultView.addEventListener('click', () => {
       gameController.breed();
     });
+
+    setInterval(() => {
+      remainingTime.innerText = `Time Left : ${gameController.theTimer.theTurnTimeLeft} s`;
+      if (gameController.theTimer.theTurnTimeLeft === 0) {
+        alert('Your time is up!');
+        gameController.nextPlayer();
+        gameController.startTurn();
+      }
+    }, 1000);
     rollDiceButton.addEventListener('click', () => {
+      Render.removeAllChildren(rollResultView);
       const rollResult = gameController.breed();
-      herdView.innerText = JSON.stringify(
-        gameController.theCurrentPlayer.theHerd.theAnimals.map(
-          ([animal, count]) => [animal.theName, count],
-        ),
+      const playerHerd = gameController.theCurrentPlayer.theHerd.theAnimals.map(
+        ([animal, count]) => [animal.theName, count],
       );
+      const herdImagesAndCounts = playerHerd.map(
+        ([nameElement, countElement]) => {
+          if (
+            nameElement === 'big dog' ||
+            nameElement === 'small dog'
+          ) {
+            const animalImg = Render.elementFactory('img', {
+              src: `../../../static/images/avatars/dog.png`,
+            });
+            console.log(animalImg, countElement);
+            const animalCount = Render.elementFactory(
+              'div',
+              { className: 'count__div' },
+              countElement as string,
+            );
+
+            return [animalImg, animalCount];
+          }
+          const animalImg = Render.elementFactory('img', {
+            src: `../../../static/images/avatars/${nameElement}.png`,
+          });
+          const animalCount = Render.elementFactory(
+            'div',
+            { className: 'count__div' },
+            countElement as string,
+          );
+          console.log(animalCount);
+          return [animalImg, animalCount];
+        },
+      );
+
+      console.log(herdImagesAndCounts);
+
+      Render.childrenInjector(
+        herdView,
+        ...flatten(herdImagesAndCounts),
+      );
+
       const rollResults = rollResult as string[];
-      console.log(rollResults);
-      diceImages = rollResults.map((result) => {
-        console.log(result);
+      const diceImages = rollResults.map((result) => {
         if (result === 'big dog' || result === 'small dog') {
           return Render.elementFactory('img', {
-            src: `../../../static/images/avatars/dog.png`,
+            src: `../../../static/Image/avatars/dog.png`,
           });
         }
         return Render.elementFactory('img', {
           src: `../../../static/images/avatars/${result}.png`,
         });
       });
-      console.log(diceImages);
+      Render.childrenInjector(rollResultView, ...diceImages);
+      gameController.nextPlayer();
+      setTimeout(() => gameController.startTurn(), 1000);
     });
+    gameController.startTurn();
 
-    Render.childrenInjector(rollResultView, ...diceImages);
     Render.childrenInjector(
       playersBoardContainer,
       herdView,
+      remainingTime,
       rollDiceButton,
       rollResultView,
-      ...diceImages,
       exchangeButton,
       playerAvatar,
     );
