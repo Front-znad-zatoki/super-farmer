@@ -1,22 +1,28 @@
 import { GameModes } from '../Enums/GameModeEnums';
 import { AnimalNames } from '../Enums/AnimalNamesEnum';
+import { AnimalRoles } from '~src/Enums/AnimalRolesEnum';
 
 export interface GameConfigInterface {
   mode: GameModes;
   roundTimeInSeconds: number;
   totalGameTimeInSeconds?: number;
   playersConfig: { name: string; path: string }[];
-  farmAnimalsConfig: {
-    name: AnimalNames;
-    bankStock: number;
-    playersFarmStock: number;
-  }[];
-  // playerConfig?: [AnimalNames, number][];
-  // bankConfig?: [AnimalNames, number][];
-  predatorAnimalsConfig: {
-    name: AnimalNames;
-    kills: AnimalNames[];
-    isChasedAwayBy: [AnimalNames];
-  }[];
-  diceConfig: { name: AnimalNames; probability: number }[][];
+  herdConfig: herdConfigInterface[];
+  predatorAnimalsConfig: predatorAnimalInterface[];
+}
+
+interface herdConfigInterface {
+  name: AnimalNames;
+  tradeValue: number;
+  role: AnimalRoles;
+  playersInitialStock: number;
+  bankInitialStock: number;
+  dice?: { diceNumber: number; probability: number }[];
+}
+
+interface predatorAnimalInterface {
+  name: AnimalNames;
+  kills: AnimalNames[];
+  isChasedAwayBy: [AnimalNames];
+  dice?: { diceNumber: number; probability: number }[];
 }

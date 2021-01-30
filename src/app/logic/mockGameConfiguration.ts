@@ -1,4 +1,6 @@
+import { Animal } from '~src/Animals/Animal';
 import { AnimalNames } from '~src/Enums/AnimalNamesEnum';
+import { AnimalRoles } from '~src/Enums/AnimalRolesEnum';
 import { GameModes } from '~src/Enums/GameModeEnums';
 import { GameConfigInterface } from '~src/Interfaces/GameConfigInterface';
 
@@ -16,21 +18,55 @@ export const defaultGameConfiguration: GameConfigInterface = {
     },
   ],
 
-  farmAnimalsConfig: [
-    { name: AnimalNames.RABBIT, bankStock: 60, playersFarmStock: 0 },
-    { name: AnimalNames.SHEEP, bankStock: 24, playersFarmStock: 0 },
-    { name: AnimalNames.PIG, bankStock: 20, playersFarmStock: 0 },
-    { name: AnimalNames.COW, bankStock: 12, playersFarmStock: 0 },
-    { name: AnimalNames.HORSE, bankStock: 4, playersFarmStock: 0 },
+  herdConfig: [
     {
-      name: AnimalNames.SMALL_DOG,
-      bankStock: 4,
-      playersFarmStock: 0,
+      name: AnimalNames.RABBIT,
+      tradeValue: 1,
+      role: AnimalRoles.LIVESTOCK,
+      playersInitialStock: 0,
+      bankInitialStock: 60,
+      dice: [
+        { diceNumber: 1, probability: 6 },
+        { diceNumber: 2, probability: 6 },
+      ],
     },
     {
-      name: AnimalNames.BIG_DOG,
-      bankStock: 2,
-      playersFarmStock: 0,
+      name: AnimalNames.SHEEP,
+      tradeValue: 6,
+      role: AnimalRoles.LIVESTOCK,
+      playersInitialStock: 0,
+      bankInitialStock: 24,
+      dice: [
+        { diceNumber: 1, probability: 2 },
+        { diceNumber: 2, probability: 3 },
+      ],
+    },
+    {
+      name: AnimalNames.PIG,
+      tradeValue: 12,
+      role: AnimalRoles.LIVESTOCK,
+      playersInitialStock: 0,
+      bankInitialStock: 20,
+      dice: [
+        { diceNumber: 1, probability: 2 },
+        { diceNumber: 2, probability: 1 },
+      ],
+    },
+    {
+      name: AnimalNames.COW,
+      tradeValue: 36,
+      role: AnimalRoles.LIVESTOCK,
+      playersInitialStock: 0,
+      bankInitialStock: 12,
+      dice: [{ diceNumber: 2, probability: 1 }],
+    },
+    {
+      name: AnimalNames.HORSE,
+      tradeValue: 72,
+      role: AnimalRoles.LIVESTOCK,
+      playersInitialStock: 0,
+      bankInitialStock: 4,
+      dice: [{ diceNumber: 1, probability: 1 }],
     },
   ],
   predatorAnimalsConfig: [
@@ -38,6 +74,7 @@ export const defaultGameConfiguration: GameConfigInterface = {
       name: AnimalNames.FOX,
       kills: [AnimalNames.RABBIT],
       isChasedAwayBy: [AnimalNames.SMALL_DOG],
+      dice: [{ diceNumber: 1, probability: 1 }],
     },
     {
       name: AnimalNames.WOLF,
@@ -48,22 +85,24 @@ export const defaultGameConfiguration: GameConfigInterface = {
         AnimalNames.COW,
       ],
       isChasedAwayBy: [AnimalNames.BIG_DOG],
+      dice: [{ diceNumber: 2, probability: 1 }],
     },
   ],
-  diceConfig: [
-    [
-      { name: AnimalNames.RABBIT, probability: 6 },
-      { name: AnimalNames.SHEEP, probability: 2 },
-      { name: AnimalNames.PIG, probability: 2 },
-      { name: AnimalNames.HORSE, probability: 1 },
-      { name: AnimalNames.FOX, probability: 1 },
-    ],
-    [
-      { name: AnimalNames.RABBIT, probability: 6 },
-      { name: AnimalNames.SHEEP, probability: 3 },
-      { name: AnimalNames.PIG, probability: 1 },
-      { name: AnimalNames.COW, probability: 1 },
-      { name: AnimalNames.FOX, probability: 1 },
-    ],
-  ],
 };
+
+// diceConfig: [
+//   [
+//     { name: AnimalNames.RABBIT, probability: 6 },
+//     { name: AnimalNames.SHEEP, probability: 2 },
+//     { name: AnimalNames.PIG, probability: 2 },
+//     { name: AnimalNames.HORSE, probability: 1 },
+//     { name: AnimalNames.FOX, probability: 1 },
+//   ],
+//   [
+//     { name: AnimalNames.RABBIT, probability: 6 },
+//     { name: AnimalNames.SHEEP, probability: 3 },
+//     { name: AnimalNames.PIG, probability: 1 },
+//     { name: AnimalNames.COW, probability: 1 },
+//     { name: AnimalNames.FOX, probability: 1 },
+//   ],
+// ],
