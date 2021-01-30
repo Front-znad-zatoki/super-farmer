@@ -12,26 +12,27 @@ import { AnimalNames } from '../../Enums/AnimalNamesEnum';
 
 export class Herd {
   protected animals: [Animal, number][];
-  constructor(
-    numberOfRabbits = 0,
-    numberOfSheep = 0,
-    numberOfPigs = 0,
-    numberOfCows = 0,
-    numberOfHorses = 0,
-    numberOfSmallDogs = 0,
-    numberOfBigDogs = 0,
-  ) {
-    this.animals = [
-      [new Rabbit(), numberOfRabbits],
-      [new Sheep(), numberOfSheep],
-      [new Pig(), numberOfPigs],
-      [new Cow(), numberOfCows],
-      [new Horse(), numberOfHorses],
-      [new SmallDog(), numberOfSmallDogs],
-      [new BigDog(), numberOfBigDogs],
-    ];
+  constructor() {
+    // numberOfBigDogs = 0, // numberOfSmallDogs = 0, // numberOfHorses = 0, // numberOfCows = 0, // numberOfPigs = 0, // numberOfSheep = 0, // numberOfRabbits = 0, // herdConfig: Animal[] = defaultHerdConfig;
+    // this.animals = herdConfig.map(animal => {
+    //   return [new Animal(animal.name), animal.farmStock ]
+    // })
+    // this.animals = [
+    // [new Rabbit(), numberOfRabbits],
+    // [new Sheep(), numberOfSheep],
+    // [new Pig(), numberOfPigs],
+    // [new Cow(), numberOfCows],
+    // [new Horse(), numberOfHorses],
+    // [new SmallDog(), numberOfSmallDogs],
+    // [new BigDog(), numberOfBigDogs],
+    // ];
+    this.animals = [];
   }
-
+  findAnimal(animalName: AnimalNames) {
+    return;
+    // return indexOfAnimal;
+  }
+  // updateNumberOfAnimals(index: number, newNumberOfAnimals: number) {}
   addAnimals(animalName: AnimalNames, numberToAdd: number): Herd {
     this.animals = this.animals.map((animalData) => {
       const name = animalData[0].theName;
@@ -48,11 +49,10 @@ export class Herd {
   }
 
   getAnimalNumber(animalName: AnimalNames): number {
-    const animalToCheck = this.animals.find((animalData) => {
-      return animalData[0].theName === animalName;
-    });
-    if (!animalToCheck) return 0;
-    return animalToCheck[1];
+    const animalToCheck = this.animals.find(
+      (animalData) => animalData[0].theName === animalName,
+    );
+    return animalToCheck ? animalToCheck[1] : 0;
   }
 
   private cullAllAnimalsOfOneType(animalName: AnimalNames): void {
