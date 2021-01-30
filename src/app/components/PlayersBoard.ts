@@ -31,7 +31,6 @@ export class PlayersBoard {
       className: 'players__data__avatar',
       src: playersChosenAvatarPath,
     });
-    //  TO DO: ADD INSTANCE OF CLASS GAMECONTROLLER;
     const herd = new Herd();
 
     const herdView: HTMLElement = Render.elementFactory('div', {
