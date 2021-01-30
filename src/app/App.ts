@@ -12,6 +12,7 @@ export class App {
     const view = new PlayersBoard().renderPlayersBoard(
       '../../static/images/avatars/sheep.png',
       'Carlos Santana',
+      'red',
     );
 
     return 'hello world';
