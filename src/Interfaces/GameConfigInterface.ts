@@ -11,7 +11,7 @@ export interface GameConfigInterface {
   predatorAnimalsConfig: predatorAnimalInterface[];
 }
 
-interface herdConfigInterface {
+export interface herdConfigInterface {
   name: AnimalNames;
   tradeValue: number;
   role: AnimalRoles;
@@ -20,7 +20,7 @@ interface herdConfigInterface {
   dice?: { diceNumber: number; probability: number }[];
 }
 
-interface predatorAnimalInterface {
+export interface predatorAnimalInterface {
   name: AnimalNames;
   kills: AnimalNames[];
   isChasedAwayBy: [AnimalNames];
