@@ -8,13 +8,14 @@ import { Wolf } from '../Animals/Wolf';
 import { Herd } from './logic/Herd';
 import { ConvertToAnimalObject } from './utils/ConvertToAnimalObject';
 import { add, divide, floor, min } from 'lodash';
-import { AnimalRoles } from '~src/Enums/AnimalRolesEnum';
+import { AnimalRoles } from '../Enums/AnimalRolesEnum';
+import { Bank } from './logic/Bank';
 
 export class BreedProcessor {
   randomResultInterfaceWolf: GetRandomValue;
   randomResultInterfaceFox: GetRandomValue;
 
-  constructor(private bank: Player) {
+  constructor(private bank: Bank) {
     this.randomResultInterfaceWolf = new SecondDice();
     this.randomResultInterfaceFox = new FirstDice();
   }
@@ -84,14 +85,14 @@ export class BreedProcessor {
     }
     herd.theAnimals
       .filter(
-        (tuple) =>
-          tuple[0].hasRole(AnimalRoles.LIVESTOCK) &&
-          tuple[0].theName !== AnimalNames.HORSE,
+        ([animal]) =>
+          animal.hasRole(AnimalRoles.LIVESTOCK) &&
+          animal.theName !== AnimalNames.HORSE,
       )
-      .forEach((tuple) =>
+      .forEach(([animal, count]) =>
         this.bank.theHerd.addAnimals(
-          tuple[0].theName as AnimalNames,
-          tuple[1],
+          animal.theName as AnimalNames,
+          count,
         ),
       );
   }

@@ -1,6 +1,6 @@
 import { AnimalNames } from '../Enums/AnimalNamesEnum';
 import { ConvertToAnimalObject } from './utils/ConvertToAnimalObject';
-import _ from 'lodash';
+import { multiply } from 'lodash';
 import { Player } from '../Player';
 import { Herd } from './logic/Herd';
 
@@ -36,7 +36,7 @@ export class Trade {
   }
 
   private calculateValue(offer: [AnimalNames, number]): number {
-    return _.multiply(
+    return multiply(
       ConvertToAnimalObject.convertToAnimalObject(offer[0]).theValue,
       offer[1],
     );

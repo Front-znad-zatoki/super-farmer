@@ -1,19 +1,13 @@
 import { AnimalNames } from '../../Enums/AnimalNamesEnum';
 import { Player } from '../../Player';
+import { Bank } from '../logic/Bank';
 import { Trade } from '../Trade';
 
 // To run this demo add TradeDemo.playDemo() in App.ts
 
 export class TradeDemo {
   static playDemo(): void {
-    const bank = new Player('bank');
-    bank.theHerd.addAnimals(AnimalNames.RABBIT, 60);
-    bank.theHerd.addAnimals(AnimalNames.SHEEP, 24);
-    bank.theHerd.addAnimals(AnimalNames.PIG, 20);
-    bank.theHerd.addAnimals(AnimalNames.COW, 12);
-    bank.theHerd.addAnimals(AnimalNames.HORSE, 4);
-    bank.theHerd.addAnimals(AnimalNames.SMALL_DOG, 4);
-    bank.theHerd.addAnimals(AnimalNames.BIG_DOG, 2);
+    const bank = new Bank();
     const trade = new Trade(bank);
     const player = new Player('player');
     player.theHerd.addAnimals(AnimalNames.SHEEP, 5);
