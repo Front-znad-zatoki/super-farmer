@@ -1,8 +1,9 @@
 import { Render } from '../utils/Render';
-import { GameController } from '../GameController';
 import { flatten } from 'lodash';
+import { Herd } from '.././logic/Herd';
 
 export class PlayersBoard {
+  /* returns player's board with player's name, avatar and herd */
   renderPlayersBoard(
     playersChosenAvatarPath: string,
     playersChosenName: string,
@@ -16,60 +17,60 @@ export class PlayersBoard {
     );
     const playersDataPanel: HTMLElement = Render.elementFactory(
       'div',
-      { className: 'board-container__data' },
+      { className: 'players__data' },
     );
-    const playerName = Render.elementFactory(
+    const playerName: HTMLElement = Render.elementFactory(
       'h3',
       {
-        className: 'board-container__data__name',
+        className: 'players__data__name',
         style: `color:${playersColor}`,
       },
       playersChosenName,
     );
-    const playerAvatar = Render.elementFactory('img', {
-      className: 'player__avatar',
+    const playerAvatar: HTMLElement = Render.elementFactory('img', {
+      className: 'players__data__avatar',
       src: playersChosenAvatarPath,
     });
-    const gameController = new GameController(playersChosenName);
-    const herdView = Render.elementFactory('div', {
-      className: 'herd__container',
+    //  TO DO: ADD INSTANCE OF CLASS GAMECONTROLLER;
+    const herd = new Herd();
+
+    const herdView: HTMLElement = Render.elementFactory('div', {
+      className: 'players__herd',
     });
 
-    const playerHerd = gameController.theCurrentPlayer.theHerd.theAnimals.map(
-      ([animal, count]) => [animal.theName, count],
-    );
+    const playerHerd = herd.theAnimals.map(([animal, count]) => [
+      animal.theName,
+      count,
+    ]);
     const herdImagesAndCounts = playerHerd.map(
       ([nameElement, countElement]) => {
         if (
           nameElement === 'big dog' ||
           nameElement === 'small dog'
         ) {
-          const animalImg = Render.elementFactory(
-            // 'div',
-            // { className: 'animal-img__item' },
-            'img',
-            {
-              src: `../../../static/images/avatars/dog.png`,
-            },
-          );
+          const animalImg = Render.elementFactory('img', {
+            className: 'players__herd__img',
+            src: `../../../static/images/avatars/dog.png`,
+          });
+
           console.log(animalImg, countElement);
           const animalCount = Render.elementFactory(
             'div',
-            { className: 'count-element__item' },
+            { className: 'players__herd__count' },
             `x${countElement}`,
           );
 
           return [animalImg, animalCount];
         }
         const animalImg = Render.elementFactory('img', {
+          className: 'players__herd__img',
           src: `../../../static/images/avatars/${nameElement}.png`,
         });
         const animalCount = Render.elementFactory(
           'div',
-          { className: 'count__div' },
+          { className: 'players__herd__count' },
           `x${countElement}`,
         );
-        console.log(animalCount);
         return [animalImg, animalCount];
       },
     );

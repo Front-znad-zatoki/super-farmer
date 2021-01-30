@@ -1,10 +1,26 @@
-.board__container {
+.board-container {
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
 }
-.data__panel {
+.players__data {
   display: flex;
+  margin: 50px;
+  &__avatar {
+    width: 300px;
+  }
+  &__name {
+    font-size: 50px;
+  }
 }
-.herd__container {
+.players__herd {
   display: flex;
+  align-items: center;
+  &__img {
+    width: 100px;
+    margin-left: 50px;
+  }
+  &__count {
+    font-size: 30px;
+  }
 }
