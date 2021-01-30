@@ -69,24 +69,26 @@ export class ModalBasic {
   createAndAppendButtonsRow(
     leftButtonText: string,
     leftButtonAction: () => void,
-    rightButtonText: string,
-    rightButtonAction: () => void,
+    rightButtonText?: string,
+    rightButtonAction?: () => void,
   ): ModalBasic {
     const leftButton: HTMLElement = new Button().create(
       leftButtonText,
     );
-    const rightButton: HTMLElement = new Button().create(
-      rightButtonText,
-    );
+    const rightButton: HTMLElement | null = rightButtonText
+      ? new Button().create(rightButtonText)
+      : null;
+    if (rightButton && rightButtonAction) {
+      rightButton.addEventListener('click', rightButtonAction);
+    }
     leftButton.addEventListener('click', leftButtonAction);
-    rightButton.addEventListener('click', rightButtonAction);
     const buttonsRow = Render.elementFactory(
       'div',
       {
         className: 'modal__buttons',
       },
       leftButton,
-      rightButton,
+      rightButton ? rightButton : '',
     );
     Render.childrenInjector(this.modalContainer, buttonsRow);
     return this;
