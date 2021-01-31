@@ -1,7 +1,7 @@
-import { AnimalNames } from '~src/Enums/AnimalNamesEnum';
-import { GameModes } from '~src/Enums/GameModeEnums';
-import { GameConfigInterface } from '~src/Interfaces/GameConfigInterface';
-import { Player } from '~src/Player';
+import { AnimalNames } from '../../Enums/AnimalNamesEnum';
+import { GameModes } from '../../Enums/GameModeEnums';
+import { GameConfigInterface } from '../../Interfaces/GameConfigInterface';
+import { Player } from '../../Player';
 import { BreedProcessor } from '../BreedProcessor';
 import { Dice } from '../Dice';
 import { FirstDice } from '../FirstDice';
@@ -9,7 +9,7 @@ import { SecondDice } from '../SecondDice';
 import { Timer } from '../Timer';
 import { Bank } from './Bank';
 // import { Herd } from './Herd';
-import { defaultGameConfiguration } from './mockGameConfiguration';
+import { defaultGameConfiguration } from './defaultGameConfiguration';
 //TODO: CHECK IF LODASH CAN HELP WITH SETTINGS
 // import { filter } from 'lodash';
 
@@ -25,32 +25,42 @@ export class Game {
   dice: Dice[];
   timer: Timer;
   breedProcessor: BreedProcessor;
-  // trade, breed processor
-
+  //TODO: ADD TRADE AFTER IT IS MERGED
   constructor(
-    configObject: GameConfigInterface = defaultGameConfiguration,
-    // TODO: CHECK HOW TO DESTRUCTURE, IF NOT MAYBE CHANGE CONFIG OBJECT INTO MORE PARAMETERS
-    // {mode, roundTimeInSeconds, playersConfig, herdConfig, predatorAnimalsConfig}
+    // configObject: GameConfigInterface = defaultGameConfiguration,
+    {
+      mode,
+      roundTimeInSeconds,
+      playersConfig,
+      herdConfig,
+      // TODO: DEFINE THE NECESSITY TO CREATE: this.predators
+      predatorAnimalsConfig,
+    }: GameConfigInterface = defaultGameConfiguration,
   ) {
-    this.mode = configObject.mode;
-    this.roundTimeInSeconds = configObject.roundTimeInSeconds;
-    // TODO: CHECK IF NEEDED FOR ANY TYPE OF GAME this.totalGameTimeInSeconds = configObject.totalGameTimeInSeconds;
-    this.playersConfig = configObject.playersConfig;
-    this.playersHerdConfig = configObject.herdConfig.map((animal) => {
+    this.mode = mode;
+    this.roundTimeInSeconds = roundTimeInSeconds;
+    this.playersConfig = playersConfig;
+    this.playersHerdConfig = herdConfig.map((animal) => {
       return [animal.name, animal.playersInitialStock];
     });
-    this.banksHerdConfig = configObject.herdConfig.map((animal) => {
+    this.banksHerdConfig = herdConfig.map((animal) => {
       return [animal.name, animal.bankInitialStock];
     });
-    this.players = configObject.playersConfig.map(
-      (player) => new Player(player.name, player.path),
+    this.players = playersConfig.map(
+      (player) =>
+        new Player(
+          player.name,
+          player.path,
+          player.color,
+          this.playersHerdConfig,
+        ),
     );
-    this.bank = new Bank();
+    this.bank = new Bank(this.banksHerdConfig);
     // TODO: GET DICE DATA FROM CONFIG AFTER/ IF DICE REFACTOR
     // TODO: CHECK IF NEEDED SINCE THEY ARE CALLED IN BREEDPROCESSOR
     this.dice = [new FirstDice(), new SecondDice()];
     // TODO: CHECK IF TIMER IS CALLED CORRECTLY IN GAME
-    this.timer = new Timer(configObject.roundTimeInSeconds);
+    this.timer = new Timer(roundTimeInSeconds);
     // TO CHECK: SHOULD BREED PROCESSOR CREATE DICE INSTANCES?
     this.breedProcessor = new BreedProcessor();
     // TODO: ADD TRADE AFTER TRADE PR APPROVED
@@ -62,13 +72,9 @@ export class Game {
    */
   init(): void {
     this.players.forEach(
-      // TO CONSIDER: REMOVE INIT METHOD AND MOVE FUNCTIONALITIES TO CONSTRUCTOR
-      // TODO: UPDATE WHEN HERD CONSTRUCTOR IS UPDATED
-      // (player) => (player.theHerd = new Herd(this.playersHerdConfig)),
+      // TODO: DEFINE IF NECESSARY
       (player) => console.log(player),
     );
-    // TODO: UPDATE WHEN HERD CONSTRUCTOR IS UPDATED
-    // this.bank.theHerd = new Herd(this.banksHerdConfig);
   }
 
   get theMode(): GameModes {
