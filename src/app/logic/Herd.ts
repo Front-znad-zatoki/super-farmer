@@ -12,24 +12,17 @@ import { AnimalNames } from '../../Enums/AnimalNamesEnum';
 
 export class Herd {
   protected animals: [Animal, number][];
-  constructor(
-    numberOfRabbits = 0,
-    numberOfSheep = 0,
-    numberOfPigs = 0,
-    numberOfCows = 0,
-    numberOfHorses = 0,
-    numberOfSmallDogs = 0,
-    numberOfBigDogs = 0,
-  ) {
+  constructor(playersHerdConfig: [AnimalNames, number][]) {
     this.animals = [
-      [new Rabbit(), numberOfRabbits],
-      [new Sheep(), numberOfSheep],
-      [new Pig(), numberOfPigs],
-      [new Cow(), numberOfCows],
-      [new Horse(), numberOfHorses],
-      [new SmallDog(), numberOfSmallDogs],
-      [new BigDog(), numberOfBigDogs],
+      [new Rabbit(), 0],
+      [new Sheep(), 0],
+      [new Pig(), 0],
+      [new Cow(), 0],
+      [new Horse(), 0],
+      [new SmallDog(), 0],
+      [new BigDog(), 0],
     ];
+    console.log(playersHerdConfig);
   }
 
   addAnimals(animalName: AnimalNames, numberToAdd: number): Herd {
