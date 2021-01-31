@@ -2,7 +2,7 @@ import { Render } from './utils/Render';
 import { AnimalNames } from '../Enums/AnimalNamesEnum';
 import { GameController } from './GameController';
 import { Game } from './logic/Game';
-import { mockGameConfiguration } from './logic/mockGameConfiguration';
+import { defaultGameConfiguration } from './logic/defaultGameConfiguration';
 
 export class View {
   renderMenuView(): void {
@@ -60,7 +60,7 @@ export class View {
           : playersChosenAvatarPath;
 
       Render.removeAllChildren('#sf-app');
-      new Game(mockGameConfiguration).init();
+      new Game(defaultGameConfiguration);
 
       this.renderGameView(inputValue, playersChosenAvatarPath);
     };
@@ -83,10 +83,6 @@ export class View {
       src: playersChosenAvatarPath,
     });
     const gameController = new GameController(this);
-    gameController.initializePlayer(
-      playersChosenName,
-      playersChosenAvatarPath,
-    );
     const remainingTime = Render.elementFactory('div', {
       id: 'time-remaining',
       className: 'remainig-time__counter',
