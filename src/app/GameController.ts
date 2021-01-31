@@ -23,12 +23,6 @@ export class GameController {
     return this.timer;
   }
 
-  initializePlayer(name: string, imgPath: string): Player {
-    this.player = new Player(name, imgPath);
-    this.currentPlayer = this.player;
-    return this.player;
-  }
-
   startTurn(): void {
     this.timer.countdown();
     const turnTimer = setInterval(() => {
