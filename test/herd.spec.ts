@@ -1,16 +1,16 @@
-import { Animal, Value } from '../src/Animals/Animal';
-import { BigDog } from '../src/Animals/BigDog';
-import { Cow } from '../src/Animals/Cow';
+// import { Animal, Value } from '../src/Animals/Animal';
+// import { BigDog } from '../src/Animals/BigDog';
+// import { Cow } from '../src/Animals/Cow';
 import { Fox } from '../src/Animals/Fox';
-import { Horse } from '../src/Animals/Horse';
-import { Pig } from '../src/Animals/Pig';
-import { Rabbit } from '../src/Animals/Rabbit';
-import { Sheep } from '../src/Animals/Sheep';
-import { SmallDog } from '../src/Animals/SmallDog';
+// import { Horse } from '../src/Animals/Horse';
+// import { Pig } from '../src/Animals/Pig';
+// import { Rabbit } from '../src/Animals/Rabbit';
+// import { Sheep } from '../src/Animals/Sheep';
+// import { SmallDog } from '../src/Animals/SmallDog';
 import { Wolf } from '../src/Animals/Wolf';
 import { AnimalNames } from '../src/Enums/AnimalNamesEnum';
 import { Herd } from '../src/app/logic/Herd';
-import { AnimalRoles } from '../src/Enums/AnimalRolesEnum';
+// import { AnimalRoles } from '../src/Enums/AnimalRolesEnum';
 import { mockHerdConfig } from '../src/app/logic/mockHerdConfig';
 
 // const newHerd = new Herd(mockHerdConfig);

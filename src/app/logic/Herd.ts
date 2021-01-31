@@ -1,14 +1,7 @@
 import _ from 'lodash';
-import { AnimalRoles } from '~src/Enums/AnimalRolesEnum';
+import { AnimalRoles } from '../../Enums/AnimalRolesEnum';
 import { Animal, Value } from '../../Animals/Animal';
-import { BigDog } from '../../Animals/BigDog';
-// import { Cow } from '../../Animals/Cow';
 import { Fox } from '../../Animals/Fox';
-// import { Horse } from '../../Animals/Horse';
-// import { Pig } from '../../Animals/Pig';
-// import { Rabbit } from '../../Animals/Rabbit';
-// import { Sheep } from '../../Animals/Sheep';
-import { SmallDog } from '../../Animals/SmallDog';
 import { Wolf } from '../../Animals/Wolf';
 import { AnimalNames } from '../../Enums/AnimalNamesEnum';
 
@@ -31,8 +24,12 @@ export class Herd {
       },
     );
   }
-  // TODO: ADD METHOD DESCRIPTION
-  private findAnimalIndex(animalName: AnimalNames): number {
+  /**
+   * Finds the index of the tuple with given animal's name.
+   * @param {AnimalNames} animalName The animal name to search in animals tuples array.
+   * @return {number} The index of the tuple with searched animal.
+   */
+  private findAnimalTupleIndex(animalName: AnimalNames): number {
     const indexOfAnimal = this.animals.findIndex((animal) => {
       if (animal[0].theName === animalName) return true;
     });
@@ -40,70 +37,115 @@ export class Herd {
       throw new Error(`Animal: ${animalName} not found`);
     return indexOfAnimal;
   }
-  // TODO: ADD METHOD DESCRIPTION
-  private addAnimalNumbers(
+
+  /**
+   * Adds two numbers.
+   * @param {number} currentNumber Current number of animals in the herd.
+   * @param {number} numberToAdd Number to add to the current number of animals in the herd.
+   * @return {number} New number of animals in the herd.
+   */
+  private addNumbers(
     currentNumber: number,
     numberToAdd: number,
   ): number {
     return _.add(currentNumber, numberToAdd);
   }
-  // TODO: ADD METHOD DESCRIPTION
-  private substractAnimalNumbers(
+
+  /**
+   * Substracts two numbers.
+   * @param {number} currentNumber Current number of animals in the herd.
+   * @param {number} numberToSubstract Number to substract from the current number of animals in the herd.
+   * @return {number} New number of animals in the herd.
+   */
+  private substractNumbers(
     currentNumber: number,
     numberToSubstract: number,
   ): number {
     return _.subtract(currentNumber, numberToSubstract);
   }
-  // TODO: ADD METHOD DESCRIPTION
+
+  /**
+   * Updates the number of animals in the herd.
+   * @param {number} indexOfTupleAnimal Current number of animals in the herd.
+   * @param {number} newNumberOfAnimals Number to be the new number of animals in the herd.
+   */
   private updateNumberOfAnimals(
-    index: number,
+    indexOfTupleAnimal: number,
     newNumberOfAnimals: number,
   ): void {
-    this.animals[index][1] = newNumberOfAnimals;
+    this.animals[indexOfTupleAnimal][1] = newNumberOfAnimals;
   }
-  // TODO: ADD METHOD DESCRIPTION
+
+  /**
+   * Finds the index of the chosen animals tuple, adds the number of the animals in the herd
+   * to the incoming number of animals, updates the number in animals tuple array.
+   * updates the number of animals in the herd.
+   * @param {AnimalNames} animalName Name of the animal to be updated.
+   * @param {number} numberToAdd Number to add to the number of animals in the herd.
+   */
   addAnimalsToHerd(
     animalName: AnimalNames,
     numberToAdd: number,
   ): void {
-    const animalIndex = this.findAnimalIndex(animalName);
+    const animalIndex = this.findAnimalTupleIndex(animalName);
     const animalTuple = this.animals[animalIndex];
-    const newNumber = this.addAnimalNumbers(
-      animalTuple[1],
-      numberToAdd,
-    );
+    const newNumber = this.addNumbers(animalTuple[1], numberToAdd);
     this.updateNumberOfAnimals(animalIndex, newNumber);
   }
-  // TODO: ADD METHOD DESCRIPTION
+
+  /**
+   * Finds the index of the chosen animals tuple, substracts the given number of the animals from
+   * the number of animals in the herd, updates the number in animals tuple array.
+   * updates the number of animals in the herd.
+   * @param {number} animalName Name of the animal to be updated.
+   * @param {number} numberToSubstract Number to substract from the number of animals in the herd.
+   */
   removeAnimalsFromHerd(
     animalName: AnimalNames,
     numberToSubstract: number,
   ): void {
-    const animalIndex = this.findAnimalIndex(animalName);
+    const animalIndex = this.findAnimalTupleIndex(animalName);
     const animalTuple = this.animals[animalIndex];
-    const newNumber = this.substractAnimalNumbers(
+    const newNumber = this.substractNumbers(
       animalTuple[1],
       numberToSubstract,
     );
     this.updateNumberOfAnimals(animalIndex, newNumber);
   }
-  // TODO: ADD METHOD DESCRIPTION
+
+  /**
+   * Returns the object's array of animals tuples.
+   * @return {[Animal, number][]} Array of animals tuples in herd.
+   */
   get theAnimals(): [Animal, number][] {
     return this.animals;
   }
-  // TODO: ADD METHOD DESCRIPTION
+
+  /**
+   * Gets the number of the animals in the herd with given name.
+   * @param {AnimalNames} animalName The animal name to search.
+   * @return {number} The current number of animals of this name in the herd.
+   */
   getAnimalNumber(animalName: AnimalNames): number {
     const animalToCheck = this.animals[
-      this.findAnimalIndex(animalName)
+      this.findAnimalTupleIndex(animalName)
     ];
     return animalToCheck[1];
   }
-  // TODO: ADD METHOD DESCRIPTION
+
+  /**
+   * Reduces to zero the number of the animals in the herd with given name.
+   * @param {AnimalNames} animalName The animal name to search and to be culled.
+   */
   private cullAllAnimalsOfOneType(animalName: AnimalNames): void {
-    const indexOfAnimalTuple = this.findAnimalIndex(animalName);
+    const indexOfAnimalTuple = this.findAnimalTupleIndex(animalName);
     this.animals[indexOfAnimalTuple][1] = 0;
   }
-  // TODO: ADD METHOD DESCRIPTION
+
+  /**
+   * Reduces to zero the number of the animals in the herd with given names.
+   * @param {AnimalNames[]} animalName The animal's names array to search and to be culled.
+   */
   private cullAllAnimalsOfGivenTypes(
     animalNames: AnimalNames[],
   ): void {
@@ -111,9 +153,14 @@ export class Herd {
       this.cullAllAnimalsOfOneType(animal);
     });
   }
-  // TODO: ADD METHOD DESCRIPTION
-  // TODO: Check parameteres type
-  // TODO: Modify to use config
+
+  /**
+   * Depending on the attacking animal, it checks if there is a herd protector for the given type of attacker,
+   * then reduces to zero the number of the animals in the herd or removes the protector, as is defined by game configuration.
+   * @param { Fox | Wolf } attackingAnimal The animal that is attacking the herd.
+   */
+  // TODO: Check parameteres type. Create classes for protectors and predators if needed.
+  // TODO: Modify to use config? Define at refactor
   cullAnimals(attackingAnimal: Fox | Wolf): void {
     switch (attackingAnimal.theName) {
       case AnimalNames.FOX: {
