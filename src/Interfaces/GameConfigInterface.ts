@@ -1,12 +1,12 @@
 import { GameModes } from '../Enums/GameModeEnums';
 import { AnimalNames } from '../Enums/AnimalNamesEnum';
-import { AnimalRoles } from '~src/Enums/AnimalRolesEnum';
+import { AnimalRoles } from '../Enums/AnimalRolesEnum';
 
 export interface GameConfigInterface {
   mode: GameModes;
   roundTimeInSeconds: number;
   totalGameTimeInSeconds?: number;
-  playersConfig: { name: string; path: string }[];
+  playersConfig: { name: string; path: string; color: string }[];
   herdConfig: herdConfigInterface[];
   predatorAnimalsConfig: predatorAnimalInterface[];
 }
@@ -14,6 +14,7 @@ export interface GameConfigInterface {
 export interface herdConfigInterface {
   name: AnimalNames;
   tradeValue: number;
+  path: string;
   role: AnimalRoles;
   playersInitialStock: number;
   bankInitialStock: number;
