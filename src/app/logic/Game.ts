@@ -25,6 +25,7 @@ export class Game {
   dice: Dice[];
   timer: Timer;
   breedProcessor: BreedProcessor;
+  private currentPlayerNumber: number;
   //TODO: ADD TRADE AFTER IT IS MERGED
   constructor(
     // configObject: GameConfigInterface = defaultGameConfiguration,
@@ -55,6 +56,7 @@ export class Game {
           this.playersHerdConfig,
         ),
     );
+    this.currentPlayerNumber = 0;
     this.bank = new Bank(this.banksHerdConfig);
     // TODO: GET DICE DATA FROM CONFIG AFTER/ IF DICE REFACTOR
     // TODO: CHECK IF NEEDED SINCE THEY ARE CALLED IN BREEDPROCESSOR
@@ -83,6 +85,10 @@ export class Game {
 
   get thePlayers(): Player[] {
     return this.players;
+  }
+
+  get theCurrentPlayer(): Player {
+    return this.players[this.currentPlayerNumber];
   }
 
   get theBank(): Bank {
