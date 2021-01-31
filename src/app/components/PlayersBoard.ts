@@ -5,8 +5,8 @@ import { Herd } from '.././logic/Herd';
 export class PlayersBoard {
   /* returns player's board with player's name, avatar and herd */
   renderPlayersBoard(
-    playersChosenAvatarPath: string,
     playersChosenName: string,
+    playersChosenAvatarPath: string,
     playersColor: string,
   ): void {
     const playersBoardContainer: HTMLElement = Render.elementFactory(
@@ -52,7 +52,6 @@ export class PlayersBoard {
             src: `../../../static/images/avatars/dog.png`,
           });
 
-          console.log(animalImg, countElement);
           const animalCount = Render.elementFactory(
             'div',
             { className: 'players__herd__count' },
