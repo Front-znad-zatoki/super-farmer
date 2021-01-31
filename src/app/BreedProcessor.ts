@@ -70,7 +70,7 @@ export class BreedProcessor {
       foxDiceAnimalName == wolfDiceAnimalName
     ) {
       const numberOfAnimals = herd.getAnimalNumber(foxDiceAnimalName);
-      herd.addAnimals(
+      herd.addAnimalsToHerd(
         foxDiceAnimalName,
         Math.floor((numberOfAnimals + 2) / 2),
       );
@@ -78,7 +78,7 @@ export class BreedProcessor {
     }
     if (foxDiceAnimalName) {
       const numberOfAnimals = herd.getAnimalNumber(foxDiceAnimalName);
-      herd.addAnimals(
+      herd.addAnimalsToHerd(
         foxDiceAnimalName,
         Math.floor((numberOfAnimals + 1) / 2),
       );
@@ -87,7 +87,7 @@ export class BreedProcessor {
       const numberOfAnimals = herd.getAnimalNumber(
         wolfDiceAnimalName,
       );
-      herd.addAnimals(
+      herd.addAnimalsToHerd(
         wolfDiceAnimalName,
         Math.floor((numberOfAnimals + 1) / 2),
       );
