@@ -1,4 +1,4 @@
-import { time } from 'console';
+// import { time } from 'console';
 import { AnimalNames } from '../Enums/AnimalNamesEnum';
 import { Player } from '../Player';
 import { BreedProcessor } from './BreedProcessor';
@@ -21,12 +21,6 @@ export class GameController {
 
   get theTimer(): Timer {
     return this.timer;
-  }
-
-  initializePlayer(name: string, imgPath: string): Player {
-    this.player = new Player(name, imgPath);
-    this.currentPlayer = this.player;
-    return this.player;
   }
 
   startTurn(): void {
