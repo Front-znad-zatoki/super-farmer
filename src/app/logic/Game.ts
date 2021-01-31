@@ -27,6 +27,7 @@ export class Game {
   timer: Timer;
   breedProcessor: BreedProcessor;
   trade: Trade;
+  private currentPlayerNumber: number;
   constructor({
     mode,
     roundTimeInSeconds,
@@ -57,6 +58,7 @@ export class Game {
           this.playersHerdConfig,
         ),
     );
+    this.currentPlayerNumber = 0;
     this.bank = new Bank(this.banksHerdConfig);
     // TODO: GET DICE DATA FROM CONFIG AFTER/ IF DICE REFACTOR
     // TODO: CHECK IF NEEDED SINCE THEY ARE CALLED IN BREEDPROCESSOR
@@ -73,6 +75,10 @@ export class Game {
 
   get thePlayers(): Player[] {
     return this.players;
+  }
+
+  get theCurrentPlayer(): Player {
+    return this.players[this.currentPlayerNumber];
   }
 
   get theBank(): Bank {
