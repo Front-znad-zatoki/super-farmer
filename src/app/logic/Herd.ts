@@ -13,7 +13,6 @@ export class Herd {
   ) {
     this.animals = playersHerdConfig.map(
       ({ name, tradeValue, role, path, inStock }) => {
-        // TODO: ADD PATH TO ANIMAL IMAGE, VALUE, ROLE IN CONFIG -> CHANGE IN GAME
         const newAnimal = new Animal(name, path, tradeValue, role);
         return [newAnimal, inStock];
       },

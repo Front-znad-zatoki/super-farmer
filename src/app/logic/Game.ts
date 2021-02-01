@@ -1,4 +1,4 @@
-import { AnimalNames } from '../../Enums/AnimalNamesEnum';
+import { HerdConfigInterface } from '../../Interfaces/HerdConfigInterface';
 import { GameModes } from '../../Enums/GameModeEnums';
 import { GameConfigInterface } from '../../Interfaces/GameConfigInterface';
 import { Player } from '../../Player';
@@ -7,45 +7,47 @@ import { Dice } from '../Dice';
 import { FirstDice } from '../FirstDice';
 import { SecondDice } from '../SecondDice';
 import { Timer } from '../Timer';
+import { Trade } from '../Trade';
 import { Bank } from './Bank';
-// import { Herd } from './Herd';
 import { defaultGameConfiguration } from './defaultGameConfiguration';
-//TODO: CHECK IF LODASH CAN HELP WITH SETTINGS
-// import { filter } from 'lodash';
+import { LivestockConfigInterface } from '../../Interfaces/LivestockConfigInterface';
+import { ProtectorsConfigInterface } from '../../Interfaces/ProtectorsConfigInterface';
+import { HerdOwners } from '../../Enums/HerdOwnerEnum';
 
 export class Game {
   mode: GameModes;
   roundTimeInSeconds: number;
   // totalGameTimeInSeconds: number;
   playersConfig: { name: string; path: string }[];
-  playersHerdConfig: [AnimalNames, number][];
-  banksHerdConfig: [AnimalNames, number][];
+  playersHerdConfig: HerdConfigInterface[];
+  banksHerdConfig: HerdConfigInterface[];
   players: Player[];
   bank: Bank;
   dice: Dice[];
   timer: Timer;
   breedProcessor: BreedProcessor;
   trade: Trade;
-  constructor(
-    // configObject: GameConfigInterface = defaultGameConfiguration,
-    {
-      mode,
-      roundTimeInSeconds,
-      playersConfig,
-      livestockConfig,
-      protectorsConfig,
-      predatorsConfig,
-    }: GameConfigInterface = defaultGameConfiguration,
-  ) {
+  constructor({
+    mode,
+    roundTimeInSeconds,
+    playersConfig,
+    livestockConfig,
+    protectorsConfig,
+  }: // predatorsConfig,
+  GameConfigInterface = defaultGameConfiguration) {
     this.mode = mode;
     this.roundTimeInSeconds = roundTimeInSeconds;
     this.playersConfig = playersConfig;
-    this.playersHerdConfig = livestockConfig.map((animal) => {
-      return [animal.name, animal.playersInitialStock];
-    });
-    this.banksHerdConfig = livestockConfig.map((animal) => {
-      return [animal.name, animal.bankInitialStock];
-    });
+    this.playersHerdConfig = this.preparePlayersHerdConfig(
+      livestockConfig,
+      protectorsConfig,
+      HerdOwners.PLAYER,
+    );
+    this.banksHerdConfig = this.preparePlayersHerdConfig(
+      livestockConfig,
+      protectorsConfig,
+      HerdOwners.BANK,
+    );
     this.players = playersConfig.map(
       (player) =>
         new Player(
@@ -59,11 +61,10 @@ export class Game {
     // TODO: GET DICE DATA FROM CONFIG AFTER/ IF DICE REFACTOR
     // TODO: CHECK IF NEEDED SINCE THEY ARE CALLED IN BREEDPROCESSOR
     this.dice = [new FirstDice(), new SecondDice()];
-    // TODO: CHECK IF TIMER IS CALLED CORRECTLY IN GAME
     this.timer = new Timer(roundTimeInSeconds);
     // TO CHECK: SHOULD BREED PROCESSOR CREATE DICE INSTANCES?
-    this.breedProcessor = new BreedProcessor();
-    this.trade = new Trade();
+    this.breedProcessor = new BreedProcessor(this.bank);
+    this.trade = new Trade(this.bank);
   }
 
   get theMode(): GameModes {
@@ -89,8 +90,63 @@ export class Game {
     return this.breedProcessor;
   }
 
-  // TODO: ADD TRADE AFTER TRADE PR APPROVED
-  // get theTrade(): Trade {
-  //   return this.trade;
-  // }
+  get theTrade(): Trade {
+    return this.trade;
+  }
+
+  // TODO: REFACTOR!
+  preparePlayersHerdConfig(
+    livestockConfig: LivestockConfigInterface[],
+    protectorsConfig: ProtectorsConfigInterface[],
+    owner: HerdOwners,
+  ): HerdConfigInterface[] {
+    const herdLivestockConfig: HerdConfigInterface[] = livestockConfig.map(
+      ({
+        name,
+        tradeValue,
+        role,
+        path,
+        playersInitialStock,
+        bankInitialStock,
+      }) => {
+        return {
+          name,
+          tradeValue,
+          role,
+          path,
+          inStock:
+            owner === HerdOwners.PLAYER
+              ? playersInitialStock
+              : bankInitialStock,
+        };
+      },
+    );
+    const herdProtectorsConfig: HerdConfigInterface[] = protectorsConfig.map(
+      ({
+        name,
+        tradeValue,
+        role,
+        path,
+        playersInitialStock,
+        bankInitialStock,
+        chasesAway,
+      }) => {
+        return {
+          name,
+          tradeValue,
+          role,
+          path,
+          chasesAway,
+          inStock:
+            owner === HerdOwners.PLAYER
+              ? playersInitialStock
+              : bankInitialStock,
+        };
+      },
+    );
+    const herdConfig = herdLivestockConfig.concat(
+      herdProtectorsConfig,
+    );
+    return herdConfig;
+  }
 }

@@ -23,6 +23,7 @@ export const defaultGameConfiguration: GameConfigInterface = {
     {
       name: AnimalNames.RABBIT,
       tradeValue: 1,
+      path: '/static/images/avatars/rabbit.png',
       role: AnimalRoles.LIVESTOCK,
       playersInitialStock: 0,
       bankInitialStock: 60,
@@ -34,6 +35,7 @@ export const defaultGameConfiguration: GameConfigInterface = {
     {
       name: AnimalNames.SHEEP,
       tradeValue: 6,
+      path: '/static/images/avatars/sheep.png',
       role: AnimalRoles.LIVESTOCK,
       playersInitialStock: 0,
       bankInitialStock: 24,
@@ -45,6 +47,7 @@ export const defaultGameConfiguration: GameConfigInterface = {
     {
       name: AnimalNames.PIG,
       tradeValue: 12,
+      path: '/static/images/avatars/pig.png',
       role: AnimalRoles.LIVESTOCK,
       playersInitialStock: 0,
       bankInitialStock: 20,
@@ -56,6 +59,7 @@ export const defaultGameConfiguration: GameConfigInterface = {
     {
       name: AnimalNames.COW,
       tradeValue: 36,
+      path: '/static/images/avatars/cow.png',
       role: AnimalRoles.LIVESTOCK,
       playersInitialStock: 0,
       bankInitialStock: 12,
@@ -64,6 +68,7 @@ export const defaultGameConfiguration: GameConfigInterface = {
     {
       name: AnimalNames.HORSE,
       tradeValue: 72,
+      path: '/static/images/avatars/horse.png',
       role: AnimalRoles.LIVESTOCK,
       playersInitialStock: 0,
       bankInitialStock: 4,
@@ -73,28 +78,34 @@ export const defaultGameConfiguration: GameConfigInterface = {
   protectorsConfig: [
     {
       name: AnimalNames.SMALL_DOG,
-      tradeValue: 1,
+      tradeValue: 6,
+      path: '/static/images/avatars/dog.png',
       role: AnimalRoles.GUARDIAN,
       playersInitialStock: 0,
-      bankInitialStock: 60,
+      bankInitialStock: 4,
+      chasesAway: AnimalNames.FOX,
     },
     {
-      name: AnimalNames.SHEEP,
-      tradeValue: 6,
+      name: AnimalNames.BIG_DOG,
+      tradeValue: 36,
+      path: '/static/images/avatars/dog.png',
       role: AnimalRoles.GUARDIAN,
       playersInitialStock: 0,
-      bankInitialStock: 24,
+      bankInitialStock: 2,
+      chasesAway: AnimalNames.WOLF,
     },
   ],
   predatorsConfig: [
     {
       name: AnimalNames.FOX,
+      path: '/static/images/avatars/fox.png',
       kills: [AnimalNames.RABBIT],
       isChasedAwayBy: [AnimalNames.SMALL_DOG],
       dice: [{ diceNumber: 1, probability: 1 }],
     },
     {
       name: AnimalNames.WOLF,
+      path: '/static/images/avatars/wolf.png',
       kills: [
         AnimalNames.RABBIT,
         AnimalNames.SHEEP,

@@ -1,4 +1,4 @@
-import { HerdConfigInterface } from '../../src/Interfaces/HerdConfigInterface';
+import { HerdConfigInterface } from '../../Interfaces/HerdConfigInterface';
 import { Player } from '../../Player';
 import { defaultBankConfig } from './defaultBankConfig';
 
