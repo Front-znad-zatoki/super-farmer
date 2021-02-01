@@ -79,10 +79,6 @@ export class View {
       src: playersChosenAvatarPath,
     });
     const gameController = new GameController(this);
-    gameController.initializePlayer(
-      playersChosenName,
-      playersChosenAvatarPath,
-    );
     const remainingTime = Render.elementFactory('div', {
       id: 'time-remaining',
       className: 'remainig-time__counter',
