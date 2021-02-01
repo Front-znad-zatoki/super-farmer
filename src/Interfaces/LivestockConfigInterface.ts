@@ -4,7 +4,7 @@ import { AnimalRoles } from '../Enums/AnimalRolesEnum';
 export interface LivestockConfigInterface {
   name: AnimalNames;
   tradeValue: number;
-  roles: AnimalRoles;
+  role: AnimalRoles;
   playersInitialStock?: number;
   bankInitialStock?: number;
   dice?: { diceNumber: number; probability: number }[];

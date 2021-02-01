@@ -10,14 +10,16 @@ export const defaultGameConfiguration: GameConfigInterface = {
     {
       name: 'Carlos Santanos',
       path: '../../static/images/avatars/dog.png',
+      color: 'blue',
     },
     {
       name: 'Pablo Escofarmo',
       path: '../../static/images/avatars/cow.png',
+      color: 'green',
     },
   ],
 
-  herdConfig: [
+  livestockConfig: [
     {
       name: AnimalNames.RABBIT,
       tradeValue: 1,
@@ -68,7 +70,23 @@ export const defaultGameConfiguration: GameConfigInterface = {
       dice: [{ diceNumber: 1, probability: 1 }],
     },
   ],
-  predatorAnimalsConfig: [
+  protectorsConfig: [
+    {
+      name: AnimalNames.SMALL_DOG,
+      tradeValue: 1,
+      role: AnimalRoles.GUARDIAN,
+      playersInitialStock: 0,
+      bankInitialStock: 60,
+    },
+    {
+      name: AnimalNames.SHEEP,
+      tradeValue: 6,
+      role: AnimalRoles.GUARDIAN,
+      playersInitialStock: 0,
+      bankInitialStock: 24,
+    },
+  ],
+  predatorsConfig: [
     {
       name: AnimalNames.FOX,
       kills: [AnimalNames.RABBIT],
