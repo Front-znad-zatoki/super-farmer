@@ -10,20 +10,19 @@ export const defaultGameConfiguration: GameConfigInterface = {
     {
       name: 'Carlos Santanos',
       path: '../../static/images/avatars/dog.png',
-      color: 'bada55',
+      color: 'blue',
     },
     {
       name: 'Pablo Escofarmo',
       path: '../../static/images/avatars/cow.png',
-      color: 'daff00',
+      color: 'green',
     },
   ],
 
-  herdConfig: [
+  livestockConfig: [
     {
       name: AnimalNames.RABBIT,
       tradeValue: 1,
-      path: '/static/images/avatars/rabbit.png',
       role: AnimalRoles.LIVESTOCK,
       playersInitialStock: 0,
       bankInitialStock: 60,
@@ -35,7 +34,6 @@ export const defaultGameConfiguration: GameConfigInterface = {
     {
       name: AnimalNames.SHEEP,
       tradeValue: 6,
-      path: '/static/images/avatars/sheep.png',
       role: AnimalRoles.LIVESTOCK,
       playersInitialStock: 0,
       bankInitialStock: 24,
@@ -47,7 +45,6 @@ export const defaultGameConfiguration: GameConfigInterface = {
     {
       name: AnimalNames.PIG,
       tradeValue: 12,
-      path: '/static/images/avatars/pig.png',
       role: AnimalRoles.LIVESTOCK,
       playersInitialStock: 0,
       bankInitialStock: 20,
@@ -59,7 +56,6 @@ export const defaultGameConfiguration: GameConfigInterface = {
     {
       name: AnimalNames.COW,
       tradeValue: 36,
-      path: '/static/images/avatars/cow.png',
       role: AnimalRoles.LIVESTOCK,
       playersInitialStock: 0,
       bankInitialStock: 12,
@@ -68,30 +64,29 @@ export const defaultGameConfiguration: GameConfigInterface = {
     {
       name: AnimalNames.HORSE,
       tradeValue: 72,
-      path: '/static/images/avatars/horse.png',
       role: AnimalRoles.LIVESTOCK,
       playersInitialStock: 0,
       bankInitialStock: 4,
       dice: [{ diceNumber: 1, probability: 1 }],
     },
+  ],
+  protectorsConfig: [
     {
       name: AnimalNames.SMALL_DOG,
-      tradeValue: 6,
-      path: '/static/images/avatars/dog.png',
+      tradeValue: 1,
       role: AnimalRoles.GUARDIAN,
       playersInitialStock: 0,
-      bankInitialStock: 4,
+      bankInitialStock: 60,
     },
     {
-      name: AnimalNames.BIG_DOG,
-      tradeValue: 36,
-      path: '/static/images/avatars/dog.png',
+      name: AnimalNames.SHEEP,
+      tradeValue: 6,
       role: AnimalRoles.GUARDIAN,
       playersInitialStock: 0,
-      bankInitialStock: 2,
+      bankInitialStock: 24,
     },
   ],
-  predatorAnimalsConfig: [
+  predatorsConfig: [
     {
       name: AnimalNames.FOX,
       kills: [AnimalNames.RABBIT],
@@ -112,7 +107,6 @@ export const defaultGameConfiguration: GameConfigInterface = {
   ],
 };
 
-// TO CONSIDER: DIFFERENT DICE APPROACH
 // diceConfig: [
 //   [
 //     { name: AnimalNames.RABBIT, probability: 6 },

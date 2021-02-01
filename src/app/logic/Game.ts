@@ -25,25 +25,25 @@ export class Game {
   dice: Dice[];
   timer: Timer;
   breedProcessor: BreedProcessor;
-  //TODO: ADD TRADE AFTER IT IS MERGED
+  trade: Trade;
   constructor(
     // configObject: GameConfigInterface = defaultGameConfiguration,
     {
       mode,
       roundTimeInSeconds,
       playersConfig,
-      herdConfig,
-      // TODO: DEFINE THE NECESSITY TO CREATE: this.predators
-      predatorAnimalsConfig,
+      livestockConfig,
+      protectorsConfig,
+      predatorsConfig
     }: GameConfigInterface = defaultGameConfiguration,
   ) {
     this.mode = mode;
     this.roundTimeInSeconds = roundTimeInSeconds;
     this.playersConfig = playersConfig;
-    this.playersHerdConfig = herdConfig.map((animal) => {
+    this.playersHerdConfig = livestockConfig.map((animal) => {
       return [animal.name, animal.playersInitialStock];
     });
-    this.banksHerdConfig = herdConfig.map((animal) => {
+    this.banksHerdConfig = livestockConfig.map((animal) => {
       return [animal.name, animal.bankInitialStock];
     });
     this.players = playersConfig.map(
@@ -63,18 +63,7 @@ export class Game {
     this.timer = new Timer(roundTimeInSeconds);
     // TO CHECK: SHOULD BREED PROCESSOR CREATE DICE INSTANCES?
     this.breedProcessor = new BreedProcessor();
-    // TODO: ADD TRADE AFTER TRADE PR APPROVED
-    // this.trade = new Trade()
-  }
-
-  /**
-   * Initializes game with data from initial setup.
-   */
-  init(): void {
-    this.players.forEach(
-      // TODO: DEFINE IF NECESSARY
-      (player) => console.log(player),
-    );
+    this.trade = new Trade()
   }
 
   get theMode(): GameModes {
