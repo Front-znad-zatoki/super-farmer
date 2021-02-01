@@ -2,6 +2,7 @@
 import { AnimalNames } from '../Enums/AnimalNamesEnum';
 import { Player } from '../Player';
 import { BreedProcessor } from './BreedProcessor';
+import { Bank } from './logic/Bank';
 import { Timer } from './Timer';
 import { View } from './View';
 
@@ -12,7 +13,7 @@ export class GameController {
   private breedProcessor: BreedProcessor;
   constructor(private view: View) {
     this.timer = new Timer();
-    this.breedProcessor = new BreedProcessor();
+    this.breedProcessor = new BreedProcessor(new Bank());
   }
 
   get theCurrentPlayer(): Player {

@@ -1,6 +1,6 @@
 import { Herd } from './app/logic/Herd';
-import { AnimalNames } from './Enums/AnimalNamesEnum';
-// import { AnimalRoles } from './Enums/AnimalRolesEnum';
+import { mockHerdConfig } from './app/logic/mockHerdConfig';
+import { HerdConfigInterface } from './Interfaces/HerdConfigInterface';
 
 export class Player {
   protected name: string;
@@ -9,16 +9,14 @@ export class Player {
   protected color: string;
 
   // TODO: set path to default avatar when it's available
-  // TODO: DECIDE HOW THE COLORS SHOULD BE CHOSEN, DEFAULT ALSO
-
   constructor(
     name: string,
     avatar = 'path to default avatar',
-    color = 'bada55',
-    playerHerdConfig: [AnimalNames, number][],
+    color = 'green',
+    herdConfig: HerdConfigInterface[] = mockHerdConfig,
   ) {
     this.name = name;
-    this.herd = new Herd(playerHerdConfig);
+    this.herd = new Herd(herdConfig);
     this.avatar = avatar;
     this.color = color;
   }
