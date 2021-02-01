@@ -1,0 +1,13 @@
+.player-panel {
+  display: flex;
+  flex-grow: 1 1 1;
+  max-height: 30vh;
+  &__herd {
+
+  }
+
+  &__image {
+    height: 3rem;
+    width: auto;
+  }
+}
