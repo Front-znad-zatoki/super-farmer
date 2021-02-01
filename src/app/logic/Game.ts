@@ -79,6 +79,11 @@ export class Game {
     );
   }
 
+  nextPlayer(): void {
+    this.currentPlayerNumber =
+      (this.currentPlayerNumber + 1) % this.players.length;
+  }
+
   get theMode(): GameModes {
     return this.mode;
   }
