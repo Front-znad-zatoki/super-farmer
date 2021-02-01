@@ -1,28 +1,23 @@
-import { Value } from './Animals/Animal';
 import { Herd } from './app/logic/Herd';
-import { AnimalNames } from './Enums/AnimalNamesEnum';
-import { AnimalRoles } from './Enums/AnimalRolesEnum';
+import { HerdConfigInterface } from './Interfaces/HerdConfigInterface';
 
 export class Player {
   protected name: string;
   protected avatar: string;
   protected herd: Herd;
+  protected color: string;
 
   // TODO: set path to default avatar when it's available
   constructor(
     name: string,
     avatar = 'path to default avatar',
-    playersHerdConfig: {
-      name: AnimalNames;
-      tradeValue: Value;
-      role: AnimalRoles;
-      path: string;
-      initialStock: number;
-    }[],
+    color: string,
+    herdConfig: HerdConfigInterface[],
   ) {
     this.name = name;
-    this.herd = new Herd(playersHerdConfig);
+    this.herd = new Herd(herdConfig);
     this.avatar = avatar;
+    this.color = color;
   }
 
   get theName(): string {

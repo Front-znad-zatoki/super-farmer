@@ -1,26 +1,18 @@
 import _ from 'lodash';
-import { AnimalRoles } from '../../Enums/AnimalRolesEnum';
-import { Animal, Value } from '../../Animals/Animal';
+import { Animal } from '../../Animals/Animal';
 import { Fox } from '../../Animals/Fox';
 import { Wolf } from '../../Animals/Wolf';
 import { AnimalNames } from '../../Enums/AnimalNamesEnum';
+import { HerdConfigInterface } from '../../Interfaces/HerdConfigInterface';
 
 export class Herd {
   protected animals: [Animal, number][];
-  constructor(
-    playersHerdConfig: {
-      name: AnimalNames;
-      tradeValue: Value;
-      role: AnimalRoles;
-      path: string;
-      initialStock: number;
-    }[],
-  ) {
+  constructor(playersHerdConfig: HerdConfigInterface[]) {
     this.animals = playersHerdConfig.map(
-      ({ name, tradeValue, role, path, initialStock }) => {
+      ({ name, tradeValue, role, path, inStock }) => {
         // TODO: ADD PATH TO ANIMAL IMAGE, VALUE, ROLE IN CONFIG -> CHANGE IN GAME
         const newAnimal = new Animal(name, path, tradeValue, role);
-        return [newAnimal, initialStock];
+        return [newAnimal, inStock];
       },
     );
   }
@@ -30,8 +22,8 @@ export class Herd {
    * @return {number} The index of the tuple with searched animal.
    */
   private findAnimalTupleIndex(animalName: AnimalNames): number {
-    const indexOfAnimal = this.animals.findIndex((animal) => {
-      if (animal[0].theName === animalName) return true;
+    const indexOfAnimal = this.animals.findIndex(([animal]) => {
+      if (animal.theName === animalName) return true;
     });
     if (indexOfAnimal === -1)
       throw new Error(`Animal: ${animalName} not found`);
