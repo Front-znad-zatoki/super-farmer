@@ -34,7 +34,7 @@ export class Game {
       playersConfig,
       livestockConfig,
       protectorsConfig,
-      predatorsConfig
+      predatorsConfig,
     }: GameConfigInterface = defaultGameConfiguration,
   ) {
     this.mode = mode;
@@ -63,7 +63,7 @@ export class Game {
     this.timer = new Timer(roundTimeInSeconds);
     // TO CHECK: SHOULD BREED PROCESSOR CREATE DICE INSTANCES?
     this.breedProcessor = new BreedProcessor();
-    this.trade = new Trade()
+    this.trade = new Trade();
   }
 
   get theMode(): GameModes {
