@@ -6,12 +6,16 @@ import { AnimalNames } from '../Enums/AnimalNamesEnum';
 import { Fox } from '../Animals/Fox';
 import { Wolf } from '../Animals/Wolf';
 import { Herd } from './logic/Herd';
+import { ConvertToAnimalObject } from './utils/ConvertToAnimalObject';
+import { add, divide, floor, min } from 'lodash';
+import { AnimalRoles } from '../Enums/AnimalRolesEnum';
+import { Bank } from './logic/Bank';
 
 export class BreedProcessor {
   randomResultInterfaceWolf: GetRandomValue;
   randomResultInterfaceFox: GetRandomValue;
 
-  constructor() {
+  constructor(private bank: Bank) {
     this.randomResultInterfaceWolf = new SecondDice();
     this.randomResultInterfaceFox = new FirstDice();
   }
@@ -19,78 +23,97 @@ export class BreedProcessor {
   processBreedPhase({ theHerd }: Player): [AnimalNames, AnimalNames] {
     const wolfDiceResult = this.randomResultInterfaceWolf.getRandomValue();
     const foxDiceResult = this.randomResultInterfaceFox.getRandomValue();
-    if (foxDiceResult !== AnimalNames.FOX) {
-      if (wolfDiceResult !== AnimalNames.WOLF) {
-        this.breedAnimals(foxDiceResult, wolfDiceResult, theHerd);
-      } else {
-        this.breedAnimals(foxDiceResult, undefined, theHerd);
-        theHerd.cullAnimals(
-          this.getRandomResult(wolfDiceResult) as Wolf,
-        );
-      }
+    const equalResult = foxDiceResult === wolfDiceResult;
+    if (equalResult) {
+      this.breedAnimals(foxDiceResult, theHerd, true);
+      return [wolfDiceResult, foxDiceResult];
+    }
+    if (foxDiceResult === AnimalNames.FOX) {
+      const fox: Fox = ConvertToAnimalObject.convertToAnimalObject(
+        foxDiceResult,
+      ) as Fox;
+      this.returnToBank(fox, theHerd);
+      theHerd.cullAnimals(fox);
     } else {
-      if (wolfDiceResult !== AnimalNames.WOLF) {
-        this.breedAnimals(undefined, wolfDiceResult, theHerd);
-        theHerd.cullAnimals(
-          this.getRandomResult(foxDiceResult) as Fox,
-        );
-      } else {
-        theHerd.cullAnimals(
-          this.getRandomResult(foxDiceResult) as Fox,
-        );
-        theHerd.cullAnimals(
-          this.getRandomResult(wolfDiceResult) as Wolf,
-        );
-      }
+      this.breedAnimals(foxDiceResult, theHerd);
+    }
+    if (wolfDiceResult === AnimalNames.WOLF) {
+      const wolf = ConvertToAnimalObject.convertToAnimalObject(
+        wolfDiceResult,
+      ) as Wolf;
+      this.returnToBank(wolf, theHerd);
+      theHerd.cullAnimals(wolf);
+    } else {
+      this.breedAnimals(wolfDiceResult, theHerd);
     }
     return [wolfDiceResult, foxDiceResult];
   }
 
-  private getRandomResult(
-    animalName: AnimalNames,
-  ): Wolf | Fox | AnimalNames {
-    switch (animalName) {
-      case AnimalNames.FOX:
-        return new Fox();
-      case AnimalNames.WOLF:
-        return new Wolf();
-      default:
-        return animalName;
+  private breedAnimals(
+    diceResult: AnimalNames,
+    herd: Herd,
+    isDoubled?: boolean,
+  ): void {
+    if (isDoubled) {
+      const herdGrow = this.calculateHerdGrow(
+        diceResult,
+        herd,
+        isDoubled,
+      );
+      this.bank.theHerd.addAnimalsToHerd(diceResult, -herdGrow);
+      herd.addAnimalsToHerd(diceResult, herdGrow);
+      return;
     }
+    const herdGrow = this.calculateHerdGrow(diceResult, herd);
+    this.bank.theHerd.addAnimalsToHerd(diceResult, -herdGrow);
+    herd.addAnimalsToHerd(diceResult, herdGrow);
   }
 
-  private breedAnimals(
-    foxDiceAnimalName: AnimalNames | undefined,
-    wolfDiceAnimalName: AnimalNames | undefined,
-    herd: Herd,
-  ) {
-    if (
-      foxDiceAnimalName &&
-      wolfDiceAnimalName &&
-      foxDiceAnimalName == wolfDiceAnimalName
-    ) {
-      const numberOfAnimals = herd.getAnimalNumber(foxDiceAnimalName);
-      herd.addAnimalsToHerd(
-        foxDiceAnimalName,
-        Math.floor((numberOfAnimals + 2) / 2),
+  private returnToBank(predator: Wolf | Fox, herd: Herd): void {
+    if (predator instanceof Fox) {
+      if (herd.getAnimalNumber(AnimalNames.SMALL_DOG) > 0) {
+        this.bank.theHerd.addAnimalsToHerd(AnimalNames.SMALL_DOG, 1);
+        return;
+      }
+      const quantity = herd.getAnimalNumber(AnimalNames.RABBIT);
+      this.bank.theHerd.addAnimalsToHerd(
+        AnimalNames.RABBIT,
+        quantity,
       );
       return;
     }
-    if (foxDiceAnimalName) {
-      const numberOfAnimals = herd.getAnimalNumber(foxDiceAnimalName);
-      herd.addAnimalsToHerd(
-        foxDiceAnimalName,
-        Math.floor((numberOfAnimals + 1) / 2),
-      );
+    if (herd.getAnimalNumber(AnimalNames.BIG_DOG) > 0) {
+      this.bank.theHerd.addAnimalsToHerd(AnimalNames.BIG_DOG, 1);
+      return;
     }
-    if (wolfDiceAnimalName) {
-      const numberOfAnimals = herd.getAnimalNumber(
-        wolfDiceAnimalName,
+    herd.theAnimals
+      .filter(
+        ([animal]) =>
+          animal.hasRole(AnimalRoles.LIVESTOCK) &&
+          animal.theName !== AnimalNames.HORSE,
+      )
+      .forEach(([animal, count]) =>
+        this.bank.theHerd.addAnimalsToHerd(
+          animal.theName as AnimalNames,
+          count,
+        ),
       );
-      herd.addAnimalsToHerd(
-        wolfDiceAnimalName,
-        Math.floor((numberOfAnimals + 1) / 2),
-      );
-    }
+  }
+
+  private calculateHerdGrow(
+    diceResult: AnimalNames,
+    herd: Herd,
+    isDoubled?: boolean,
+  ): number {
+    const herdMaxGrow = floor(
+      divide(
+        add(herd.getAnimalNumber(diceResult), isDoubled ? 2 : 1),
+        2,
+      ),
+    );
+    const bankContains = this.bank.theHerd.getAnimalNumber(
+      diceResult,
+    );
+    return min([herdMaxGrow, bankContains]) as number;
   }
 }
