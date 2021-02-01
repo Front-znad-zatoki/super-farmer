@@ -1,4 +1,5 @@
 import { Herd } from './app/logic/Herd';
+import { mockHerdConfig } from './app/logic/mockHerdConfig';
 import { HerdConfigInterface } from './Interfaces/HerdConfigInterface';
 
 export class Player {
@@ -11,8 +12,8 @@ export class Player {
   constructor(
     name: string,
     avatar = 'path to default avatar',
-    color: string,
-    herdConfig: HerdConfigInterface[],
+    color = 'green',
+    herdConfig: HerdConfigInterface[] = mockHerdConfig,
   ) {
     this.name = name;
     this.herd = new Herd(herdConfig);

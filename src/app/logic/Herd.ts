@@ -4,10 +4,13 @@ import { Fox } from '../../Animals/Fox';
 import { Wolf } from '../../Animals/Wolf';
 import { AnimalNames } from '../../Enums/AnimalNamesEnum';
 import { HerdConfigInterface } from '../../Interfaces/HerdConfigInterface';
+import { mockHerdConfig } from './mockHerdConfig';
 
 export class Herd {
   protected animals: [Animal, number][];
-  constructor(playersHerdConfig: HerdConfigInterface[]) {
+  constructor(
+    playersHerdConfig: HerdConfigInterface[] = mockHerdConfig,
+  ) {
     this.animals = playersHerdConfig.map(
       ({ name, tradeValue, role, path, inStock }) => {
         // TODO: ADD PATH TO ANIMAL IMAGE, VALUE, ROLE IN CONFIG -> CHANGE IN GAME

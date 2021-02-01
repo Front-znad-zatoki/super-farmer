@@ -61,10 +61,10 @@ export class Trade {
     playerHerd: Herd,
     [animalBought, quantityBought]: [AnimalNames, number],
   ): boolean {
-    playerHerd.addAnimals(animalSold, -quantitySold);
-    playerHerd.addAnimals(animalBought, quantityBought);
-    this.bank.theHerd.addAnimals(animalSold, quantitySold);
-    this.bank.theHerd.addAnimals(animalBought, -quantityBought);
+    playerHerd.addAnimalsToHerd(animalSold, -quantitySold);
+    playerHerd.addAnimalsToHerd(animalBought, quantityBought);
+    this.bank.theHerd.addAnimalsToHerd(animalSold, quantitySold);
+    this.bank.theHerd.addAnimalsToHerd(animalBought, -quantityBought);
     return true;
   }
 }
