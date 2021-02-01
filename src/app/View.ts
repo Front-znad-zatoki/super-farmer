@@ -1,8 +1,6 @@
 import { Render } from './utils/Render';
 import { AnimalNames } from '../Enums/AnimalNamesEnum';
 import { GameController } from './GameController';
-import { Game } from './logic/Game';
-import { defaultGameConfiguration } from './logic/defaultGameConfiguration';
 
 export class View {
   renderMenuView(): void {
@@ -60,8 +58,6 @@ export class View {
           : playersChosenAvatarPath;
 
       Render.removeAllChildren('#sf-app');
-      new Game(defaultGameConfiguration);
-
       this.renderGameView(inputValue, playersChosenAvatarPath);
     };
     startGameButton.addEventListener('click', handleClick);

@@ -69,6 +69,11 @@ export class Game {
     this.trade = new Trade(this.bank);
   }
 
+  nextPlayer(): void {
+    this.currentPlayerNumber =
+      (this.currentPlayerNumber + 1) % this.players.length;
+  }
+
   get theMode(): GameModes {
     return this.mode;
   }
