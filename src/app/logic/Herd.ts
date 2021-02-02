@@ -13,7 +13,6 @@ export class Herd {
   ) {
     this.animals = playersHerdConfig.map(
       ({ name, tradeValue, role, path, inStock }) => {
-        // TODO: ADD PATH TO ANIMAL IMAGE, VALUE, ROLE IN CONFIG -> CHANGE IN GAME
         const newAnimal = new Animal(name, path, tradeValue, role);
         return [newAnimal, inStock];
       },
@@ -31,32 +30,6 @@ export class Herd {
     if (indexOfAnimal === -1)
       throw new Error(`Animal: ${animalName} not found`);
     return indexOfAnimal;
-  }
-
-  /**
-   * Adds two numbers.
-   * @param {number} currentNumber Current number of animals in the herd.
-   * @param {number} numberToAdd Number to add to the current number of animals in the herd.
-   * @return {number} New number of animals in the herd.
-   */
-  private addNumbers(
-    currentNumber: number,
-    numberToAdd: number,
-  ): number {
-    return _.add(currentNumber, numberToAdd);
-  }
-
-  /**
-   * Substracts two numbers.
-   * @param {number} currentNumber Current number of animals in the herd.
-   * @param {number} numberToSubstract Number to substract from the current number of animals in the herd.
-   * @return {number} New number of animals in the herd.
-   */
-  private substractNumbers(
-    currentNumber: number,
-    numberToSubstract: number,
-  ): number {
-    return _.subtract(currentNumber, numberToSubstract);
   }
 
   /**
@@ -84,7 +57,7 @@ export class Herd {
   ): void {
     const animalIndex = this.findAnimalTupleIndex(animalName);
     const animalTuple = this.animals[animalIndex];
-    const newNumber = this.addNumbers(animalTuple[1], numberToAdd);
+    const newNumber = _.add(animalTuple[1], numberToAdd);
     this.updateNumberOfAnimals(animalIndex, newNumber);
   }
 
@@ -101,10 +74,9 @@ export class Herd {
   ): void {
     const animalIndex = this.findAnimalTupleIndex(animalName);
     const animalTuple = this.animals[animalIndex];
-    const newNumber = this.substractNumbers(
-      animalTuple[1],
-      numberToSubstract,
-    );
+    if (animalTuple[1] < numberToSubstract)
+      alert('not enough animals');
+    const newNumber = _.subtract(animalTuple[1], numberToSubstract);
     this.updateNumberOfAnimals(animalIndex, newNumber);
   }
 
