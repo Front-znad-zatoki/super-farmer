@@ -1,4 +1,3 @@
-// import { time } from 'console';
 import { AnimalNames } from '../Enums/AnimalNamesEnum';
 import { GameProcessor } from './logic/GameProcessor';
 import { View } from './View';
@@ -17,6 +16,11 @@ export class GameController {
     return this.game;
   }
 
+  /**
+   * Starts the turn for the current player.
+   * Displays alert when the time is over.
+   * Updates the remaining time on the View.
+   */
   startTurn(): void {
     this.gameProcessor.startTurn(
       (currentPlayer) => {
@@ -32,6 +36,13 @@ export class GameController {
     this.gameProcessor.stopTurn();
   }
 
+  /**
+   * Executes trade proposed by the player and checks win condition.
+   * If player wins the game after the trade, stops the timer and tells the View to display the WinModal.
+   * @param offer made by the player
+   * @param target desired by the player
+   * @returns true if the trade was sucessful, false otherwise
+   */
   trade(
     offer: [AnimalNames, number],
     target: [AnimalNames, number],
@@ -44,6 +55,10 @@ export class GameController {
     return tradeResult;
   }
 
+  /**
+   * Rolls the dice for the player and updates their Herd.
+   * If player wins the game after the breed, stops the timer and tells the View to display the WinModal.
+   */
   breed(): [AnimalNames, AnimalNames] | undefined {
     const diceResult = this.gameProcessor.breed();
     if (this.gameProcessor.checkWin()) {
@@ -53,6 +68,9 @@ export class GameController {
     return diceResult;
   }
 
+  /**
+   * Sets the current player to the next player in order.
+   */
   nextPlayer(): void {
     this.gameProcessor.nextPlayer();
   }
