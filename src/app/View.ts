@@ -160,4 +160,12 @@ export class View {
   displayAlert(name: string): void {
     alert(`${name}'s turn has passed!`);
   }
+
+  handleTrade(): void {
+    console.log('handle trade');
+  }
+
+  handleRoll(): void {
+    console.log('handle roll');
+  }
 }
