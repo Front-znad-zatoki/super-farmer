@@ -40,4 +40,12 @@ export class Player {
   set theHerd(herd: Herd) {
     this.herd = herd;
   }
+
+  get theColor(): string {
+    return this.color;
+  }
+
+  set theColor(color: string) {
+    this.color = color;
+  }
 }
