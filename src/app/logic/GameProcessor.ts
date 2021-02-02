@@ -32,8 +32,21 @@ export class GameProcessor {
   stopTurn(): void {
     this.game.theTimer.resetTurn();
   }
-  //   TODO implement when Trade is merged
-  //   trade() {}
+
+  trade(
+    offer: [AnimalNames, number],
+    target: [AnimalNames, number],
+  ): boolean {
+    if (this.game.theTimer.theTurnTimeLeft === 0) {
+      return false;
+    }
+    const tradeResult = this.game.theTrade.processOffer(
+      offer,
+      this.game.theCurrentPlayer,
+      target,
+    );
+    return tradeResult;
+  }
 
   checkWin(): boolean {
     const animalsRequiredToWin: AnimalNames[] = [

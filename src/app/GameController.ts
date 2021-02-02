@@ -6,11 +6,15 @@ import { Game } from './logic/Game';
 import { defaultGameConfiguration } from './logic/defaultGameConfiguration';
 
 export class GameController {
+  private game: Game;
   private gameProcessor: GameProcessor;
   constructor(private view: View) {
-    this.gameProcessor = new GameProcessor(
-      new Game(defaultGameConfiguration),
-    );
+    this.game = new Game(defaultGameConfiguration);
+    this.gameProcessor = new GameProcessor(this.game);
+  }
+
+  get theGame(): Game {
+    return this.game;
   }
 
   startTurn(): void {
@@ -28,14 +32,23 @@ export class GameController {
     this.gameProcessor.stopTurn();
   }
 
-  // TODO when Trade is done
-  // trade();
+  trade(
+    offer: [AnimalNames, number],
+    target: [AnimalNames, number],
+  ): boolean {
+    const tradeResult = this.gameProcessor.trade(offer, target);
+    if (this.gameProcessor.checkWin()) {
+      this.gameProcessor.stopTurn();
+      this.view.displayWinModal(this.game.theCurrentPlayer);
+    }
+    return tradeResult;
+  }
 
   breed(): [AnimalNames, AnimalNames] | undefined {
     const diceResult = this.gameProcessor.breed();
     if (this.gameProcessor.checkWin()) {
       this.gameProcessor.stopTurn();
-      //TODO winModal from View
+      this.view.displayWinModal(this.game.theCurrentPlayer);
     }
     return diceResult;
   }
