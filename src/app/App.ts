@@ -1,4 +1,4 @@
-import { BankBoard } from '../app/components/BanksBoard';
+import { BankBoard } from '../app/components/BankBoard';
 
 export class App {
   init(): string {
