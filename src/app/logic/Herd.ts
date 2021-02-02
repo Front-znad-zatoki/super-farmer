@@ -74,6 +74,8 @@ export class Herd {
   ): void {
     const animalIndex = this.findAnimalTupleIndex(animalName);
     const animalTuple = this.animals[animalIndex];
+    if (animalTuple[1] < numberToSubstract)
+      alert('not enough animals');
     const newNumber = _.subtract(animalTuple[1], numberToSubstract);
     this.updateNumberOfAnimals(animalIndex, newNumber);
   }
