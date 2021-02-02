@@ -2,9 +2,10 @@ import { AnimalNames } from '../Enums/AnimalNamesEnum';
 import { AnimalRoles } from '../Enums/AnimalRolesEnum';
 import { pull } from 'lodash';
 
-type Value = 1 | 6 | 12 | 36 | 72;
+export type Value = 1 | 6 | 12 | 36 | 72;
 
-export abstract class Animal {
+// export abstract class Animal {
+export class Animal {
   protected name: AnimalNames;
   protected imagePath: string;
   protected roles: AnimalRoles[];
