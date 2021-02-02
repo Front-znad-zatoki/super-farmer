@@ -10,9 +10,9 @@ export class TradeDemo {
     const bank = new Bank();
     const trade = new Trade(bank);
     const player = new Player('player');
-    player.theHerd.addAnimals(AnimalNames.SHEEP, 5);
-    player.theHerd.addAnimals(AnimalNames.PIG, 5);
-    player.theHerd.addAnimals(AnimalNames.COW, 2);
+    player.theHerd.addAnimalsToHerd(AnimalNames.SHEEP, 5);
+    player.theHerd.addAnimalsToHerd(AnimalNames.PIG, 5);
+    player.theHerd.addAnimalsToHerd(AnimalNames.COW, 2);
     const offer1: [AnimalNames, number] = [AnimalNames.SHEEP, 1];
     const offer2: [AnimalNames, number] = [AnimalNames.SHEEP, 2];
     const offer3: [AnimalNames, number] = [AnimalNames.COW, 1];

@@ -5,13 +5,13 @@ import { BreedProcessor } from '../BreedProcessor';
 export class BreedPhaseDemo {
   static playDemo(): void {
     const bank = new Player('bank');
-    bank.theHerd.addAnimals(AnimalNames.RABBIT, 10);
-    bank.theHerd.addAnimals(AnimalNames.SHEEP, 10);
-    bank.theHerd.addAnimals(AnimalNames.PIG, 10);
-    bank.theHerd.addAnimals(AnimalNames.COW, 12);
-    bank.theHerd.addAnimals(AnimalNames.HORSE, 4);
-    bank.theHerd.addAnimals(AnimalNames.SMALL_DOG, 4);
-    bank.theHerd.addAnimals(AnimalNames.BIG_DOG, 2);
+    bank.theHerd.addAnimalsToHerd(AnimalNames.RABBIT, 10);
+    bank.theHerd.addAnimalsToHerd(AnimalNames.SHEEP, 10);
+    bank.theHerd.addAnimalsToHerd(AnimalNames.PIG, 10);
+    bank.theHerd.addAnimalsToHerd(AnimalNames.COW, 12);
+    bank.theHerd.addAnimalsToHerd(AnimalNames.HORSE, 4);
+    bank.theHerd.addAnimalsToHerd(AnimalNames.SMALL_DOG, 4);
+    bank.theHerd.addAnimalsToHerd(AnimalNames.BIG_DOG, 2);
     const bp = new BreedProcessor(bank);
     const player = new Player('player');
     for (let i = 0; i < 10; i++) {

@@ -1,9 +1,13 @@
-import { Player } from '~src/Player';
-import { Herd } from './Herd';
+import { HerdConfigInterface } from '~src/Interfaces/HerdConfigInterface';
+import { Player } from '../../Player';
+import { defaultBankConfig } from './defaultBankConfig';
 
 export class Bank extends Player {
-  constructor() {
-    super('Bank');
-    this.herd = new Herd(60, 24, 20, 12, 4, 4, 2);
+  constructor(
+    banksHerdConfig: HerdConfigInterface[] = defaultBankConfig,
+  ) {
+    super('bank', '', '', banksHerdConfig);
+    // TO BE DIFNED BY GAME'S CONFIG:
+    // this.herd = new Herd(60, 24, 20, 12, 4, 4, 2);
   }
 }

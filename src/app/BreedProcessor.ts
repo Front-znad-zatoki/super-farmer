@@ -60,27 +60,30 @@ export class BreedProcessor {
         herd,
         isDoubled,
       );
-      this.bank.theHerd.addAnimals(diceResult, -herdGrow);
-      herd.addAnimals(diceResult, herdGrow);
+      this.bank.theHerd.addAnimalsToHerd(diceResult, -herdGrow);
+      herd.addAnimalsToHerd(diceResult, herdGrow);
       return;
     }
     const herdGrow = this.calculateHerdGrow(diceResult, herd);
-    this.bank.theHerd.addAnimals(diceResult, -herdGrow);
-    herd.addAnimals(diceResult, herdGrow);
+    this.bank.theHerd.addAnimalsToHerd(diceResult, -herdGrow);
+    herd.addAnimalsToHerd(diceResult, herdGrow);
   }
 
   private returnToBank(predator: Wolf | Fox, herd: Herd): void {
     if (predator instanceof Fox) {
       if (herd.getAnimalNumber(AnimalNames.SMALL_DOG) > 0) {
-        this.bank.theHerd.addAnimals(AnimalNames.SMALL_DOG, 1);
+        this.bank.theHerd.addAnimalsToHerd(AnimalNames.SMALL_DOG, 1);
         return;
       }
       const quantity = herd.getAnimalNumber(AnimalNames.RABBIT);
-      this.bank.theHerd.addAnimals(AnimalNames.RABBIT, quantity);
+      this.bank.theHerd.addAnimalsToHerd(
+        AnimalNames.RABBIT,
+        quantity,
+      );
       return;
     }
     if (herd.getAnimalNumber(AnimalNames.BIG_DOG) > 0) {
-      this.bank.theHerd.addAnimals(AnimalNames.BIG_DOG, 1);
+      this.bank.theHerd.addAnimalsToHerd(AnimalNames.BIG_DOG, 1);
       return;
     }
     herd.theAnimals
@@ -90,7 +93,7 @@ export class BreedProcessor {
           animal.theName !== AnimalNames.HORSE,
       )
       .forEach(([animal, count]) =>
-        this.bank.theHerd.addAnimals(
+        this.bank.theHerd.addAnimalsToHerd(
           animal.theName as AnimalNames,
           count,
         ),

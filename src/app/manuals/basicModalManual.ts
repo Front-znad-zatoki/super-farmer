@@ -4,7 +4,7 @@ import { Button } from '../components/Button';
 import { ModalBasic } from '../components/ModalBasic';
 import { Render } from '../utils/Render';
 
-export function basicModalDemo() {
+export function basicModalDemo(): void {
   // MOCK FOR MODAL
   const handleModalClose = () => {
     //TODO: WRITE LOGIC
