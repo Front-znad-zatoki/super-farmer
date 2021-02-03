@@ -4,15 +4,7 @@ import { Player } from '../../Player';
 
 export class PlayersBoard {
   /* returns player's board with player's name, avatar and herd */
-  renderPlayersBoard(
-    playersChosenName: string,
-    playersChosenAvatarPath: string,
-    //(when will the color in Player) playersColor: string,
-  ): HTMLElement {
-    const player = new Player(
-      playersChosenName,
-      playersChosenAvatarPath,
-    );
+  renderPlayersBoard(player: Player): HTMLElement {
     const playersBoardContainer: HTMLElement = Render.elementFactory(
       'div',
       {
@@ -27,13 +19,13 @@ export class PlayersBoard {
       'h3',
       {
         className: 'players__data__name',
-        // style: `color:${playersColor}`,
+        style: player.theColor,
       },
-      playersChosenName,
+      player.theName,
     );
     const playerAvatar: HTMLElement = Render.elementFactory('img', {
       className: 'players__data__avatar',
-      src: playersChosenAvatarPath,
+      src: player.theAvatar,
     });
 
     const herdView: HTMLElement = Render.elementFactory('div', {
@@ -44,44 +36,25 @@ export class PlayersBoard {
       string,
       number,
     ][] = player.theHerd.theAnimals.map(([animal, count]) => [
-      animal.theName,
+      animal.theImagePath,
       count,
     ]);
     const herdImagesAndCounts: HTMLElement[][] = playerHerd.map(
-      ([nameElement, countElement]) => {
-        if (
-          nameElement === 'big dog' ||
-          nameElement === 'small dog'
-        ) {
-          const animalImg: HTMLElement = Render.elementFactory(
-            'img',
-            {
-              className: 'players__herd__img',
-              src: `../../../static/images/avatars/dog.png`,
-            },
-          );
-
-          const animalCount: HTMLElement = Render.elementFactory(
-            'div',
-            { className: 'players__herd__count' },
-            `x${countElement}`,
-          );
-
-          return [animalImg, animalCount];
-        }
+      ([pathElement, countElement]) => {
         const animalImg: HTMLElement = Render.elementFactory('img', {
           className: 'players__herd__img',
-          src: `../../../static/images/avatars/${nameElement}.png`,
+          src: pathElement,
         });
+
         const animalCount: HTMLElement = Render.elementFactory(
           'div',
           { className: 'players__herd__count' },
           `x${countElement}`,
         );
+
         return [animalImg, animalCount];
       },
     );
-
     Render.childrenInjector(
       herdView,
       ...flatten(herdImagesAndCounts),
