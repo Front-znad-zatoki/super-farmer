@@ -1,11 +1,12 @@
 import { AnimalNames } from '../Enums/AnimalNamesEnum';
 import { Player } from '../Player';
+import { PlayerPanel } from './components/PlayerPanel';
 import { Bank } from './logic/Bank';
 import { Render } from './utils/Render';
 import { ViewController } from './ViewController';
 
 export class GameView {
-  private playerPanel: any; // TODO: after merge #78 change to PlayerPanel
+  private playerPanel: PlayerPanel; // TODO: after merge #78 change to PlayerPanel
 
   constructor(private view: ViewController) {}
 
@@ -43,9 +44,8 @@ export class GameView {
   }
 
   private createPlayerPanel(player: Player): HTMLElement {
-    // this.playerPanel = new PlayerPanel(player, this);
-    // return this.playerPanel.createPlayerPanel()                       <== TODO: Uncomment after #78 will be merged
-    return Render.elementFactory('div', {}, JSON.stringify(player));
+    this.playerPanel = new PlayerPanel(player, this);
+    return this.playerPanel.createPlayerPanel();
   }
 
   private createEndGameButton() {
@@ -73,7 +73,7 @@ export class GameView {
   }
 
   displayRollResult(
-    diceResults: AnimalNames[],
+    diceResults: [AnimalNames, AnimalNames],
     playerGain: [AnimalNames, number][],
   ): void {
     this.playerPanel.displayRollResult(diceResults, playerGain);
