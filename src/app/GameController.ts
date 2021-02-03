@@ -3,14 +3,14 @@ import { Player } from '../Player';
 import { BreedProcessor } from './BreedProcessor';
 import { Bank } from './logic/Bank';
 import { Timer } from './Timer';
-import { View } from './View';
+import { ViewController } from './ViewController';
 
 export class GameController {
   private currentPlayer: Player | undefined;
   private player: Player | undefined;
   private timer: Timer;
   private breedProcessor: BreedProcessor;
-  constructor(private view: View) {
+  constructor(private view: ViewController) {
     this.timer = new Timer();
     this.breedProcessor = new BreedProcessor(new Bank());
   }

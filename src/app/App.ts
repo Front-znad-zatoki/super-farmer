@@ -1,5 +1,8 @@
+import { ViewController } from './ViewController';
+
 export class App {
-  init(): string {
-    return 'hello world';
+  init(): void {
+    const view = new ViewController();
+    view.displayMenuView();
   }
 }

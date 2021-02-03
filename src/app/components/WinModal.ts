@@ -1,5 +1,6 @@
-import { Player } from '~src/Player';
+import { Player } from '../../Player';
 import { Render } from '../utils/Render';
+import { ViewController } from '../ViewController';
 import { ModalBasic } from './ModalBasic';
 
 export class WinModal extends ModalBasic {
@@ -11,8 +12,11 @@ export class WinModal extends ModalBasic {
     ) as WinModal;
   }
 
-  addButton(): void {
-    const handleEnd = () => Render.removeElement('.modal');
+  addButton(view: ViewController): void {
+    const handleEnd = () => {
+      Render.removeElement('.modal');
+      view.displayMenuView();
+    };
     this.createAndAppendButtonsRow(
       'End game - back to menu',
       handleEnd,

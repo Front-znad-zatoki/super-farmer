@@ -1,6 +1,6 @@
 .page__container {
   width: 100vw;
-  height: 100vh;
+  height: calc(100vh - 2rem);
   text-align: center;
 }
 
@@ -49,6 +49,10 @@
 }
 
 .footer {
-  padding: 32px;
-  background-color: cadetblue;
+  margin: auto;
+  position: sticky;
+  bottom: 0;
+  width: 100vw;
+  text-align: center;
+  line-height: 2em;
 }
