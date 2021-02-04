@@ -1,11 +1,11 @@
 import { Player } from '../../Player';
 import { PlayerPanel } from '../components/PlayerPanel';
 import { Render } from '../utils/Render';
-import { View } from '../View';
+import { ViewController } from '../ViewController';
 
 export class PlayerPanelDemo {
   static playDemo(): void {
-    const view = new View();
+    const viewController = new ViewController();
     const player = new Player(
       'Misha',
       './static/images/avatars/sheep.png',
@@ -13,7 +13,10 @@ export class PlayerPanelDemo {
     );
     Render.render(
       '#sf-app',
-      new PlayerPanel(player, view).createPlayerPanel(),
+      new PlayerPanel(
+        player,
+        viewController.theGameView,
+      ).createPlayerPanel(),
     );
   }
 }

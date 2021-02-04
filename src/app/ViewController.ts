@@ -15,6 +15,10 @@ export class ViewController {
     this.gameView = new GameView(this);
   }
 
+  get theGameView(): GameView {
+    return this.gameView;
+  }
+
   displayMenuView(): void {
     this.menuView.displayMenu();
   }
