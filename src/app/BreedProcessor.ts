@@ -21,6 +21,7 @@ export class BreedProcessor {
     // TODO: CREATE PREDATORS INSTANCES (CLASS PREDATOR) BASED ON CONFIG FROM GAME
     predatorConfig: PredatorsConfigInterface[],
   ) {
+    console.log(predatorConfig);
     this.randomResultInterfaceWolf = new SecondDice();
     this.randomResultInterfaceFox = new FirstDice();
   }

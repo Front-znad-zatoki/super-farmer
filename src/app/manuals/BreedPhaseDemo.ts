@@ -1,6 +1,7 @@
 import { Player } from '../../Player';
 import { AnimalNames } from '../../Enums/AnimalNamesEnum';
 import { BreedProcessor } from '../BreedProcessor';
+import { mockPredatorConfig } from './mockPredatorConfig';
 
 export class BreedPhaseDemo {
   static playDemo(): void {
@@ -12,7 +13,7 @@ export class BreedPhaseDemo {
     bank.theHerd.addAnimalsToHerd(AnimalNames.HORSE, 4);
     bank.theHerd.addAnimalsToHerd(AnimalNames.SMALL_DOG, 4);
     bank.theHerd.addAnimalsToHerd(AnimalNames.BIG_DOG, 2);
-    const bp = new BreedProcessor(bank);
+    const bp = new BreedProcessor(bank, mockPredatorConfig);
     const player = new Player('player');
     for (let i = 0; i < 10; i++) {
       bp.processBreedPhase(player);
