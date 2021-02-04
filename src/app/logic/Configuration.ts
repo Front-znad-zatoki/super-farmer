@@ -3,6 +3,7 @@ import { PredatorsConfigInterface } from '../../Interfaces/PredatorsConfigInterf
 import { ProtectorsConfigInterface } from '../../Interfaces/ProtectorsConfigInterface';
 import { GameModes } from '../../Enums/GameModeEnums';
 import { GameConfigInterface } from '../../Interfaces/GameConfigInterface';
+import { AnimalNames } from '~src/Enums/AnimalNamesEnum';
 
 export class Configuration implements GameConfigInterface {
   protected _mode: GameModes;
@@ -33,7 +34,7 @@ export class Configuration implements GameConfigInterface {
     this._predatorsConfig = predatorsConfig;
     // this.dice = dice
   }
-  totalGameTimeInSeconds?: number | undefined;
+  totalGameTimeInSeconds?: number;
 
   set mode(newMode: GameModes) {
     this._mode = newMode;
@@ -47,7 +48,7 @@ export class Configuration implements GameConfigInterface {
   get roundTimeInSeconds(): number {
     return this.roundTimeInSeconds;
   }
-  //TODO: CREATE PLAYER CONFIG INTERFACE
+  //TODO: CREATE PLAYER CONFIG INTERFACE IF NECESSARY
   set playersConfig(
     newPlayersConfig: {
       name: string;
@@ -102,6 +103,19 @@ export class Configuration implements GameConfigInterface {
   }): void {
     this._playersConfig.concat(newPlayerConfig);
   }
+  removeLastPlayer(): void {
+    this._playersConfig.pop();
+  }
+  addNewAnimalToLivestock(
+    newAnimalConfig: LivestockConfigInterface,
+  ): void {
+    this._livestockConfig.concat(newAnimalConfig);
+  }
+  removeLivestockAnimal(animaname: AnimalNames): void {
+    this._livestockConfig.filter(
+      (animal) => animal.name !== animaname,
+    );
+  }
 
-  // TODO: ADD NEW LIVESTOCK, PREDATOR, PROTECTOR ETC.
+  // TODO: PREDATOR, PROTECTOR ETC WHEN GAME SETTINGS APPEAR.
 }
