@@ -3,9 +3,9 @@ import { GameModes } from '../../Enums/GameModeEnums';
 import { GameConfigInterface } from '../../Interfaces/GameConfigInterface';
 import { Player } from '../../Player';
 import { BreedProcessor } from '../BreedProcessor';
-import { Dice } from '../Dice';
-import { FirstDice } from '../FirstDice';
-import { SecondDice } from '../SecondDice';
+// import { Dice } from '../Dice';
+// import { FirstDice } from '../FirstDice';
+// import { SecondDice } from '../SecondDice';
 import { Timer } from '../Timer';
 import { Trade } from '../Trade';
 import { Bank } from './Bank';
@@ -23,7 +23,7 @@ export class Game {
   banksHerdConfig: HerdConfigInterface[];
   players: Player[];
   bank: Bank;
-  dice: Dice[];
+  // dice: Dice[];
   timer: Timer;
   breedProcessor: BreedProcessor;
   trade: Trade;
@@ -33,8 +33,8 @@ export class Game {
     playersConfig,
     livestockConfig,
     protectorsConfig,
-  }: // predatorsConfig,
-  GameConfigInterface = defaultGameConfiguration) {
+    predatorsConfig,
+  }: GameConfigInterface = defaultGameConfiguration) {
     this.mode = mode;
     this.roundTimeInSeconds = roundTimeInSeconds;
     this.playersConfig = playersConfig;
@@ -60,10 +60,13 @@ export class Game {
     this.bank = new Bank(this.banksHerdConfig);
     // TODO: GET DICE DATA FROM CONFIG AFTER/ IF DICE REFACTOR
     // TODO: CHECK IF NEEDED SINCE THEY ARE CALLED IN BREEDPROCESSOR
-    this.dice = [new FirstDice(), new SecondDice()];
+    // this.dice = [new FirstDice(), new SecondDice()];
     this.timer = new Timer(roundTimeInSeconds);
     // TO CHECK: SHOULD BREED PROCESSOR CREATE DICE INSTANCES?
-    this.breedProcessor = new BreedProcessor(this.bank);
+    this.breedProcessor = new BreedProcessor(
+      this.bank,
+      predatorsConfig,
+    );
     this.trade = new Trade(this.bank);
   }
 
@@ -79,9 +82,9 @@ export class Game {
     return this.bank;
   }
 
-  get theDice(): Dice[] {
-    return this.dice;
-  }
+  // get theDice(): Dice[] {
+  //   return this.dice;
+  // }
   get theTimer(): Timer {
     return this.theTimer;
   }

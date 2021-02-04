@@ -1,4 +1,4 @@
 export interface AttackHerdInterface {
-  // TODO: tweak when herd is ready
-  attackHerd(): string;
+  // TODO: DEFINE THE ACTION FOR ATTACK
+  attackHerd(): void;
 }

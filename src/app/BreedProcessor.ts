@@ -10,12 +10,17 @@ import { ConvertToAnimalObject } from './utils/ConvertToAnimalObject';
 import { add, divide, floor, min } from 'lodash';
 import { AnimalRoles } from '../Enums/AnimalRolesEnum';
 import { Bank } from './logic/Bank';
+import { PredatorsConfigInterface } from '~src/Interfaces/PredatorsConfigInterface';
 
 export class BreedProcessor {
   randomResultInterfaceWolf: GetRandomValue;
   randomResultInterfaceFox: GetRandomValue;
 
-  constructor(private bank: Bank) {
+  constructor(
+    private bank: Bank,
+    // TODO: CREATE PREDATORS INSTANCES (CLASS PREDATOR) BASED ON CONFIG FROM GAME
+    predatorConfig: PredatorsConfigInterface[],
+  ) {
     this.randomResultInterfaceWolf = new SecondDice();
     this.randomResultInterfaceFox = new FirstDice();
   }
