@@ -9,9 +9,11 @@ export class TradeModal extends EmptyModal {
   tradeForm: HTMLElement;
   playerView: HTMLElement;
   bankView: HTMLElement;
+  player: Player;
 
-  constructor(private trade: Trade, private player: Player) {
+  constructor(private trade: Trade, firstPlayer: Player) {
     super();
+    this.player = firstPlayer;
     this.playerView = Render.elementFactory('div', {
       className: 'trade__player-wrapper',
     });
@@ -36,24 +38,33 @@ export class TradeModal extends EmptyModal {
     this.modalContainer.appendChild(this.tradeForm);
   }
 
+  /**
+   * Creates TradeModal and returns it as HTMLElement.
+   */
   createModal(): HTMLElement {
     Render.childrenInjector(
       this.bankView,
       this.createHerdView(this.trade.thisBank, true),
     );
+    Render.childrenInjector(
+      this.playerView,
+      this.createHerdView(this.player),
+    );
     this.tradeForm.addEventListener('submit', this.handleSubmit);
     return this.modal;
   }
 
-  setPlayer(player: Player): void {
+  /**
+   * Sets next player and his herd in the TradeModal.
+   */
+  setNextPlayer(player: Player): void {
+    this.player = player;
     Render.removeAllChildren(this.playerView);
-    this.playerView.appendChild(this.createHerdView(player));
-  }
-
-  refreshHerdViews(player: Player, bank: Player): void {
-    this.setPlayer(player);
+    this.playerView.appendChild(this.createHerdView(this.player));
     Render.removeAllChildren(this.bankView);
-    this.bankView.appendChild(this.createHerdView(bank, true));
+    this.bankView.appendChild(
+      this.createHerdView(this.trade.thisBank, true),
+    );
   }
 
   private createHerdView(
@@ -88,35 +99,41 @@ export class TradeModal extends EmptyModal {
   ): HTMLElement[] {
     const animalsRows: HTMLElement[] = herd.theAnimals.reduce(
       (animalsElements: HTMLElement[], [animal, count]) => {
-        animalsElements.push(
-          Render.elementFactory(
-            'div',
-            { className: 'trade__row' },
+        if (count > 0) {
+          animalsElements.push(
             Render.elementFactory(
-              'label',
-              {
-                for: `${isBank ? 'bank' : 'player'}_${
+              'div',
+              { className: 'trade__row' },
+              Render.elementFactory(
+                'label',
+                {
+                  for: `${isBank ? 'bank' : 'player'}_${
+                    animal.theName
+                  }`,
+                },
+                `${animal.theName}: ${count}`,
+              ),
+              Render.elementFactory('input', {
+                type: 'number',
+                id: `${isBank ? 'bank' : 'player'}_${animal.theName}`,
+                name: `${isBank ? 'bank' : 'player'}_${
                   animal.theName
                 }`,
-              },
-              `${animal.theName}: ${count}`,
+                min: '0',
+                max: `${count}`,
+              }),
             ),
-            Render.elementFactory('input', {
-              type: 'number',
-              id: `${isBank ? 'bank' : 'player'}_${animal.theName}`,
-              name: `${isBank ? 'bank' : 'player'}_${animal.theName}`,
-              min: '0',
-              max: `${count}`,
-            }),
-          ),
-        );
+          );
+        }
         return animalsElements;
       },
       [],
     );
+
     return animalsRows;
   }
 
+  //TODO: refactor
   private formDataIntoTuples(formData: FormData): [Offer, Offer] {
     const offer: Offer[] = [];
     const target: Offer[] = [];
@@ -136,6 +153,8 @@ export class TradeModal extends EmptyModal {
         }
       }
     }
+
+    //TODO: add display warning when more or less than needed
     if (offer.length !== 1 || target.length !== 1) {
       console.log('Za dużo zwiemrzątek');
     }
@@ -147,7 +166,7 @@ export class TradeModal extends EmptyModal {
     const formData = new FormData(event.target as HTMLFormElement);
     const [offer, target] = this.formDataIntoTuples(formData);
     if (this.trade.processOffer(offer, this.player, target)) {
-      this.refreshHerdViews(this.player, this.trade.thisBank);
+      this.setNextPlayer(this.player);
     }
   };
 }
