@@ -1,0 +1,24 @@
+.trade {
+  display: grid;
+  height: 100%;
+  grid-template-columns: 2fr 1fr 2fr;
+
+  &__player-herd {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1em;
+  }
+
+  &__row {
+    display: grid;
+  }
+
+  &__player-heading {
+    padding-bottom: 1em;
+    text-transform: uppercase;
+  }
+
+  &__submit {
+    height: 4em;
+  }
+}
