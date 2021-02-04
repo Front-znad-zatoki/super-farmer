@@ -52,7 +52,7 @@ export class GameProcessor {
     offer: [AnimalNames, number],
     target: [AnimalNames, number],
   ): boolean {
-    if (this.game.theTimer.theTurnTimeLeft === 0) {
+    if (!this.hasTimeLeft()) {
       return false;
     }
     const tradeResult = this.game.theTrade.processOffer(
@@ -91,7 +91,7 @@ export class GameProcessor {
    * @returns the result of the current players roll
    */
   breed(): [AnimalNames, AnimalNames] | undefined {
-    if (this.game.theTimer.theTurnTimeLeft === 0) {
+    if (!this.hasTimeLeft()) {
       return;
     }
     const rollResult = this.game.theBreedProcessor.processBreedPhase(
@@ -106,5 +106,9 @@ export class GameProcessor {
   nextPlayer(): void {
     this.game.nextPlayer();
     this.game.theTimer.resetTurn();
+  }
+
+  private hasTimeLeft(): boolean {
+    return this.game.theTimer.theTurnTimeLeft === 0;
   }
 }
