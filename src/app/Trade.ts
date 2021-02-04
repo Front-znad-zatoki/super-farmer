@@ -4,6 +4,8 @@ import { multiply } from 'lodash';
 import { Player } from '../Player';
 import { Herd } from './logic/Herd';
 
+export type Offer = [AnimalNames, number];
+
 export class Trade {
   constructor(private bank: Player) {}
   get thisBank(): Player {
@@ -17,9 +19,9 @@ export class Trade {
    * @returns true if transaction will be processed, and false otherwise
    */
   processOffer(
-    offer: [AnimalNames, number],
+    offer: Offer,
     { theHerd: playerHerd }: Player,
-    target: [AnimalNames, number],
+    target: Offer,
   ): boolean {
     if (
       playerHerd.getAnimalNumber(offer[0]) < offer[1] ||
@@ -38,17 +40,14 @@ export class Trade {
       : this.disposeResult(offer, playerHerd, target);
   }
 
-  private calculateValue(offer: [AnimalNames, number]): number {
+  private calculateValue(offer: Offer): number {
     return multiply(
       ConvertToAnimalObject.convertToAnimalObject(offer[0]).theValue,
       offer[1],
     );
   }
 
-  private adjustOffer(
-    offer: [AnimalNames, number],
-    target: [AnimalNames, number],
-  ): void {
+  private adjustOffer(offer: Offer, target: Offer): void {
     offer[1] -= 1;
     if (this.calculateValue(offer) <= this.calculateValue(target)) {
       return;
