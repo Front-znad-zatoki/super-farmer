@@ -6,6 +6,9 @@ import { Herd } from './logic/Herd';
 
 export class Trade {
   constructor(private bank: Player) {}
+  get thisBank(): Player {
+    return this.bank;
+  }
   /**
    * Gets an offer from player and returns true or false if transaction can be made processed and process it if possible
    * @param offer accepts tuple with offer containing animal name and quantity to be sold
