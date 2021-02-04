@@ -1,8 +1,8 @@
 import { Render } from './utils/Render';
 import { AnimalNames } from '../Enums/AnimalNamesEnum';
 import { GameController } from './GameController';
-import { Game } from './logic/Game';
-import { defaultGameConfiguration } from './logic/defaultGameConfiguration';
+import { Player } from '../Player';
+import { WinModal } from './components/WinModal';
 
 export class View {
   renderMenuView(): void {
@@ -60,8 +60,6 @@ export class View {
           : playersChosenAvatarPath;
 
       Render.removeAllChildren('#sf-app');
-      new Game(defaultGameConfiguration);
-
       this.renderGameView(inputValue, playersChosenAvatarPath);
     };
     startGameButton.addEventListener('click', handleClick);
@@ -116,7 +114,7 @@ export class View {
     rollADiceButton.addEventListener('click', () => {
       const rollResult = gameController.breed();
       herdView.innerText = JSON.stringify(
-        gameController.theCurrentPlayer.theHerd.theAnimals.map(
+        gameController.theGame.theCurrentPlayer.theHerd.theAnimals.map(
           ([animal, count]) => [animal.theName, count],
         ),
       );
@@ -159,6 +157,13 @@ export class View {
 
   displayAlert(name: string): void {
     alert(`${name}'s turn has passed!`);
+  }
+
+  displayWinModal(player: Player): void {
+    const modal = new WinModal();
+    modal.create(player);
+    modal.addButton();
+    Render.render('#sf-app', modal.modal);
   }
 
   handleTrade(): void {
