@@ -1,14 +1,10 @@
 import { Render } from '../utils/Render';
 import { flatten } from 'lodash';
-import { Herd } from '.././logic/Herd';
+import { Player } from '../../Player';
 
 export class PlayersBoard {
   /* returns player's board with player's name, avatar and herd */
-  renderPlayersBoard(
-    playersChosenAvatarPath: string,
-    playersChosenName: string,
-    playersColor: string,
-  ): void {
+  renderPlayersBoard(player: Player): HTMLElement {
     const playersBoardContainer: HTMLElement = Render.elementFactory(
       'div',
       {
@@ -23,57 +19,42 @@ export class PlayersBoard {
       'h3',
       {
         className: 'players__data__name',
-        style: `color:${playersColor}`,
+        style: `color:${player.theColor}`,
       },
-      playersChosenName,
+      player.theName,
     );
     const playerAvatar: HTMLElement = Render.elementFactory('img', {
       className: 'players__data__avatar',
-      src: playersChosenAvatarPath,
+      src: player.theAvatar,
     });
-    const herd = new Herd();
 
     const herdView: HTMLElement = Render.elementFactory('div', {
       className: 'players__herd',
     });
 
-    const playerHerd = herd.theAnimals.map(([animal, count]) => [
-      animal.theName,
+    const playerHerd: [
+      string,
+      number,
+    ][] = player.theHerd.theAnimals.map(([animal, count]) => [
+      animal.theImagePath,
       count,
     ]);
-    const herdImagesAndCounts = playerHerd.map(
-      ([nameElement, countElement]) => {
-        if (
-          nameElement === 'big dog' ||
-          nameElement === 'small dog'
-        ) {
-          const animalImg = Render.elementFactory('img', {
-            className: 'players__herd__img',
-            src: `../../../static/images/avatars/dog.png`,
-          });
-
-          console.log(animalImg, countElement);
-          const animalCount = Render.elementFactory(
-            'div',
-            { className: 'players__herd__count' },
-            `x${countElement}`,
-          );
-
-          return [animalImg, animalCount];
-        }
-        const animalImg = Render.elementFactory('img', {
+    const herdImagesAndCounts: HTMLElement[][] = playerHerd.map(
+      ([pathElement, countElement]) => {
+        const animalImg: HTMLElement = Render.elementFactory('img', {
           className: 'players__herd__img',
-          src: `../../../static/images/avatars/${nameElement}.png`,
+          src: pathElement,
         });
-        const animalCount = Render.elementFactory(
+
+        const animalCount: HTMLElement = Render.elementFactory(
           'div',
           { className: 'players__herd__count' },
           `x${countElement}`,
         );
+
         return [animalImg, animalCount];
       },
     );
-
     Render.childrenInjector(
       herdView,
       ...flatten(herdImagesAndCounts),
@@ -89,6 +70,6 @@ export class PlayersBoard {
       playersDataPanel,
       herdView,
     );
-    Render.render('#sf-app', playersBoardContainer);
+    return playersBoardContainer;
   }
 }
