@@ -1,23 +1,19 @@
-import { Fox } from '../../Animals/Fox';
-import { Wolf } from '../../Animals/Wolf';
 import { Animal } from '../../Animals/Animal';
-import { BigDog } from '../../Animals/BigDog';
-import { Cow } from '../../Animals/Cow';
-import { Horse } from '../../Animals/Horse';
-import { Pig } from '../../Animals/Pig';
 import { Rabbit } from '../../Animals/Rabbit';
 import { Sheep } from '../../Animals/Sheep';
+import { Pig } from '../../Animals/Pig';
+import { Cow } from '../../Animals/Cow';
+import { Horse } from '../../Animals/Horse';
+import { Fox } from '../../Animals/Fox';
+import { Wolf } from '../../Animals/Wolf';
 import { SmallDog } from '../../Animals/SmallDog';
+import { BigDog } from '../../Animals/BigDog';
 import { AnimalNames } from '../../Enums/AnimalNamesEnum';
+import { Render } from './Render';
 
-export class ConvertToAnimalObject {
-  /**
-   * Method that creates animal object based on animal name
-   * @param animal takes AnimalName
-   * @returns Animal object with corresponding instace
-   */
-  static convertToAnimalObject(animal: AnimalNames): Animal {
-    switch (animal) {
+export class ConvertAnimalName {
+  static toAnimalObject(name: string): Animal {
+    switch (name) {
       case AnimalNames.RABBIT:
         return new Rabbit();
       case AnimalNames.SHEEP:
@@ -37,7 +33,16 @@ export class ConvertToAnimalObject {
       case AnimalNames.WOLF:
         return new Wolf();
       default:
-        throw Error(`Animal name is unknown: ${animal}`);
+        throw Error(`Animal name is unknown: ${name}`);
     }
+  }
+
+  static toHTMLElement(name: string, className: string): HTMLElement {
+    const animal = ConvertAnimalName.toAnimalObject(name);
+    return Render.elementFactory('img', {
+      className: className,
+      alt: animal.theName.toLowerCase(),
+      src: `${animal.theImagePath}`,
+    });
   }
 }

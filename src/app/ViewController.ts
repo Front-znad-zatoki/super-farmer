@@ -1,9 +1,10 @@
-import { MenuView } from './MenuView';
 import { GameView } from './GameView';
 import { Player } from '../Player';
 import { Bank } from './logic/Bank';
 import { Render } from './utils/Render';
 import { WinModal } from './components/WinModal';
+import { AnimalNames } from '~src/Enums/AnimalNamesEnum';
+import { MenuView } from './MenuView';
 
 export class ViewController {
   private menuView: MenuView;
@@ -49,6 +50,13 @@ export class ViewController {
 
   handleRoll(): void {
     // TODO: roll the dice call
+  }
+
+  updateRollResults(
+    diceResults: AnimalNames[],
+    playerGain: [AnimalNames, number][],
+  ): void {
+    this.gameView.displayRollResult(diceResults, playerGain);
   }
 
   handleTrade(): void {

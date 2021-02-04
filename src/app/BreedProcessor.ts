@@ -6,10 +6,10 @@ import { AnimalNames } from '../Enums/AnimalNamesEnum';
 import { Fox } from '../Animals/Fox';
 import { Wolf } from '../Animals/Wolf';
 import { Herd } from './logic/Herd';
-import { ConvertToAnimalObject } from './utils/ConvertToAnimalObject';
 import { add, divide, floor, min } from 'lodash';
 import { AnimalRoles } from '../Enums/AnimalRolesEnum';
 import { Bank } from './logic/Bank';
+import { ConvertAnimalName } from './utils/ConvertAnimalName';
 
 export class BreedProcessor {
   randomResultInterfaceWolf: GetRandomValue;
@@ -29,7 +29,7 @@ export class BreedProcessor {
       return [wolfDiceResult, foxDiceResult];
     }
     if (foxDiceResult === AnimalNames.FOX) {
-      const fox: Fox = ConvertToAnimalObject.convertToAnimalObject(
+      const fox: Fox = ConvertAnimalName.toAnimalObject(
         foxDiceResult,
       ) as Fox;
       this.returnToBank(fox, theHerd);
@@ -38,7 +38,7 @@ export class BreedProcessor {
       this.breedAnimals(foxDiceResult, theHerd);
     }
     if (wolfDiceResult === AnimalNames.WOLF) {
-      const wolf = ConvertToAnimalObject.convertToAnimalObject(
+      const wolf = ConvertAnimalName.toAnimalObject(
         wolfDiceResult,
       ) as Wolf;
       this.returnToBank(wolf, theHerd);

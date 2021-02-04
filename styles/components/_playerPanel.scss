@@ -44,6 +44,19 @@
   &__result {
     width: 30vw;
     padding: 0.5rem;
+    text-align: center;
+
+    &--dice {
+      margin-top: 3rem;
+    }
+
+    &--gain {
+      margin-top: 3rem;
+    }
+
+    &--container {
+      display: inline;
+    }
   }
 
   &__buttons {

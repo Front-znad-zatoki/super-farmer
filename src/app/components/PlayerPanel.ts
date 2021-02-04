@@ -3,7 +3,8 @@ import { Render } from '../utils/Render';
 import { flatten } from 'lodash';
 import { AnimalNames } from '../../Enums/AnimalNamesEnum';
 import { GameView } from '../GameView';
-import { time } from 'console';
+import { ConvertAnimalName } from '../utils/ConvertAnimalName';
+import { Animal } from '../../Animals/Animal';
 
 export class PlayerPanel {
   /**
@@ -13,6 +14,9 @@ export class PlayerPanel {
    */
   constructor(private player: Player, private view: GameView) {}
 
+  /**
+   * Creates player panel and returns it as HTMLElement
+   */
   createPlayerPanel(): HTMLElement {
     return Render.elementFactory(
       'div',
@@ -68,28 +72,26 @@ export class PlayerPanel {
     return Render.elementFactory(
       'div',
       { className: 'player-panel__herd' },
-      ...flatten(this.convertHerd()),
+      ...flatten(
+        this.convertAnimalsToHTML(this.player.theHerd.theAnimals),
+      ),
     );
   }
 
-  private convertHerd(): HTMLElement[] {
-    return this.player.theHerd.theAnimals.map(([animal, count]) => {
-      return Render.elementFactory(
+  private convertAnimalsToHTML(
+    animals: [Animal, number][],
+  ): HTMLElement[] {
+    return animals.map(([animal, count]) =>
+      Render.elementFactory(
         'div',
-        { className: 'resources' },
-        Render.elementFactory('img', {
-          className: 'player-panel__image',
-          alt: `${animal.theName}`,
-          src: `./static/images/avatars/${
-            animal.theName === AnimalNames.BIG_DOG ||
-            animal.theName === AnimalNames.SMALL_DOG
-              ? 'dog'
-              : animal.theName
-          }.png`,
-        }),
+        { className: 'player-panel__result--container' },
+        ConvertAnimalName.toHTMLElement(
+          animal.theName,
+          'player-panel__image',
+        ),
         `x${count}`,
-      );
-    });
+      ),
+    );
   }
 
   private createResultWindow(): HTMLElement {
@@ -114,9 +116,10 @@ export class PlayerPanel {
   private createDiceButton(): HTMLElement {
     const rollBtn = Render.elementFactory(
       'button',
-      { className: 'btn' },
+      { className: 'btn button' },
       'Roll the dice',
     );
+    // rollBtn.addEventListener('click', () => this.view.handleRoll());
     rollBtn.addEventListener('click', () => this.view.handleRoll());
     return rollBtn;
   }
@@ -124,55 +127,68 @@ export class PlayerPanel {
   private createExchangeButton(): HTMLElement {
     const tradeBtn = Render.elementFactory(
       'button',
-      { className: 'btn' },
+      { className: 'btn button' },
       'Exchange',
     );
     tradeBtn.addEventListener('click', () => this.view.handleTrade());
     return tradeBtn;
   }
 
+  /**
+   * Displays results of Dice throw
+   * @param diceResults Takes array of dice results
+   * @param playerGain Takes array of tuples containing players gain
+   */
   displayRollResult(
-    diceResults: [AnimalNames, AnimalNames],
+    diceResults: AnimalNames[],
     playerGain: [AnimalNames, number][],
   ): void {
     const diceResult = Render.elementFactory(
       'div',
       {},
-      Render.elementFactory('img', {
-        className: 'player-panel__image',
-        alt: `${diceResults[0].toLowerCase()}`,
-        src: `./static/images/avatars/${diceResults[0].toLowerCase()}.png`,
-      }),
-      Render.elementFactory('img', {
-        className: 'player-panel__image',
-        alt: `${diceResults[1].toLowerCase()}`,
-        src: `./static/images/avatars/${diceResults[1].toLowerCase()}.png`,
-      }),
-    );
-    const gain = playerGain.map(([name, count]) =>
       Render.elementFactory(
-        'img',
-        {
-          className: 'player-panel__image',
-          src: `./static/images/avatars/${name.toLowerCase()}.png`,
-          alt: `${name.toLowerCase()}`,
-        },
-        `x${count}`,
+        'h3',
+        { className: 'player-panel__result--dice' },
+        `Dice results:`,
+      ),
+      ...diceResults.map((name) =>
+        ConvertAnimalName.toHTMLElement(name, 'player-panel__image'),
       ),
     );
     Render.render(
       '.player-panel__result',
       diceResult,
-      Render.elementFactory('div', {}, ...gain),
+      Render.elementFactory(
+        'div',
+        {},
+        Render.elementFactory(
+          'h3',
+          { className: 'player-panel__result--gain' },
+          `${this.player.theName} gains:`,
+        ),
+        ...this.convertAnimalsToHTML(
+          playerGain.map(([animal, count]) => [
+            ConvertAnimalName.toAnimalObject(animal),
+            count,
+          ]),
+        ),
+      ),
     );
   }
 
+  /**
+   * Updates timer on player panel
+   * @param timeLeft accepts number value for time left
+   */
   updateTime(timeLeft: number): void {
     const timer = document.querySelector('#time-left') as HTMLElement;
     timer.innerText = `Time left: ${timeLeft} sec.`;
     timer.setAttribute('disabled', 'false');
   }
 
+  /**
+   * Hides timer if necessary
+   */
   hideTimer(): void {
     (document.querySelector(
       '#time-left',

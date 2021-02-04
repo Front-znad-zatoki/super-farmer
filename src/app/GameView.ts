@@ -6,7 +6,7 @@ import { Render } from './utils/Render';
 import { ViewController } from './ViewController';
 
 export class GameView {
-  private playerPanel: PlayerPanel; // TODO: after merge #78 change to PlayerPanel
+  private playerPanel: PlayerPanel;
 
   constructor(private view: ViewController) {}
 
@@ -73,7 +73,7 @@ export class GameView {
   }
 
   displayRollResult(
-    diceResults: [AnimalNames, AnimalNames],
+    diceResults: AnimalNames[],
     playerGain: [AnimalNames, number][],
   ): void {
     this.playerPanel.displayRollResult(diceResults, playerGain);

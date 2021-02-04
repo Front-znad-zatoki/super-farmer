@@ -17,7 +17,7 @@ export class MenuView {
     return Render.elementFactory(
       'div',
       {
-        className: 'page__container',
+        className: 'page__container menu-window',
       },
       this.createHeading(),
       this.createPageContent(),
@@ -30,13 +30,13 @@ export class MenuView {
       { className: 'menu-window__header' },
       Render.elementFactory(
         'h1',
-        { className: 'menu-window__heading' },
-        'TypeScript Game',
+        { className: 'menu-window__heading heading' },
+        'FARM TYCOON',
       ),
       Render.elementFactory(
-        'p',
-        { className: 'menu-window__description' },
-        'description',
+        'h2',
+        { className: 'menu-window__description text' },
+        'Breed animals, Do your math, Be quick, Plan ahead, Protect your herd, Predators are there to get your animals! Become a farmer and be the first to gather all the animals!',
       ),
     );
   }
@@ -59,9 +59,9 @@ export class MenuView {
       Render.elementFactory(
         'button',
         {
-          className: 'menu__button--rules',
+          className: 'menu__button--rules button',
         },
-        'rules',
+        'i',
       ),
     );
   }
@@ -69,7 +69,7 @@ export class MenuView {
   private createMenuButtons(): HTMLElement[] {
     const startGameButton = Render.elementFactory(
       'button',
-      { className: 'menu__button' },
+      { className: 'button' },
       'NEW GAME',
     );
     startGameButton.addEventListener('click', () =>
@@ -78,7 +78,7 @@ export class MenuView {
     const settingsButton = Render.elementFactory(
       'button',
       {
-        className: 'menu__button',
+        className: 'button',
       },
       'SETTINGS',
     );
@@ -86,7 +86,7 @@ export class MenuView {
     const authorsButton = Render.elementFactory(
       'button',
       {
-        className: 'menu__button--disabled',
+        className: 'button',
       },
       'AUTHORS',
     );

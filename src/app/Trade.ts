@@ -1,8 +1,8 @@
 import { AnimalNames } from '../Enums/AnimalNamesEnum';
-import { ConvertToAnimalObject } from './utils/ConvertToAnimalObject';
 import { multiply } from 'lodash';
 import { Player } from '../Player';
 import { Herd } from './logic/Herd';
+import { ConvertAnimalName } from './utils/ConvertAnimalName';
 
 export class Trade {
   constructor(private bank: Player) {}
@@ -37,7 +37,7 @@ export class Trade {
 
   private calculateValue(offer: [AnimalNames, number]): number {
     return multiply(
-      ConvertToAnimalObject.convertToAnimalObject(offer[0]).theValue,
+      ConvertAnimalName.toAnimalObject(offer[0]).theValue,
       offer[1],
     );
   }
