@@ -165,4 +165,12 @@ export class View {
     modal.addButton();
     Render.render('#sf-app', modal.modal);
   }
+
+  handleTrade(): void {
+    console.log('handle trade');
+  }
+
+  handleRoll(): void {
+    console.log('handle roll');
+  }
 }
