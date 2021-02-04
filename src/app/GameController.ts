@@ -1,65 +1,77 @@
-// import { time } from 'console';
 import { AnimalNames } from '../Enums/AnimalNamesEnum';
-import { Player } from '../Player';
-import { BreedProcessor } from './BreedProcessor';
-import { Bank } from './logic/Bank';
-import { Timer } from './Timer';
+import { GameProcessor } from './logic/GameProcessor';
 import { ViewController } from './ViewController';
+import { Game } from './logic/Game';
+import { defaultGameConfiguration } from './logic/defaultGameConfiguration';
 
 export class GameController {
-  private currentPlayer: Player | undefined;
-  private player: Player | undefined;
-  private timer: Timer;
-  private breedProcessor: BreedProcessor;
+  private game: Game;
+  private gameProcessor: GameProcessor;
   constructor(private view: ViewController) {
-    this.timer = new Timer();
-    this.breedProcessor = new BreedProcessor(new Bank());
+    this.game = new Game(defaultGameConfiguration);
+    this.gameProcessor = new GameProcessor(this.game);
   }
 
-  get theCurrentPlayer(): Player {
-    return this.currentPlayer as Player;
+  get theGame(): Game {
+    return this.game;
   }
 
-  get theTimer(): Timer {
-    return this.timer;
-  }
-
+  /**
+   * Starts the turn for the current player.
+   * Displays alert when the time is over.
+   * Updates the remaining time on the View.
+   */
   startTurn(): void {
-    this.timer.countdown();
-    const turnTimer = setInterval(() => {
-      if (!this.timer.running) {
-        clearInterval(turnTimer);
-        if (Math.ceil(this.timer.theTurnTimeLeft) === 0) {
-          this.view.displayAlert(
-            this.currentPlayer?.theName as string,
-          );
-          this.nextPlayer();
-          this.startTurn();
-        }
-      }
-      this.view.updateRemainingTime(
-        Math.round(this.timer.theTurnTimeLeft),
-      );
-    }, 10);
-  }
-
-  breed(): [AnimalNames, AnimalNames] | undefined {
-    if (this.timer.theTurnTimeLeft === 0) {
-      return;
-    }
-    const rollResult = this.breedProcessor.processBreedPhase(
-      this.currentPlayer as Player,
+    this.gameProcessor.startTurn(
+      (currentPlayer) => {
+        // this.view.displayAlert(currentPlayer?.theName as string);
+      },
+      (remainingTime) => {
+        this.view.updateRemainingTime(remainingTime);
+      },
     );
-    return rollResult;
   }
 
   stopTurn(): void {
-    this.timer.resetTurn();
+    this.gameProcessor.stopTurn();
   }
 
+  /**
+   * Executes trade proposed by the player and checks win condition.
+   * If player wins the game after the trade, stops the timer and tells the View to display the WinModal.
+   * @param offer made by the player
+   * @param target desired by the player
+   * @returns true if the trade was sucessful, false otherwise
+   */
+  trade(
+    offer: [AnimalNames, number],
+    target: [AnimalNames, number],
+  ): boolean {
+    const tradeResult = this.gameProcessor.trade(offer, target);
+    if (this.gameProcessor.checkWin()) {
+      this.gameProcessor.stopTurn();
+      this.view.displayWinModal(this.game.theCurrentPlayer);
+    }
+    return tradeResult;
+  }
+
+  /**
+   * Rolls the dice for the player and updates their Herd.
+   * If player wins the game after the breed, stops the timer and tells the View to display the WinModal.
+   */
+  breed(): [AnimalNames, AnimalNames] | undefined {
+    const diceResult = this.gameProcessor.breed();
+    if (this.gameProcessor.checkWin()) {
+      this.gameProcessor.stopTurn();
+      this.view.displayWinModal(this.game.theCurrentPlayer);
+    }
+    return diceResult;
+  }
+
+  /**
+   * Sets the current player to the next player in order.
+   */
   nextPlayer(): void {
-    //TODO multiplayer logic
-    this.currentPlayer = this.player;
-    this.timer.resetTurn();
+    this.gameProcessor.nextPlayer();
   }
 }

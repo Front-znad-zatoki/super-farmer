@@ -3,7 +3,7 @@ import { Player } from '../Player';
 import { Bank } from './logic/Bank';
 import { Render } from './utils/Render';
 import { WinModal } from './components/WinModal';
-import { AnimalNames } from '~src/Enums/AnimalNamesEnum';
+import { AnimalNames } from '../Enums/AnimalNamesEnum';
 import { MenuView } from './MenuView';
 
 export class ViewController {
@@ -67,14 +67,8 @@ export class ViewController {
     // TODO: exchange call
   }
 
-  displayWinModal(): void {
-    // TODO: win modal with correct data
+  displayWinModal(player: Player): void {
     const winModal = new WinModal();
-    const player = new Player(
-      'Misha',
-      './static/images/avatars/dog.png',
-      '#55AF83',
-    );
     winModal.create(player);
     winModal.addButton(this);
     Render.render('body', winModal.modal);
