@@ -88,7 +88,7 @@ export const defaultGameConfiguration: GameConfigInterface = {
     {
       name: AnimalNames.BIG_DOG,
       tradeValue: 36,
-      path: '/static/images/avatars/dog.png',
+      path: '/static/images/avatars/dog.png', // TODO: CHANGE TO BIG/SMALL DOG
       role: AnimalRoles.GUARDIAN,
       playersInitialStock: 0,
       bankInitialStock: 2,

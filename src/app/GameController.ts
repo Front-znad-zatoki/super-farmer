@@ -1,3 +1,4 @@
+// import { time } from 'console';
 import { AnimalNames } from '../Enums/AnimalNamesEnum';
 import { Player } from '../Player';
 import { BreedProcessor } from './BreedProcessor';
