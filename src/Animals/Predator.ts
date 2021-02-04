@@ -1,6 +1,6 @@
-import { AnimalNames } from '~src/Enums/AnimalNamesEnum';
-import { AnimalRoles } from '~src/Enums/AnimalRolesEnum';
-import { AttackHerdInterface } from '~src/Interfaces/AttackHerdInterface';
+import { AnimalNames } from '../Enums/AnimalNamesEnum';
+import { AnimalRoles } from '../Enums/AnimalRolesEnum';
+import { AttackHerdInterface } from '../Interfaces/AttackHerdInterface';
 import { Animal } from './Animal';
 
 export class Predator extends Animal implements AttackHerdInterface {

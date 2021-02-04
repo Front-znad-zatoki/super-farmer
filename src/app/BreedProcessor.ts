@@ -10,7 +10,7 @@ import { ConvertToAnimalObject } from './utils/ConvertToAnimalObject';
 import { add, divide, floor, min } from 'lodash';
 import { AnimalRoles } from '../Enums/AnimalRolesEnum';
 import { Bank } from './logic/Bank';
-import { PredatorsConfigInterface } from '~src/Interfaces/PredatorsConfigInterface';
+import { PredatorsConfigInterface } from '../Interfaces/PredatorsConfigInterface';
 
 export class BreedProcessor {
   randomResultInterfaceWolf: GetRandomValue;

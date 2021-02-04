@@ -5,5 +5,6 @@ export interface PredatorsConfigInterface {
   path: string;
   kills: AnimalNames[];
   isChasedAwayBy: AnimalNames[];
+  exclamation: string;
   dice?: { diceNumber: number; probability: number }[];
 }
