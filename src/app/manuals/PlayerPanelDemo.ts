@@ -11,12 +11,8 @@ export class PlayerPanelDemo {
       './static/images/avatars/sheep.png',
       '#44AF95',
     );
-    Render.render(
-      '#sf-app',
-      new PlayerPanel(
-        player,
-        viewController.theGameView,
-      ).createPlayerPanel(),
-    );
+    const pp = new PlayerPanel(viewController.theGameView);
+    pp.setPlayer(player);
+    Render.render('#sf-app', pp.createPlayerPanel());
   }
 }
