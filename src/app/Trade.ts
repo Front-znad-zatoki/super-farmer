@@ -46,13 +46,8 @@ export class Trade {
 
   private calculateValue([animal, count]: Offer): number {
     return multiply(
-<<<<<<< HEAD
-      ConvertAnimalName.toAnimalObject(offer[0]).theValue,
-      offer[1],
-=======
-      ConvertToAnimalObject.convertToAnimalObject(animal).theValue,
+      ConvertAnimalName.toAnimalObject(animal).theValue,
       count,
->>>>>>> develop
     );
   }
 
