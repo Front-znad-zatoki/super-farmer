@@ -33,7 +33,11 @@ export class GameView {
         'div',
         { style: 'height: 3rem;' },
         endGameButton,
-        bankPanel,
+        Render.elementFactory(
+          'div',
+          { id: 'bank-board', style: 'display: inline;' },
+          bankPanel,
+        ),
       ),
     );
   }
@@ -132,7 +136,7 @@ export class GameView {
 
   refreshHerd(bank: Bank): void {
     this.playerPanel.refreshHerd();
-    Render.removeElement('#bank-board');
-    Render.render('#sf-app', this.createBankPanel(bank));
+    Render.removeAllChildren('#bank-board');
+    Render.render('#bank-board', this.createBankPanel(bank));
   }
 }

@@ -5,7 +5,6 @@ export class BankBoard {
   /* returns Bank board with animals and counts */
   renderBankBoard(bank: Bank): HTMLElement {
     const bankView = Render.elementFactory('div', {
-      id: 'bank-board',
       className: 'bank__board',
     });
     const bankText = Render.elementFactory(
