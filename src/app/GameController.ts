@@ -3,6 +3,7 @@ import { GameProcessor } from './logic/GameProcessor';
 import { ViewController } from './ViewController';
 import { Game } from './logic/Game';
 import { defaultGameConfiguration } from './logic/defaultGameConfiguration';
+import { Bank } from './logic/Bank';
 
 export class GameController {
   private game: Game;
@@ -100,5 +101,9 @@ export class GameController {
 
   resumeTurn(): void {
     this.gameProcessor.resumeGame();
+  }
+
+  getBank(): Bank {
+    return this.game.theBank;
   }
 }

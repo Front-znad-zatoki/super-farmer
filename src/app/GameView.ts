@@ -1,5 +1,6 @@
 import { AnimalNames } from '../Enums/AnimalNamesEnum';
 import { Player } from '../Player';
+import { BankBoard } from './components/BankBoard';
 import { PlayerPanel } from './components/PlayerPanel';
 import { PlayersBoard } from './components/PlayersBoard';
 import { Bank } from './logic/Bank';
@@ -28,8 +29,12 @@ export class GameView {
       '#sf-app',
       playersBoards,
       playerPanel,
-      endGameButton,
-      bankPanel,
+      Render.elementFactory(
+        'div',
+        { style: 'height: 3rem;' },
+        endGameButton,
+        bankPanel,
+      ),
     );
   }
 
@@ -58,7 +63,7 @@ export class GameView {
   private createEndGameButton() {
     const endGameButton = Render.elementFactory(
       'button',
-      {},
+      { className: 'button endgame' },
       'End game',
     );
     endGameButton.addEventListener('click', () => {
@@ -68,7 +73,7 @@ export class GameView {
   }
 
   private createBankPanel(bank: Bank): HTMLElement {
-    return Render.elementFactory('div', {}, JSON.stringify(bank)); // TODO: Use bank element from task #56
+    return new BankBoard().renderBankBoard(bank);
   }
 
   private setBackground(player: Player): void {
@@ -125,7 +130,9 @@ export class GameView {
     this.playerPanel.disableTrade();
   }
 
-  refreshHerd(): void {
+  refreshHerd(bank: Bank): void {
     this.playerPanel.refreshHerd();
+    Render.removeElement('#bank-board');
+    Render.render('#sf-app', this.createBankPanel(bank));
   }
 }

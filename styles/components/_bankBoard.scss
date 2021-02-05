@@ -1,11 +1,20 @@
 .bank__board {
-  display: flex;
+  display: inline-flex;
+  width: 90vw;
+  align-content: space-around;
   align-items: center;
-  &__img {
-    width: 100px;
-    margin-left: 50px;
+  justify-content: space-around;
+  background-color: wheat;
+
+  &__container {
   }
-  &__count {
-    font-size: 30px;
+
+  &__text {
+    display: inline;
+    font-weight: 700;
+  }
+
+  &__img {
+    height: 3rem;
   }
 }

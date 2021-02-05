@@ -118,6 +118,6 @@ export class ViewController {
   }
 
   refreshHerd(): void {
-    this.gameView.refreshHerd();
+    this.gameView.refreshHerd(this.gameController?.getBank() as Bank);
   }
 }

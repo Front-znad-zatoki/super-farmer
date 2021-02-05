@@ -1,35 +1,31 @@
 import { Render } from '../utils/Render';
 import { Bank } from '../logic/Bank';
-import { flatten } from 'lodash';
+import { ConvertAnimalName } from '../utils/ConvertAnimalName';
 export class BankBoard {
   /* returns Bank board with animals and counts */
   renderBankBoard(bank: Bank): HTMLElement {
-    const bankView: HTMLElement = Render.elementFactory('div', {
+    const bankView = Render.elementFactory('div', {
+      id: 'bank-board',
       className: 'bank__board',
     });
-    const bankHerd = bank.theHerd.theAnimals.map(
-      ([animal, count]) => [animal.theImagePath, count],
+    const bankText = Render.elementFactory(
+      'div',
+      { className: 'bank__board__text' },
+      `BANK:`,
     );
-    const bankImagesAndCounts: HTMLElement[][] = bankHerd.map(
-      ([pathElement, countElement]) => {
-        const animalImg: HTMLElement = Render.elementFactory('img', {
-          className: 'bank__board__img',
-          src: `${pathElement}`,
-        });
-        const animalCount: HTMLElement = Render.elementFactory(
-          'div',
-          { className: 'bank__board__count' },
-          `x${countElement}`,
-        );
-
-        return [animalImg, animalCount];
-      },
+    const bankHerd = bank.theHerd.theAnimals.map(([animal, count]) =>
+      Render.elementFactory(
+        'div',
+        { className: 'bank__board__container' },
+        ConvertAnimalName.toHTMLElement(
+          animal.theName,
+          'bank__board__img',
+        ),
+        `x${count}`,
+      ),
     );
 
-    Render.childrenInjector(
-      bankView,
-      ...flatten(bankImagesAndCounts),
-    );
+    Render.childrenInjector(bankView, bankText, ...bankHerd);
     return bankView;
   }
 }
