@@ -75,11 +75,15 @@ export class TradeModal extends EmptyModal {
     this.player = player;
     Render.removeAllChildren(this.playerView);
     this.playerView.appendChild(this.createHerdView(this.player));
+    this.updateBank();
+    this.showModal();
+  }
+
+  private updateBank(): void {
     Render.removeAllChildren(this.bankView);
     this.bankView.appendChild(
       this.createHerdView(this.trade.thisBank, true),
     );
-    this.showModal();
   }
 
   private createHerdView(
