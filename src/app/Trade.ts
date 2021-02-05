@@ -59,9 +59,9 @@ export class Trade {
    * updates players and banks herd
    */
   private disposeResult(
-    [animalSold, quantitySold]: [AnimalNames, number],
+    [animalSold, quantitySold]: Offer,
     playerHerd: Herd,
-    [animalBought, quantityBought]: [AnimalNames, number],
+    [animalBought, quantityBought]: Offer,
   ): boolean {
     playerHerd.addAnimalsToHerd(animalSold, -quantitySold);
     playerHerd.addAnimalsToHerd(animalBought, quantityBought);
