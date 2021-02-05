@@ -5,7 +5,7 @@ export class BankBoard {
   /* returns Bank board with animals and counts */
   renderBankBoard(bank: Bank): HTMLElement {
     const bankView: HTMLElement = Render.elementFactory('div', {
-      className: 'bank',
+      className: 'bank__board',
     });
     const bankHerd = bank.theHerd.theAnimals.map(
       ([animal, count]) => [animal.theImagePath, count],
@@ -13,12 +13,12 @@ export class BankBoard {
     const bankImagesAndCounts: HTMLElement[][] = bankHerd.map(
       ([pathElement, countElement]) => {
         const animalImg: HTMLElement = Render.elementFactory('img', {
-          className: 'bank__img',
+          className: 'bank__board__img',
           src: `${pathElement}`,
         });
         const animalCount: HTMLElement = Render.elementFactory(
           'div',
-          { className: 'bank__count' },
+          { className: 'bank__board__count' },
           `x${countElement}`,
         );
 
