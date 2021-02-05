@@ -10,6 +10,7 @@ export class TradeModal extends EmptyModal {
   playerView: HTMLElement;
   bankView: HTMLElement;
   warning: HTMLElement;
+  backButton: HTMLElement;
   player: Player;
 
   constructor(private trade: Trade, firstPlayer: Player) {
@@ -39,10 +40,12 @@ export class TradeModal extends EmptyModal {
     this.warning = Render.elementFactory('p', {
       className: 'warning',
     });
+    this.backButton = Render.elementFactory('button', {}, 'back');
     Render.childrenInjector(
       this.modalContainer,
       this.tradeForm,
       this.warning,
+      this.backButton,
     );
   }
 
@@ -61,6 +64,7 @@ export class TradeModal extends EmptyModal {
     this.tradeForm.addEventListener('submit', this.handleSubmit);
     this.modal.addEventListener('keydown', this.clearWarning);
     this.modal.addEventListener('click', this.clearWarning);
+    this.backButton.addEventListener('click', () => this.hideModal());
     return this.modal;
   }
 
@@ -171,7 +175,6 @@ export class TradeModal extends EmptyModal {
       const [[offeredAnimal]] = offer;
       const [[targetAnimal]] = target;
       if (this.trade.processOffer(offer[0], this.player, target[0])) {
-        console.log('poszło');
         return true;
       }
       this.displayWarning(
