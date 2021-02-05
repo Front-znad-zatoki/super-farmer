@@ -1,4 +1,4 @@
-import { ModeModal } from '../ModeModal';
+import { ModeModal } from '../components/ModeModal';
 import { Render } from '../utils/Render';
 
 export function ModeModalDemo() {

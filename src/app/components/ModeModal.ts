@@ -1,7 +1,7 @@
 //     Add  ModeModalDemo(); in App.ts to see result
-import { Button } from './components/Button';
-import { ModalBasic } from './components/ModalBasic';
-import { Render } from './utils/Render';
+import { Button } from './Button';
+import { ModalBasic } from './ModalBasic';
+import { Render } from '../utils/Render';
 
 export class ModeModal extends ModalBasic {
   static createModeModal(): HTMLElement {
