@@ -31,8 +31,6 @@ export class TradeModalDemo {
     player2.theHerd.addAnimalsToHerd(AnimalNames.COW, 1);
     player2.theHerd.addAnimalsToHerd(AnimalNames.HORSE, 1);
 
-    setTimeout(() => modal.setNextPlayer(player2), 15000);
-
     const player3 = new Player(
       'Eustachy',
       './static/images/avatars/dog.png',
@@ -43,6 +41,9 @@ export class TradeModalDemo {
     player3.theHerd.addAnimalsToHerd(AnimalNames.COW, 2);
     player3.theHerd.addAnimalsToHerd(AnimalNames.HORSE, 0);
 
-    setTimeout(() => modal.setNextPlayer(player3), 15000);
+    setTimeout(() => {
+      modal.setNextPlayer(player2);
+      setTimeout(() => modal.setNextPlayer(player3), 15000);
+    }, 15000);
   }
 }
