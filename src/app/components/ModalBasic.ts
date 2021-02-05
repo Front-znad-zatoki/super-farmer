@@ -10,11 +10,11 @@ export class ModalBasic extends EmptyModal {
    * @param {HTMLElement} modalContent Content of modal to render below heading and description.
    * @return {ModalBasic} The modal object.
    */
-  renderBasicModal(
+  protected renderBasicModal(
     heading: string,
     text: string,
     modalContent?: HTMLElement,
-  ): ModalBasic {
+  ): void {
     const modalHeader = Render.elementFactory(
       'h2',
       { className: 'modal__heading' },
@@ -33,7 +33,6 @@ export class ModalBasic extends EmptyModal {
       modalText,
       modalContent ? modalContent : '',
     );
-    return this;
   }
 
   /**
@@ -41,9 +40,8 @@ export class ModalBasic extends EmptyModal {
    * @param { string | HTMLElement } content Content of modal to render below heading and description.
    * @return {ModalBasic} The model's object.
    */
-  addModalContent(content: string | HTMLElement): ModalBasic {
+  protected addModalContent(content: string | HTMLElement): void {
     Render.childrenInjector(this.modalContainer, content);
-    return this;
   }
 
   /**
@@ -54,12 +52,12 @@ export class ModalBasic extends EmptyModal {
    * @param {function} rigthButtonAction Function to be added to the click listener of the right button.
    * @return {ModalBasic} The model's object.
    */
-  createAndAppendButtonsRow(
+  protected createAndAppendButtonsRow(
     leftButtonText: string,
     leftButtonAction: () => void,
     rightButtonText?: string,
     rightButtonAction?: () => void,
-  ): ModalBasic {
+  ): void {
     const leftButton: HTMLElement = new Button().create(
       leftButtonText,
     );
@@ -79,6 +77,5 @@ export class ModalBasic extends EmptyModal {
       rightButton ? rightButton : '',
     );
     Render.childrenInjector(this.modalContainer, buttonsRow);
-    return this;
   }
 }

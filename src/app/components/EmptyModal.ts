@@ -1,9 +1,7 @@
 import { Render } from '../utils/Render';
-import { pull } from 'lodash';
-
 export abstract class EmptyModal {
-  modal: HTMLElement;
-  modalContainer: HTMLElement;
+  protected modal: HTMLElement;
+  protected modalContainer: HTMLElement;
   constructor() {
     this.modalContainer = Render.elementFactory('div', {
       className: 'modal__container',
