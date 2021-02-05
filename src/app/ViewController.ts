@@ -6,11 +6,14 @@ import { WinModal } from './components/WinModal';
 import { MenuView } from './MenuView';
 import { GameController } from './GameController';
 import { RollResult } from './BreedProcessor';
+import { Trade } from './Trade';
+import { TradeModal } from './components/TradeModal';
 
 export class ViewController {
   private menuView: MenuView;
   private gameView: GameView;
   private gameController: GameController | undefined;
+  private tradeModal: TradeModal | undefined;
 
   constructor() {
     this.menuView = new MenuView(this);
@@ -57,7 +60,7 @@ export class ViewController {
   }
 
   handleTrade(): void {
-    // TODO: exchange call
+    this.gameController?.startTrade();
   }
 
   displayWinModal(player: Player): void {
@@ -75,8 +78,13 @@ export class ViewController {
     // TODO: display rules
   }
 
-  displayTradeModal(): void {
-    // TODO: display trade
+  displayTradeModal(player: Player, trade: Trade): void {
+    if (this.tradeModal) {
+      this.tradeModal.setNextPlayer(player);
+    } else {
+      this.tradeModal = new TradeModal(trade, player, this);
+      Render.render('body', this.tradeModal.createModal());
+    }
   }
 
   displaySettingsModal(): void {
@@ -99,5 +107,13 @@ export class ViewController {
 
   pauseTurn(): void {
     this.gameController?.pauseTurn();
+  }
+
+  runTimer(): void {
+    this.gameController?.resumeTurn();
+  }
+
+  disableTrade(): void {
+    this.gameView.disableTrade();
   }
 }

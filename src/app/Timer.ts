@@ -2,6 +2,7 @@ export class Timer {
   private turnTimeLeft: number;
   private isRunning = false;
   private gameEnded = true;
+  private gamePaused = false;
 
   constructor(private maxTurnTime = 15) {
     this.turnTimeLeft = this.maxTurnTime;
@@ -27,7 +28,9 @@ export class Timer {
         clearInterval(countdownInterval);
         this.isRunning = false;
       }
-      this.reduceTime();
+      if (!this.gamePaused) {
+        this.reduceTime();
+      }
     }, 10);
   }
 
@@ -36,7 +39,11 @@ export class Timer {
   }
 
   pauseTime(): void {
-    this.isRunning = false;
+    this.gamePaused = true;
+  }
+
+  resumeTime(): void {
+    this.gamePaused = false;
   }
 
   resetTurn(): void {

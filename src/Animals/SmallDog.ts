@@ -34,8 +34,6 @@ export class SmallDog extends Animal implements ProtectHerdInterface {
       {
         id: id,
         className: 'exclamation',
-        // style:
-        // 'color: green; font-size: 28px; font-weight: bold; border: 5px dotted red; margin: 10px; padding: 10px;',
       },
       exclamation,
     );
@@ -45,6 +43,6 @@ export class SmallDog extends Animal implements ProtectHerdInterface {
       console.log(err.message);
     }
 
-    setTimeout(() => Render.removeElement(`#${id}`), 6000);
+    // setTimeout(() => Render.removeElement(`#${id}`), 6000);
   }
 }

@@ -120,4 +120,8 @@ export class GameView {
   pauseTurn(): void {
     this.view.pauseTurn();
   }
+
+  disableTrade(): void {
+    this.playerPanel.disableTrade();
+  }
 }

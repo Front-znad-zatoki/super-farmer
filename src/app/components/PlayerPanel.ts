@@ -147,7 +147,10 @@ export class PlayerPanel {
   private createExchangeButton(): HTMLElement {
     const tradeBtn = Render.elementFactory(
       'button',
-      { className: 'btn button' },
+      {
+        id: 'exchange',
+        className: 'btn button',
+      },
       'Exchange',
     );
     tradeBtn.addEventListener('click', () => this.view.handleTrade());
@@ -221,6 +224,13 @@ export class PlayerPanel {
         { className: 'exclamation' },
         `${this.player.theName}'s turn has passed!`,
       ),
+    );
+  }
+
+  disableTrade(): void {
+    (document.querySelector('#exchange') as HTMLElement).setAttribute(
+      'disabled',
+      'true',
     );
   }
 }

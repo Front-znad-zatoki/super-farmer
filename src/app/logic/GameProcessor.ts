@@ -39,6 +39,10 @@ export class GameProcessor {
     this.game.theTimer.pauseTime();
   }
 
+  resumeGame(): void {
+    this.game.theTimer.resumeTime();
+  }
+
   /**
    * Stops the timer for the current player.
    */

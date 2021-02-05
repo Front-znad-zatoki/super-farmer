@@ -89,4 +89,16 @@ export class GameController {
   quitGame(): void {
     this.gameProcessor.quitGame();
   }
+
+  startTrade(): void {
+    this.pauseTurn();
+    this.view.displayTradeModal(
+      this.game.theCurrentPlayer,
+      this.game.theTrade,
+    );
+  }
+
+  resumeTurn(): void {
+    this.gameProcessor.resumeGame();
+  }
 }

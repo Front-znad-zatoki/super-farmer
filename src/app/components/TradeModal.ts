@@ -1,8 +1,9 @@
-import { AnimalNames } from '~src/Enums/AnimalNamesEnum';
-import { Player } from '~src/Player';
+import { AnimalNames } from '../../Enums/AnimalNamesEnum';
+import { Player } from '../../Player';
 import { Herd } from '../logic/Herd';
 import { Offer, Trade } from '../Trade';
 import { Render } from '../utils/Render';
+import { ViewController } from '../ViewController';
 import { EmptyModal } from './EmptyModal';
 
 export class TradeModal extends EmptyModal {
@@ -13,7 +14,11 @@ export class TradeModal extends EmptyModal {
   backButton: HTMLElement;
   player: Player;
 
-  constructor(private trade: Trade, firstPlayer: Player) {
+  constructor(
+    private trade: Trade,
+    firstPlayer: Player,
+    private view: ViewController,
+  ) {
     super();
     this.player = firstPlayer;
     this.playerView = Render.elementFactory('div', {
@@ -64,7 +69,10 @@ export class TradeModal extends EmptyModal {
     this.tradeForm.addEventListener('submit', this.handleSubmit);
     this.modal.addEventListener('keydown', this.clearWarning);
     this.modal.addEventListener('click', this.clearWarning);
-    this.backButton.addEventListener('click', () => this.hideModal());
+    this.backButton.addEventListener('click', () => {
+      this.hideModal();
+      this.view.runTimer();
+    });
     return this.modal;
   }
 
@@ -211,6 +219,8 @@ export class TradeModal extends EmptyModal {
     const data = this.formDataIntoTuples(formData);
     if (this.processTrade(data)) {
       this.hideModal();
+      this.view.runTimer();
+      this.view.disableTrade();
     }
   };
 
