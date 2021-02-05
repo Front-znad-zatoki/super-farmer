@@ -75,6 +75,7 @@ export class TradeModal extends EmptyModal {
     this.bankView.appendChild(
       this.createHerdView(this.trade.thisBank, true),
     );
+    this.showModal();
   }
 
   private createHerdView(
@@ -202,7 +203,7 @@ export class TradeModal extends EmptyModal {
     const formData = new FormData(event.target as HTMLFormElement);
     const data = this.formDataIntoTuples(formData);
     if (this.processTrade(data)) {
-      this.setNextPlayer(this.player);
+      this.hideModal();
     }
   };
 
