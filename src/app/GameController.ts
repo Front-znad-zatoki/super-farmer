@@ -9,7 +9,7 @@ export class GameController {
   private gameProcessor: GameProcessor;
   constructor(private view: ViewController) {
     this.game = new Game(defaultGameConfiguration);
-    this.gameProcessor = new GameProcessor(this.game);
+    this.gameProcessor = new GameProcessor(this.game, this);
   }
 
   get theGame(): Game {
@@ -22,18 +22,19 @@ export class GameController {
    * Updates the remaining time on the View.
    */
   startTurn(): void {
-    this.gameProcessor.startTurn(
-      (currentPlayer) => {
-        // this.view.displayAlert(currentPlayer?.theName as string);
-      },
-      (remainingTime) => {
-        this.view.updateRemainingTime(remainingTime);
-      },
-    );
+    this.gameProcessor.startTurn();
   }
 
   stopTurn(): void {
     this.gameProcessor.stopTurn();
+  }
+
+  pauseTurn(): void {
+    this.gameProcessor.pauseTurn();
+  }
+
+  turnAlert(): void {
+    this.view.turnAlert();
   }
 
   /**
@@ -48,24 +49,25 @@ export class GameController {
     target: [AnimalNames, number],
   ): boolean {
     const tradeResult = this.gameProcessor.trade(offer, target);
+    this.isGameWon();
+    return tradeResult;
+  }
+
+  private isGameWon(): void {
     if (this.gameProcessor.checkWin()) {
       this.gameProcessor.stopTurn();
       this.view.displayWinModal(this.game.theCurrentPlayer);
     }
-    return tradeResult;
   }
 
   /**
    * Rolls the dice for the player and updates their Herd.
    * If player wins the game after the breed, stops the timer and tells the View to display the WinModal.
    */
-  breed(): [AnimalNames, AnimalNames] | undefined {
+  breed(): void {
     const diceResult = this.gameProcessor.breed();
-    if (this.gameProcessor.checkWin()) {
-      this.gameProcessor.stopTurn();
-      this.view.displayWinModal(this.game.theCurrentPlayer);
-    }
-    return diceResult;
+    this.isGameWon();
+    this.view.updateRollResults(diceResult);
   }
 
   /**
@@ -73,5 +75,18 @@ export class GameController {
    */
   nextPlayer(): void {
     this.gameProcessor.nextPlayer();
+    this.view.startGame(
+      this.game.thePlayers,
+      this.game.theCurrentPlayer,
+      this.game.theBank,
+    );
+  }
+
+  updateTimeRemaining(timeLeft: number): void {
+    this.view.updateRemainingTime(timeLeft);
+  }
+
+  quitGame(): void {
+    this.gameProcessor.quitGame();
   }
 }

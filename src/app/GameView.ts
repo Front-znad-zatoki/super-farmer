@@ -1,6 +1,7 @@
 import { AnimalNames } from '../Enums/AnimalNamesEnum';
 import { Player } from '../Player';
 import { PlayerPanel } from './components/PlayerPanel';
+import { PlayersBoard } from './components/PlayersBoard';
 import { Bank } from './logic/Bank';
 import { Render } from './utils/Render';
 import { ViewController } from './ViewController';
@@ -8,7 +9,9 @@ import { ViewController } from './ViewController';
 export class GameView {
   private playerPanel: PlayerPanel;
 
-  constructor(private view: ViewController) {}
+  constructor(private view: ViewController) {
+    this.playerPanel = new PlayerPanel(this);
+  }
 
   renderGameView(
     players: Player[],
@@ -20,6 +23,7 @@ export class GameView {
     const endGameButton = this.createEndGameButton();
     const bankPanel = this.createBankPanel(bank);
     Render.removeAllChildren('#sf-app');
+    this.setBackground(currentPlayer);
     Render.render(
       '#sf-app',
       playersBoards,
@@ -32,19 +36,22 @@ export class GameView {
   private createPlayersBoards(players: Player[]): HTMLElement {
     return Render.elementFactory(
       'div',
-      {},
+      { className: 'player-boards__container' },
       ...players.map((player) =>
         Render.elementFactory(
           'div',
-          { id: `${player.theName}` },
-          JSON.stringify(player), // TODO: renderPlayerBoard <== Task #55
+          {
+            id: `${player.theName}`,
+            className: 'player-boards__board',
+          },
+          new PlayersBoard().renderPlayersBoard(player),
         ),
       ),
     );
   }
 
   private createPlayerPanel(player: Player): HTMLElement {
-    this.playerPanel = new PlayerPanel(player, this);
+    this.playerPanel.setPlayer(player);
     return this.playerPanel.createPlayerPanel();
   }
 
@@ -54,14 +61,20 @@ export class GameView {
       {},
       'End game',
     );
-    endGameButton.addEventListener('click', () =>
-      this.view.endGame(),
-    );
+    endGameButton.addEventListener('click', () => {
+      this.view.endGame();
+    });
     return endGameButton;
   }
 
   private createBankPanel(bank: Bank): HTMLElement {
     return Render.elementFactory('div', {}, JSON.stringify(bank)); // TODO: Use bank element from task #56
+  }
+
+  private setBackground(player: Player): void {
+    (document.querySelector(
+      '#sf-app',
+    ) as HTMLElement).style.background = player.theColor;
   }
 
   handleRoll(): void {
@@ -77,9 +90,34 @@ export class GameView {
     playerGain: [AnimalNames, number][],
   ): void {
     this.playerPanel.displayRollResult(diceResults, playerGain);
+    this.renderPlayerPanel();
+  }
+
+  private renderPlayerPanel(): void {
+    Render.removeAllChildren('#player-board');
+    Render.render(
+      '#player-board',
+      ...this.playerPanel.createPanelBoard(),
+    );
   }
 
   updateRemainingTime(timeLeft: number): void {
     this.playerPanel.updateTime(timeLeft);
+  }
+
+  stopTimer(): void {
+    this.view.stopTimer();
+  }
+
+  nextTurn(): void {
+    this.view.nextTurn();
+  }
+
+  turnAlert(): void {
+    this.playerPanel.turnAlert();
+  }
+
+  pauseTurn(): void {
+    this.view.pauseTurn();
   }
 }

@@ -7,12 +7,18 @@ import { ConvertAnimalName } from '../utils/ConvertAnimalName';
 import { Animal } from '../../Animals/Animal';
 
 export class PlayerPanel {
+  private player: Player;
   /**
    * Creates PlayerPanel based on data given
-   * @param player accepts instance of current player
    * @param view accepts instance of View componenet
    */
-  constructor(private player: Player, private view: GameView) {}
+  constructor(private view: GameView) {
+    this.player = new Player('', '', '');
+  }
+
+  setPlayer(player: Player): void {
+    this.player = player;
+  }
 
   /**
    * Creates player panel and returns it as HTMLElement
@@ -34,8 +40,15 @@ export class PlayerPanel {
     return Render.elementFactory(
       'div',
       {
+        id: 'player-board',
         className: 'player-panel__board',
       },
+      ...this.createPanelBoard(),
+    );
+  }
+
+  createPanelBoard(): HTMLElement[] {
+    return [
       Render.elementFactory(
         'div',
         { className: 'player-panel__info' },
@@ -52,7 +65,7 @@ export class PlayerPanel {
         `Time left: `,
       ),
       this.createPlayerHerd(),
-    );
+    ];
   }
 
   private createPlayerDetails(): HTMLElement {
@@ -116,11 +129,18 @@ export class PlayerPanel {
   private createDiceButton(): HTMLElement {
     const rollBtn = Render.elementFactory(
       'button',
-      { className: 'btn button' },
+      {
+        id: 'roll-dice',
+        className: 'btn button',
+      },
       'Roll the dice',
     );
-    // rollBtn.addEventListener('click', () => this.view.handleRoll());
-    rollBtn.addEventListener('click', () => this.view.handleRoll());
+    rollBtn.addEventListener('click', () => {
+      this.view.handleRoll();
+      (document.querySelector(
+        '#roll-dice',
+      ) as HTMLElement).setAttribute('disabled', 'true');
+    });
     return rollBtn;
   }
 
@@ -174,6 +194,14 @@ export class PlayerPanel {
         ),
       ),
     );
+    this.view.stopTimer();
+    setTimeout(() => this.hideTimer(), 10);
+  }
+
+  private hideTimer(): void {
+    (document.querySelector(
+      '#time-left',
+    ) as HTMLElement).style.display = 'none';
   }
 
   /**
@@ -183,15 +211,16 @@ export class PlayerPanel {
   updateTime(timeLeft: number): void {
     const timer = document.querySelector('#time-left') as HTMLElement;
     timer.innerText = `Time left: ${timeLeft} sec.`;
-    timer.setAttribute('disabled', 'false');
   }
 
-  /**
-   * Hides timer if necessary
-   */
-  hideTimer(): void {
-    (document.querySelector(
-      '#time-left',
-    ) as HTMLElement).setAttribute('disabled', 'true');
+  turnAlert(): void {
+    Render.render(
+      '#sf-app',
+      Render.elementFactory(
+        'div',
+        { className: 'exclamation' },
+        `${this.player.theName}'s turn has passed!`,
+      ),
+    );
   }
 }

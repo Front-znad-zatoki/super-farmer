@@ -40,3 +40,32 @@
     background: rgb(250, 0, 0);
   }
 }
+
+.player-boards {
+  &__container {
+    display: flex;
+    height: 50vh;
+    flex-wrap: wrap;
+    align-content: space-around;
+    justify-content: space-around;
+  }
+
+  &__board {
+    width: 49vw;
+    border: 1px black solid;
+    background-color: white;
+    border-radius: 0.3rem;
+  }
+}
+
+.exclamation {
+  position: absolute;
+  top: calc(50vh - 10px - 0.5em);
+  left: 20vw;
+  padding: 10px;
+  border: 5px dotted red;
+  background-color: white;
+  color: green;
+  font-size: 28px;
+  font-weight: bold;
+}

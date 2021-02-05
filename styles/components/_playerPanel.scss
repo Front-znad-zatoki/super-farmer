@@ -25,7 +25,6 @@
     position: absolute;
     top: 0.5rem;
     right: 0.5rem;
-    display: none;
   }
 
   &__herd {
@@ -47,11 +46,11 @@
     text-align: center;
 
     &--dice {
-      margin-top: 3rem;
+      margin-top: 2rem;
     }
 
     &--gain {
-      margin-top: 3rem;
+      margin-top: 2rem;
     }
 
     &--container {

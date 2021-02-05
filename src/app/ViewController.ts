@@ -3,16 +3,19 @@ import { Player } from '../Player';
 import { Bank } from './logic/Bank';
 import { Render } from './utils/Render';
 import { WinModal } from './components/WinModal';
-import { AnimalNames } from '../Enums/AnimalNamesEnum';
 import { MenuView } from './MenuView';
+import { GameController } from './GameController';
+import { RollResult } from './BreedProcessor';
 
 export class ViewController {
   private menuView: MenuView;
   private gameView: GameView;
+  private gameController: GameController | undefined;
 
   constructor() {
     this.menuView = new MenuView(this);
     this.gameView = new GameView(this);
+    this.gameController = undefined;
   }
 
   get theGameView(): GameView {
@@ -24,19 +27,12 @@ export class ViewController {
   }
 
   launchGame(): void {
-    // TODO: will be replaced with game controller call
-    const player1 = new Player(
-      'Misha',
-      './static/images/avatars/sheep.png',
-      '#95AF34',
+    this.gameController = new GameController(this);
+    this.startGame(
+      this.gameController.theGame.thePlayers,
+      this.gameController.theGame.theCurrentPlayer,
+      this.gameController.theGame.theBank,
     );
-    const player2 = new Player(
-      'Wania',
-      './static/images/avatars/pig.png',
-      '#AF3287',
-    );
-    const bank = new Bank();
-    this.startGame([player1, player2], player1, bank);
   }
 
   startGame(
@@ -44,8 +40,8 @@ export class ViewController {
     currentPlayer: Player,
     bank: Bank,
   ): void {
-    const gameView = new GameView(this);
-    gameView.renderGameView(players, currentPlayer, bank);
+    this.gameView.renderGameView(players, currentPlayer, bank);
+    this.gameController?.startTurn();
   }
 
   updateRemainingTime(timeLeft: number): void {
@@ -53,14 +49,11 @@ export class ViewController {
   }
 
   handleRoll(): void {
-    // TODO: roll the dice call
+    this.gameController?.breed();
   }
 
-  updateRollResults(
-    diceResults: AnimalNames[],
-    playerGain: [AnimalNames, number][],
-  ): void {
-    this.gameView.displayRollResult(diceResults, playerGain);
+  updateRollResults({ rollResult, gain }: RollResult): void {
+    this.gameView.displayRollResult(rollResult, gain);
   }
 
   handleTrade(): void {
@@ -72,6 +65,10 @@ export class ViewController {
     winModal.create(player);
     winModal.addButton(this);
     Render.render('body', winModal.modal);
+  }
+
+  turnAlert(): void {
+    this.gameView.turnAlert();
   }
 
   displayRulesModal(): void {
@@ -86,7 +83,21 @@ export class ViewController {
     // TODO: display settings
   }
 
+  stopTimer(): void {
+    this.gameController?.stopTurn();
+  }
+
+  nextTurn(): void {
+    this.gameController?.nextPlayer();
+  }
+
   endGame(): void {
-    this.menuView.displayMenu();
+    this.gameController?.quitGame();
+    this.gameController?.stopTurn();
+    setTimeout(() => this.menuView.displayMenu(), 100);
+  }
+
+  pauseTurn(): void {
+    this.gameController?.pauseTurn();
   }
 }
