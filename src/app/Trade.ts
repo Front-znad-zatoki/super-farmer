@@ -23,14 +23,7 @@ export class Trade {
     { theHerd: playerHerd }: Player,
     target: Offer,
   ): boolean {
-    const [offeredAnimal, offeredAnimalCount] = offer;
-    const [targetAnimal, targetAnimalCount] = target;
-    if (
-      playerHerd.getAnimalNumber(offeredAnimal) <
-        offeredAnimalCount ||
-      this.bank.theHerd.getAnimalNumber(targetAnimal) <
-        targetAnimalCount
-    ) {
+    if (this.areOffersInvalid(offer, playerHerd, target)) {
       return false;
     }
     let value = this.calculateValue(offer);
@@ -42,6 +35,18 @@ export class Trade {
     return price > value
       ? false
       : this.disposeResult(offer, playerHerd, target);
+  }
+
+  private areOffersInvalid(
+    [animal, count]: Offer,
+    playerHerd: Herd,
+    [bankAnimal, bankCount]: Offer,
+  ): boolean {
+    return (
+      (count > 1 && bankCount > 1) ||
+      playerHerd.getAnimalNumber(animal) < count ||
+      this.bank.theHerd.getAnimalNumber(bankAnimal) < bankCount
+    );
   }
 
   private calculateValue([animal, count]: Offer): number {
