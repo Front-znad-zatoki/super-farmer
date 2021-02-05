@@ -1,28 +1,45 @@
+import { GameModes } from '~src/Enums/GameModeEnums';
 import { Predator } from '../../Animals/Predator';
 import { AnimalNames } from '../../Enums/AnimalNamesEnum';
 import { PredatorsConfigInterface } from '../../Interfaces/PredatorsConfigInterface';
 import { Game } from '../logic/Game';
 
 export function logGameObject(): void {
-  const gra = new Game();
-  console.log(gra);
-  gra.theCurrentPlayer.theHerd.addAnimalsToHerd(
+  const mockGame = new Game();
+  console.log(mockGame);
+  mockGame.theCurrentPlayer.theHerd.addAnimalsToHerd(
     AnimalNames.RABBIT,
     10,
   );
-  gra.theCurrentPlayer.theHerd.addAnimalsToHerd(
-    AnimalNames.BIG_DOG,
-    1,
-  );
-  gra.theCurrentPlayer.theHerd.cullAnimals(
+  // mockGame.theCurrentPlayer.theHerd.addAnimalsToHerd(
+  //   AnimalNames.BIG_DOG,
+  //   1,
+  // );
+  // mockGame.theCurrentPlayer.theHerd.addAnimalsToHerd(
+  //   AnimalNames.SMALL_DOG,
+  //   1,
+  // );
+  // mockGame.theCurrentPlayer.theHerd.cullAnimals(
+  //   new Predator(
+  //     mockWolf.name,
+  //     mockWolf.path,
+  //     undefined,
+  //     mockWolf.kills,
+  //     mockWolf.isChasedAwayBy,
+  //     mockWolf.exclamation,
+  //   ),
+  //   GameModes.DYNAMIC,
+  // );
+  mockGame.theCurrentPlayer.theHerd.cullAnimals(
     new Predator(
-      mockWolf.name,
-      mockWolf.path,
+      mockFox.name,
+      mockFox.path,
       undefined,
-      mockWolf.kills,
-      mockWolf.isChasedAwayBy,
-      mockWolf.exclamation,
+      mockFox.kills,
+      mockFox.isChasedAwayBy,
+      mockFox.exclamation,
     ),
+    GameModes.DYNAMIC,
   );
 }
 
@@ -37,5 +54,14 @@ const mockWolf: PredatorsConfigInterface = {
   ],
   isChasedAwayBy: AnimalNames.BIG_DOG,
   exclamation: 'Auuuuuu!Grrrrr!',
+  // dice: [{ diceNumber: 2, probability: 1 }],
+};
+
+const mockFox: PredatorsConfigInterface = {
+  name: AnimalNames.FOX,
+  path: '/static/images/avatars/fox.png',
+  kills: [AnimalNames.RABBIT],
+  isChasedAwayBy: AnimalNames.SMALL_DOG,
+  exclamation: 'Ringangngnignign',
   // dice: [{ diceNumber: 2, probability: 1 }],
 };

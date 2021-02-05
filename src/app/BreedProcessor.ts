@@ -11,19 +11,22 @@ import { add, divide, floor, min } from 'lodash';
 import { AnimalRoles } from '../Enums/AnimalRolesEnum';
 import { Bank } from './logic/Bank';
 import { PredatorsConfigInterface } from '../Interfaces/PredatorsConfigInterface';
+import { GameModes } from '../Enums/GameModeEnums';
 
 export class BreedProcessor {
   randomResultInterfaceWolf: GetRandomValue;
   randomResultInterfaceFox: GetRandomValue;
-
+  mode: GameModes;
   constructor(
     private bank: Bank,
     // TODO: CREATE PREDATORS INSTANCES (CLASS PREDATOR) BASED ON CONFIG FROM GAME
     predatorConfig: PredatorsConfigInterface[],
+    mode: GameModes,
   ) {
-    console.log(predatorConfig);
     this.randomResultInterfaceWolf = new SecondDice();
     this.randomResultInterfaceFox = new FirstDice();
+    // TODO: ADD MODE - NEEDED TO PASS TO CULL ANIMALS TO CHECK HOW MANY TO KILL
+    this.mode = mode;
   }
 
   processBreedPhase({ theHerd }: Player): [AnimalNames, AnimalNames] {
@@ -39,7 +42,7 @@ export class BreedProcessor {
         foxDiceResult,
       ) as Fox;
       this.returnToBank(fox, theHerd);
-      theHerd.cullAnimals(fox);
+      theHerd.cullAnimals(fox, this.mode);
     } else {
       this.breedAnimals(foxDiceResult, theHerd);
     }
@@ -48,7 +51,7 @@ export class BreedProcessor {
         wolfDiceResult,
       ) as Wolf;
       this.returnToBank(wolf, theHerd);
-      theHerd.cullAnimals(wolf);
+      theHerd.cullAnimals(wolf, this.mode);
     } else {
       this.breedAnimals(wolfDiceResult, theHerd);
     }

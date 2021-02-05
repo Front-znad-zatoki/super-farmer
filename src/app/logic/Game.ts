@@ -68,6 +68,7 @@ export class Game {
     this.breedProcessor = new BreedProcessor(
       this.bank,
       predatorsConfig,
+      this.mode,
     );
     this.trade = new Trade(this.bank);
   }
