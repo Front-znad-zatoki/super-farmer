@@ -1,0 +1,11 @@
+.bank__board {
+  display: flex;
+  align-items: center;
+  &__img {
+    width: 100px;
+    margin-left: 50px;
+  }
+  &__count {
+    font-size: 30px;
+  }
+}
