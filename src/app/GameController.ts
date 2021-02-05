@@ -8,8 +8,11 @@ import { Bank } from './logic/Bank';
 export class GameController {
   private game: Game;
   private gameProcessor: GameProcessor;
-  constructor(private view: ViewController) {
-    this.game = new Game(defaultGameConfiguration);
+  constructor(
+    private view: ViewController,
+    private config = defaultGameConfiguration,
+  ) {
+    this.game = new Game(config);
     this.gameProcessor = new GameProcessor(this.game, this);
   }
 

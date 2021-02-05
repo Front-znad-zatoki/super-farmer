@@ -8,6 +8,7 @@ import { GameController } from './GameController';
 import { RollResult } from './BreedProcessor';
 import { Trade } from './Trade';
 import { TradeModal } from './components/TradeModal';
+import { defaultGameConfiguration } from './logic/defaultGameConfiguration';
 
 export class ViewController {
   private menuView: MenuView;

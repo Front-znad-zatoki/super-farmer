@@ -24,22 +24,26 @@ export class GameView {
     const endGameButton = this.createEndGameButton();
     const bankPanel = this.createBankPanel(bank);
     Render.removeAllChildren('#sf-app');
-    this.setBackground(currentPlayer);
     Render.render(
       '#sf-app',
-      playersBoards,
-      playerPanel,
       Render.elementFactory(
         'div',
-        { style: 'height: 3rem;' },
-        endGameButton,
+        { className: 'page-container' },
+        playersBoards,
+        playerPanel,
         Render.elementFactory(
           'div',
-          { id: 'bank-board', style: 'display: inline;' },
-          bankPanel,
+          { className: 'bank__bar' },
+          endGameButton,
+          Render.elementFactory(
+            'div',
+            { id: 'bank-board' },
+            bankPanel,
+          ),
         ),
       ),
     );
+    this.setBackground(currentPlayer);
   }
 
   private createPlayersBoards(players: Player[]): HTMLElement {
@@ -82,7 +86,7 @@ export class GameView {
 
   private setBackground(player: Player): void {
     (document.querySelector(
-      '#sf-app',
+      '.page-container',
     ) as HTMLElement).style.background = player.theColor;
   }
 
