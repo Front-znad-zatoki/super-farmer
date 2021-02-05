@@ -8,7 +8,7 @@ export class WinModal extends ModalBasic {
       'CONGRATULATIONS!',
       `${player.theName} has won!`,
       this.createImage(player),
-    ) as WinModal;
+    );
   }
 
   addButton(): void {
