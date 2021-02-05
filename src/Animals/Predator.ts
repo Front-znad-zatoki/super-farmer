@@ -5,14 +5,14 @@ import { Animal } from './Animal';
 
 export class Predator extends Animal implements AttackHerdInterface {
   protected _kills: AnimalNames[];
-  protected _isChasedAwayBy: AnimalNames[];
+  protected _isChasedAwayBy: AnimalNames;
   protected _exclamation: string;
   constructor(
     name: AnimalNames,
     imagePath: string,
     roles: AnimalRoles = AnimalRoles.PREDATOR,
     kills: AnimalNames[],
-    isChasedAwayBy: AnimalNames[],
+    isChasedAwayBy: AnimalNames,
     exclamation: string,
   ) {
     super(name, imagePath, undefined, roles);
@@ -24,7 +24,7 @@ export class Predator extends Animal implements AttackHerdInterface {
   get kills(): AnimalNames[] {
     return this._kills;
   }
-  get isChasedAwayBy(): AnimalNames[] {
+  get isChasedAwayBy(): AnimalNames {
     return this._isChasedAwayBy;
   }
   get exclamation(): string {
