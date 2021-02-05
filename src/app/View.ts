@@ -1,6 +1,8 @@
 import { Render } from './utils/Render';
 import { AnimalNames } from '../Enums/AnimalNamesEnum';
 import { GameController } from './GameController';
+import { Player } from '../Player';
+import { WinModal } from './components/WinModal';
 
 export class View {
   renderMenuView(): void {
@@ -79,10 +81,6 @@ export class View {
       src: playersChosenAvatarPath,
     });
     const gameController = new GameController(this);
-    gameController.initializePlayer(
-      playersChosenName,
-      playersChosenAvatarPath,
-    );
     const remainingTime = Render.elementFactory('div', {
       id: 'time-remaining',
       className: 'remainig-time__counter',
@@ -116,7 +114,7 @@ export class View {
     rollADiceButton.addEventListener('click', () => {
       const rollResult = gameController.breed();
       herdView.innerText = JSON.stringify(
-        gameController.theCurrentPlayer.theHerd.theAnimals.map(
+        gameController.theGame.theCurrentPlayer.theHerd.theAnimals.map(
           ([animal, count]) => [animal.theName, count],
         ),
       );
@@ -159,5 +157,20 @@ export class View {
 
   displayAlert(name: string): void {
     alert(`${name}'s turn has passed!`);
+  }
+
+  displayWinModal(player: Player): void {
+    const modal = new WinModal();
+    modal.create(player);
+    modal.addButton();
+    Render.render('#sf-app', modal.modal);
+  }
+
+  handleTrade(): void {
+    console.log('handle trade');
+  }
+
+  handleRoll(): void {
+    console.log('handle roll');
   }
 }

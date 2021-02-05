@@ -1,20 +1,8 @@
 import { Render } from '../utils/Render';
 import { Button } from './Button';
+import { EmptyModal } from './EmptyModal';
 
-export class ModalBasic {
-  modal: HTMLElement;
-  modalContainer: HTMLElement;
-  constructor() {
-    this.modalContainer = Render.elementFactory('div', {
-      className: 'modal__container',
-    });
-    this.modal = Render.elementFactory(
-      'div',
-      { className: 'modal' },
-      this.modalContainer,
-    );
-  }
-
+export class ModalBasic extends EmptyModal {
   /**
    * Creates and appends the main modal structure.
    * @param {string} heading Heading to be render inside the modal.
@@ -69,24 +57,26 @@ export class ModalBasic {
   createAndAppendButtonsRow(
     leftButtonText: string,
     leftButtonAction: () => void,
-    rightButtonText: string,
-    rightButtonAction: () => void,
+    rightButtonText?: string,
+    rightButtonAction?: () => void,
   ): ModalBasic {
     const leftButton: HTMLElement = new Button().create(
       leftButtonText,
     );
-    const rightButton: HTMLElement = new Button().create(
-      rightButtonText,
-    );
+    const rightButton: HTMLElement | null = rightButtonText
+      ? new Button().create(rightButtonText)
+      : null;
+    if (rightButton && rightButtonAction) {
+      rightButton.addEventListener('click', rightButtonAction);
+    }
     leftButton.addEventListener('click', leftButtonAction);
-    rightButton.addEventListener('click', rightButtonAction);
     const buttonsRow = Render.elementFactory(
       'div',
       {
         className: 'modal__buttons',
       },
       leftButton,
-      rightButton,
+      rightButton ? rightButton : '',
     );
     Render.childrenInjector(this.modalContainer, buttonsRow);
     return this;
