@@ -47,6 +47,11 @@ export class PlayerPanel {
     );
   }
 
+  refreshHerd(): void {
+    Render.removeAllChildren('#player-board');
+    Render.render('#player-board', ...this.createPanelBoard());
+  }
+
   createPanelBoard(): HTMLElement[] {
     return [
       Render.elementFactory(

@@ -116,4 +116,8 @@ export class ViewController {
   disableTrade(): void {
     this.gameView.disableTrade();
   }
+
+  refreshHerd(): void {
+    this.gameView.refreshHerd();
+  }
 }

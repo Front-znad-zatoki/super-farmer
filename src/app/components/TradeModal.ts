@@ -220,6 +220,7 @@ export class TradeModal extends EmptyModal {
     if (this.processTrade(data)) {
       this.hideModal();
       this.view.runTimer();
+      this.view.refreshHerd();
       this.view.disableTrade();
     }
   };

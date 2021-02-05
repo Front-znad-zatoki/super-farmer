@@ -124,4 +124,8 @@ export class GameView {
   disableTrade(): void {
     this.playerPanel.disableTrade();
   }
+
+  refreshHerd(): void {
+    this.playerPanel.refreshHerd();
+  }
 }
