@@ -23,14 +23,12 @@ describe('Trade class test.', () => {
     expect(player.theHerd.getAnimalNumber(AnimalNames.SHEEP)).toBe(1);
   });
 
-  it('Should process trade with reducing players offer', () => {
+  it('Should not process trade due invalid count', () => {
     player.theHerd.addAnimalsToHerd(AnimalNames.COW, 3);
     const offer: [AnimalNames, number] = [AnimalNames.COW, 3];
     const target: [AnimalNames, number] = [AnimalNames.PIG, 3];
     const result = trade.processOffer(offer, player, target);
-    expect(result).toBe(true);
-    expect(player.theHerd.getAnimalNumber(AnimalNames.PIG)).toBe(3);
-    expect(player.theHerd.getAnimalNumber(AnimalNames.COW)).toBe(2);
+    expect(result).toBe(false);
   });
 
   it('Should not process due to low offer', () => {
