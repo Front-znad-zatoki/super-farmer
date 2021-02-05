@@ -24,7 +24,7 @@ export class TradeModal extends EmptyModal {
       'form',
       {
         action: '',
-        method: 'get',
+        method: 'post',
         className: 'trade',
       },
       this.playerView,
@@ -35,7 +35,7 @@ export class TradeModal extends EmptyModal {
       }),
       this.bankView,
     );
-    this.modalContainer.appendChild(this.tradeForm);
+    Render.childrenInjector(this.modalContainer, this.tradeForm);
   }
 
   /**
@@ -133,8 +133,7 @@ export class TradeModal extends EmptyModal {
     return animalsRows;
   }
 
-  //TODO: refactor
-  private formDataIntoTuples(formData: FormData): [Offer, Offer] {
+  private formDataIntoTuples(formData: FormData): [Offer[], Offer[]] {
     const offer: Offer[] = [];
     const target: Offer[] = [];
     for (const [key, value] of formData.entries()) {
@@ -153,19 +152,38 @@ export class TradeModal extends EmptyModal {
         }
       }
     }
+    return [offer, target];
+  }
 
-    //TODO: add display warning when more or less than needed
-    if (offer.length !== 1 || target.length !== 1) {
-      console.log('Za dużo zwiemrzątek');
+  private processTrade([offer, target]: [Offer[], Offer[]]): boolean {
+    if (offer.length === 1 && target.length === 1) {
+      const [[offeredAnimal]] = offer;
+      const [[targetAnimal]] = target;
+      if (this.trade.processOffer(offer[0], this.player, target[0])) {
+        return true;
+      }
+      console.log(
+        `The ratio of the ${offeredAnimal}s to ${targetAnimal} is not correct`,
+      );
     }
-    return [offer[0], target[0]];
+    if (offer.length > 1 || target.length > 1) {
+      console.log(
+        'To much types of animals, allowed one type for one type',
+      );
+    }
+    if (offer.length <= 0 || target.length <= 0) {
+      console.log(
+        'There need to be at least one animal on both sides',
+      );
+    }
+    return false;
   }
 
   private handleSubmit = (event: Event): void => {
     event.preventDefault();
     const formData = new FormData(event.target as HTMLFormElement);
-    const [offer, target] = this.formDataIntoTuples(formData);
-    if (this.trade.processOffer(offer, this.player, target)) {
+    const data = this.formDataIntoTuples(formData);
+    if (this.processTrade(data)) {
       this.setNextPlayer(this.player);
     }
   };
