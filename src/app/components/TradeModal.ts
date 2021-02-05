@@ -9,6 +9,7 @@ export class TradeModal extends EmptyModal {
   tradeForm: HTMLElement;
   playerView: HTMLElement;
   bankView: HTMLElement;
+  warning: HTMLElement;
   player: Player;
 
   constructor(private trade: Trade, firstPlayer: Player) {
@@ -35,7 +36,14 @@ export class TradeModal extends EmptyModal {
       }),
       this.bankView,
     );
-    Render.childrenInjector(this.modalContainer, this.tradeForm);
+    this.warning = Render.elementFactory('p', {
+      className: 'warning',
+    });
+    Render.childrenInjector(
+      this.modalContainer,
+      this.tradeForm,
+      this.warning,
+    );
   }
 
   /**
@@ -51,6 +59,8 @@ export class TradeModal extends EmptyModal {
       this.createHerdView(this.player),
     );
     this.tradeForm.addEventListener('submit', this.handleSubmit);
+    this.modal.addEventListener('keydown', this.clearWarning);
+    this.modal.addEventListener('click', this.clearWarning);
     return this.modal;
   }
 
@@ -160,23 +170,31 @@ export class TradeModal extends EmptyModal {
       const [[offeredAnimal]] = offer;
       const [[targetAnimal]] = target;
       if (this.trade.processOffer(offer[0], this.player, target[0])) {
+        console.log('poszło');
         return true;
       }
-      console.log(
-        `The ratio of the ${offeredAnimal}s to ${targetAnimal} is not correct`,
+      this.displayWarning(
+        `The value ratio of the ${offeredAnimal}s to ${targetAnimal}s is not correct`,
       );
+      return false;
     }
     if (offer.length > 1 || target.length > 1) {
-      console.log(
+      this.displayWarning(
         'To much types of animals, allowed one type for one type',
       );
+      return false;
     }
     if (offer.length <= 0 || target.length <= 0) {
-      console.log(
+      this.displayWarning(
         'There need to be at least one animal on both sides',
       );
+      return false;
     }
     return false;
+  }
+
+  private displayWarning(message: string): void {
+    this.warning.textContent = message;
   }
 
   private handleSubmit = (event: Event): void => {
@@ -186,5 +204,9 @@ export class TradeModal extends EmptyModal {
     if (this.processTrade(data)) {
       this.setNextPlayer(this.player);
     }
+  };
+
+  private clearWarning = (): void => {
+    this.warning.textContent = '';
   };
 }
