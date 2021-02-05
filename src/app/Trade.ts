@@ -4,8 +4,13 @@ import { multiply } from 'lodash';
 import { Player } from '../Player';
 import { Herd } from './logic/Herd';
 
+export type Offer = [AnimalNames, number];
+
 export class Trade {
   constructor(private bank: Player) {}
+  get thisBank(): Player {
+    return this.bank;
+  }
   /**
    * Gets an offer from player and returns true or false if transaction can be made processed and process it if possible
    * @param offer accepts tuple with offer containing animal name and quantity to be sold
@@ -14,13 +19,17 @@ export class Trade {
    * @returns true if transaction will be processed, and false otherwise
    */
   processOffer(
-    offer: [AnimalNames, number],
+    offer: Offer,
     { theHerd: playerHerd }: Player,
-    target: [AnimalNames, number],
+    target: Offer,
   ): boolean {
+    const [offeredAnimal, offeredAnimalCount] = offer;
+    const [targetAnimal, targetAnimalCount] = target;
     if (
-      playerHerd.getAnimalNumber(offer[0]) < offer[1] ||
-      this.bank.theHerd.getAnimalNumber(target[0]) < target[1]
+      playerHerd.getAnimalNumber(offeredAnimal) <
+        offeredAnimalCount ||
+      this.bank.theHerd.getAnimalNumber(targetAnimal) <
+        targetAnimalCount
     ) {
       return false;
     }
@@ -35,17 +44,14 @@ export class Trade {
       : this.disposeResult(offer, playerHerd, target);
   }
 
-  private calculateValue(offer: [AnimalNames, number]): number {
+  private calculateValue([animal, count]: Offer): number {
     return multiply(
-      ConvertToAnimalObject.convertToAnimalObject(offer[0]).theValue,
-      offer[1],
+      ConvertToAnimalObject.convertToAnimalObject(animal).theValue,
+      count,
     );
   }
 
-  private adjustOffer(
-    offer: [AnimalNames, number],
-    target: [AnimalNames, number],
-  ): void {
+  private adjustOffer(offer: Offer, target: Offer): void {
     offer[1] -= 1;
     if (this.calculateValue(offer) <= this.calculateValue(target)) {
       return;
@@ -57,9 +63,9 @@ export class Trade {
    * updates players and banks herd
    */
   private disposeResult(
-    [animalSold, quantitySold]: [AnimalNames, number],
+    [animalSold, quantitySold]: Offer,
     playerHerd: Herd,
-    [animalBought, quantityBought]: [AnimalNames, number],
+    [animalBought, quantityBought]: Offer,
   ): boolean {
     playerHerd.addAnimalsToHerd(animalSold, -quantitySold);
     playerHerd.addAnimalsToHerd(animalBought, quantityBought);
