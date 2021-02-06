@@ -161,9 +161,7 @@ export class View {
 
   displayWinModal(player: Player): void {
     const modal = new WinModal();
-    modal.create(player);
-    modal.addButton();
-    Render.render('#sf-app', modal.modal);
+    Render.render('#sf-app', modal.createWinModal(player));
   }
 
   handleTrade(): void {
