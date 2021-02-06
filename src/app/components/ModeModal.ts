@@ -1,108 +1,150 @@
 import { BasicModal } from './BasicModal';
 import { Render } from '../utils/Render';
+import { PlayerDTO } from '~src/Interfaces/PlayerDTOInterface';
 
 export class ModeModal extends BasicModal {
-  modeForm: HTMLElement;
+  private modeForm: HTMLFormElement;
+  private playersData: PlayerDTO[];
+  private playerElements: HTMLElement[];
+  private addPlayerButton: HTMLElement;
+  private playerInputsWrapper: HTMLElement;
 
   constructor() {
     super();
-    this.modeForm = Render.elementFactory('form', {
-      id: 'trade-modal',
-      action: '',
-      method: 'post',
-      className: 'mode-modal',
+    this.playerElements = [];
+    this.addPlayerButton = Render.elementFactory(
+      'button',
+      { type: 'button', className: 'mode-form__add-player-btn' },
+      'add next player',
+    );
+    this.playerInputsWrapper = Render.elementFactory('div', {
+      className: 'mode-inputs-wrapper',
     });
+    this.modeForm = this.createForm();
+    this.playersData = [];
   }
 
   createModeModal(): HTMLElement {
     this.renderBasicModal(
       'Add your nick, choose avatar and color',
-      '',
-      this.generateInputs(),
+      undefined,
+      this.modeForm,
+      this.generateButtons(),
     );
-
-    this.createAndAppendButtonsRow(
-      'GO BACK',
-      () => this.hideModal(),
-      'PLAY',
-      () => {
-        this.hideModal();
-      },
-    );
-
+    this.addEventListeners();
     return this.modal;
   }
 
-  private generateInputs(): HTMLElement {
-    // Left side
-    const player1Svg = Render.elementFactory('img', {
-      src: '../../static/images/playerAvatars/man.svg',
-    });
-    const player2Svg = Render.elementFactory('img', {
-      src: '../../static/images/playerAvatars/woman.svg',
-    });
-
-    const player1Name = Render.elementFactory('input', {
-      type: 'text',
-      id: '1_pname',
-      name: '1_pname',
-      placeholder: 'Player 1',
-    });
-
-    const player2Name = Render.elementFactory('input', {
-      type: 'text',
-      id: '2_pname',
-      name: '2_pname',
-      placeholder: 'Player 2',
-    });
-
-    const player1 = Render.elementFactory(
-      'div',
-      { className: 'player1' },
-      player1Svg,
-      player1Name,
-    );
-    const player2 = Render.elementFactory(
-      'div',
-      { className: 'player2' },
-      player2Svg,
-      player2Name,
+  private createForm(): HTMLFormElement {
+    Render.childrenInjector(
+      this.playerInputsWrapper,
+      ...this.playerElements,
     );
 
-    const playersInfo = Render.elementFactory(
+    const form = Render.elementFactory(
       'form',
-      { className: 'mode-modal__players' },
-      player1,
-      player2,
+      {
+        id: 'mode-form',
+        action: '',
+        method: 'get',
+        className: 'mode-modal',
+      },
+
+      this.playerInputsWrapper,
+      this.addPlayerButton,
     );
+    this.addPlayer();
 
-    // Right side
-
-    const avatar1 = Render.elementFactory('img', {
-      src: '../../static/images/playerAvatars/man.svg',
-    });
-    const avatar2 = Render.elementFactory('img', {
-      src: '../../static/images/playerAvatars/woman.svg',
-    });
-
-    const avatarsWrapper = Render.elementFactory(
-      'div',
-      { className: 'mode-modal__avatars-wrapper' },
-      avatar1,
-      avatar2,
-    );
-
-    const colorsWrapper = Render.elementFactory('div', {
-      className: 'mode-modal__colors-wrapper',
-    });
-
-    const modeModal = Render.elementFactory(
-      'div',
-      { className: 'modal__mode-modal' },
-      playersInfo,
-      avatarsWrapper,
-      colorsWrapper,
-    );
-    return modeModal;
+    return form as HTMLFormElement;
   }
+
+  private addEventListeners(): void {
+    this.modeForm.addEventListener('submit', this.handleSubmit);
+    this.addPlayerButton.addEventListener(
+      'click',
+      this.handleClickAddPlayer,
+    );
+  }
+
+  private addPlayer(): void {
+    const numberOfPlayers = this.playerInputsWrapper.children.length;
+    if (numberOfPlayers >= 4) {
+      return;
+    }
+    const playerInputRow = this.generatePlayerInput(
+      numberOfPlayers + 1,
+    );
+    if (numberOfPlayers >= 3) {
+      this.addPlayerButton.classList.add('hidden');
+    }
+    Render.childrenInjector(this.playerInputsWrapper, playerInputRow);
+  }
+
+  private generateButtons(): HTMLElement {
+    const backButton = Render.elementFactory(
+      'button',
+      {
+        className: 'button',
+      },
+      'back',
+    );
+    const playButton = Render.elementFactory(
+      'button',
+      {
+        type: 'submit',
+        form: 'mode-form',
+        className: 'button',
+      },
+      'play',
+    );
+    const buttonsWrapper = Render.elementFactory(
+      'div',
+      {
+        className: 'modal__buttons',
+      },
+      backButton,
+      playButton,
+    );
+    return buttonsWrapper;
+  }
+
+  private generatePlayerInput(numberOfPlayer: number): HTMLElement {
+    const indicator = `name_${numberOfPlayer}`;
+    const label = Render.elementFactory(
+      'label',
+      { for: indicator, className: 'mode-modal__form-label' },
+      Render.elementFactory('img', {
+        className: 'mode-form__avatar',
+        src: '../../static/images/playerAvatars/woman.svg',
+      }),
+    );
+
+    const input = Render.elementFactory('input', {
+      type: 'text',
+      id: indicator,
+      name: indicator,
+      placeholder: `Player ${numberOfPlayer}`,
+      className: 'mode-form__input',
+    });
+    const playerRow = Render.elementFactory(
+      'div',
+      { className: 'mode-form__row' },
+      label,
+      input,
+    );
+    return playerRow;
+  }
+
+  private handleSubmit = (event: Event): void => {
+    event.preventDefault();
+    const formData = new FormData(event.target as HTMLFormElement);
+
+    for (const [key, value] of formData.entries()) {
+      console.log(key + ': ' + value);
+    }
+  };
+
+  private handleClickAddPlayer = (): void => {
+    this.addPlayer();
+  };
 }
