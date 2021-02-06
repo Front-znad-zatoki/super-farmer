@@ -6,7 +6,7 @@ export class Horse extends Animal {
   constructor() {
     super(
       AnimalNames.HORSE,
-      '/static/images/avatars/horse.png',
+      './static/images/avatars/horse.png',
       72,
       AnimalRoles.LIVESTOCK,
     );

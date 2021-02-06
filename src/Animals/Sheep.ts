@@ -6,7 +6,7 @@ export class Sheep extends Animal {
   constructor() {
     super(
       AnimalNames.SHEEP,
-      '/static/images/avatars/sheep.png',
+      './static/images/avatars/sheep.png',
       6,
       AnimalRoles.LIVESTOCK,
     );

@@ -6,7 +6,7 @@ export class Pig extends Animal {
   constructor() {
     super(
       AnimalNames.PIG,
-      '/static/images/avatars/pig.png',
+      './static/images/avatars/pig.png',
       12,
       AnimalRoles.LIVESTOCK,
     );
