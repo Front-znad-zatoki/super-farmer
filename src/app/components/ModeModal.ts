@@ -8,6 +8,8 @@ export class ModeModal extends BasicModal {
   private playerElements: HTMLElement[];
   private addPlayerButton: HTMLElement;
   private playerInputsWrapper: HTMLElement;
+  private backButton!: HTMLElement;
+  private playButton!: HTMLElement;
 
   constructor() {
     super();
@@ -64,6 +66,10 @@ export class ModeModal extends BasicModal {
       'click',
       this.handleClickAddPlayer,
     );
+    this.backButton.addEventListener(
+      'click',
+      this.handleClickBackButton,
+    );
   }
 
   private addPlayer(): void {
@@ -81,14 +87,14 @@ export class ModeModal extends BasicModal {
   }
 
   private generateButtons(): HTMLElement {
-    const backButton = Render.elementFactory(
+    this.backButton = Render.elementFactory(
       'button',
       {
         className: 'button',
       },
       'back',
     );
-    const playButton = Render.elementFactory(
+    this.playButton = Render.elementFactory(
       'button',
       {
         type: 'submit',
@@ -102,8 +108,8 @@ export class ModeModal extends BasicModal {
       {
         className: 'modal__buttons',
       },
-      backButton,
-      playButton,
+      this.backButton,
+      this.playButton,
     );
     return buttonsWrapper;
   }
@@ -146,5 +152,10 @@ export class ModeModal extends BasicModal {
 
   private handleClickAddPlayer = (): void => {
     this.addPlayer();
+  };
+
+  private handleClickBackButton = (): void => {
+    this.hideModal();
+    this.modeForm.reset();
   };
 }
