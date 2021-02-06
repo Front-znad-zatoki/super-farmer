@@ -1,10 +1,39 @@
-//     Add  ModeModalDemo(); in App.ts to see result
-import { Button } from './Button';
-import { ModalBasic } from './ModalBasic';
+import { BasicModal } from './BasicModal';
 import { Render } from '../utils/Render';
 
-export class ModeModal extends ModalBasic {
-  static createModeModal(): HTMLElement {
+export class ModeModal extends BasicModal {
+  modeForm: HTMLElement;
+
+  constructor() {
+    super();
+    this.modeForm = Render.elementFactory('form', {
+      id: 'trade-modal',
+      action: '',
+      method: 'post',
+      className: 'mode-modal',
+    });
+  }
+
+  createModeModal(): HTMLElement {
+    this.renderBasicModal(
+      'Add your nick, choose avatar and color',
+      '',
+      this.generateInputs(),
+    );
+
+    this.createAndAppendButtonsRow(
+      'GO BACK',
+      () => this.hideModal(),
+      'PLAY',
+      () => {
+        this.hideModal();
+      },
+    );
+
+    return this.modal;
+  }
+
+  private generateInputs(): HTMLElement {
     // Left side
     const player1Svg = Render.elementFactory('img', {
       src: '../../static/images/playerAvatars/man.svg',
@@ -12,36 +41,19 @@ export class ModeModal extends ModalBasic {
     const player2Svg = Render.elementFactory('img', {
       src: '../../static/images/playerAvatars/woman.svg',
     });
-    const player3Svg = Render.elementFactory('img', {
-      src: '../../static/images/playerAvatars/man.svg',
-    });
-    const player4Svg = Render.elementFactory('img', {
-      src: '../../static/images/playerAvatars/woman.svg',
-    });
 
     const player1Name = Render.elementFactory('input', {
       type: 'text',
-      id: 'pName',
-      name: 'pName',
+      id: '1_pname',
+      name: '1_pname',
       placeholder: 'Player 1',
     });
+
     const player2Name = Render.elementFactory('input', {
       type: 'text',
-      id: 'pName',
-      name: 'pName',
+      id: '2_pname',
+      name: '2_pname',
       placeholder: 'Player 2',
-    });
-    const player3Name = Render.elementFactory('input', {
-      type: 'text',
-      id: 'pName',
-      name: 'pName',
-      placeholder: 'Player 3',
-    });
-    const player4Name = Render.elementFactory('input', {
-      type: 'text',
-      id: 'pName',
-      name: 'pName',
-      placeholder: 'Player 4',
     });
 
     const player1 = Render.elementFactory(
@@ -56,26 +68,12 @@ export class ModeModal extends ModalBasic {
       player2Svg,
       player2Name,
     );
-    const player3 = Render.elementFactory(
-      'div',
-      { className: 'player3' },
-      player3Svg,
-      player3Name,
-    );
-    const player4 = Render.elementFactory(
-      'div',
-      { className: 'player4' },
-      player4Svg,
-      player4Name,
-    );
 
     const playersInfo = Render.elementFactory(
       'form',
       { className: 'mode-modal__players' },
       player1,
       player2,
-      player3,
-      player4,
     );
 
     // Right side
@@ -94,39 +92,9 @@ export class ModeModal extends ModalBasic {
       avatar2,
     );
 
-    const color1 = Render.elementFactory('input', {
-      type: 'color',
-      id: 'c1',
-      name: 'c1',
-      value: '#ff0000',
+    const colorsWrapper = Render.elementFactory('div', {
+      className: 'mode-modal__colors-wrapper',
     });
-    const color2 = Render.elementFactory('input', {
-      type: 'color',
-      id: 'c2',
-      name: 'c2',
-      value: '#ff00ff',
-    });
-    const color3 = Render.elementFactory('input', {
-      type: 'color',
-      id: 'c3',
-      name: 'c3',
-      value: '#66ff66',
-    });
-    const color4 = Render.elementFactory('input', {
-      type: 'color',
-      id: 'c4',
-      name: 'c4',
-      value: '#0066ff',
-    });
-
-    const colorsWrapper = Render.elementFactory(
-      'div',
-      { className: 'mode-modal__colors-wrapper' },
-      color1,
-      color2,
-      color3,
-      color4,
-    );
 
     const modeModal = Render.elementFactory(
       'div',
