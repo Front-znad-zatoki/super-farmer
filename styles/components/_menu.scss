@@ -1,0 +1,60 @@
+.page__container {
+  width: 100vw;
+  height: calc(100vh - 2rem);
+  background-color: white;
+  text-align: center;
+}
+
+.menu-window {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  &__header {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 32px;
+  }
+  &__heading {
+  }
+  &__description {
+  }
+}
+
+.menu {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 32px;
+  &__graphic {
+    &-container {
+      width: 30vw;
+      height: 50vh;
+      background-color: cadetblue;
+    }
+  }
+  &__buttons {
+    display: flex;
+    flex-direction: column;
+  }
+  &__button {
+    &--rules {
+      position: absolute;
+      right: 2rem;
+      bottom: 0;
+      width: 2rem;
+      height: 2rem;
+    }
+  }
+}
+
+.footer {
+  position: sticky;
+  bottom: 0;
+  width: 100vw;
+  margin: auto;
+  background-color: white;
+  line-height: 2em;
+  text-align: center;
+}

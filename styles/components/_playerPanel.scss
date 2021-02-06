@@ -1,0 +1,76 @@
+.player-panel {
+  display: flex;
+  width: 100vw;
+  min-height: 40vh;
+  flex-grow: 1 1 1;
+
+  &__board {
+    position: relative;
+    width: 60vw;
+    padding: 0.5rem;
+    border-right: 1px solid black;
+  }
+
+  &__details {
+    display: inline-block;
+    margin-left: 1rem;
+  }
+
+  &__name {
+    font-size: 1.7rem;
+    font-weight: 700;
+  }
+
+  &__time {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+  }
+
+  &__herd {
+    display: inline-flex;
+    width: 100%;
+    height: 80%;
+    align-items: center;
+    justify-content: space-around;
+  }
+
+  &__image {
+    width: auto;
+    height: 4rem;
+  }
+
+  &__result {
+    width: 30vw;
+    padding: 0.5rem;
+    text-align: center;
+
+    &--dice {
+      margin-top: 2rem;
+    }
+
+    &--gain {
+      margin-top: 2rem;
+    }
+
+    &--container {
+      display: inline;
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    width: 10vw;
+    flex-direction: column;
+  }
+}
+
+.btn {
+  width: 100%;
+  height: 50%;
+}
+
+.avatar-icon {
+  display: inline;
+  height: 3rem;
+}

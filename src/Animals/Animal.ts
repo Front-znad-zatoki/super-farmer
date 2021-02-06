@@ -1,20 +1,24 @@
 import { AnimalNames } from '../Enums/AnimalNamesEnum';
 import { AnimalRoles } from '../Enums/AnimalRolesEnum';
-import _ from 'lodash';
+import { pull } from 'lodash';
 
-type Value = 1 | 6 | 12 | 36 | 72;
+export type Value = 1 | 6 | 12 | 36 | 72;
 
-export abstract class Animal {
+// export abstract class Animal {
+export class Animal {
   protected name: AnimalNames;
+  protected imagePath: string;
   protected roles: AnimalRoles[];
   protected value?: Value;
 
   constructor(
     name: AnimalNames,
+    imagePath = '',
     value?: Value,
     ...roles: AnimalRoles[]
   ) {
     this.name = name;
+    this.imagePath = imagePath;
     this.roles = roles;
     this.value = value;
   }
@@ -23,8 +27,8 @@ export abstract class Animal {
     return this.name;
   }
 
-  get theRoles(): AnimalRoles[] {
-    return this.roles;
+  get theImagePath(): string {
+    return this.imagePath;
   }
 
   get theValue(): Value {
@@ -34,6 +38,10 @@ export abstract class Animal {
 
   set theValue(value: Value) {
     this.value = value;
+  }
+
+  get theRoles(): AnimalRoles[] {
+    return this.roles;
   }
 
   /**
@@ -49,7 +57,7 @@ export abstract class Animal {
    * @returns the array after removing elements
    */
   removeRole(...role: AnimalRoles[]): AnimalRoles[] {
-    return _.pull(this.roles, ...role);
+    return pull(this.roles, ...role);
   }
 
   /**

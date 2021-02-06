@@ -1,0 +1,28 @@
+.bank {
+  &__board {
+    display: inline-flex;
+    width: 90vw;
+    align-content: space-around;
+    align-items: center;
+    justify-content: space-around;
+    background-color: wheat;
+
+    &__container {
+    }
+
+    &__text {
+      display: inline;
+      font-weight: 700;
+    }
+
+    &__img {
+      height: 3rem;
+    }
+  }
+
+  &__bar {
+    position: absolute;
+    bottom: 0;
+    display: inline-flex;
+  }
+}

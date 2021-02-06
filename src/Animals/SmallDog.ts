@@ -6,7 +6,12 @@ import { Animal } from './Animal';
 
 export class SmallDog extends Animal implements ProtectHerdInterface {
   constructor() {
-    super(AnimalNames.SMALL_DOG, 6, AnimalRoles.GUARDIAN);
+    super(
+      AnimalNames.SMALL_DOG,
+      '/static/images/avatars/dog.png',
+      6,
+      AnimalRoles.GUARDIAN,
+    );
   }
 
   // TODO: implement when herd is ready
@@ -28,8 +33,7 @@ export class SmallDog extends Animal implements ProtectHerdInterface {
       'div',
       {
         id: id,
-        style:
-          'color: green; font-size: 28px; font-weight: bold; border: 5px dotted red; margin: 10px; padding: 10px;',
+        className: 'exclamation',
       },
       exclamation,
     );
@@ -39,6 +43,6 @@ export class SmallDog extends Animal implements ProtectHerdInterface {
       console.log(err.message);
     }
 
-    setTimeout(() => Render.removeElement(`#${id}`), 6000);
+    // setTimeout(() => Render.removeElement(`#${id}`), 6000);
   }
 }

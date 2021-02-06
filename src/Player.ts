@@ -1,17 +1,24 @@
 import { Herd } from './app/logic/Herd';
+import { mockHerdConfig } from './app/logic/mockHerdConfig';
+import { HerdConfigInterface } from './Interfaces/HerdConfigInterface';
 
 export class Player {
   protected name: string;
   protected avatar: string;
   protected herd: Herd;
-  protected score: number;
+  protected color: string;
 
   // TODO: set path to default avatar when it's available
-  constructor(name: string, avatar = 'path to default avatar') {
+  constructor(
+    name: string,
+    avatar = 'path to default avatar',
+    color = 'green',
+    herdConfig: HerdConfigInterface[] = mockHerdConfig,
+  ) {
     this.name = name;
-    this.herd = new Herd();
+    this.herd = new Herd(herdConfig);
     this.avatar = avatar;
-    this.score = 0;
+    this.color = color;
   }
 
   get theName(): string {
@@ -34,13 +41,11 @@ export class Player {
     this.herd = herd;
   }
 
-  get theScore(): number {
-    return this.score;
+  get theColor(): string {
+    return this.color;
   }
 
-  updateScore(): void {
-    // TODO: count value of all animals from herd when it's ready
-    const newScore = 0;
-    this.score = newScore;
+  set theColor(color: string) {
+    this.color = color;
   }
 }
