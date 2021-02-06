@@ -13,6 +13,7 @@ import { defaultGameConfiguration } from './defaultGameConfiguration';
 import { LivestockConfigInterface } from '../../Interfaces/LivestockConfigInterface';
 import { ProtectorsConfigInterface } from '../../Interfaces/ProtectorsConfigInterface';
 import { HerdOwners } from '../../Enums/HerdOwnerEnum';
+import { AiPlayer } from '../AiPlayer';
 
 export class Game {
   mode: GameModes;
@@ -49,15 +50,23 @@ export class Game {
       protectorsConfig,
       HerdOwners.BANK,
     );
-    this.players = playersConfig.map(
-      (player) =>
-        new Player(
-          player.name,
-          player.path,
-          player.color,
-          this.playersHerdConfig,
-        ),
-    );
+    this.players = [
+      ...playersConfig.map(
+        (player) =>
+          new Player(
+            player.name,
+            player.path,
+            player.color,
+            this.playersHerdConfig,
+          ),
+      ),
+      new AiPlayer(
+        'AiPlayer',
+        undefined,
+        undefined,
+        this.playersHerdConfig,
+      ),
+    ];
     this.currentPlayerNumber = 0;
     this.bank = new Bank(this.banksHerdConfig);
     // TODO: GET DICE DATA FROM CONFIG AFTER/ IF DICE REFACTOR

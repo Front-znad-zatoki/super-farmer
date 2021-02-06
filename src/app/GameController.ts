@@ -4,6 +4,7 @@ import { ViewController } from './ViewController';
 import { Game } from './logic/Game';
 import { defaultGameConfiguration } from './logic/defaultGameConfiguration';
 import { Bank } from './logic/Bank';
+import { AiPlayer } from './AiPlayer';
 
 export class GameController {
   private game: Game;
@@ -84,6 +85,11 @@ export class GameController {
       this.game.theCurrentPlayer,
       this.game.theBank,
     );
+    if (this.game.theCurrentPlayer instanceof AiPlayer) {
+      //TODO disable interface for the time of AiPlayers move
+      this.game.theCurrentPlayer.makeAMove(this);
+      //TODO enable interface for the time of AiPlayers move
+    }
   }
 
   updateTimeRemaining(timeLeft: number): void {
