@@ -1,8 +1,8 @@
 import { Player } from '~src/Player';
 import { Render } from '../utils/Render';
-import { ModalBasic } from './ModalBasic';
+import { BasicModal } from './BasicModal';
 
-export class WinModal extends ModalBasic {
+export class WinModal extends BasicModal {
   create(player: Player): void {
     this.renderBasicModal(
       'CONGRATULATIONS!',

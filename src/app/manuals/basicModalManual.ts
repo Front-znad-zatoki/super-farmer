@@ -1,7 +1,7 @@
 //TO VIEW DEMO, INSERT IN APP.TS: basicModalDemo()
 
 import { Button } from '../components/Button';
-import { ModalBasic } from '../components/ModalBasic';
+import { BasicModal } from '../components/BasicModal';
 import { Render } from '../utils/Render';
 
 export function basicModalDemo(): void {
@@ -15,7 +15,7 @@ export function basicModalDemo(): void {
     Render.removeElement('.modal');
   };
 
-  const basicModal: ModalBasic = new ModalBasic();
+  const basicModal: BasicModal = new BasicModal();
 
   basicModal.renderBasicModal(
     'START GAME',

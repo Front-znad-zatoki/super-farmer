@@ -2,13 +2,12 @@ import { Render } from '../utils/Render';
 import { Button } from './Button';
 import { EmptyModal } from './EmptyModal';
 
-export class ModalBasic extends EmptyModal {
+export class BasicModal extends EmptyModal {
   /**
    * Creates and appends the main modal structure.
    * @param {string} heading Heading to be render inside the modal.
    * @param {string} text Additional description or text to be inserted below heading.
    * @param {HTMLElement} modalContent Content of modal to render below heading and description.
-   * @return {ModalBasic} The modal object.
    */
   protected renderBasicModal(
     heading: string,
@@ -38,7 +37,6 @@ export class ModalBasic extends EmptyModal {
   /**
    * Creates and appends the modal content.
    * @param { string | HTMLElement } content Content of modal to render below heading and description.
-   * @return {ModalBasic} The model's object.
    */
   protected addModalContent(content: string | HTMLElement): void {
     Render.childrenInjector(this.modalContainer, content);
@@ -50,7 +48,6 @@ export class ModalBasic extends EmptyModal {
    * @param {function} leftButtonAction Function to be added to the click listener of the left button.
    * @param {string} rightButtonText Text to be rendered in the right button.
    * @param {function} rigthButtonAction Function to be added to the click listener of the right button.
-   * @return {ModalBasic} The model's object.
    */
   protected createAndAppendButtonsRow(
     leftButtonText: string,
