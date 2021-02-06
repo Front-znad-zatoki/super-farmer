@@ -1,9 +1,13 @@
-import { AnimalNames } from '~src/Enums/AnimalNamesEnum';
-import { Player } from '~src/Player';
+import { AnimalNames } from '../../Enums/AnimalNamesEnum';
+import { RollResult } from '../BreedProcessor';
+import { GameController } from '../GameController';
 import { Game } from './Game';
 
 export class GameProcessor {
-  constructor(private game: Game) {}
+  constructor(
+    private game: Game,
+    private gameController: GameController,
+  ) {}
 
   /**
    * Starts the timer for current players turn.
@@ -11,28 +15,32 @@ export class GameProcessor {
    * @param turnTimeOverCallback to be executed when the time is over
    * @param updateRemainingTimeCallback to be executed when the remaining time changes
    */
-  startTurn(
-    turnTimeOverCallback: (currentPlayer: Player) => void,
-    updateRemainingTimeCallback: (remainingTime: number) => void,
-  ): void {
+  startTurn(): void {
     this.game.theTimer.countdown();
     const turnTimer = setInterval(() => {
       if (!this.game.theTimer.running) {
         clearInterval(turnTimer);
-        if (Math.ceil(this.game.theTimer.theTurnTimeLeft) === 0) {
-          turnTimeOverCallback(this.game.theCurrentPlayer);
-
-          this.nextPlayer();
-          this.startTurn(
-            turnTimeOverCallback,
-            updateRemainingTimeCallback,
-          );
+        if (Math.round(this.game.theTimer.theTurnTimeLeft) === 0) {
+          this.gameController.turnAlert();
+        }
+        if (!this.game.theTimer.hasGameEnded) {
+          setTimeout(() => {
+            this.gameController.nextPlayer();
+          }, 3000);
         }
       }
-      updateRemainingTimeCallback(
+      this.gameController.updateTimeRemaining(
         Math.round(this.game.theTimer.theTurnTimeLeft),
       );
-    }, 10);
+    }, 100);
+  }
+
+  pauseTurn(): void {
+    this.game.theTimer.pauseTime();
+  }
+
+  resumeGame(): void {
+    this.game.theTimer.resumeTime();
   }
 
   /**
@@ -74,7 +82,7 @@ export class GameProcessor {
       AnimalNames.COW,
       AnimalNames.HORSE,
     ];
-    for (const animal in animalsRequiredToWin) {
+    for (const animal of animalsRequiredToWin) {
       if (
         this.game.theCurrentPlayer.theHerd.getAnimalNumber(
           animal as AnimalNames,
@@ -90,9 +98,9 @@ export class GameProcessor {
    * Rolls the dice for the player and updates their Herd.
    * @returns the result of the current players roll
    */
-  breed(): [AnimalNames, AnimalNames] | undefined {
+  breed(): RollResult {
     if (!this.hasTimeLeft()) {
-      return;
+      return { rollResult: [], gain: [] };
     }
     const rollResult = this.game.theBreedProcessor.processBreedPhase(
       this.game.theCurrentPlayer,
@@ -109,6 +117,10 @@ export class GameProcessor {
   }
 
   private hasTimeLeft(): boolean {
-    return this.game.theTimer.theTurnTimeLeft === 0;
+    return this.game.theTimer.running;
+  }
+
+  quitGame(): void {
+    this.game.theTimer.quitGame();
   }
 }

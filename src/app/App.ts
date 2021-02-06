@@ -1,8 +1,8 @@
-import { ModeModalManual } from './manuals/ModeModalManual';
+import { ViewController } from './ViewController';
 
 export class App {
-  init(): string {
-    ModeModalManual.playDemo();
-    return 'hello world';
+  init(): void {
+    const view = new ViewController();
+    view.displayMenuView();
   }
 }

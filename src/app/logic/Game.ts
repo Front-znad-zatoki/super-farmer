@@ -94,7 +94,7 @@ export class Game {
     return this.dice;
   }
   get theTimer(): Timer {
-    return this.theTimer;
+    return this.timer;
   }
 
   get theBreedProcessor(): BreedProcessor {

@@ -4,6 +4,7 @@ import { TradeModal } from '../components/TradeModal';
 import { Bank } from '../logic/Bank';
 import { Trade } from '../Trade';
 import { Render } from '../utils/Render';
+import { ViewController } from '../ViewController';
 
 //type TradeModalDemo.playDemo() in init in App.ts
 export class TradeModalDemo {
@@ -13,12 +14,13 @@ export class TradeModalDemo {
       'Donald',
       './static/images/avatars/dog.png',
     );
+    const view = new ViewController();
     player.theHerd.addAnimalsToHerd(AnimalNames.RABBIT, 20);
     player.theHerd.addAnimalsToHerd(AnimalNames.SHEEP, 5);
     player.theHerd.addAnimalsToHerd(AnimalNames.PIG, 5);
     player.theHerd.addAnimalsToHerd(AnimalNames.COW, 2);
     player.theHerd.addAnimalsToHerd(AnimalNames.HORSE, 1);
-    const modal = new TradeModal(trade, player);
+    const modal = new TradeModal(trade, player, view);
     Render.render('#sf-app', modal.createModal());
 
     const player2 = new Player(

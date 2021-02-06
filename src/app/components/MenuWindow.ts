@@ -1,10 +1,14 @@
 import { Render } from '../utils/Render';
+import { ViewController } from '../ViewController';
 
 export class MenuWindow {
+  constructor(private view: ViewController) {}
+
   /**
    * Returns menu window, a landing page where a player can find out more info about the game and start to play.
    */
-  renderMenuWindow(): HTMLElement {
+  renderMenuWindow(): void {
+    Render.removeAllChildren('#sf-app');
     const menuWindowHeading: HTMLElement = Render.elementFactory(
       'h1',
       { className: 'menu-window__heading heading' },
@@ -86,6 +90,6 @@ export class MenuWindow {
       menu,
       footer,
     );
-    return pageContainer;
+    Render.render('#sf-app', pageContainer);
   }
 }

@@ -1,6 +1,7 @@
 .page__container {
   width: 100vw;
-  height: 100vh;
+  height: calc(100vh - 2rem);
+  background-color: white;
   text-align: center;
 }
 
@@ -40,15 +41,20 @@
   &__button {
     &--rules {
       position: absolute;
-      right: 32px;
-      bottom: -16px;
-      width: 32px;
-      height: 32px;
+      right: 2rem;
+      bottom: 0;
+      width: 2rem;
+      height: 2rem;
     }
   }
 }
 
 .footer {
-  padding: 32px;
-  background-color: cadetblue;
+  position: sticky;
+  bottom: 0;
+  width: 100vw;
+  margin: auto;
+  background-color: white;
+  line-height: 2em;
+  text-align: center;
 }

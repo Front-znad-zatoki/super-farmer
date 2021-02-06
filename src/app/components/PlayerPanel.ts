@@ -1,17 +1,28 @@
 import { Player } from '../../Player';
 import { Render } from '../utils/Render';
-import { View } from '../View';
 import { flatten } from 'lodash';
 import { AnimalNames } from '../../Enums/AnimalNamesEnum';
+import { GameView } from '../GameView';
+import { ConvertAnimalName } from '../utils/ConvertAnimalName';
+import { Animal } from '../../Animals/Animal';
 
 export class PlayerPanel {
+  private player: Player;
   /**
    * Creates PlayerPanel based on data given
-   * @param player accepts instance of current player
-   * @param view accepts instance of View componnet
+   * @param view accepts instance of View componenet
    */
-  constructor(private player: Player, private view: View) {}
+  constructor(private view: GameView) {
+    this.player = new Player('', '', '');
+  }
 
+  setPlayer(player: Player): void {
+    this.player = player;
+  }
+
+  /**
+   * Creates player panel and returns it as HTMLElement
+   */
   createPlayerPanel(): HTMLElement {
     return Render.elementFactory(
       'div',
@@ -29,8 +40,20 @@ export class PlayerPanel {
     return Render.elementFactory(
       'div',
       {
+        id: 'player-board',
         className: 'player-panel__board',
       },
+      ...this.createPanelBoard(),
+    );
+  }
+
+  refreshHerd(): void {
+    Render.removeAllChildren('#player-board');
+    Render.render('#player-board', ...this.createPanelBoard());
+  }
+
+  createPanelBoard(): HTMLElement[] {
+    return [
       Render.elementFactory(
         'div',
         { className: 'player-panel__info' },
@@ -44,10 +67,10 @@ export class PlayerPanel {
       Render.elementFactory(
         'div',
         { id: 'time-left', className: 'player-panel__time' },
-        `Time left: ${this.player.theAvatar}`,
+        `Time left: `,
       ),
       this.createPlayerHerd(),
-    );
+    ];
   }
 
   private createPlayerDetails(): HTMLElement {
@@ -67,28 +90,26 @@ export class PlayerPanel {
     return Render.elementFactory(
       'div',
       { className: 'player-panel__herd' },
-      ...flatten(this.convertHerd()),
+      ...flatten(
+        this.convertAnimalsToHTML(this.player.theHerd.theAnimals),
+      ),
     );
   }
 
-  private convertHerd(): HTMLElement[] {
-    return this.player.theHerd.theAnimals.map(([animal, count]) => {
-      return Render.elementFactory(
+  private convertAnimalsToHTML(
+    animals: [Animal, number][],
+  ): HTMLElement[] {
+    return animals.map(([animal, count]) =>
+      Render.elementFactory(
         'div',
-        { className: 'resources' },
-        Render.elementFactory('img', {
-          className: 'player-panel__image',
-          alt: `${animal.theName}`,
-          src: `./static/images/avatars/${
-            animal.theName === AnimalNames.BIG_DOG ||
-            animal.theName === AnimalNames.SMALL_DOG
-              ? 'dog'
-              : animal.theName
-          }.png`,
-        }),
+        { className: 'player-panel__result--container' },
+        ConvertAnimalName.toHTMLElement(
+          animal.theName,
+          'player-panel__image',
+        ),
         `x${count}`,
-      );
-    });
+      ),
+    );
   }
 
   private createResultWindow(): HTMLElement {
@@ -113,20 +134,108 @@ export class PlayerPanel {
   private createDiceButton(): HTMLElement {
     const rollBtn = Render.elementFactory(
       'button',
-      { className: 'btn' },
-      'Roll a dice',
+      {
+        id: 'roll-dice',
+        className: 'btn button',
+      },
+      'Roll the dice',
     );
-    rollBtn.addEventListener('click', () => this.view.handleRoll());
+    rollBtn.addEventListener('click', () => {
+      this.view.handleRoll();
+      (document.querySelector(
+        '#roll-dice',
+      ) as HTMLElement).setAttribute('disabled', 'true');
+    });
     return rollBtn;
   }
 
   private createExchangeButton(): HTMLElement {
     const tradeBtn = Render.elementFactory(
       'button',
-      { className: 'btn' },
+      {
+        id: 'exchange',
+        className: 'btn button',
+      },
       'Exchange',
     );
     tradeBtn.addEventListener('click', () => this.view.handleTrade());
     return tradeBtn;
+  }
+
+  /**
+   * Displays results of Dice throw
+   * @param diceResults Takes array of dice results
+   * @param playerGain Takes array of tuples containing players gain
+   */
+  displayRollResult(
+    diceResults: AnimalNames[],
+    playerGain: [AnimalNames, number][],
+  ): void {
+    const diceResult = Render.elementFactory(
+      'div',
+      {},
+      Render.elementFactory(
+        'h3',
+        { className: 'player-panel__result--dice' },
+        `Dice results:`,
+      ),
+      ...diceResults.map((name) =>
+        ConvertAnimalName.toHTMLElement(name, 'player-panel__image'),
+      ),
+    );
+    Render.render(
+      '.player-panel__result',
+      diceResult,
+      Render.elementFactory(
+        'div',
+        {},
+        Render.elementFactory(
+          'h3',
+          { className: 'player-panel__result--gain' },
+          `${this.player.theName} gains:`,
+        ),
+        ...this.convertAnimalsToHTML(
+          playerGain.map(([animal, count]) => [
+            ConvertAnimalName.toAnimalObject(animal),
+            count,
+          ]),
+        ),
+      ),
+    );
+    this.view.stopTimer();
+    setTimeout(() => this.hideTimer(), 10);
+  }
+
+  private hideTimer(): void {
+    (document.querySelector(
+      '#time-left',
+    ) as HTMLElement).style.display = 'none';
+  }
+
+  /**
+   * Updates timer on player panel
+   * @param timeLeft accepts number value for time left
+   */
+  updateTime(timeLeft: number): void {
+    const timer = document.querySelector('#time-left') as HTMLElement;
+    timer.innerText = `Time left: ${timeLeft} sec.`;
+  }
+
+  turnAlert(): void {
+    Render.render(
+      '#sf-app',
+      Render.elementFactory(
+        'div',
+        { className: 'exclamation' },
+        `${this.player.theName}'s turn has passed!`,
+      ),
+    );
+  }
+
+  disableTrade(): void {
+    (document.querySelector('#exchange') as HTMLElement).setAttribute(
+      'disabled',
+      'true',
+    );
   }
 }

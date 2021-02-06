@@ -1,8 +1,13 @@
-import { Player } from '~src/Player';
+import { Player } from '../../Player';
 import { Render } from '../utils/Render';
+import { ViewController } from '../ViewController';
 import { BasicModal } from './BasicModal';
 
 export class WinModal extends BasicModal {
+  constructor(private view: ViewController) {
+    super();
+  }
+
   createWinModal(player: Player): HTMLElement {
     this.renderBasicModal(
       'CONGRATULATIONS!',
@@ -14,7 +19,10 @@ export class WinModal extends BasicModal {
   }
 
   private addButton(): void {
-    const handleEnd = () => Render.removeElement('.modal');
+    const handleEnd = () => {
+      Render.removeElement('.modal');
+      this.view.displayMenuView();
+    };
     this.createAndAppendButtonsRow(
       'End game - back to menu',
       handleEnd,
