@@ -8,7 +8,7 @@ export class Fox extends Animal implements AttackHerdInterface {
   constructor() {
     super(
       AnimalNames.FOX,
-      '/static/images/avatars/fox.png',
+      './static/images/avatars/fox.png',
       undefined,
       AnimalRoles.PREDATOR,
     );
