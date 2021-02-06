@@ -9,7 +9,7 @@ export class MenuView {
       this.view.launchGame(players),
     );
     this.modeModal.hideModal();
-    Render.render('#sf-app', this.modeModal.createModeModal());
+    Render.render('body', this.modeModal.createModeModal());
   }
 
   displayMenu(): void {

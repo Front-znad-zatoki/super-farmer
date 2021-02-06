@@ -90,6 +90,10 @@ export class ViewController {
     }
   }
 
+  displayAuthorsModal(): void {
+    // TODO: display authors
+  }
+
   displaySettingsModal(): void {
     // TODO: display settings
   }
