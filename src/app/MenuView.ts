@@ -1,8 +1,16 @@
+import { ModeModal } from './components/ModeModal';
 import { Render } from './utils/Render';
 import { ViewController } from './ViewController';
 
 export class MenuView {
-  constructor(private view: ViewController) {}
+  private modeModal: ModeModal;
+  constructor(private view: ViewController) {
+    this.modeModal = new ModeModal((players) =>
+      this.view.launchGame(players),
+    );
+    this.modeModal.hideModal();
+    Render.render('#sf-app', this.modeModal.createModeModal());
+  }
 
   displayMenu(): void {
     Render.removeAllChildren('#sf-app');
@@ -72,9 +80,9 @@ export class MenuView {
       { className: 'button' },
       'NEW GAME',
     );
-    startGameButton.addEventListener('click', () =>
-      this.view.launchGame(),
-    );
+    startGameButton.addEventListener('click', () => {
+      this.modeModal.showModal();
+    });
     const settingsButton = Render.elementFactory(
       'button',
       {

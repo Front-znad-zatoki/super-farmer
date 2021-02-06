@@ -9,16 +9,19 @@ import { RollResult } from './BreedProcessor';
 import { Trade } from './Trade';
 import { TradeModal } from './components/TradeModal';
 import { defaultGameConfiguration } from './logic/defaultGameConfiguration';
+import { PlayerDTO } from '../Interfaces/PlayerDTOInterface';
 
 export class ViewController {
   private menuView: MenuView;
   private gameView: GameView;
+  private winModal: WinModal;
   private gameController: GameController | undefined;
   private tradeModal: TradeModal | undefined;
 
   constructor() {
     this.menuView = new MenuView(this);
     this.gameView = new GameView(this);
+    this.winModal = new WinModal(this);
     this.gameController = undefined;
   }
 
@@ -30,8 +33,10 @@ export class ViewController {
     this.menuView.displayMenu();
   }
 
-  launchGame(): void {
-    this.gameController = new GameController(this);
+  launchGame(players: PlayerDTO[]): void {
+    const config = defaultGameConfiguration;
+    config.playersConfig = players;
+    this.gameController = new GameController(this, config);
     this.startGame(
       this.gameController.theGame.thePlayers,
       this.gameController.theGame.theCurrentPlayer,
@@ -65,10 +70,7 @@ export class ViewController {
   }
 
   displayWinModal(player: Player): void {
-    const winModal = new WinModal();
-    winModal.create(player);
-    winModal.addButton(this);
-    Render.render('body', winModal.modal);
+    Render.render('body', this.winModal.createWinModal(player));
   }
 
   turnAlert(): void {
