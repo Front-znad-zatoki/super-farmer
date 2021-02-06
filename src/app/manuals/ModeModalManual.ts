@@ -1,29 +1,10 @@
 import { ModeModal } from '../components/ModeModal';
 import { Render } from '../utils/Render';
 
-export function ModeModalDemo() {
-  const handleModalClose = () => {
-    //TODO: WRITE LOGIC
-    Render.removeElement('.modal');
-  };
-  const handlePlayGame = () => {
-    //TODO: WRITE LOGIC
-    Render.removeElement('.modal');
-  };
-  const modeModalDemo: ModeModal = new ModeModal();
+export class ModeModalManual {
+  static playDemo(): void {
+    const modeModal = new ModeModal();
 
-  modeModalDemo.renderBasicModal(
-    'Add your nick, choose avatar and color',
-    '',
-    ModeModal.createModeModal(),
-  );
-
-  modeModalDemo.createAndAppendButtonsRow(
-    'GO BACK',
-    handleModalClose,
-    'PLAY',
-    handlePlayGame,
-  );
-
-  Render.render('#sf-app', modeModalDemo.modal);
+    Render.render('#sf-app', modeModal.createModeModal());
+  }
 }
