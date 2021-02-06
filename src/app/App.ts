@@ -1,8 +1,8 @@
-import { ModeModalDemo } from './manuals/ModeModalManual';
+import { ModeModalManual } from './manuals/ModeModalManual';
 
 export class App {
   init(): string {
-    ModeModalDemo();
+    ModeModalManual.playDemo();
     return 'hello world';
   }
 }
