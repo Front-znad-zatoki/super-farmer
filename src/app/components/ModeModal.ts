@@ -7,6 +7,7 @@ export class ModeModal extends BasicModal {
   private modeForm: HTMLFormElement;
   private playerElements: HTMLElement[];
   private addPlayerButton: HTMLElement;
+  private removePlayerButton: HTMLElement;
   private playerInputsWrapper: HTMLElement;
   private backButton!: HTMLElement;
   private playButton!: HTMLElement;
@@ -20,8 +21,19 @@ export class ModeModal extends BasicModal {
     this.playerElements = [];
     this.addPlayerButton = Render.elementFactory(
       'button',
-      { type: 'button', className: 'mode-form__add-player-btn' },
+      {
+        type: 'button',
+        className: 'mode-form__add-player-btn',
+      },
       'add next player',
+    );
+    this.removePlayerButton = Render.elementFactory(
+      'button',
+      {
+        type: 'button',
+        className: 'mode-form__remove-player-btn hidden',
+      },
+      'remove player',
     );
     this.playerInputsWrapper = Render.elementFactory('div', {
       className: 'mode-inputs-wrapper',
@@ -61,6 +73,7 @@ export class ModeModal extends BasicModal {
 
       this.playerInputsWrapper,
       this.addPlayerButton,
+      this.removePlayerButton,
     );
     this.addPlayer();
 
@@ -77,20 +90,41 @@ export class ModeModal extends BasicModal {
       'click',
       this.handleClickBackButton,
     );
+    this.removePlayerButton.addEventListener(
+      'click',
+      this.handleClickRemovePlayer,
+    );
   }
 
   private addPlayer(): void {
     const numberOfPlayers = this.playerInputsWrapper.children.length;
-    if (numberOfPlayers >= 4) {
-      return;
-    }
+    if (numberOfPlayers >= 4) return;
+
     const playerInputRow = this.generatePlayerInput(
       numberOfPlayers + 1,
     );
+
     if (numberOfPlayers >= 3) {
       this.addPlayerButton.classList.add('hidden');
     }
     Render.childrenInjector(this.playerInputsWrapper, playerInputRow);
+    if (numberOfPlayers === 1) {
+      this.removePlayerButton.classList.remove('hidden');
+    }
+  }
+
+  private removePlayer(): void {
+    const numberOfPlayers = this.playerInputsWrapper.children.length;
+    if (numberOfPlayers <= 1) return;
+
+    if (numberOfPlayers === 4) {
+      this.addPlayerButton.classList.remove('hidden');
+    }
+
+    (this.playerInputsWrapper.lastElementChild as Element).remove();
+
+    if (numberOfPlayers === 2)
+      this.removePlayerButton.classList.add('hidden');
   }
 
   private generateButtons(): HTMLElement {
@@ -136,7 +170,7 @@ export class ModeModal extends BasicModal {
       type: 'text',
       id: indicator,
       name: indicator,
-      value: `Player ${numberOfPlayer}`,
+      placeholder: `Player ${numberOfPlayer}`,
       className: 'mode-form__input',
     });
     const playerRow = Render.elementFactory(
@@ -162,7 +196,10 @@ export class ModeModal extends BasicModal {
       const [key] = formKey.split('_');
       switch (key) {
         case 'name': {
-          playerDTO.name = value;
+          playerDTO.name =
+            value.trim().length > 0
+              ? value
+              : `Janush ${playersData.length + 1}`;
           break;
         }
         case 'path': {
@@ -190,6 +227,10 @@ export class ModeModal extends BasicModal {
 
   private handleClickAddPlayer = (): void => {
     this.addPlayer();
+  };
+
+  private handleClickRemovePlayer = (): void => {
+    this.removePlayer();
   };
 
   private handleClickBackButton = (): void => {
