@@ -130,7 +130,7 @@ export class ModeModal extends BasicModal {
       type: 'text',
       id: indicator,
       name: indicator,
-      placeholder: `Player ${numberOfPlayer}`,
+      value: `Player ${numberOfPlayer}`,
       className: 'mode-form__input',
     });
     const playerRow = Render.elementFactory(
@@ -147,7 +147,11 @@ export class ModeModal extends BasicModal {
   ): PlayerDTO[] {
     const playersData = [];
     for (const [formKey, formValue] of formData.entries()) {
-      const playerDTO: PlayerDTO = { name: '', path: '', color: '' };
+      const playerDTO: PlayerDTO = {
+        name: '',
+        path: './static/images/playerAvatars/woman.svg',
+        color: '#064a89',
+      };
       const value = formValue.toString();
       const [key] = formKey.split('_');
       switch (key) {
