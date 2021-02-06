@@ -1,17 +1,18 @@
 import { BasicModal } from './BasicModal';
 import { Render } from '../utils/Render';
 import { PlayerDTO } from '~src/Interfaces/PlayerDTOInterface';
+import { CallbackOneParam } from '~src/Interfaces/CallbackOneParamInterface';
 
 export class ModeModal extends BasicModal {
   private modeForm: HTMLFormElement;
-  private playersData: PlayerDTO[];
   private playerElements: HTMLElement[];
   private addPlayerButton: HTMLElement;
   private playerInputsWrapper: HTMLElement;
   private backButton!: HTMLElement;
   private playButton!: HTMLElement;
+  private submitCallback: CallbackOneParam<PlayerDTO[]>;
 
-  constructor() {
+  constructor(submitCallback: CallbackOneParam<PlayerDTO[]>) {
     super();
     this.playerElements = [];
     this.addPlayerButton = Render.elementFactory(
@@ -23,7 +24,7 @@ export class ModeModal extends BasicModal {
       className: 'mode-inputs-wrapper',
     });
     this.modeForm = this.createForm();
-    this.playersData = [];
+    this.submitCallback = submitCallback;
   }
 
   createModeModal(): HTMLElement {
@@ -121,7 +122,7 @@ export class ModeModal extends BasicModal {
       { for: indicator, className: 'mode-modal__form-label' },
       Render.elementFactory('img', {
         className: 'mode-form__avatar',
-        src: '../../static/images/playerAvatars/woman.svg',
+        src: './static/images/playerAvatars/woman.svg',
       }),
     );
 
@@ -141,7 +142,10 @@ export class ModeModal extends BasicModal {
     return playerRow;
   }
 
-  private setPlayersDataFromFormData(formData: FormData): void {
+  private convertDataFormToPlayersData(
+    formData: FormData,
+  ): PlayerDTO[] {
+    const playersData = [];
     for (const [formKey, formValue] of formData.entries()) {
       const playerDTO: PlayerDTO = { name: '', path: '', color: '' };
       const value = formValue.toString();
@@ -160,15 +164,16 @@ export class ModeModal extends BasicModal {
           break;
         }
       }
-      this.playersData.push(playerDTO);
+      playersData.push(playerDTO);
     }
+    return playersData;
   }
 
   private handleSubmit = (event: Event): void => {
     event.preventDefault();
     const formData = new FormData(event.target as HTMLFormElement);
-    this.setPlayersDataFromFormData(formData);
-    console.log(this.playersData);
+    const playersData = this.convertDataFormToPlayersData(formData);
+    this.submitCallback(playersData);
   };
 
   private handleClickAddPlayer = (): void => {
