@@ -184,6 +184,8 @@ export class ModeModal extends BasicModal {
     const formData = new FormData(event.target as HTMLFormElement);
     const playersData = this.convertDataFormToPlayersData(formData);
     this.submitCallback(playersData);
+    this.hideModal();
+    this.modeForm.reset();
   };
 
   private handleClickAddPlayer = (): void => {
