@@ -3,15 +3,17 @@ import { Render } from '../utils/Render';
 import { BasicModal } from './BasicModal';
 
 export class WinModal extends BasicModal {
-  create(player: Player): void {
+  createWinModal(player: Player): HTMLElement {
     this.renderBasicModal(
       'CONGRATULATIONS!',
       `${player.theName} has won!`,
       this.createImage(player),
     );
+    this.addButton();
+    return this.modal;
   }
 
-  addButton(): void {
+  private addButton(): void {
     const handleEnd = () => Render.removeElement('.modal');
     this.createAndAppendButtonsRow(
       'End game - back to menu',
