@@ -12,6 +12,9 @@ export class ModeModal extends BasicModal {
   private playButton!: HTMLElement;
   private submitCallback: CallbackOneParam<PlayerDTO[]>;
 
+  /**
+   * @param submitCallback - will be called onSubmit with PlayerDTO[] data in the argument
+   */
   constructor(submitCallback: CallbackOneParam<PlayerDTO[]>) {
     super();
     this.playerElements = [];
@@ -27,6 +30,9 @@ export class ModeModal extends BasicModal {
     this.submitCallback = submitCallback;
   }
 
+  /**
+   * Creates ModeModal and returns it as HTMLElement.
+   */
   createModeModal(): HTMLElement {
     this.renderBasicModal(
       'Add your nick, choose avatar and color',

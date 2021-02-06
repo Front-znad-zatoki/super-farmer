@@ -13,6 +13,10 @@ export class TradeModal extends EmptyModal {
   private backButton: HTMLElement;
   private player: Player;
 
+  /**
+   * @param trade instance of Trade
+   * @param firstPlayer instance of player who will be first in queue
+   */
   constructor(private trade: Trade, firstPlayer: Player) {
     super();
     this.player = firstPlayer;
