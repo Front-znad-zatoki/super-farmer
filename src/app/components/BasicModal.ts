@@ -7,12 +7,12 @@ export class BasicModal extends EmptyModal {
    * Creates and appends the main modal structure.
    * @param {string} heading Heading to be render inside the modal.
    * @param {string} text Additional description or text to be inserted below heading.
-   * @param {HTMLElement} modalContent Content of modal to render below heading and description.
+   * @param {HTMLElement[]} modalContent Content of modal to render below heading and description.
    */
   protected renderBasicModal(
     heading: string,
     text: string,
-    modalContent?: HTMLElement,
+    ...modalContent: HTMLElement[]
   ): void {
     const modalHeader = Render.elementFactory(
       'h2',
@@ -30,7 +30,7 @@ export class BasicModal extends EmptyModal {
       this.modalContainer,
       modalHeader,
       modalText,
-      modalContent ? modalContent : '',
+      ...modalContent,
     );
   }
 
