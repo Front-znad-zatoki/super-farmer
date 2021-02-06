@@ -141,13 +141,34 @@ export class ModeModal extends BasicModal {
     return playerRow;
   }
 
+  private setPlayersDataFromFormData(formData: FormData): void {
+    for (const [formKey, formValue] of formData.entries()) {
+      const playerDTO: PlayerDTO = { name: '', path: '', color: '' };
+      const value = formValue.toString();
+      const [key] = formKey.split('_');
+      switch (key) {
+        case 'name': {
+          playerDTO.name = value;
+          break;
+        }
+        case 'path': {
+          playerDTO.path = value;
+          break;
+        }
+        case 'color': {
+          playerDTO.color = value;
+          break;
+        }
+      }
+      this.playersData.push(playerDTO);
+    }
+  }
+
   private handleSubmit = (event: Event): void => {
     event.preventDefault();
     const formData = new FormData(event.target as HTMLFormElement);
-
-    for (const [key, value] of formData.entries()) {
-      console.log(key + ': ' + value);
-    }
+    this.setPlayersDataFromFormData(formData);
+    console.log(this.playersData);
   };
 
   private handleClickAddPlayer = (): void => {
