@@ -6,12 +6,12 @@ import { Render } from '../utils/Render';
 import { EmptyModal } from './EmptyModal';
 
 export class TradeModal extends EmptyModal {
-  tradeForm: HTMLElement;
-  playerView: HTMLElement;
-  bankView: HTMLElement;
-  warning: HTMLElement;
-  backButton: HTMLElement;
-  player: Player;
+  private tradeForm: HTMLElement;
+  private playerView: HTMLElement;
+  private bankView: HTMLElement;
+  private warning: HTMLElement;
+  private backButton: HTMLElement;
+  private player: Player;
 
   constructor(private trade: Trade, firstPlayer: Player) {
     super();
