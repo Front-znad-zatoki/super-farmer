@@ -6,13 +6,11 @@ import { ViewController } from '../ViewController';
 export class WinModalDemo {
   static playDemo(): void {
     const view = new ViewController();
-    const modal = new WinModal();
+    const modal = new WinModal(view);
     const player = new Player(
       'player',
       './static/images/avatars/dog.png',
     );
-    modal.create(player);
-    modal.addButton(view);
-    Render.render('#sf-app', modal.modal);
+    Render.render('#sf-app', modal.createWinModal(player));
   }
 }

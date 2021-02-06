@@ -1,21 +1,27 @@
 import { Player } from '../../Player';
 import { Render } from '../utils/Render';
 import { ViewController } from '../ViewController';
-import { ModalBasic } from './ModalBasic';
+import { BasicModal } from './BasicModal';
 
-export class WinModal extends ModalBasic {
-  create(player: Player): void {
+export class WinModal extends BasicModal {
+  constructor(private view: ViewController) {
+    super();
+  }
+
+  createWinModal(player: Player): HTMLElement {
     this.renderBasicModal(
       'CONGRATULATIONS!',
       `${player.theName} has won!`,
       this.createImage(player),
-    ) as WinModal;
+    );
+    this.addButton();
+    return this.modal;
   }
 
-  addButton(view: ViewController): void {
+  private addButton(): void {
     const handleEnd = () => {
       Render.removeElement('.modal');
-      view.displayMenuView();
+      this.view.displayMenuView();
     };
     this.createAndAppendButtonsRow(
       'End game - back to menu',
