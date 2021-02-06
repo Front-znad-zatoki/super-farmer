@@ -16,14 +16,14 @@ export abstract class EmptyModal {
   /**
    * Hides modal - adds class with display:none
    */
-  protected hideModal(): void {
-    this.modal.classList.add('modal--hidden');
+  hideModal(): void {
+    this.modal.classList.add('hidden');
   }
 
   /**
    * Shows modal - removes class with display:none
    */
-  protected showModal(): void {
-    this.modal.classList.remove('modal--hidden');
+  showModal(): void {
+    this.modal.classList.remove('hidden');
   }
 }
