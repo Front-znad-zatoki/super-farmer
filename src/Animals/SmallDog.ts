@@ -8,7 +8,7 @@ export class SmallDog extends Animal implements ProtectHerdInterface {
   constructor() {
     super(
       AnimalNames.SMALL_DOG,
-      '/static/images/avatars/dog.png',
+      './static/images/avatars/dog.png',
       6,
       AnimalRoles.GUARDIAN,
     );
