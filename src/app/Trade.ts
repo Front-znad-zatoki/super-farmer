@@ -1,5 +1,5 @@
 import { AnimalNames } from '../Enums/AnimalNamesEnum';
-import { multiply } from 'lodash';
+import { multiply, sum } from 'lodash';
 import { Player } from '../Player';
 import { Herd } from './logic/Herd';
 import { ConvertAnimalName } from './utils/ConvertAnimalName';
@@ -19,9 +19,9 @@ export class Trade {
    * @returns true if transaction will be processed, and false otherwise
    */
   processOffer(
-    offer: Offer,
+    offer: Offer[],
     { theHerd: playerHerd }: Player,
-    target: Offer,
+    target: Offer[],
   ): boolean {
     if (this.areOffersInvalid(offer, playerHerd, target)) {
       return false;
@@ -38,47 +38,81 @@ export class Trade {
   }
 
   private areOffersInvalid(
-    [animal, count]: Offer,
+    offer: Offer[],
     playerHerd: Herd,
-    [bankAnimal, bankCount]: Offer,
+    target: Offer[],
   ): boolean {
     return (
-      (count > 1 && bankCount > 1) ||
-      playerHerd.getAnimalNumber(animal) < count ||
-      this.bank.theHerd.getAnimalNumber(bankAnimal) < bankCount
+      (offer.length > 1 && target.length > 1) ||
+      this.isOfferQuantityInvalid(offer, playerHerd) ||
+      this.isOfferQuantityInvalid(target, this.bank.theHerd) ||
+      !this.isSingleQuantityOnAnySide(offer, target)
     );
   }
 
-  private calculateValue([animal, count]: Offer): number {
-    return multiply(
-      ConvertAnimalName.toAnimalObject(animal).theValue,
-      count,
+  private isOfferQuantityInvalid(
+    offer: Offer[],
+    herd: Herd,
+  ): boolean {
+    return (
+      offer.filter(
+        ([animal, count]) => herd.getAnimalNumber(animal) >= count,
+      ).length !== offer.length
     );
   }
 
-  private adjustOffer(offer: Offer, target: Offer): void {
-    offer[1] -= 1;
+  private isSingleQuantityOnAnySide(
+    offer: Offer[],
+    target: Offer[],
+  ): boolean {
+    return (
+      (offer.length === 1 && offer[0][1] === 1) ||
+      (target.length === 1 && target[0][1] === 1)
+    );
+  }
+
+  private calculateValue(offer: Offer[]): number {
+    return sum(
+      offer.map(([animal, count]) =>
+        multiply(
+          ConvertAnimalName.toAnimalObject(animal).theValue,
+          count,
+        ),
+      ),
+    );
+  }
+
+  private adjustOffer(offer: Offer[], target: Offer[]): void {
+    this.removeQuantityOfOffer(offer);
     if (this.calculateValue(offer) <= this.calculateValue(target)) {
       return;
     }
     this.adjustOffer(offer, target);
   }
 
+  private removeQuantityOfOffer(offer: Offer[]): void {
+    offer[0][1] -= 1;
+    if (offer[0][1] === 0) {
+      offer.slice();
+    }
+  }
+
   /**
    * updates players and banks herd
    */
   private disposeResult(
-    [animalSold, quantitySold]: Offer,
+    offer: Offer[],
     playerHerd: Herd,
-    [animalBought, quantityBought]: Offer,
+    target: Offer[],
   ): boolean {
-    playerHerd.removeAnimalsFromHerd(animalSold, quantitySold);
-    playerHerd.addAnimalsToHerd(animalBought, quantityBought);
-    this.bank.theHerd.addAnimalsToHerd(animalSold, quantitySold);
-    this.bank.theHerd.removeAnimalsFromHerd(
-      animalBought,
-      quantityBought,
-    );
+    offer.forEach(([animal, count]) => {
+      playerHerd.removeAnimalsFromHerd(animal, count);
+      this.bank.theHerd.addAnimalsToHerd(animal, count);
+    });
+    target.forEach(([animal, count]) => {
+      playerHerd.addAnimalsToHerd(animal, count);
+      this.bank.theHerd.removeAnimalsFromHerd(animal, count);
+    });
     return true;
   }
 }
