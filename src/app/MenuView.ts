@@ -39,13 +39,13 @@ export class MenuView {
       Render.elementFactory(
         'h1',
         { className: 'menu-window__heading heading' },
-        'FARM TYCOON',
+        'SUPERFARMER',
       ),
-      Render.elementFactory(
+      /* Render.elementFactory(
         'h2',
         { className: 'menu-window__description text' },
         'Breed animals, Do your math, Be quick, Plan ahead, Protect your herd, Predators are there to get your animals! Become a farmer and be the first to gather all the animals!',
-      ),
+      ),*/
     );
   }
 
@@ -53,17 +53,17 @@ export class MenuView {
     return Render.elementFactory(
       'div',
       { className: 'menu' },
-      Render.elementFactory('div', {
-        className: 'menu__graphic-container',
-      }),
+      // Render.elementFactory('div', {
+      // className: 'menu__graphic-container',
+      // }),
       Render.elementFactory(
         'div',
         { className: 'menu__buttons' },
         ...this.createMenuButtons(),
       ),
-      Render.elementFactory('div', {
-        className: 'menu__graphic-container',
-      }),
+      // Render.elementFactory('div', {
+      // className: 'menu__graphic-container',
+      // }),
       Render.elementFactory(
         'button',
         {
@@ -104,7 +104,7 @@ export class MenuView {
 
   private createFooter(): HTMLElement {
     return Render.elementFactory(
-      'div',
+      'h3',
       { className: 'footer' },
       'CodersCamp2020',
     );
