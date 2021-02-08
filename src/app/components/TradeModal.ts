@@ -217,6 +217,7 @@ export class TradeModal extends EmptyModal {
       this.view.runTimer();
       this.view.refreshHerd();
       this.view.disableTrade();
+      this.view.checkIfGameIsWon();
     }
   };
 

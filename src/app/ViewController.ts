@@ -127,4 +127,8 @@ export class ViewController {
   refreshHerd(): void {
     this.gameView.refreshHerd(this.gameController?.getBank() as Bank);
   }
+
+  checkIfGameIsWon(): void {
+    this.gameController?.checkIfGameIsWon();
+  }
 }

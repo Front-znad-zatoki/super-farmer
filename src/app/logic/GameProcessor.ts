@@ -51,27 +51,6 @@ export class GameProcessor {
   }
 
   /**
-   * Executes trade proposed by the player and checks win condition.
-   * @param offer made by the player
-   * @param target desired by the player
-   * @returns true if the trade was sucessful, false if the trade was not sucessful or the player run out of time
-   */
-  trade(
-    offer: [AnimalNames, number],
-    target: [AnimalNames, number],
-  ): boolean {
-    if (!this.hasTimeLeft()) {
-      return false;
-    }
-    const tradeResult = this.game.theTrade.processOffer(
-      offer,
-      this.game.theCurrentPlayer,
-      target,
-    );
-    return tradeResult;
-  }
-
-  /**
    * @returns true if current player wins the game, false otherwise
    */
   checkWin(): boolean {
