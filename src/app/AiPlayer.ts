@@ -37,7 +37,10 @@ export class AiPlayer extends Player {
       //trade rabbits for a small dog
       return;
     }
-    //
+
+    if (this.hasOneHorseAndTwoCows()) {
+      //TODO trade one cow for animals they don't have
+    }
   }
   private animalsForTrade(): [AnimalNames, number][] {
     const animalsForTrade: [AnimalNames, number][] = [];
@@ -71,5 +74,16 @@ export class AiPlayer extends Player {
 
   private buyASmallDog(): boolean {
     return this.theHerd.getAnimalNumber(AnimalNames.RABBIT) >= 6;
+  }
+
+  private hasOneHorseAndTwoCows(): boolean {
+    return (
+      this.herd.getAnimalNumber(AnimalNames.HORSE) === 1 &&
+      this.herd.getAnimalNumber(AnimalNames.COW) === 2
+    );
+  }
+
+  private buyAHorse(): boolean {
+    return this.herd.getAnimalNumber(AnimalNames.HORSE) === 0; //&& I can afford a horse - after many to one will be implemented
   }
 }
