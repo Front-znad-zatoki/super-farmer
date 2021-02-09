@@ -1,7 +1,6 @@
 .page__container {
-  z-index: -1;
-  width: 100vw;
   height: 100vh;
+  z-index: -1;
   background: url(/static/images/ui/background.png) no-repeat center;
   background-size: cover;
 }
@@ -10,41 +9,60 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  padding: 60px 0 60px 60px;
   &__header {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    padding: 32px;
-  }
-  &__heading {
-  }
-  &__description {
+    font-family: Roboto;
+    font-weight: 700;
   }
 }
 
 .menu {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 32px;
   &__buttons {
     display: flex;
     flex-direction: column;
-  }
-  &__button {
-    &--rules {
+    width: 20%;
+    margin-bottom: 55vh;
+    text-align: start;
+    &__button {
+      border: none;
+      outline: none;
+      margin-top: 50px;
+      font-size: 24px;
+      font-family: Roboto;
+      font-weight: 700;
+      color: #000;
+      text-align: start;
+      background: none;
+      &:hover {
+        color: #f00;
+        cursor: pointer;
+      }
+    }
+
+    &--start {
       position: absolute;
-      right: 2rem;
-      bottom: 0;
-      width: 2rem;
-      height: 2rem;
+      left: 40vw;
+      top: 75vh;
+      width: 25%;
+      height: 13%;
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-family: Roboto;
+      font-size: 30px;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      background: #203739;
+      &:hover {
+        background-color: #f00;
+        cursor: pointer;
+      }
     }
   }
 }
 
 .footer {
-  color: rgb(250, 250, 250);
+  color: #fff;
   font-family: Roboto;
   font-size: 24px;
   font-weight: 700;
