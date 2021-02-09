@@ -1,6 +1,6 @@
 .page__container {
-  height: 100vh;
   z-index: -1;
+  height: 100vh;
   background: url(/static/images/ui/background.png) no-repeat center;
   background-size: cover;
 }
@@ -19,20 +19,20 @@
 .menu {
   &__buttons {
     display: flex;
-    flex-direction: column;
     width: 20%;
+    flex-direction: column;
     margin-bottom: 55vh;
     text-align: start;
     &__button {
       border: none;
-      outline: none;
       margin-top: 50px;
-      font-size: 24px;
-      font-family: Roboto;
-      font-weight: 700;
-      color: #000;
-      text-align: start;
       background: none;
+      color: #000;
+      font-family: Roboto;
+      font-size: 24px;
+      font-weight: 700;
+      outline: none;
+      text-align: start;
       &:hover {
         color: #f00;
         cursor: pointer;
@@ -41,18 +41,18 @@
 
     &--start {
       position: absolute;
-      left: 40vw;
       top: 75vh;
+      left: 40vw;
       width: 25%;
       height: 13%;
       border: none;
+      background: #203739;
       border-radius: 8px;
       color: #fff;
       font-family: Roboto;
       font-size: 30px;
       font-weight: 700;
       letter-spacing: 0.3em;
-      background: #203739;
       &:hover {
         background-color: #f00;
         cursor: pointer;
