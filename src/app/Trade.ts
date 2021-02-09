@@ -13,10 +13,10 @@ export class Trade {
   }
   /**
    * Gets an offer from player and returns true or false if transaction can be made processed and process it if possible
-   * @param offer accepts tuple with offer containing animal name and quantity to be sold
+   * @param offer accepts array of tuple with offer containing animal name and quantity to be sold
    * @param player accepts instance of Player class, which wants to sell his animals
-   * @param target accepts tuple with desired animal(s) containing desired animal name and quantity to buy
-   * @returns true if transaction will be processed, and false otherwise
+   * @param target accepts array of tuple with desired animal(s) containing desired animal name and quantity to buy
+   * @returns true if transaction is processed, and false otherwise
    */
   processOffer(
     offer: Offer[],
@@ -26,15 +26,31 @@ export class Trade {
     if (this.areOffersInvalid(offer, playerHerd, target)) {
       return false;
     }
+    offer.sort(
+      ([animalA], [animalB]) =>
+        ConvertAnimalName.toAnimalObject(animalA).theValue -
+        ConvertAnimalName.toAnimalObject(animalB).theValue,
+    );
+    console.log(offer);
     let value = this.calculateValue(offer);
     const price = this.calculateValue(target);
     if (price < value) {
-      this.adjustOffer(offer, target);
-      value = this.calculateValue(offer);
+      if (this.containsOneItem(offer)) {
+        if (this.calculateBankValue() !== price) {
+          return false;
+        }
+        this.disposeResult(offer, playerHerd, target);
+        return true;
+      } else {
+        this.adjustOffer(offer, value, price);
+        value = this.calculateValue(offer);
+      }
     }
-    return price > value
-      ? false
-      : this.disposeResult(offer, playerHerd, target);
+    if (price > value) {
+      return false;
+    }
+    this.disposeResult(offer, playerHerd, target);
+    return true;
   }
 
   private areOffersInvalid(
@@ -46,7 +62,7 @@ export class Trade {
       (offer.length > 1 && target.length > 1) ||
       this.isOfferQuantityInvalid(offer, playerHerd) ||
       this.isOfferQuantityInvalid(target, this.bank.theHerd) ||
-      !this.isSingleQuantityOnAnySide(offer, target)
+      this.areQuantityOnSidesInvalid(offer, target)
     );
   }
 
@@ -61,11 +77,11 @@ export class Trade {
     );
   }
 
-  private isSingleQuantityOnAnySide(
+  private areQuantityOnSidesInvalid(
     offer: Offer[],
     target: Offer[],
   ): boolean {
-    return (
+    return !(
       (offer.length === 1 && offer[0][1] === 1) ||
       (target.length === 1 && target[0][1] === 1)
     );
@@ -82,19 +98,43 @@ export class Trade {
     );
   }
 
-  private adjustOffer(offer: Offer[], target: Offer[]): void {
-    this.removeQuantityOfOffer(offer);
-    if (this.calculateValue(offer) <= this.calculateValue(target)) {
-      return;
-    }
-    this.adjustOffer(offer, target);
+  private containsOneItem(offer: Offer[]): boolean {
+    return offer.length === 1 && offer[0][1] === 1;
   }
 
-  private removeQuantityOfOffer(offer: Offer[]): void {
-    offer[0][1] -= 1;
-    if (offer[0][1] === 0) {
-      offer.slice();
+  private calculateBankValue(): number {
+    return sum(
+      this.bank.theHerd.theAnimals.map(([animal, count]) =>
+        multiply(animal.theValue, count),
+      ),
+    );
+  }
+
+  /**
+   * Adjusts player offer for exchange in bank
+   * @param offer accepts array of tuple
+   * @param value accepts number equal to value of offer
+   * @param price accepts number equal to desired target
+   */
+  private adjustOffer(
+    offer: Offer[],
+    value: number,
+    price: number,
+  ): void {
+    const valueOfFirstItem = this.calculateValue([offer[0]]);
+    const differece = value - price;
+    if (valueOfFirstItem === differece) {
+      offer.shift();
+      return;
     }
+    if (valueOfFirstItem < differece) {
+      offer.shift();
+      this.adjustOffer(offer, this.calculateValue(offer), price);
+      return;
+    }
+    const singleAnimalCost = valueOfFirstItem / offer[0][1];
+    const animalsToRemoveFromOffer = differece / singleAnimalCost;
+    offer[0][1] -= Math.round(animalsToRemoveFromOffer);
   }
 
   /**
@@ -104,7 +144,7 @@ export class Trade {
     offer: Offer[],
     playerHerd: Herd,
     target: Offer[],
-  ): boolean {
+  ): void {
     offer.forEach(([animal, count]) => {
       playerHerd.removeAnimalsFromHerd(animal, count);
       this.bank.theHerd.addAnimalsToHerd(animal, count);
@@ -113,6 +153,5 @@ export class Trade {
       playerHerd.addAnimalsToHerd(animal, count);
       this.bank.theHerd.removeAnimalsFromHerd(animal, count);
     });
-    return true;
   }
 }
