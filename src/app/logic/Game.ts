@@ -70,7 +70,11 @@ export class Game {
       predatorsConfig,
       this.mode,
     );
-    this.trade = new Trade(this.bank);
+    this.trade = new Trade(
+      this.bank,
+      livestockConfig,
+      protectorsConfig,
+    );
   }
 
   nextPlayer(): void {
@@ -98,7 +102,7 @@ export class Game {
   //   return this.dice;
   // }
   get theTimer(): Timer {
-    return this.theTimer;
+    return this.timer;
   }
 
   get theBreedProcessor(): BreedProcessor {

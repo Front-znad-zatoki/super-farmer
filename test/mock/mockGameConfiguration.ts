@@ -23,7 +23,7 @@ export const defaultGameConfiguration: GameConfigInterface = {
     {
       name: AnimalNames.RABBIT,
       tradeValue: 1,
-      path: '/static/images/avatars/rabbit.png',
+      path: './static/images/avatars/rabbit.png',
       role: AnimalRoles.LIVESTOCK,
       playersInitialStock: 0,
       bankInitialStock: 60,
@@ -35,7 +35,7 @@ export const defaultGameConfiguration: GameConfigInterface = {
     {
       name: AnimalNames.SHEEP,
       tradeValue: 6,
-      path: '/static/images/avatars/sheep.png',
+      path: './static/images/avatars/sheep.png',
       role: AnimalRoles.LIVESTOCK,
       playersInitialStock: 0,
       bankInitialStock: 24,
@@ -47,7 +47,7 @@ export const defaultGameConfiguration: GameConfigInterface = {
     {
       name: AnimalNames.PIG,
       tradeValue: 12,
-      path: '/static/images/avatars/pig.png',
+      path: './static/images/avatars/pig.png',
       role: AnimalRoles.LIVESTOCK,
       playersInitialStock: 0,
       bankInitialStock: 20,
@@ -59,7 +59,7 @@ export const defaultGameConfiguration: GameConfigInterface = {
     {
       name: AnimalNames.COW,
       tradeValue: 36,
-      path: '/static/images/avatars/cow.png',
+      path: './static/images/avatars/cow.png',
       role: AnimalRoles.LIVESTOCK,
       playersInitialStock: 0,
       bankInitialStock: 12,
@@ -68,7 +68,7 @@ export const defaultGameConfiguration: GameConfigInterface = {
     {
       name: AnimalNames.HORSE,
       tradeValue: 72,
-      path: '/static/images/avatars/horse.png',
+      path: './static/images/avatars/horse.png',
       role: AnimalRoles.LIVESTOCK,
       playersInitialStock: 0,
       bankInitialStock: 4,
@@ -79,7 +79,7 @@ export const defaultGameConfiguration: GameConfigInterface = {
     {
       name: AnimalNames.SMALL_DOG,
       tradeValue: 6,
-      path: '/static/images/avatars/dog.png',
+      path: './static/images/avatars/dog.png',
       role: AnimalRoles.GUARDIAN,
       playersInitialStock: 0,
       bankInitialStock: 4,
@@ -88,7 +88,7 @@ export const defaultGameConfiguration: GameConfigInterface = {
     {
       name: AnimalNames.BIG_DOG,
       tradeValue: 36,
-      path: '/static/images/avatars/dog.png',
+      path: './static/images/avatars/dog.png',
       role: AnimalRoles.GUARDIAN,
       playersInitialStock: 0,
       bankInitialStock: 2,
@@ -98,7 +98,7 @@ export const defaultGameConfiguration: GameConfigInterface = {
   predatorsConfig: [
     {
       name: AnimalNames.FOX,
-      path: '/static/images/avatars/fox.png',
+      path: './static/images/avatars/fox.png',
       kills: [AnimalNames.RABBIT],
       isChasedAwayBy: AnimalNames.SMALL_DOG,
       exclamation:
@@ -107,7 +107,7 @@ export const defaultGameConfiguration: GameConfigInterface = {
     },
     {
       name: AnimalNames.WOLF,
-      path: '/static/images/avatars/wolf.png',
+      path: './static/images/avatars/wolf.png',
       kills: [
         AnimalNames.RABBIT,
         AnimalNames.SHEEP,

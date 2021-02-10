@@ -1,8 +1,10 @@
 import { logGameObject } from './manuals/dynamicModeManual';
+import { ViewController } from './ViewController';
 
 export class App {
-  init(): string {
+  init(): void {
+    const view = new ViewController();
     logGameObject();
-    return 'hello world';
+    view.displayMenuView();
   }
 }

@@ -1,16 +1,16 @@
 import { Player } from '../../Player';
 import { WinModal } from '../components/WinModal';
 import { Render } from '../utils/Render';
+import { ViewController } from '../ViewController';
 
 export class WinModalDemo {
   static playDemo(): void {
-    const modal = new WinModal();
+    const view = new ViewController();
+    const modal = new WinModal(view);
     const player = new Player(
       'player',
       './static/images/avatars/dog.png',
     );
-    modal.create(player);
-    modal.addButton();
-    Render.render('#sf-app', modal.modal);
+    Render.render('#sf-app', modal.createWinModal(player));
   }
 }

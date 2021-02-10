@@ -25,7 +25,6 @@
     position: absolute;
     top: 0.5rem;
     right: 0.5rem;
-    display: none;
   }
 
   &__herd {
@@ -44,6 +43,19 @@
   &__result {
     width: 30vw;
     padding: 0.5rem;
+    text-align: center;
+
+    &--dice {
+      margin-top: 2rem;
+    }
+
+    &--gain {
+      margin-top: 2rem;
+    }
+
+    &--container {
+      display: inline;
+    }
   }
 
   &__buttons {

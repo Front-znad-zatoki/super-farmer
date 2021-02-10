@@ -1,9 +1,7 @@
-import { MenuWindow } from '../components/MenuWindow';
-import { Render } from '../utils/Render';
+import { ViewController } from '../ViewController';
 
 export function menuWindowManual(): void {
-  const menuWindowView = new MenuWindow().renderMenuWindow();
-  Render.render('#sf-app', menuWindowView);
+  new ViewController().displayMenuView();
 }
 
 // TO RUN DEMO INSERT :  menuWindowManual() IN APP.TS;
