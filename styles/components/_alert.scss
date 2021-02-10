@@ -1,0 +1,25 @@
+.alert {
+  display: flex;
+  border-width: 1px;
+  border-style: solid;
+  border-color: none;
+  border-radius: 0.25rem;
+  transition: all 0.7s ease-in-out;
+
+  &:hover {
+    background-color: white;
+  }
+
+  &__icon {
+    width: auto;
+    height: 2rem;
+    margin: 0.5rem 1rem;
+  }
+
+  &__text {
+    display: inline-flex;
+    margin: 0.5rem;
+    font-size: 1.2rem;
+    line-height: 2rem;
+  }
+}
