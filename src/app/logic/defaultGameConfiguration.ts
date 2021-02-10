@@ -94,6 +94,7 @@ export const defaultGameConfiguration: GameConfigInterface = {
     {
       name: AnimalNames.FOX,
       path: './static/images/avatars/fox.png',
+      roles: AnimalRoles.PREDATOR,
       kills: [AnimalNames.RABBIT],
       isChasedAwayBy: AnimalNames.SMALL_DOG,
       exclamation:
@@ -103,6 +104,7 @@ export const defaultGameConfiguration: GameConfigInterface = {
     {
       name: AnimalNames.WOLF,
       path: './static/images/avatars/wolf.png',
+      roles: AnimalRoles.PREDATOR,
       kills: [
         AnimalNames.RABBIT,
         AnimalNames.SHEEP,
