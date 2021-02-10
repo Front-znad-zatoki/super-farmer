@@ -2,6 +2,7 @@ import { BasicModal } from './BasicModal';
 import { Render } from '../utils/Render';
 import { PlayerDTO } from '~src/Interfaces/PlayerDTOInterface';
 import { CallbackOneParam } from '~src/Interfaces/CallbackOneParamInterface';
+import { Avatars } from '~src/Enums/AvatarsEnum';
 
 export class ModeModal extends BasicModal {
   private modeForm: HTMLFormElement;
@@ -162,7 +163,7 @@ export class ModeModal extends BasicModal {
       { for: indicator, className: 'mode-modal__form-label' },
       Render.elementFactory('img', {
         className: 'mode-form__avatar',
-        src: './static/images/playerAvatars/woman.svg',
+        src: Avatars.farmer1,
       }),
     );
 
@@ -189,7 +190,7 @@ export class ModeModal extends BasicModal {
     for (const [formKey, formValue] of formData.entries()) {
       const playerDTO: PlayerDTO = {
         name: '',
-        path: './static/images/playerAvatars/woman.svg',
+        path: Avatars.farmer1,
         color: '#064a89',
       };
       const value = formValue.toString();
