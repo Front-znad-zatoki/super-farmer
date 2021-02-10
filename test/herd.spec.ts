@@ -43,7 +43,7 @@ describe('Herds method', () => {
       new Predator(
         mockFox.name,
         mockFox.path,
-        undefined,
+        mockWolf.roles,
         mockFox.kills,
         mockFox.isChasedAwayBy,
         mockFox.exclamation,
@@ -64,7 +64,7 @@ describe('Herds method', () => {
       new Predator(
         mockWolf.name,
         mockWolf.path,
-        undefined,
+        mockWolf.roles,
         mockWolf.kills,
         mockWolf.isChasedAwayBy,
         mockWolf.exclamation,
