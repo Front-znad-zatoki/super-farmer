@@ -128,18 +128,18 @@ export class Trade {
     price: number,
   ): void {
     const valueOfFirstItem = this.calculateValue([offer[0]]);
-    const differece = value - price;
-    if (valueOfFirstItem === differece) {
+    const difference = value - price;
+    if (valueOfFirstItem === difference) {
       offer.shift();
       return;
     }
-    if (valueOfFirstItem < differece) {
+    if (valueOfFirstItem < difference) {
       offer.shift();
       this.adjustOffer(offer, this.calculateValue(offer), price);
       return;
     }
     const singleAnimalCost = valueOfFirstItem / offer[0][1];
-    const animalsToRemoveFromOffer = differece / singleAnimalCost;
+    const animalsToRemoveFromOffer = difference / singleAnimalCost;
     offer[0][1] -= Math.round(animalsToRemoveFromOffer);
   }
 
