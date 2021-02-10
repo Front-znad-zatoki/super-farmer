@@ -1,6 +1,7 @@
 import { Player } from '../src/Player';
 import { AnimalNames } from '../src/Enums/AnimalNamesEnum';
 import { Offer, Trade } from '../src/app/Trade';
+import { defaultGameConfiguration } from '../src/app/logic/defaultGameConfiguration';
 
 describe('Trade class test.', () => {
   const bank = new Player('bank');
@@ -11,7 +12,11 @@ describe('Trade class test.', () => {
   bank.theHerd.addAnimalsToHerd(AnimalNames.HORSE, 4);
   bank.theHerd.addAnimalsToHerd(AnimalNames.SMALL_DOG, 4);
   bank.theHerd.addAnimalsToHerd(AnimalNames.BIG_DOG, 2);
-  const trade = new Trade(bank);
+  const trade = new Trade(
+    bank,
+    defaultGameConfiguration.livestockConfig,
+    defaultGameConfiguration.protectorsConfig,
+  );
   const player = new Player('player');
 
   it('Should process trade with correct ammount', () => {

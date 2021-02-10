@@ -3,6 +3,7 @@ import { multiply, sum } from 'lodash';
 import { Player } from '../Player';
 import { Herd } from './logic/Herd';
 import { LivestockConfigInterface } from '../Interfaces/LivestockConfigInterface';
+import { ProtectorsConfigInterface } from '../Interfaces/ProtectorsConfigInterface';
 
 export type Offer = [AnimalNames, number];
 
@@ -10,6 +11,7 @@ export class Trade {
   constructor(
     private bank: Player,
     private livestockConfig: LivestockConfigInterface[],
+    private protectorsConfig: ProtectorsConfigInterface[],
   ) {}
   get thisBank(): Player {
     return this.bank;
@@ -89,7 +91,7 @@ export class Trade {
   }
 
   private getValue(animalName: AnimalNames): number {
-    return this.livestockConfig.filter(
+    return [...this.livestockConfig, ...this.protectorsConfig].filter(
       (animal) => animal.name === animalName,
     )[0].tradeValue;
   }
