@@ -6,7 +6,7 @@ export class Rabbit extends Animal {
   constructor() {
     super(
       AnimalNames.RABBIT,
-      './static/images/avatars/rabbit.png',
+      './static/images/avatars/rabbit.svg',
       1,
       AnimalRoles.LIVESTOCK,
     );

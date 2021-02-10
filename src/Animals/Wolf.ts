@@ -8,7 +8,7 @@ export class Wolf extends Animal implements AttackHerdInterface {
   constructor() {
     super(
       AnimalNames.WOLF,
-      './static/images/avatars/wolf.png',
+      './static/images/avatars/wolf.svg',
       undefined,
       AnimalRoles.PREDATOR,
     );
