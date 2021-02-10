@@ -12,11 +12,6 @@ export const defaultGameConfiguration: GameConfigInterface = {
       path: '../../static/images/avatars/dog.png',
       color: 'blue',
     },
-    {
-      name: 'Pablo Escofarmo',
-      path: '../../static/images/avatars/cow.png',
-      color: 'green',
-    },
   ],
 
   livestockConfig: [

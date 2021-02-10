@@ -6,6 +6,7 @@ export class MenuView {
   private modeModal: ModeModal;
   constructor(private view: ViewController) {
     this.modeModal = new ModeModal((players) =>
+      // TODO: PASS INFO ABOUT MODE OR AI
       this.view.launchGame(players),
     );
     this.modeModal.hideModal();

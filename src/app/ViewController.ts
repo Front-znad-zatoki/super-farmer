@@ -10,6 +10,9 @@ import { Trade } from './Trade';
 import { TradeModal } from './components/TradeModal';
 import { defaultGameConfiguration } from './logic/defaultGameConfiguration';
 import { PlayerDTO } from '../Interfaces/PlayerDTOInterface';
+import { Configuration } from './logic/Configuration';
+import { GameModes } from '../../src/Enums/GameModeEnums';
+import { dynamicGameConfiguration } from './logic/dynamicGameConfiguration';
 
 export class ViewController {
   private menuView: MenuView;
@@ -32,9 +35,17 @@ export class ViewController {
   displayMenuView(): void {
     this.menuView.displayMenu();
   }
-
-  launchGame(players: PlayerDTO[]): void {
-    const config = defaultGameConfiguration;
+  /*TODO: CHECK IF AI NEEDED, CONNECT WITH CALLBACK THAT PASSES PLAYERS*/
+  launchGame(players: PlayerDTO[], mode?: GameModes): void {
+    // TODO: REMOVE NEXT 3 LINES AFTER PASSING MODE AS AN ARGUMENT IS IMPLEMENTED
+    let gameMode: GameModes = GameModes.STATIC;
+    gameMode = GameModes.DYNAMIC;
+    // gameMode = GameModes.STATIC;
+    const config: Configuration =
+      gameMode === GameModes.DYNAMIC
+        ? new Configuration(dynamicGameConfiguration)
+        : new Configuration(defaultGameConfiguration);
+    console.log(config);
     config.playersConfig = players;
     this.gameController = new GameController(this, config);
     this.startGame(

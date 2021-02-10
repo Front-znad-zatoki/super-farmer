@@ -9,7 +9,7 @@ import { BreedProcessor } from '../BreedProcessor';
 import { Timer } from '../Timer';
 import { Trade } from '../Trade';
 import { Bank } from './Bank';
-import { defaultGameConfiguration } from './defaultGameConfiguration';
+// import { defaultGameConfiguration } from './defaultGameConfiguration';
 import { LivestockConfigInterface } from '../../Interfaces/LivestockConfigInterface';
 import { ProtectorsConfigInterface } from '../../Interfaces/ProtectorsConfigInterface';
 import { HerdOwners } from '../../Enums/HerdOwnerEnum';
@@ -35,7 +35,7 @@ export class Game {
     livestockConfig,
     protectorsConfig,
     predatorsConfig,
-  }: GameConfigInterface = defaultGameConfiguration) {
+  }: GameConfigInterface) {
     this.mode = mode;
     this.roundTimeInSeconds = roundTimeInSeconds;
     this.playersConfig = playersConfig;

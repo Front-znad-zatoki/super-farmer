@@ -16,6 +16,7 @@ export class ModeModal extends BasicModal {
   /**
    * @param submitCallback - will be called onSubmit with PlayerDTO[] data in the argument
    */
+  // TODO: ADD CHECKBOX FOR MODE AND PASS IT IN CALLBACK
   constructor(submitCallback: CallbackOneParam<PlayerDTO[]>) {
     super();
     this.playerElements = [];

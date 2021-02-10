@@ -1,11 +1,13 @@
+import { AnimalRoles } from '~src/Enums/AnimalRolesEnum';
 import { GameModes } from '~src/Enums/GameModeEnums';
 import { Predator } from '../../Animals/Predator';
 import { AnimalNames } from '../../Enums/AnimalNamesEnum';
 import { PredatorsConfigInterface } from '../../Interfaces/PredatorsConfigInterface';
+import { dynamicGameConfiguration } from '../logic/dynamicGameConfiguration';
 import { Game } from '../logic/Game';
 
 export function logGameObject(): void {
-  const mockGame = new Game();
+  const mockGame = new Game(dynamicGameConfiguration);
   console.log(mockGame);
   mockGame.theCurrentPlayer.theHerd.addAnimalsToHerd(
     AnimalNames.RABBIT,
@@ -46,6 +48,7 @@ export function logGameObject(): void {
 const mockWolf: PredatorsConfigInterface = {
   name: AnimalNames.WOLF,
   path: '/static/images/avatars/wolf.png',
+  roles: AnimalRoles.PREDATOR,
   kills: [
     AnimalNames.RABBIT,
     AnimalNames.SHEEP,
@@ -60,6 +63,7 @@ const mockWolf: PredatorsConfigInterface = {
 const mockFox: PredatorsConfigInterface = {
   name: AnimalNames.FOX,
   path: '/static/images/avatars/fox.png',
+  roles: AnimalRoles.PREDATOR,
   kills: [AnimalNames.RABBIT],
   isChasedAwayBy: AnimalNames.SMALL_DOG,
   exclamation: 'Ringangngnignign',
