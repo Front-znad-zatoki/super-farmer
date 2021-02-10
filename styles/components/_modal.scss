@@ -12,12 +12,12 @@
   align-items: center;
   justify-content: center;
   // Color /
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.5);
   &__container {
     // Display & Box Model /
     display: flex;
-    width: 80%;
-    height: 80%;
+    // width: 80%;
+    // height: 80%;
     flex-direction: column;
     justify-content: space-between;
     padding: 48px;
@@ -38,5 +38,46 @@
     justify-content: space-between;
   }
   &__button {
+  }
+
+  &__win-heading {
+    font-size: 2.5rem;
+  }
+
+  &__win-image {
+    position: relative;
+    width: 10rem;
+    height: 10rem;
+    border: 2px solid #ffca36;
+    margin: 5rem auto auto;
+    border-radius: 50%;
+  }
+
+  &__win-avatar {
+    position: relative;
+    top: 2rem;
+    width: auto;
+    height: 6rem;
+  }
+
+  &__win-medal {
+    position: absolute;
+    right: -2rem;
+    bottom: -2rem;
+    height: 6rem;
+  }
+
+  &__win-text {
+    margin-top: 2rem;
+    color: #71cfd7;
+    font-size: 2rem;
+  }
+
+  &__win-button {
+    padding: 1rem 3rem;
+    margin: 5rem 8rem 1rem;
+    background-color: #203739;
+    border-radius: 0.5rem;
+    color: #fafafa;
   }
 }
