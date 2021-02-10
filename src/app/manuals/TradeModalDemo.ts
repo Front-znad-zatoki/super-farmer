@@ -25,7 +25,12 @@ export class TradeModalDemo {
     player.theHerd.addAnimalsToHerd(AnimalNames.PIG, 5);
     player.theHerd.addAnimalsToHerd(AnimalNames.COW, 2);
     player.theHerd.addAnimalsToHerd(AnimalNames.HORSE, 1);
-    const modal = new TradeModal(trade, player, view);
+    const modal = new TradeModal(
+      trade,
+      player,
+      () => view.runTimer(),
+      () => view.processAfterTrade(),
+    );
     Render.render('#sf-app', modal.createModal());
 
     const player2 = new Player(
