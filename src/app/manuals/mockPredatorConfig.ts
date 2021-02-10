@@ -1,3 +1,4 @@
+import { AnimalRoles } from '../../Enums/AnimalRolesEnum';
 import { AnimalNames } from '../../Enums/AnimalNamesEnum';
 import { PredatorsConfigInterface } from '../../Interfaces/PredatorsConfigInterface';
 
