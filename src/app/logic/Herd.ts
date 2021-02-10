@@ -1,8 +1,6 @@
-import _ from 'lodash';
+import { add, subtract } from 'lodash';
 import { Predator } from '../../Animals/Predator';
 import { Animal } from '../../Animals/Animal';
-// import { Fox } from '../../Animals/Fox';
-// import { Wolf } from '../../Animals/Wolf';
 import { AnimalNames } from '../../Enums/AnimalNamesEnum';
 import { HerdConfigInterface } from '../../Interfaces/HerdConfigInterface';
 import { mockHerdConfig } from './mockHerdConfig';
@@ -61,7 +59,7 @@ export class Herd {
   ): void {
     const animalIndex = this.findAnimalTupleIndex(animalName);
     const animalTuple = this.animals[animalIndex];
-    const newNumber = _.add(animalTuple[1], numberToAdd);
+    const newNumber = add(animalTuple[1], numberToAdd);
     this.updateNumberOfAnimals(animalIndex, newNumber);
   }
 
@@ -80,7 +78,7 @@ export class Herd {
     const animalTuple = this.animals[animalIndex];
     if (animalTuple[1] < numberToSubstract)
       console.log('not enough animals: ', animalName);
-    const newNumber = _.subtract(animalTuple[1], numberToSubstract);
+    const newNumber = subtract(animalTuple[1], numberToSubstract);
     this.updateNumberOfAnimals(animalIndex, newNumber);
   }
 
@@ -137,8 +135,8 @@ export class Herd {
     attackingAnimal: Predator | Fox | Wolf,
     mode: GameModes,
   ): void {
+    // TODO: REMOVE NEXT LINE AFTER BREED REFACTOR
     if (attackingAnimal instanceof Predator) {
-      // TODO: REMOVE AFTER BREED REFACTOR
       const animalsToCull = attackingAnimal.kills;
       const protector = attackingAnimal.isChasedAwayBy;
       const hasProtector = this.getAnimalNumber(protector) > 0;
