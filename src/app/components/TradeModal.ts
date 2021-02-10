@@ -187,29 +187,20 @@ export class TradeModal extends EmptyModal {
   }
 
   private processTrade([offer, target]: [Offer[], Offer[]]): boolean {
-    if (offer.length === 1 && target.length === 1) {
-      const [[offeredAnimal]] = offer;
-      const [[targetAnimal]] = target;
-      if (this.trade.processOffer(offer[0], this.player, target[0])) {
-        return true;
-      }
-      this.displayWarning(
-        `The value ratio of the ${offeredAnimal}s to ${targetAnimal}s is not correct`,
-      );
-      return false;
-    }
-    if (offer.length > 1 || target.length > 1) {
-      this.displayWarning(
-        'To much types of animals, allowed one type for one type',
-      );
-      return false;
-    }
     if (offer.length <= 0 || target.length <= 0) {
       this.displayWarning(
         'There need to be at least one animal on both sides',
       );
       return false;
     }
+    const [[offeredAnimal]] = offer;
+    const [[targetAnimal]] = target;
+    if (this.trade.processOffer(offer, this.player, target)) {
+      return true;
+    }
+    this.displayWarning(
+      `The value ratio of the ${offeredAnimal}s to ${targetAnimal}s is not correct`,
+    );
     return false;
   }
 
@@ -226,6 +217,7 @@ export class TradeModal extends EmptyModal {
       this.view.runTimer();
       this.view.refreshHerd();
       this.view.disableTrade();
+      this.view.checkIfGameIsWon();
     }
   };
 
