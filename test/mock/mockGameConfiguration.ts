@@ -1,7 +1,7 @@
-import { AnimalNames } from '../../Enums/AnimalNamesEnum';
-import { AnimalRoles } from '../../Enums/AnimalRolesEnum';
-import { GameModes } from '../../Enums/GameModeEnums';
-import { GameConfigInterface } from '../../Interfaces/GameConfigInterface';
+import { AnimalNames } from '../../src/Enums/AnimalNamesEnum';
+import { AnimalRoles } from '../../src/Enums/AnimalRolesEnum';
+import { GameModes } from '../../src/Enums/GameModeEnums';
+import { GameConfigInterface } from '../../src/Interfaces/GameConfigInterface';
 
 export const defaultGameConfiguration: GameConfigInterface = {
   mode: GameModes.STATIC,

@@ -32,6 +32,6 @@ export class Predator extends Animal implements AttackHerdInterface {
   }
 
   attackHerd(): void {
-    alert(this._exclamation);
+    console.log(this._exclamation);
   }
 }

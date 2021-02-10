@@ -1,6 +1,6 @@
-import { HerdConfigInterface } from '../../Interfaces/HerdConfigInterface';
-import { AnimalNames } from '../../Enums/AnimalNamesEnum';
-import { AnimalRoles } from '../../Enums/AnimalRolesEnum';
+import { HerdConfigInterface } from '../../src/Interfaces/HerdConfigInterface';
+import { AnimalNames } from '../../src/Enums/AnimalNamesEnum';
+import { AnimalRoles } from '../../src/Enums/AnimalRolesEnum';
 
 export const mockHerdConfig: HerdConfigInterface[] = [
   {

@@ -3,16 +3,14 @@ import { Predator } from '../../Animals/Predator';
 import { Animal } from '../../Animals/Animal';
 import { AnimalNames } from '../../Enums/AnimalNamesEnum';
 import { HerdConfigInterface } from '../../Interfaces/HerdConfigInterface';
-import { mockHerdConfig } from './mockHerdConfig';
+import { mockHerdConfig } from '../../../test/mock/mockHerdConfig';
 import { Wolf } from '../../Animals/Wolf';
 import { Fox } from '../../Animals/Fox';
 import { GameModes } from '../../Enums/GameModeEnums';
 
 export class Herd {
   protected animals: [Animal, number][];
-  constructor(
-    playersHerdConfig: HerdConfigInterface[] = mockHerdConfig,
-  ) {
+  constructor(playersHerdConfig: HerdConfigInterface[]) {
     this.animals = playersHerdConfig.map(
       ({ name, tradeValue, role, path, inStock }) => {
         const newAnimal = new Animal(name, path, tradeValue, role);
@@ -154,7 +152,7 @@ export class Herd {
         // console.log(JSON.parse(JSON.stringify(this.animals)));
       } else {
         this.removeAnimalsFromHerd(protector, 1);
-        console.log(JSON.parse(JSON.stringify(this.animals)));
+        // console.log(JSON.parse(JSON.stringify(this.animals)));
         // TODO: ADD METHOD TO PROTECTORS
         // this.animals[protectorIndex][0].protectHerd();
       }

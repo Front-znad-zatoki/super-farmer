@@ -20,15 +20,15 @@ export function logGameObject(): void {
   //   1,
   // );
   // mockGame.theCurrentPlayer.theHerd.cullAnimals(
-  //   new Predator(
-  //     mockWolf.name,
-  //     mockWolf.path,
-  //     undefined,
-  //     mockWolf.kills,
-  //     mockWolf.isChasedAwayBy,
-  //     mockWolf.exclamation,
-  //   ),
-  //   GameModes.DYNAMIC,
+  // new Predator(
+  //   mockWolf.name,
+  //   mockWolf.path,
+  //   undefined,
+  //   mockWolf.kills,
+  //   mockWolf.isChasedAwayBy,
+  //   mockWolf.exclamation,
+  // ),
+  // GameModes.DYNAMIC,
   // );
   mockGame.theCurrentPlayer.theHerd.cullAnimals(
     new Predator(
