@@ -9,7 +9,7 @@ export const defaultGameConfiguration: GameConfigInterface = {
   playersConfig: [
     {
       name: 'Carlos Santanos',
-      path: '../../static/images/avatars/dog.png',
+      path: '../../static/images/avatars/small_dog.svg',
       color: 'blue',
     },
   ],
@@ -18,7 +18,7 @@ export const defaultGameConfiguration: GameConfigInterface = {
     {
       name: AnimalNames.RABBIT,
       tradeValue: 1,
-      path: './static/images/avatars/rabbit.png',
+      path: './static/images/avatars/rabbit.svg',
       role: AnimalRoles.LIVESTOCK,
       playersInitialStock: 0,
       bankInitialStock: 60,
@@ -30,7 +30,7 @@ export const defaultGameConfiguration: GameConfigInterface = {
     {
       name: AnimalNames.SHEEP,
       tradeValue: 6,
-      path: './static/images/avatars/sheep.png',
+      path: './static/images/avatars/sheep.svg',
       role: AnimalRoles.LIVESTOCK,
       playersInitialStock: 0,
       bankInitialStock: 24,
@@ -42,7 +42,7 @@ export const defaultGameConfiguration: GameConfigInterface = {
     {
       name: AnimalNames.PIG,
       tradeValue: 12,
-      path: './static/images/avatars/pig.png',
+      path: './static/images/avatars/pig.svg',
       role: AnimalRoles.LIVESTOCK,
       playersInitialStock: 0,
       bankInitialStock: 20,
@@ -54,7 +54,7 @@ export const defaultGameConfiguration: GameConfigInterface = {
     {
       name: AnimalNames.COW,
       tradeValue: 36,
-      path: './static/images/avatars/cow.png',
+      path: './static/images/avatars/cow.svg',
       role: AnimalRoles.LIVESTOCK,
       playersInitialStock: 0,
       bankInitialStock: 12,
@@ -63,7 +63,7 @@ export const defaultGameConfiguration: GameConfigInterface = {
     {
       name: AnimalNames.HORSE,
       tradeValue: 72,
-      path: './static/images/avatars/horse.png',
+      path: './static/images/avatars/horse.svg',
       role: AnimalRoles.LIVESTOCK,
       playersInitialStock: 0,
       bankInitialStock: 4,
@@ -74,7 +74,7 @@ export const defaultGameConfiguration: GameConfigInterface = {
     {
       name: AnimalNames.SMALL_DOG,
       tradeValue: 6,
-      path: './static/images/avatars/dog.png',
+      path: './static/images/avatars/small_dog.svg',
       role: AnimalRoles.GUARDIAN,
       playersInitialStock: 0,
       bankInitialStock: 4,
@@ -83,7 +83,7 @@ export const defaultGameConfiguration: GameConfigInterface = {
     {
       name: AnimalNames.BIG_DOG,
       tradeValue: 36,
-      path: './static/images/avatars/dog.png', // TODO: CHANGE TO BIG/SMALL DOG
+      path: './static/images/avatars/big_dog.svg', // TODO: CHANGE TO BIG/SMALL DOG
       role: AnimalRoles.GUARDIAN,
       playersInitialStock: 0,
       bankInitialStock: 2,
@@ -93,7 +93,7 @@ export const defaultGameConfiguration: GameConfigInterface = {
   predatorsConfig: [
     {
       name: AnimalNames.FOX,
-      path: './static/images/avatars/fox.png',
+      path: './static/images/avatars/fox.svg',
       roles: AnimalRoles.PREDATOR,
       kills: [AnimalNames.RABBIT],
       isChasedAwayBy: AnimalNames.SMALL_DOG,
@@ -103,8 +103,8 @@ export const defaultGameConfiguration: GameConfigInterface = {
     },
     {
       name: AnimalNames.WOLF,
-      path: './static/images/avatars/wolf.png',
       roles: AnimalRoles.PREDATOR,
+      path: './static/images/avatars/wolf.svg',
       kills: [
         AnimalNames.RABBIT,
         AnimalNames.SHEEP,

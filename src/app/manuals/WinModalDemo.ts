@@ -9,7 +9,7 @@ export class WinModalDemo {
     const modal = new WinModal(view);
     const player = new Player(
       'player',
-      './static/images/avatars/dog.png',
+      './static/images/avatars/small_dog.svg',
     );
     Render.render('#sf-app', modal.createWinModal(player));
   }

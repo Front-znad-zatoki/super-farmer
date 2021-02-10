@@ -17,7 +17,7 @@ export class TradeModalDemo {
     );
     const player = new Player(
       'Donald',
-      './static/images/avatars/dog.png',
+      './static/images/avatars/small_dog.svg',
     );
     const view = new ViewController();
     player.theHerd.addAnimalsToHerd(AnimalNames.RABBIT, 20);
@@ -35,7 +35,7 @@ export class TradeModalDemo {
 
     const player2 = new Player(
       'Gerwazy',
-      './static/images/avatars/dog.png',
+      './static/images/avatars/big_dog.svg',
     );
     player2.theHerd.addAnimalsToHerd(AnimalNames.RABBIT, 6);
     player2.theHerd.addAnimalsToHerd(AnimalNames.SHEEP, 1);
@@ -45,7 +45,7 @@ export class TradeModalDemo {
 
     const player3 = new Player(
       'Eustachy',
-      './static/images/avatars/dog.png',
+      './static/images/avatars/cow.svg',
     );
     player3.theHerd.addAnimalsToHerd(AnimalNames.RABBIT, 8);
     player3.theHerd.addAnimalsToHerd(AnimalNames.SHEEP, 3);
