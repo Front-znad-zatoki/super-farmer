@@ -1,6 +1,7 @@
 import { AnimalNames } from '../../Enums/AnimalNamesEnum';
 import { Player } from '../../Player';
 import { Bank } from '../logic/Bank';
+import { defaultGameConfiguration } from '../logic/defaultGameConfiguration';
 import { Offer, Trade } from '../Trade';
 
 // To run this demo add TradeDemo.playDemo() in App.ts
@@ -8,7 +9,10 @@ import { Offer, Trade } from '../Trade';
 export class TradeDemo {
   static playDemo(): void {
     const bank = new Bank();
-    const trade = new Trade(bank);
+    const trade = new Trade(
+      bank,
+      defaultGameConfiguration.livestockConfig,
+    );
     const player = new Player('player');
     player.theHerd.addAnimalsToHerd(AnimalNames.SHEEP, 9);
     player.theHerd.addAnimalsToHerd(AnimalNames.PIG, 5);

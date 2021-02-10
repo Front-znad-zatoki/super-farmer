@@ -2,12 +2,15 @@ import { AnimalNames } from '../Enums/AnimalNamesEnum';
 import { multiply, sum } from 'lodash';
 import { Player } from '../Player';
 import { Herd } from './logic/Herd';
-import { ConvertAnimalName } from './utils/ConvertAnimalName';
+import { LivestockConfigInterface } from '../Interfaces/LivestockConfigInterface';
 
 export type Offer = [AnimalNames, number];
 
 export class Trade {
-  constructor(private bank: Player) {}
+  constructor(
+    private bank: Player,
+    private livestockConfig: LivestockConfigInterface[],
+  ) {}
   get thisBank(): Player {
     return this.bank;
   }
@@ -28,10 +31,8 @@ export class Trade {
     }
     offer.sort(
       ([animalA], [animalB]) =>
-        ConvertAnimalName.toAnimalObject(animalA).theValue -
-        ConvertAnimalName.toAnimalObject(animalB).theValue,
+        this.getValue(animalA) - this.getValue(animalB),
     );
-    console.log(offer);
     let value = this.calculateValue(offer);
     const price = this.calculateValue(target);
     if (price < value) {
@@ -87,13 +88,16 @@ export class Trade {
     );
   }
 
+  private getValue(animalName: AnimalNames): number {
+    return this.livestockConfig.filter(
+      (animal) => animal.name === animalName,
+    )[0].tradeValue;
+  }
+
   private calculateValue(offer: Offer[]): number {
     return sum(
       offer.map(([animal, count]) =>
-        multiply(
-          ConvertAnimalName.toAnimalObject(animal).theValue,
-          count,
-        ),
+        multiply(this.getValue(animal), count),
       ),
     );
   }
