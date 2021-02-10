@@ -95,7 +95,7 @@ export class ViewController {
     }
   }
 
-  private processAfterTrade(): void {
+  processAfterTrade(): void {
     this.runTimer();
     this.refreshHerd();
     this.disableTrade();
