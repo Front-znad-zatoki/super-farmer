@@ -1,9 +1,9 @@
+import { CallbackNoParam } from '~src/Interfaces/CallbackNoParam';
 import { AnimalNames } from '../../Enums/AnimalNamesEnum';
 import { Player } from '../../Player';
 import { Herd } from '../logic/Herd';
 import { Offer, Trade } from '../Trade';
 import { Render } from '../utils/Render';
-import { ViewController } from '../ViewController';
 import { EmptyModal } from './EmptyModal';
 
 export class TradeModal extends EmptyModal {
@@ -21,7 +21,8 @@ export class TradeModal extends EmptyModal {
   constructor(
     private trade: Trade,
     firstPlayer: Player,
-    private view: ViewController,
+    private backCallback: CallbackNoParam,
+    private succesCallback: CallbackNoParam,
   ) {
     super();
     this.player = firstPlayer;
@@ -75,7 +76,7 @@ export class TradeModal extends EmptyModal {
     this.modal.addEventListener('click', this.clearWarning);
     this.backButton.addEventListener('click', () => {
       this.hideModal();
-      this.view.runTimer();
+      this.backCallback();
     });
     return this.modal;
   }
@@ -214,10 +215,7 @@ export class TradeModal extends EmptyModal {
     const data = this.formDataIntoTuples(formData);
     if (this.processTrade(data)) {
       this.hideModal();
-      this.view.runTimer();
-      this.view.refreshHerd();
-      this.view.disableTrade();
-      this.view.checkIfGameIsWon();
+      this.succesCallback();
     }
   };
 

@@ -85,9 +85,21 @@ export class ViewController {
     if (this.tradeModal) {
       this.tradeModal.setNextPlayer(player);
     } else {
-      this.tradeModal = new TradeModal(trade, player, this);
+      this.tradeModal = new TradeModal(
+        trade,
+        player,
+        () => this.runTimer(),
+        () => this.processAfterTrade(),
+      );
       Render.render('body', this.tradeModal.createModal());
     }
+  }
+
+  private processAfterTrade(): void {
+    this.runTimer();
+    this.refreshHerd();
+    this.disableTrade();
+    this.checkIfGameIsWon();
   }
 
   displayAuthorsModal(): void {
