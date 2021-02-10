@@ -9,10 +9,12 @@ export class Alert {
    * Usage: Alert.createElement()
    */
   static createElement(): HTMLElement {
-    this.alert = Render.elementFactory('div', {
-      id: 'alert-component',
-      className: 'alert',
-    });
+    if (!this.alert) {
+      this.alert = Render.elementFactory('div', {
+        id: 'alert-component',
+        className: 'alert',
+      });
+    }
     return this.alert;
   }
 
@@ -23,6 +25,9 @@ export class Alert {
    * @param alertType accepts AlertType enum with correct level (INFO, WARN, CRITICAL)
    */
   static updateAlert(message: string, alertType: AlertType): void {
+    if (!this.alert) {
+      throw Error('Alert component not initialized');
+    }
     Render.removeAllChildren(this.alert);
     switch (alertType) {
       case AlertType.INFO:
