@@ -11,31 +11,31 @@ export class WinModal extends EmptyModal {
   createWinModal(player: Player): HTMLElement {
     const heading = Render.elementFactory(
       'h2',
-      { className: 'modal__win-heading' },
+      { className: 'modal__heading' },
       'Congratulations!',
     );
     const image = Render.elementFactory(
       'div',
-      { className: 'modal__win-image' },
+      { className: 'modal__image--win-container' },
       Render.elementFactory('img', {
-        className: 'modal__win-avatar',
+        className: 'modal__image--win-avatar',
         src: player.theAvatar,
         alt: `${player.theName}-avatar`,
       }),
       Render.elementFactory('img', {
-        className: 'modal__win-medal',
+        className: 'modal__image--win-medal',
         src: './static/images/ui/medal.svg',
         alt: 'medal',
       }),
     );
     const text = Render.elementFactory(
       'div',
-      { className: 'modal__win-text' },
+      { className: 'modal__text--win' },
       `${player.theName} wins`,
     );
     const button = Render.elementFactory(
       'button',
-      { type: 'submit', className: 'modal__win-button' },
+      { type: 'button', className: 'modal__button--win' },
       'MENU',
     );
     button.addEventListener('click', () =>
