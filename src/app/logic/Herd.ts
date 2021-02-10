@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { add, subtract } from 'lodash';
 import { Animal } from '../../Animals/Animal';
 import { Fox } from '../../Animals/Fox';
 import { Wolf } from '../../Animals/Wolf';
@@ -57,7 +57,7 @@ export class Herd {
   ): void {
     const animalIndex = this.findAnimalTupleIndex(animalName);
     const animalTuple = this.animals[animalIndex];
-    const newNumber = _.add(animalTuple[1], numberToAdd);
+    const newNumber = add(animalTuple[1], numberToAdd);
     this.updateNumberOfAnimals(animalIndex, newNumber);
   }
 
@@ -76,7 +76,7 @@ export class Herd {
     const animalTuple = this.animals[animalIndex];
     if (animalTuple[1] < numberToSubstract)
       alert('not enough animals');
-    const newNumber = _.subtract(animalTuple[1], numberToSubstract);
+    const newNumber = subtract(animalTuple[1], numberToSubstract);
     this.updateNumberOfAnimals(animalIndex, newNumber);
   }
 
