@@ -26,12 +26,12 @@ export class Protector
     return this._chasesAway;
   }
   get exclamation(): string {
-    if (!this._exclamation) throw new Error('nothing to say');
+    if (!this._exclamation) return '';
     return this._exclamation;
   }
 
   protectHerd(): string {
-    if (!this._exclamation) throw new Error('nothing to say');
+    if (!this._exclamation) return '';
     return this._exclamation;
   }
 }

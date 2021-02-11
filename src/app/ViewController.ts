@@ -13,6 +13,7 @@ import { PlayerDTO } from '../Interfaces/PlayerDTOInterface';
 import { Configuration } from './logic/Configuration';
 import { GameModes } from '../../src/Enums/GameModeEnums';
 import { dynamicGameConfiguration } from './logic/dynamicGameConfiguration';
+import { AnimalNames } from '~src/Enums/AnimalNamesEnum';
 
 export class ViewController {
   private menuView: MenuView;
@@ -35,12 +36,23 @@ export class ViewController {
   displayMenuView(): void {
     this.menuView.displayMenu();
   }
+
   /*TODO: CHECK IF AI NEEDED, CONNECT WITH CALLBACK THAT PASSES PLAYERS*/
-  launchGame(players: PlayerDTO[], modeIsDynamic?: boolean): void {
+  launchGame(players: PlayerDTO[], isModeDynamic?: boolean): void {
     const config: Configuration =
-      modeIsDynamic === true
+      isModeDynamic === true
         ? new Configuration(dynamicGameConfiguration)
         : new Configuration(defaultGameConfiguration);
+    if (isModeDynamic) {
+      const numberOfPlayers = players.length;
+      config.livestockConfig = config.livestockConfig.map(
+        (animal) => {
+          if (animal.name === AnimalNames.RABBIT)
+            animal.bankInitialStock -= numberOfPlayers;
+          return animal;
+        },
+      );
+    }
     config.playersConfig = players;
     this.gameController = new GameController(this, config);
     this.startGame(

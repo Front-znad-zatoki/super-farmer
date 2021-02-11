@@ -117,39 +117,31 @@ export class BreedProcessor {
     return herdGrow;
   }
 
-  // private returnToBank(predator: Wolf | Fox, herd: Herd): void {
   private returnToBank(predator: Predator, herd: Herd): void {
-    if (predator.theName === AnimalNames.FOX) {
-      if (herd.getAnimalNumber(AnimalNames.SMALL_DOG) > 0) {
-        this.bank.theHerd.addAnimalsToHerd(AnimalNames.SMALL_DOG, 1);
-        return;
-      }
-      let quantity = herd.getAnimalNumber(AnimalNames.RABBIT);
-      //TODO: CHECK WHAT HAPPENS IN DYNAMIC MODE
-      if (this.mode === GameModes.DYNAMIC) quantity--;
-      this.bank.theHerd.addAnimalsToHerd(
-        AnimalNames.RABBIT,
-        quantity,
-      );
-      return;
+    const animalsToCull = predator.kills;
+    const protector = predator.isChasedAwayBy;
+    const hasProtector = herd.getAnimalNumber(protector);
+    const isDynamicMode = this.mode === GameModes.DYNAMIC;
+    const killsRabbits = animalsToCull.includes(AnimalNames.RABBIT);
+    if (hasProtector) {
+      console.log('has protector');
+      return this.bank.theHerd.addAnimalsToHerd(protector, 1);
     }
-    if (herd.getAnimalNumber(AnimalNames.BIG_DOG) > 0) {
-      this.bank.theHerd.addAnimalsToHerd(AnimalNames.BIG_DOG, 1);
-      return;
-    }
+
     herd.theAnimals
-      .filter(
-        //TODO: IMPLEMENT CONFIG SETTINGS
-        ([animal]) =>
-          animal.hasRole(AnimalRoles.LIVESTOCK) &&
-          animal.theName !== AnimalNames.HORSE,
-      )
-      .forEach(([animal, count]) =>
+      .filter(([animal]) => {
+        return animalsToCull.includes(animal.theName as AnimalNames);
+      })
+      .forEach(([animal, count]) => {
         this.bank.theHerd.addAnimalsToHerd(
           animal.theName as AnimalNames,
           count,
-        ),
-      );
+        );
+      });
+
+    if (isDynamicMode && killsRabbits) {
+      this.bank.theHerd.removeAnimalsFromHerd(AnimalNames.RABBIT, 1);
+    }
   }
 
   private calculateHerdGrow(

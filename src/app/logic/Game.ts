@@ -3,13 +3,9 @@ import { GameModes } from '../../Enums/GameModeEnums';
 import { GameConfigInterface } from '../../Interfaces/GameConfigInterface';
 import { Player } from '../../Player';
 import { BreedProcessor } from '../BreedProcessor';
-// import { Dice } from '../Dice';
-// import { FirstDice } from '../FirstDice';
-// import { SecondDice } from '../SecondDice';
 import { Timer } from '../Timer';
 import { Trade } from '../Trade';
 import { Bank } from './Bank';
-// import { defaultGameConfiguration } from './defaultGameConfiguration';
 import { LivestockConfigInterface } from '../../Interfaces/LivestockConfigInterface';
 import { ProtectorsConfigInterface } from '../../Interfaces/ProtectorsConfigInterface';
 import { HerdOwners } from '../../Enums/HerdOwnerEnum';
@@ -149,6 +145,7 @@ export class Game {
         playersInitialStock,
         bankInitialStock,
         chasesAway,
+        exclamation,
       }) => {
         return {
           name,
@@ -156,6 +153,7 @@ export class Game {
           role,
           path,
           chasesAway,
+          exclamation,
           inStock:
             owner === HerdOwners.PLAYER
               ? playersInitialStock

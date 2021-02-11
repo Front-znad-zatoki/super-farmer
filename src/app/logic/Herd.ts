@@ -3,9 +3,6 @@ import { Predator } from '../../Animals/Predator';
 import { Animal } from '../../Animals/Animal';
 import { AnimalNames } from '../../Enums/AnimalNamesEnum';
 import { HerdConfigInterface } from '../../Interfaces/HerdConfigInterface';
-// import { mockHerdConfig } from '../../../test/mock/mockHerdConfig';
-import { Wolf } from '../../Animals/Wolf';
-import { Fox } from '../../Animals/Fox';
 import { GameModes } from '../../Enums/GameModeEnums';
 import { Protector } from '../../Animals/Protector';
 import { AnimalRoles } from '../../Enums/AnimalRolesEnum';
@@ -37,7 +34,6 @@ export class Herd {
         return [newAnimal, inStock];
       },
     );
-    console.log(this.animals);
   }
   /**
    * Finds the index of the tuple with given animal's name.
@@ -147,36 +143,25 @@ export class Herd {
    * then reduces to zero the number of the animals in the herd or removes the protector, as is defined by game configuration.
    * @param { Fox | Wolf } attackingAnimal The animal that is attacking the herd.
    */
-  // TODO: Check parameteres type. Create classes for protectors and predators if needed.
-  // TODO: Modify to use config? Define at refactor
-  cullAnimals(
-    //  TODO: REMOVE FOX | WOLF AFTER BREED REFACTOR
-    attackingAnimal: Predator | Fox | Wolf,
-    mode: GameModes,
-  ): void {
-    // TODO: REMOVE NEXT LINE AFTER BREED REFACTOR
-    if (attackingAnimal instanceof Predator) {
-      const animalsToCull = attackingAnimal.kills;
-      const protector = attackingAnimal.isChasedAwayBy;
-      const hasProtector = this.getAnimalNumber(protector) > 0;
-      // console.log(JSON.parse(JSON.stringify(this.animals)));
-      if (!hasProtector) {
-        const isDynamicMode = mode === GameModes.DYNAMIC;
-        const killsRabbits = animalsToCull.includes(
-          AnimalNames.RABBIT,
-        );
-        this.cullAllAnimalsOfGivenTypes(animalsToCull);
-        if (isDynamicMode && killsRabbits) {
-          this.addAnimalsToHerd(AnimalNames.RABBIT, 1);
-        }
-        attackingAnimal.attackHerd();
-        // console.log(JSON.parse(JSON.stringify(this.animals)));
-      } else {
-        this.removeAnimalsFromHerd(protector, 1);
-        // console.log(JSON.parse(JSON.stringify(this.animals)));
-        // TODO: ADD METHOD TO PROTECTORS
-        // this.animals[protectorIndex][0].protectHerd();
+  cullAnimals(attackingAnimal: Predator, mode: GameModes): void {
+    const animalsToCull = attackingAnimal.kills;
+    const protector = attackingAnimal.isChasedAwayBy;
+    const hasProtector = this.getAnimalNumber(protector) > 0;
+    console.log(JSON.parse(JSON.stringify(this.animals)));
+    if (!hasProtector) {
+      const isDynamicMode = mode === GameModes.DYNAMIC;
+      const killsRabbits = animalsToCull.includes(AnimalNames.RABBIT);
+      this.cullAllAnimalsOfGivenTypes(animalsToCull);
+      if (isDynamicMode && killsRabbits) {
+        this.addAnimalsToHerd(AnimalNames.RABBIT, 1);
       }
+      attackingAnimal.attackHerd();
+    } else {
+      this.removeAnimalsFromHerd(protector, 1);
+      const protectorsIndex = this.findAnimalTupleIndex(protector);
+      (this.theAnimals[
+        protectorsIndex
+      ][0] as Protector).protectHerd();
     }
   }
 }
