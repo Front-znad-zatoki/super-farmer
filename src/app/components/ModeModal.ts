@@ -212,6 +212,51 @@ export class ModeModal extends BasicModal {
     return colors;
   }
 
+  private generateAvatarInput(numberOfPlayer: number): HTMLElement {
+    const avatarInputs: HTMLElement[] = Object.values(Avatars).reduce(
+      (avatarsElements: HTMLElement[], value, index) => {
+        const indicator = `${numberOfPlayer}avatarChoice_${
+          index + 1
+        }`;
+        const label = Render.elementFactory(
+          'label',
+          {
+            for: indicator,
+            className: 'mode-form__avatar-label',
+          },
+          Render.elementFactory('img', {
+            className: 'mode-form__avatar',
+            src: value,
+          }),
+        );
+        const radio = Render.elementFactory('input', {
+          type: 'radio',
+          name: `path_${numberOfPlayer}`,
+          className: 'mode-form__avatar-radio',
+          id: indicator,
+          value: value,
+        });
+        avatarsElements.push(
+          Render.elementFactory(
+            'div',
+            { className: 'mode-form__avatar-wrapper' },
+            label,
+            radio,
+          ),
+        );
+        return avatarsElements;
+      },
+      [],
+    );
+    const colors = Render.elementFactory(
+      'div',
+      { className: 'mode-form__avatars' },
+      ...avatarInputs,
+    );
+
+    return colors;
+  }
+
   private generateAddPlayerFields(
     numberOfPlayer: number,
   ): HTMLElement {
@@ -219,6 +264,7 @@ export class ModeModal extends BasicModal {
       'div',
       {},
       this.generateNameInput(numberOfPlayer),
+      this.generateAvatarInput(numberOfPlayer),
       this.generateColorInput(numberOfPlayer),
     );
     return fieldsWrapper;
