@@ -8,7 +8,7 @@ export class PlayerPanelDemo {
     const viewController = new ViewController();
     const player = new Player(
       'Misha',
-      './static/images/avatars/sheep.png',
+      './static/images/avatars/sheep.svg',
       '#44AF95',
     );
     const pp = new PlayerPanel(viewController.theGameView);
