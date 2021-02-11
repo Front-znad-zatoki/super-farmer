@@ -24,6 +24,8 @@ export class PlayerPanel {
    * Creates player panel and returns it as HTMLElement
    */
   createPlayerPanel(): HTMLElement {
+    console.log('hello');
+    console.log(this.player);
     return Render.elementFactory(
       'div',
       {
