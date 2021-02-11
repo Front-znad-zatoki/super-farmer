@@ -36,16 +36,11 @@ export class ViewController {
     this.menuView.displayMenu();
   }
   /*TODO: CHECK IF AI NEEDED, CONNECT WITH CALLBACK THAT PASSES PLAYERS*/
-  launchGame(players: PlayerDTO[], mode?: GameModes): void {
-    // TODO: REMOVE NEXT 3 LINES AFTER PASSING MODE AS AN ARGUMENT IS IMPLEMENTED
-    let gameMode: GameModes = GameModes.STATIC;
-    gameMode = GameModes.DYNAMIC;
-    // gameMode = GameModes.STATIC;
+  launchGame(players: PlayerDTO[], modeIsDynamic?: boolean): void {
     const config: Configuration =
-      gameMode === GameModes.DYNAMIC
+      modeIsDynamic === true
         ? new Configuration(dynamicGameConfiguration)
         : new Configuration(defaultGameConfiguration);
-    console.log(config);
     config.playersConfig = players;
     this.gameController = new GameController(this, config);
     this.startGame(

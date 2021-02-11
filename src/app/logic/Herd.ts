@@ -3,20 +3,41 @@ import { Predator } from '../../Animals/Predator';
 import { Animal } from '../../Animals/Animal';
 import { AnimalNames } from '../../Enums/AnimalNamesEnum';
 import { HerdConfigInterface } from '../../Interfaces/HerdConfigInterface';
-import { mockHerdConfig } from '../../../test/mock/mockHerdConfig';
+// import { mockHerdConfig } from '../../../test/mock/mockHerdConfig';
 import { Wolf } from '../../Animals/Wolf';
 import { Fox } from '../../Animals/Fox';
 import { GameModes } from '../../Enums/GameModeEnums';
-
+import { Protector } from '../../Animals/Protector';
+import { AnimalRoles } from '../../Enums/AnimalRolesEnum';
 export class Herd {
   protected animals: [Animal, number][];
   constructor(playersHerdConfig: HerdConfigInterface[]) {
     this.animals = playersHerdConfig.map(
-      ({ name, tradeValue, role, path, inStock }) => {
+      ({
+        name,
+        tradeValue,
+        role,
+        path,
+        inStock,
+        chasesAway,
+        exclamation,
+      }) => {
+        if (role === AnimalRoles.GUARDIAN) {
+          const newAnimal = new Protector(
+            name,
+            path,
+            role,
+            tradeValue,
+            chasesAway,
+            exclamation,
+          );
+          return [newAnimal, inStock];
+        }
         const newAnimal = new Animal(name, path, tradeValue, role);
         return [newAnimal, inStock];
       },
     );
+    console.log(this.animals);
   }
   /**
    * Finds the index of the tuple with given animal's name.

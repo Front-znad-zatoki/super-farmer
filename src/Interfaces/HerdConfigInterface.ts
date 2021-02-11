@@ -8,5 +8,6 @@ export interface HerdConfigInterface {
   role: AnimalRoles;
   path: string;
   inStock: number;
-  chasesAway?: AnimalNames;
+  chasesAway: AnimalNames | undefined;
+  exclamation: string | undefined;
 }

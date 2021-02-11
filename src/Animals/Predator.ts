@@ -31,7 +31,7 @@ export class Predator extends Animal implements AttackHerdInterface {
     return this._exclamation;
   }
 
-  attackHerd(): void {
-    console.log(this._exclamation);
+  attackHerd(): string {
+    return this._exclamation;
   }
 }
