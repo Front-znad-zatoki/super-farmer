@@ -13,7 +13,7 @@ import { PlayerDTO } from '../Interfaces/PlayerDTOInterface';
 import { Configuration } from './logic/Configuration';
 import { GameModes } from '../../src/Enums/GameModeEnums';
 import { dynamicGameConfiguration } from './logic/dynamicGameConfiguration';
-import { AnimalNames } from '~src/Enums/AnimalNamesEnum';
+import { AnimalNames } from '../Enums/AnimalNamesEnum';
 
 export class ViewController {
   private menuView: MenuView;
@@ -38,6 +38,7 @@ export class ViewController {
   }
 
   /*TODO: CHECK IF AI NEEDED, CONNECT WITH CALLBACK THAT PASSES PLAYERS*/
+  /* TODO: CONSIDER USING DEFAULT CONFIG ALWAYS, JUST CHANGE ALREADY CREATED CONFIG IN CASE ITS A DYNAMIC MODE*/
   launchGame(players: PlayerDTO[], isModeDynamic?: boolean): void {
     const config: Configuration =
       isModeDynamic === true

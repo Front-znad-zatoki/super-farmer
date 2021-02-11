@@ -141,13 +141,13 @@ export class Herd {
   /**
    * Depending on the attacking animal, it checks if there is a herd protector for the given type of attacker,
    * then reduces to zero the number of the animals in the herd or removes the protector, as is defined by game configuration.
-   * @param { Fox | Wolf } attackingAnimal The animal that is attacking the herd.
+   * @param { Predator } attackingAnimal The animal that is attacking the herd.
    */
   cullAnimals(attackingAnimal: Predator, mode: GameModes): void {
     const animalsToCull = attackingAnimal.kills;
     const protector = attackingAnimal.isChasedAwayBy;
     const hasProtector = this.getAnimalNumber(protector) > 0;
-    console.log(JSON.parse(JSON.stringify(this.animals)));
+    // console.log(JSON.parse(JSON.stringify(this.animals)));
     if (!hasProtector) {
       const isDynamicMode = mode === GameModes.DYNAMIC;
       const killsRabbits = animalsToCull.includes(AnimalNames.RABBIT);

@@ -3,15 +3,11 @@ import { FirstDice } from './FirstDice';
 import { SecondDice } from './SecondDice';
 import { Player } from '../Player';
 import { AnimalNames } from '../Enums/AnimalNamesEnum';
-import { Fox } from '../Animals/Fox';
-import { Wolf } from '../Animals/Wolf';
 import { Herd } from './logic/Herd';
-import { add, divide, floor, min, pickBy, find } from 'lodash';
-import { AnimalRoles } from '../Enums/AnimalRolesEnum';
+import { add, divide, floor, min } from 'lodash';
 import { Bank } from './logic/Bank';
 import { PredatorsConfigInterface } from '../Interfaces/PredatorsConfigInterface';
 import { GameModes } from '../Enums/GameModeEnums';
-import { ConvertAnimalName } from './utils/ConvertAnimalName';
 import { Predator } from '../../src/Animals/Predator';
 
 export type RollResult = {
@@ -26,13 +22,11 @@ export class BreedProcessor {
   predators: Predator[];
   constructor(
     private bank: Bank,
-    // TODO: CREATE PREDATORS INSTANCES (CLASS PREDATOR) BASED ON CONFIG FROM GAME
     predatorConfig: PredatorsConfigInterface[],
     mode: GameModes,
   ) {
     this.randomResultInterfaceWolf = new SecondDice();
     this.randomResultInterfaceFox = new FirstDice();
-    // TODO: ADD MODE - NEEDED TO PASS TO CULL ANIMALS TO CHECK HOW MANY TO KILL
     this.mode = mode;
     this.predators = predatorConfig.map(
       ({ name, path, roles, kills, isChasedAwayBy, exclamation }) => {
@@ -57,7 +51,6 @@ export class BreedProcessor {
   }
 
   processBreedPhase({ theHerd }: Player): RollResult {
-    console.log(this.mode);
     const wolfDiceResult = this.randomResultInterfaceWolf.getRandomValue();
     const foxDiceResult = this.randomResultInterfaceFox.getRandomValue();
     const equalResult = foxDiceResult === wolfDiceResult;
@@ -68,9 +61,6 @@ export class BreedProcessor {
     }
     const gain: [AnimalNames, number][] = [];
     if (foxDiceResult === AnimalNames.FOX) {
-      // const fox: Fox = ConvertAnimalName.toAnimalObject(
-      //   foxDiceResult,
-      // ) as Fox;
       const fox = this.getPredatorByName(AnimalNames.FOX);
       this.returnToBank(fox, theHerd);
       theHerd.cullAnimals(fox, this.mode);
@@ -81,9 +71,6 @@ export class BreedProcessor {
       ]);
     }
     if (wolfDiceResult === AnimalNames.WOLF) {
-      // const wolf = ConvertAnimalName.toAnimalObject(
-      //   wolfDiceResult,
-      // ) as Wolf;
       const wolf = this.getPredatorByName(AnimalNames.WOLF);
       this.returnToBank(wolf, theHerd);
       theHerd.cullAnimals(wolf, this.mode);
