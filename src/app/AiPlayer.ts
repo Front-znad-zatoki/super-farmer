@@ -11,12 +11,12 @@ export class AiPlayer extends Player {
    * @param gameController for the game that the player is participating in
    */
   makeAMove(gameController: GameController): void {
-    this.trade();
+    this.trade(gameController);
     gameController.breed();
     gameController.nextPlayer();
     setTimeout(() => gameController.startTurn(), 50);
   }
-  private trade(): void {
+  private trade(gameController: GameController): void {
     //Try to win the game by trading one to many if possible
     const oneToManyTrades: [AnimalNames, Offer[]][] = [
       [
@@ -48,7 +48,16 @@ export class AiPlayer extends Player {
     for (const [animalToSell, target] of oneToManyTrades) {
       if (this.herd.getAnimalNumber(animalToSell) > 1) {
         const offer: Offer[] = [[animalToSell, 1]];
-        //TODO trade return
+        if (
+          gameController.theGame.theTrade.processOffer(
+            offer,
+            this,
+            target,
+          )
+        ) {
+          return;
+        }
+        //TODO trade a horse for all the animals left in the bank
       } else if (this.herd.getAnimalNumber(animalToSell) === 0) {
         break;
       }
@@ -69,29 +78,59 @@ export class AiPlayer extends Player {
 
     if (missingAnimals.length === 1) {
       const offer = this.animalsForTrade();
-      const target = [missingAnimals[0], 1];
-      //TODO trade return
+      const target: Offer[] = [[missingAnimals[0], 1]];
+      if (
+        gameController.theGame.theTrade.processOffer(
+          offer,
+          this,
+          target,
+        )
+      ) {
+        return;
+      }
     }
     //Cannot win game by trade. Check if buying dogs is worth it
     if (this.buyABigDog()) {
       const offer = this.animalsForTrade();
-      const target = [AnimalNames.BIG_DOG, 1];
-      //trade animals for a big dog
-      return;
+      const target: Offer[] = [[AnimalNames.BIG_DOG, 1]];
+      if (
+        gameController.theGame.theTrade.processOffer(
+          offer,
+          this,
+          target,
+        )
+      ) {
+        return;
+      }
     }
 
     if (this.buyASmallDog()) {
-      const offer = [AnimalNames.RABBIT, 6];
-      const target = [AnimalNames.SMALL_DOG, 1];
-      //trade rabbits for a small dog
-      return;
+      const offer: Offer[] = [[AnimalNames.RABBIT, 6]];
+      const target: Offer[] = [[AnimalNames.SMALL_DOG, 1]];
+      if (
+        gameController.theGame.theTrade.processOffer(
+          offer,
+          this,
+          target,
+        )
+      ) {
+        return;
+      }
     }
 
     //If we don't need any dogs, try to buy the most expensive animal we can afford
     for (const missingAnimal of missingAnimals) {
       const offer = this.animalsForTrade(missingAnimal);
-      const target = [missingAnimals, 1];
-      //TODO trade return
+      const target: Offer[] = [[missingAnimal, 1]];
+      if (
+        gameController.theGame.theTrade.processOffer(
+          offer,
+          this,
+          target,
+        )
+      ) {
+        return;
+      }
     }
   }
 
