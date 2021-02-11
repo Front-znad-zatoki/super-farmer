@@ -1,4 +1,3 @@
-import { logGameObject } from './manuals/dynamicModeManual';
 import { ViewController } from './ViewController';
 
 export class App {

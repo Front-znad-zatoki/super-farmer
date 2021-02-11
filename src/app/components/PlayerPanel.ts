@@ -7,13 +7,14 @@ import { ConvertAnimalName } from '../utils/ConvertAnimalName';
 import { Animal } from '../../Animals/Animal';
 
 export class PlayerPanel {
-  private player: Player | undefined;
+  private player: Player;
   /**
    * Creates PlayerPanel based on data given
    * @param view accepts instance of View componenet
    */
   constructor(private view: GameView) {
-    this.player = undefined;
+    // TODO: FIND OUT WHY IS THIS PANEL CREATED TOGETHER WITH THE LANDING PAGE
+    this.player = new Player('', '', '');
   }
 
   setPlayer(player: Player): void {
