@@ -6,7 +6,6 @@ import { Avatars } from '~src/Enums/AvatarsEnum';
 import { Colors } from '~src/Enums/ColorsEnum';
 export class ModeModal extends BasicModal {
   private modeForm: HTMLFormElement;
-  // private playerElements: HTMLElement[];
   private addPlayerButton: HTMLElement;
   private removePlayerButton: HTMLElement;
   private playerInputsWrapper: HTMLElement;
@@ -19,7 +18,6 @@ export class ModeModal extends BasicModal {
    */
   constructor(submitCallback: CallbackOneParam<PlayerDTO[]>) {
     super();
-    // this.playerElements = [];
     this.addPlayerButton = Render.elementFactory(
       'button',
       {
@@ -58,10 +56,7 @@ export class ModeModal extends BasicModal {
   }
 
   private createForm(): HTMLFormElement {
-    Render.childrenInjector(
-      this.playerInputsWrapper,
-      // ...this.playerElements,
-    );
+    Render.childrenInjector(this.playerInputsWrapper);
 
     const form = Render.elementFactory(
       'form',
