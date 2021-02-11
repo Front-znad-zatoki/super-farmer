@@ -1,6 +1,4 @@
-import { GetRandomValue } from '../Interfaces/DiceInterface';
-import { FirstDice } from './FirstDice';
-import { SecondDice } from './SecondDice';
+import { RandomAnimalInterface } from '../Interfaces/RandomAnimalInterface';
 import { Player } from '../Player';
 import { AnimalNames } from '../Enums/AnimalNamesEnum';
 import { Fox } from '../Animals/Fox';
@@ -17,46 +15,44 @@ export type RollResult = {
 };
 
 export class BreedProcessor {
-  randomResultInterfaceWolf: GetRandomValue;
-  randomResultInterfaceFox: GetRandomValue;
-
-  constructor(private bank: Bank) {
-    this.randomResultInterfaceWolf = new SecondDice();
-    this.randomResultInterfaceFox = new FirstDice();
-  }
+  constructor(
+    private bank: Bank,
+    private firstDice: RandomAnimalInterface,
+    private secondDice: RandomAnimalInterface,
+  ) {}
 
   processBreedPhase({ theHerd }: Player): RollResult {
-    const wolfDiceResult = this.randomResultInterfaceWolf.getRandomValue();
-    const foxDiceResult = this.randomResultInterfaceFox.getRandomValue();
-    const equalResult = foxDiceResult === wolfDiceResult;
-    const roll = [wolfDiceResult, foxDiceResult];
+    const firstDiceResult = this.firstDice.getRandomValue();
+    const secondDiceResult = this.secondDice.getRandomValue();
+    const equalResult = firstDiceResult === secondDiceResult;
+    const roll = [firstDiceResult, secondDiceResult];
     if (equalResult) {
-      const count = this.breedAnimals(foxDiceResult, theHerd, true);
-      return { rollResult: roll, gain: [[foxDiceResult, count]] };
+      const count = this.breedAnimals(firstDiceResult, theHerd, true);
+      return { rollResult: roll, gain: [[firstDiceResult, count]] };
     }
     const gain: [AnimalNames, number][] = [];
-    if (foxDiceResult === AnimalNames.FOX) {
+    if (firstDiceResult === AnimalNames.FOX) {
       const fox: Fox = ConvertAnimalName.toAnimalObject(
-        foxDiceResult,
+        firstDiceResult,
       ) as Fox;
       this.returnToBank(fox, theHerd);
       theHerd.cullAnimals(fox);
     } else {
       gain.push([
-        foxDiceResult,
-        this.breedAnimals(foxDiceResult, theHerd),
+        firstDiceResult,
+        this.breedAnimals(firstDiceResult, theHerd),
       ]);
     }
-    if (wolfDiceResult === AnimalNames.WOLF) {
+    if (secondDiceResult === AnimalNames.WOLF) {
       const wolf = ConvertAnimalName.toAnimalObject(
-        wolfDiceResult,
+        secondDiceResult,
       ) as Wolf;
       this.returnToBank(wolf, theHerd);
       theHerd.cullAnimals(wolf);
     } else {
       gain.push([
-        wolfDiceResult,
-        this.breedAnimals(wolfDiceResult, theHerd),
+        secondDiceResult,
+        this.breedAnimals(secondDiceResult, theHerd),
       ]);
     }
     return { rollResult: roll, gain: gain };
