@@ -16,7 +16,10 @@ export class WinModal extends EmptyModal {
     );
     const image = Render.elementFactory(
       'div',
-      { className: 'modal__image--win-container' },
+      {
+        className: 'modal__image--win-container',
+        style: `border-color: ${player.theColor};`,
+      },
       Render.elementFactory('img', {
         className: 'modal__image--win-avatar',
         src: player.theAvatar,
@@ -30,7 +33,10 @@ export class WinModal extends EmptyModal {
     );
     const text = Render.elementFactory(
       'div',
-      { className: 'modal__text--win' },
+      {
+        className: 'modal__text--win',
+        style: `color: ${player.theColor};`,
+      },
       `${player.theName} wins`,
     );
     const button = Render.elementFactory(
