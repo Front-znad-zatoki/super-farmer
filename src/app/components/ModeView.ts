@@ -1,10 +1,12 @@
-import { BasicModal } from './BasicModal';
 import { Render } from '../utils/Render';
 import { PlayerDTO } from '~src/Interfaces/PlayerDTOInterface';
 import { CallbackOneParam } from '~src/Interfaces/CallbackOneParamInterface';
 import { Avatars } from '~src/Enums/AvatarsEnum';
 import { Colors } from '~src/Enums/ColorsEnum';
-export class ModeModal extends BasicModal {
+
+export class ModeView {
+  private modeView: HTMLElement;
+  private modeViewContainer: HTMLElement;
   private modeForm: HTMLFormElement;
   private addPlayerButton: HTMLElement;
   private removePlayerButton: HTMLElement;
@@ -17,7 +19,22 @@ export class ModeModal extends BasicModal {
    * @param submitCallback - will be called onSubmit with PlayerDTO[] data in the argument
    */
   constructor(submitCallback: CallbackOneParam<PlayerDTO[]>) {
-    super();
+    this.modeViewContainer = Render.elementFactory(
+      'div',
+      {
+        className: 'mode-view__container',
+      },
+      Render.elementFactory(
+        'h2',
+        { className: 'mode-view__heading' },
+        'Add your nick, choose avatar and color',
+      ),
+    );
+    this.modeView = Render.elementFactory(
+      'div',
+      { className: 'mode-view hidden' },
+      this.modeViewContainer,
+    );
     this.addPlayerButton = Render.elementFactory(
       'button',
       {
@@ -39,20 +56,27 @@ export class ModeModal extends BasicModal {
     });
     this.modeForm = this.createForm();
     this.submitCallback = submitCallback;
-  }
-
-  /**
-   * Creates ModeModal and returns it as HTMLElement.
-   */
-  createModeModal(): HTMLElement {
-    this.renderBasicModal(
-      'Add your nick, choose avatar and color',
-      undefined,
+    Render.childrenInjector(
+      this.modeViewContainer,
       this.modeForm,
       this.generateButtons(),
     );
     this.addEventListeners();
-    return this.modal;
+  }
+
+  /**
+   * Returns ModeView as HTMLElement.
+   */
+  get theModeView(): HTMLElement {
+    return this.modeView;
+  }
+
+  hide(): void {
+    this.modeView.classList.add('hidden');
+  }
+
+  show(): void {
+    this.modeView.classList.remove('hidden');
   }
 
   private createForm(): HTMLFormElement {
@@ -304,7 +328,7 @@ export class ModeModal extends BasicModal {
     const formData = new FormData(event.target as HTMLFormElement);
     const playersData = this.convertDataFormToPlayersData(formData);
     this.submitCallback(playersData);
-    this.hideModal();
+    this.hide();
     this.modeForm.reset();
   };
 
@@ -317,7 +341,7 @@ export class ModeModal extends BasicModal {
   };
 
   private handleClickBackButton = (): void => {
-    this.hideModal();
+    this.hide();
     this.modeForm.reset();
   };
 }
