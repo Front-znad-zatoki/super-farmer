@@ -26,11 +26,12 @@ export class MenuView {
       },
       Render.elementFactory(
         'div',
-        { className: 'page__container menu-window' },
+        { className: 'menu-window' },
         this.createHeading(),
         this.createPageContent(),
         this.createFooter(),
       ),
+      this.createStartButton(),
     );
   }
 
@@ -45,51 +46,32 @@ export class MenuView {
   private createPageContent(): HTMLElement {
     return Render.elementFactory(
       'div',
-      { className: 'menu__buttons' },
+      { className: 'menu' },
       ...this.createMenuButtons(),
     );
   }
 
   private createMenuButtons(): HTMLElement[] {
-    const rulesButton = Render.elementFactory(
-      'button',
-      {
-        className: 'menu__buttons__button',
-      },
-      'GAME RULES',
-    );
-    // rulesButton.setAttribute('disabled', 'true');
-    const settingsButton = Render.elementFactory(
-      'button',
-      {
-        className: 'menu__buttons__button',
-      },
-      'SETTINGS',
-    );
-    // settingsButton.setAttribute('disabled', 'true');
-    const authorsButton = Render.elementFactory(
-      'button',
-      {
-        className: 'menu__buttons__button',
-      },
-      'AUTHORS',
-    );
-
-    // authorsButton.setAttribute('disabled', 'true');
+    const namesButtons: string[] = ['GAME RULES', 'AUTHORS'];
+    const menuButtons = namesButtons.map((button) => {
+      return Render.elementFactory(
+        'button',
+        { className: 'menu__button' },
+        button,
+      );
+    });
+    return menuButtons;
+  }
+  private createStartButton(): HTMLElement {
     const startGameButton = Render.elementFactory(
       'button',
-      { className: 'menu__buttons--start' },
+      { className: 'start-button' },
       'START',
     );
     startGameButton.addEventListener('click', () => {
       this.modeModal.showModal();
     });
-    return [
-      rulesButton,
-      settingsButton,
-      authorsButton,
-      startGameButton,
-    ];
+    return startGameButton;
   }
 
   private createFooter(): HTMLElement {
