@@ -1,4 +1,3 @@
-import { AnimalNames } from '../Enums/AnimalNamesEnum';
 import { GameProcessor } from './logic/GameProcessor';
 import { ViewController } from './ViewController';
 import { Game } from './logic/Game';
@@ -42,27 +41,15 @@ export class GameController {
     this.view.turnAlert();
   }
 
-  /**
-   * Executes trade proposed by the player and checks win condition.
-   * If player wins the game after the trade, stops the timer and tells the View to display the WinModal.
-   * @param offer made by the player
-   * @param target desired by the player
-   * @returns true if the trade was sucessful, false otherwise
-   */
-  trade(
-    offer: [AnimalNames, number],
-    target: [AnimalNames, number],
-  ): boolean {
-    const tradeResult = this.gameProcessor.trade(offer, target);
-    this.isGameWon();
-    return tradeResult;
-  }
-
   private isGameWon(): void {
     if (this.gameProcessor.checkWin()) {
       this.gameProcessor.stopTurn();
       this.view.displayWinModal(this.game.theCurrentPlayer);
     }
+  }
+
+  checkIfGameIsWon(): void {
+    this.isGameWon();
   }
 
   /**

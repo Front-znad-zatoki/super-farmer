@@ -12,12 +12,11 @@
   align-items: center;
   justify-content: center;
   // Color /
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(32, 55, 57, 0.78);
+
   &__container {
     // Display & Box Model /
     display: flex;
-    width: 80%;
-    height: 80%;
     flex-direction: column;
     justify-content: space-between;
     padding: 48px;
@@ -27,16 +26,61 @@
     // Text /
     text-align: center;
   }
+
   &__heading {
-    text-transform: uppercase;
+    font-size: 2.5rem;
   }
+
   &__text {
     color: #aabbaa;
+
+    &--win {
+      margin-top: 2rem;
+      color: #71cfd7;
+      font-size: 2rem;
+    }
   }
+
   &__buttons {
     display: flex;
     justify-content: space-between;
   }
+
   &__button {
+    &--win {
+      padding: 1rem 3rem;
+      margin: 5rem 8rem 1rem;
+      // to reconsider after Landing Page will be merged
+      background-color: #203739;
+      border-radius: 0.5rem;
+      color: #fafafa;
+    }
+  }
+
+  &__image {
+    &--win {
+      &-container {
+        position: relative;
+        width: 10rem;
+        height: 10rem;
+        border: 2px solid #ffca36;
+        margin: 5rem auto auto;
+        border-radius: 50%;
+      }
+
+      &-avatar {
+        position: relative;
+        top: 2rem;
+        width: auto;
+        height: 6rem;
+      }
+
+      &-medal {
+        position: absolute;
+        right: -2rem;
+        bottom: -2rem;
+        height: 6rem;
+      }
+    }
   }
 }

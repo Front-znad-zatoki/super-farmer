@@ -75,7 +75,11 @@ export class Game {
     this.timer = new Timer(roundTimeInSeconds);
     // TO CHECK: SHOULD BREED PROCESSOR CREATE DICE INSTANCES?
     this.breedProcessor = new BreedProcessor(this.bank);
-    this.trade = new Trade(this.bank);
+    this.trade = new Trade(
+      this.bank,
+      livestockConfig,
+      protectorsConfig,
+    );
   }
 
   nextPlayer(): void {
