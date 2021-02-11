@@ -1,13 +1,13 @@
 .alert {
   display: flex;
-  border-width: 1px;
+  border-width: 2px;
   border-style: solid;
   border-color: none;
   border-radius: 0.25rem;
   transition: all 0.7s ease-in-out;
 
   &:hover {
-    background-color: white;
+    background-color: #eee;
   }
 
   &__icon {
