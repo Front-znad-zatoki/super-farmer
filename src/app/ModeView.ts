@@ -175,6 +175,28 @@ export class ModeView extends View {
     return input;
   }
 
+  private generateAICheckbox(numberOfPlayer: number): HTMLElement {
+    const indicator = `ai_${numberOfPlayer}`;
+    const checkbox = Render.elementFactory('input', {
+      className: 'mode-form__ai-input',
+      type: 'checkbox',
+      id: indicator,
+      name: indicator,
+    });
+    const label = Render.elementFactory('label', {
+      className: 'mode-form__ai-label',
+    });
+    const aiWrapper = Render.elementFactory(
+      'div',
+      {
+        className: 'mode-form__ai',
+      },
+      checkbox,
+      label,
+    );
+    return aiWrapper;
+  }
+
   private generateColorInput(numberOfPlayer: number): HTMLElement {
     const colorInputs: HTMLElement[] = Object.values(Colors).reduce(
       (colorsElements: HTMLElement[], value, index) => {
@@ -272,6 +294,7 @@ export class ModeView extends View {
       this.generateNameInput(numberOfPlayer),
       this.generateAvatarInput(numberOfPlayer),
       this.generateColorInput(numberOfPlayer),
+      this.generateAICheckbox(numberOfPlayer),
     );
     return fieldsWrapper;
   }
@@ -291,6 +314,7 @@ export class ModeView extends View {
             name: '',
             path: Avatars.FARMER1,
             color: Colors.GREEN,
+            isAI: false,
           } as PlayerDTO);
           players[index].name =
             value.trim().length > 0
