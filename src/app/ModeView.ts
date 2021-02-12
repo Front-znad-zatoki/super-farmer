@@ -1,10 +1,12 @@
 import { Render } from './utils/Render';
-import { CallbackTwoParam } from '~src/Interfaces/CallbackInterface';
+import {
+  CallbackNoParam,
+  CallbackTwoParam,
+} from '~src/Interfaces/CallbackInterface';
 import { Avatars } from '~src/Enums/AvatarsEnum';
 import { Colors } from '~src/Enums/ColorsEnum';
 import { EmptyView } from './EmptyView';
 import { PlayerDTO } from '~src/Interfaces/PlayerDTOInterface';
-import { AnimalRoles } from '~src/Enums/AnimalRolesEnum';
 
 export class ModeView extends EmptyView {
   private modeForm: HTMLFormElement;
@@ -14,11 +16,13 @@ export class ModeView extends EmptyView {
   private backButton!: HTMLElement;
   private playButton!: HTMLElement;
   private submitCallback: CallbackTwoParam<boolean, PlayerDTO[]>;
+  private backCallback: CallbackNoParam;
 
   /**
    * @param submitCallback - will be called onSubmit with isDynamic and PlayerDTO[] data in the arguments
    */
   constructor(
+    backCallback: CallbackNoParam,
     submitCallback: CallbackTwoParam<boolean, PlayerDTO[]>,
   ) {
     super();
@@ -42,6 +46,7 @@ export class ModeView extends EmptyView {
       className: 'mode-players-wrapper',
     });
     this.modeForm = this.createForm();
+    this.backCallback = backCallback;
     this.submitCallback = submitCallback;
 
     Render.childrenInjector(
@@ -393,6 +398,7 @@ export class ModeView extends EmptyView {
 
   private handleClickBackButton = (): void => {
     this.hide();
+    this.backCallback();
     this.modeForm.reset();
   };
 }
