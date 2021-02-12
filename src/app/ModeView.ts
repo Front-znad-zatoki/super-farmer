@@ -15,7 +15,7 @@ export class ModeView extends View {
   private submitCallback: CallbackTwoParam<boolean, PlayerDTO[]>;
 
   /**
-   * @param submitCallback - will be called onSubmit with PlayerDTO[] data in the argument
+   * @param submitCallback - will be called onSubmit with isDynamic and PlayerDTO[] data in the arguments
    */
   constructor(
     submitCallback: CallbackTwoParam<boolean, PlayerDTO[]>,

@@ -5,10 +5,9 @@ import { ViewController } from './ViewController';
 export class MenuView {
   private modeModal: ModeView;
   constructor(private view: ViewController) {
-    this.modeModal = new ModeView((players) =>
+    this.modeModal = new ModeView((isDynamic, players) =>
       this.view.launchGame(players),
     );
-    // this.modeModal.hide();
     Render.render('body', this.modeModal.theModeView);
   }
 
