@@ -1,6 +1,6 @@
 import { RandomAnimalInterface } from '../Interfaces/RandomAnimalInterface';
 import { AnimalNames } from '../Enums/AnimalNamesEnum';
-import { sample } from 'lodash';
+import { sample, shuffle } from 'lodash';
 
 export class Dice implements RandomAnimalInterface {
   private dice: AnimalNames[] = [];
@@ -14,6 +14,9 @@ export class Dice implements RandomAnimalInterface {
   }
 
   getRandomValue(): AnimalNames {
+    console.log(JSON.stringify(this.dice));
+    this.dice = shuffle(this.dice);
+    console.log(JSON.stringify(this.dice));
     return sample(this.dice) as AnimalNames;
   }
 }

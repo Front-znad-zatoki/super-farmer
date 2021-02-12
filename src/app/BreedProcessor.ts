@@ -7,7 +7,7 @@ import { Herd } from './logic/Herd';
 import { add, divide, floor, min } from 'lodash';
 import { AnimalRoles } from '../Enums/AnimalRolesEnum';
 import { Bank } from './logic/Bank';
-import { ConvertAnimalName } from './utils/ConvertAnimalName';
+import { AttackHerdInterface } from '../Interfaces/AttackHerdInterface';
 
 export type RollResult = {
   rollResult: AnimalNames[];
@@ -22,39 +22,40 @@ export class BreedProcessor {
   ) {}
 
   processBreedPhase({ theHerd }: Player): RollResult {
-    const firstDiceResult = this.firstDice.getRandomValue();
-    const secondDiceResult = this.secondDice.getRandomValue();
-    const equalResult = firstDiceResult === secondDiceResult;
-    const roll = [firstDiceResult, secondDiceResult];
-    if (equalResult) {
-      const count = this.breedAnimals(firstDiceResult, theHerd, true);
-      return { rollResult: roll, gain: [[firstDiceResult, count]] };
+    const roll = [
+      this.firstDice.getRandomValue(),
+      this.secondDice.getRandomValue(),
+    ];
+    const [firstDice, secondDice] = roll;
+    if (firstDice === secondDice) {
+      const count = this.breedAnimals(firstDice, theHerd, true);
+      return {
+        rollResult: roll,
+        gain: count ? [[firstDice, count]] : [],
+      };
     }
     const gain: [AnimalNames, number][] = [];
-    if (firstDiceResult === AnimalNames.FOX) {
-      const fox: Fox = ConvertAnimalName.toAnimalObject(
-        firstDiceResult,
-      ) as Fox;
-      this.returnToBank(fox, theHerd);
-      theHerd.cullAnimals(fox);
-    } else {
-      gain.push([
-        firstDiceResult,
-        this.breedAnimals(firstDiceResult, theHerd),
-      ]);
-    }
-    if (secondDiceResult === AnimalNames.WOLF) {
-      const wolf = ConvertAnimalName.toAnimalObject(
-        secondDiceResult,
-      ) as Wolf;
-      this.returnToBank(wolf, theHerd);
-      theHerd.cullAnimals(wolf);
-    } else {
-      gain.push([
-        secondDiceResult,
-        this.breedAnimals(secondDiceResult, theHerd),
-      ]);
-    }
+    roll
+      .filter((animal) => !this.isPredator(animal))
+      .forEach((animal) => {
+        const grow = this.breedAnimals(animal, theHerd);
+        if (grow) {
+          gain.push([animal, grow]);
+        }
+      });
+    roll
+      .filter((animal) => this.isPredator(animal))
+      .forEach((animal) => {
+        const predator = this.getPredatorObject(animal);
+        const isHerdCulled = this.returnToBank(predator, theHerd);
+        if (isHerdCulled && gain.length > 0) {
+          this.reduceGain(predator, gain);
+        }
+        predator.attackHerd();
+        theHerd.cullAnimals(
+          predator instanceof Wolf ? predator : (predator as Fox),
+        );
+      });
     return { rollResult: roll, gain: gain };
   }
 
@@ -79,22 +80,42 @@ export class BreedProcessor {
     return herdGrow;
   }
 
-  private returnToBank(predator: Wolf | Fox, herd: Herd): void {
+  private isPredator(animal: AnimalNames): boolean {
+    return animal === AnimalNames.FOX || animal === AnimalNames.WOLF;
+  }
+
+  private getPredatorObject(
+    animal: AnimalNames,
+  ): AttackHerdInterface {
+    switch (animal) {
+      case AnimalNames.FOX:
+        return new Fox();
+      case AnimalNames.WOLF:
+        return new Wolf();
+      default:
+        throw Error(`Error: unknown animal name: ${animal}`);
+    }
+  }
+
+  private returnToBank(
+    predator: AttackHerdInterface,
+    herd: Herd,
+  ): boolean {
     if (predator instanceof Fox) {
       if (herd.getAnimalNumber(AnimalNames.SMALL_DOG) > 0) {
         this.bank.theHerd.addAnimalsToHerd(AnimalNames.SMALL_DOG, 1);
-        return;
+        return false;
       }
       const quantity = herd.getAnimalNumber(AnimalNames.RABBIT);
       this.bank.theHerd.addAnimalsToHerd(
         AnimalNames.RABBIT,
         quantity,
       );
-      return;
+      return true;
     }
     if (herd.getAnimalNumber(AnimalNames.BIG_DOG) > 0) {
       this.bank.theHerd.addAnimalsToHerd(AnimalNames.BIG_DOG, 1);
-      return;
+      return false;
     }
     herd.theAnimals
       .filter(
@@ -108,6 +129,7 @@ export class BreedProcessor {
           count,
         ),
       );
+    return true;
   }
 
   private calculateHerdGrow(
@@ -125,5 +147,45 @@ export class BreedProcessor {
       diceResult,
     );
     return min([herdMaxGrow, bankContains]) as number;
+  }
+
+  private reduceGain(
+    predator: AttackHerdInterface,
+    animalsGain: [AnimalNames, number][],
+  ): void {
+    if (predator instanceof Wolf) {
+      const horseIndex = this.getAnimalIndex(
+        animalsGain,
+        AnimalNames.HORSE,
+      );
+      if (horseIndex === -1) {
+        animalsGain.splice(0);
+      } else {
+        animalsGain.splice(0, horseIndex);
+        animalsGain.splice(1, animalsGain.length);
+      }
+    }
+    if (predator instanceof Fox) {
+      const rabbitIndex = this.getAnimalIndex(
+        animalsGain,
+        AnimalNames.RABBIT,
+      );
+      if (rabbitIndex !== -1) {
+        animalsGain.splice(rabbitIndex, 1);
+      }
+    }
+  }
+
+  private getAnimalIndex(
+    animalsGain: [AnimalNames, number][],
+    animal: AnimalNames,
+  ): number {
+    const animalCount = animalsGain
+      .filter(([animalName]) => animal === animalName)
+      .map(([, count]) => count)
+      .pop();
+    return animalCount !== undefined
+      ? animalsGain.indexOf([animal, animalCount])
+      : -1;
   }
 }

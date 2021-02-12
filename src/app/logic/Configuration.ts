@@ -43,10 +43,10 @@ export class Configuration implements GameConfigInterface {
     return this._mode;
   }
   set roundTimeInSeconds(numberOfSeconds: number) {
-    this.roundTimeInSeconds = numberOfSeconds;
+    this._roundTimeInSeconds = numberOfSeconds;
   }
   get roundTimeInSeconds(): number {
-    return this.roundTimeInSeconds;
+    return this._roundTimeInSeconds;
   }
   //TODO: CREATE PLAYER CONFIG INTERFACE IF NECESSARY
   set playersConfig(
@@ -56,6 +56,7 @@ export class Configuration implements GameConfigInterface {
       color: string;
     }[],
   ) {
+    console.log(newPlayersConfig);
     this._playersConfig = newPlayersConfig;
   }
   get playersConfig(): {

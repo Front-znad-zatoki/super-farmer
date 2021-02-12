@@ -10,6 +10,7 @@ import { Trade } from './Trade';
 import { TradeModal } from './components/TradeModal';
 import { defaultGameConfiguration } from './logic/defaultGameConfiguration';
 import { PlayerDTO } from '../Interfaces/PlayerDTOInterface';
+import { Configuration } from './logic/Configuration';
 
 export class ViewController {
   private menuView: MenuView;
@@ -34,7 +35,7 @@ export class ViewController {
   }
 
   launchGame(players: PlayerDTO[]): void {
-    const config = defaultGameConfiguration;
+    const config = new Configuration(defaultGameConfiguration);
     config.playersConfig = players;
     this.gameController = new GameController(this, config);
     this.startGame(

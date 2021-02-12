@@ -38,9 +38,10 @@ export class WinModal extends EmptyModal {
       { type: 'button', className: 'modal__button--win' },
       'MENU',
     );
-    button.addEventListener('click', () =>
-      this.view.displayMenuView(),
-    );
+    button.addEventListener('click', () => {
+      this.view.endGame();
+      this.hideModal();
+    });
     Render.childrenInjector(
       this.modalContainer,
       heading,

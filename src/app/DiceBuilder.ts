@@ -1,8 +1,12 @@
-import { LivestockConfigInterface } from '~src/Interfaces/LivestockConfigInterface';
-import { PredatorsConfigInterface } from '~src/Interfaces/PredatorsConfigInterface';
-import { ProtectorsConfigInterface } from '~src/Interfaces/ProtectorsConfigInterface';
+import { LivestockConfigInterface } from '../Interfaces/LivestockConfigInterface';
+import { PredatorsConfigInterface } from '../Interfaces/PredatorsConfigInterface';
+import { ProtectorsConfigInterface } from '../Interfaces/ProtectorsConfigInterface';
 import { Dice } from './Dice';
 
+/**
+ * Builds two dice, depends on configuration.
+ * Usage: DiceBuilder.build()
+ */
 export class DiceBuilder {
   static build(
     livestockConfig: LivestockConfigInterface[],

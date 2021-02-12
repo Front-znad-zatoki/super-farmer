@@ -32,7 +32,7 @@ export class GameProcessor {
       this.gameController.updateTimeRemaining(
         Math.round(this.game.theTimer.theTurnTimeLeft),
       );
-    }, 100);
+    }, 50);
   }
 
   pauseTurn(): void {
