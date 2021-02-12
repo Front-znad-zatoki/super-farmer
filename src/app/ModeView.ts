@@ -1,9 +1,9 @@
 import { Render } from './utils/Render';
-import { PlayerDTO } from '~src/Interfaces/PlayerDTOInterface';
-import { CallbackOneParam } from '~src/Interfaces/CallbackOneParamInterface';
+import { CallbackTwoParam } from '~src/Interfaces/CallbackInterface';
 import { Avatars } from '~src/Enums/AvatarsEnum';
 import { Colors } from '~src/Enums/ColorsEnum';
 import { View } from './View';
+import { PlayerDTO } from '~src/Interfaces/PlayerDTOInterface';
 
 export class ModeView extends View {
   private modeForm: HTMLFormElement;
@@ -12,12 +12,14 @@ export class ModeView extends View {
   private playerInputsWrapper: HTMLElement;
   private backButton!: HTMLElement;
   private playButton!: HTMLElement;
-  private submitCallback: CallbackOneParam<PlayerDTO[]>;
+  private submitCallback: CallbackTwoParam<boolean, PlayerDTO[]>;
 
   /**
    * @param submitCallback - will be called onSubmit with PlayerDTO[] data in the argument
    */
-  constructor(submitCallback: CallbackOneParam<PlayerDTO[]>) {
+  constructor(
+    submitCallback: CallbackTwoParam<boolean, PlayerDTO[]>,
+  ) {
     super();
     this.addPlayerButton = Render.elementFactory(
       'button',
@@ -276,43 +278,46 @@ export class ModeView extends View {
 
   private convertDataFormToPlayersData(
     formData: FormData,
-  ): PlayerDTO[] {
-    const playersData = [];
+  ): { isDynamic: boolean; players: PlayerDTO[] } {
+    const players: PlayerDTO[] = [];
+    const isDynamic = false;
     for (const [formKey, formValue] of formData.entries()) {
       const value = formValue.toString();
       const [key, numberOfPlayer] = formKey.split('_');
       const index = +numberOfPlayer - 1;
       switch (key) {
         case 'name': {
-          playersData.push({
+          players.push({
             name: '',
             path: Avatars.FARMER1,
             color: Colors.GREEN,
           } as PlayerDTO);
-          playersData[index].name =
+          players[index].name =
             value.trim().length > 0
               ? value
-              : `Janush ${playersData.length}`;
+              : `Janush ${players.length}`;
           break;
         }
         case 'path': {
-          playersData[index].path = value;
+          players[index].path = value;
           break;
         }
         case 'color': {
-          playersData[index].color = value;
+          players[index].color = value;
           break;
         }
       }
     }
-    return playersData;
+    return { isDynamic, players };
   }
 
   private handleSubmit = (event: Event): void => {
     event.preventDefault();
     const formData = new FormData(event.target as HTMLFormElement);
-    const playersData = this.convertDataFormToPlayersData(formData);
-    this.submitCallback(playersData);
+    const { isDynamic, players } = this.convertDataFormToPlayersData(
+      formData,
+    );
+    this.submitCallback(isDynamic, players);
     this.hide();
     this.modeForm.reset();
   };
