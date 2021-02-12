@@ -3,62 +3,23 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
     background-color: $color-primary;
     border-radius: $border-radius;
 
     &__container {
       display: flex;
       justify-content: center;
-      flex-basis: 42%;
+      flex-basis: 50%;
     }
 
-    &__text {
-      display: inline;
-      font-weight: 700;
+    &__count {
+      font-family: $font-primary;
+      font-weight: $font-weight;
     }
 
     &__img {
       height: 3rem;
     }
   }
-
-  &__bar {
-    position: absolute;
-    bottom: 0;
-    display: inline-flex;
-  }
 }
-
-// Positioning: I - position, II - z-index, III - top, IV - right, V - bottom, VI - left
-// Display and box model: I - display, II - overflow, III - box-sizing, IV - width, V - height, VI - padding, VII - border, VIII - margin
-// Other: I - background, II - color, III - font-family, IV - font-size, V - text-align
-
-// .bank {
-//   &__board {
-//     display: inline-flex;
-//     width: 90vw;
-//     align-content: space-around;
-//     align-items: center;
-//     justify-content: space-around;
-//     background-color: wheat;
-
-//     &__container {
-//     }
-
-//     &__text {
-//       display: inline;
-//       font-weight: 700;
-//     }
-
-//     &__img {
-//       height: 3rem;
-//     }
-//   }
-
-//   &__bar {
-//     position: absolute;
-//     bottom: 0;
-//     display: inline-flex;
-//   }
-// }
