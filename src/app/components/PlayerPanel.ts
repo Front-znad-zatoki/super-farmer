@@ -1,10 +1,10 @@
 import { Player } from '../../Player';
 import { Render } from '../utils/Render';
-import { flatten } from 'lodash';
+// import { flatten } from 'lodash';
 import { AnimalNames } from '../../Enums/AnimalNamesEnum';
 import { GameView } from '../GameView';
 import { ConvertAnimalName } from '../utils/ConvertAnimalName';
-import { Animal } from '../../Animals/Animal';
+// import { Animal } from '../../Animals/Animal';
 
 export class PlayerPanel {
   private player: Player;
@@ -28,15 +28,15 @@ export class PlayerPanel {
       'div',
       {
         className: 'player-panel',
-        style: `background-color: ${this.player.theColor};`,
+        // style: `background-color: ${this.player.theColor};`,
       },
-      this.createPlayerBoard(),
+      // this.createPlayerBoard(),
       this.createResultWindow(),
       this.createButtonPanel(),
     );
   }
 
-  private createPlayerBoard(): HTMLElement {
+  /*private createPlayerBoard(): HTMLElement {
     return Render.elementFactory(
       'div',
       {
@@ -46,13 +46,11 @@ export class PlayerPanel {
       ...this.createPanelBoard(),
     );
   }
-
-  refreshHerd(): void {
     Render.removeAllChildren('#player-board');
     Render.render('#player-board', ...this.createPanelBoard());
-  }
+  }*/
 
-  createPanelBoard(): HTMLElement[] {
+  /*createPanelBoard(): HTMLElement[] {
     return [
       Render.elementFactory(
         'div',
@@ -71,9 +69,9 @@ export class PlayerPanel {
       ),
       this.createPlayerHerd(),
     ];
-  }
+  }*/
 
-  private createPlayerDetails(): HTMLElement {
+  /*private createPlayerDetails(): HTMLElement {
     return Render.elementFactory(
       'div',
       { className: 'player-panel__details' },
@@ -84,9 +82,9 @@ export class PlayerPanel {
         `${this.player.theName}`,
       ),
     );
-  }
+  }*/
 
-  private createPlayerHerd(): HTMLElement {
+  /* private createPlayerHerd(): HTMLElement {
     return Render.elementFactory(
       'div',
       { className: 'player-panel__herd' },
@@ -94,9 +92,9 @@ export class PlayerPanel {
         this.convertAnimalsToHTML(this.player.theHerd.theAnimals),
       ),
     );
-  }
+  }*/
 
-  private convertAnimalsToHTML(
+  /*private convertAnimalsToHTML(
     animals: [Animal, number][],
   ): HTMLElement[] {
     return animals.map(([animal, count]) =>
@@ -110,7 +108,7 @@ export class PlayerPanel {
         `x${count}`,
       ),
     );
-  }
+  }*/
 
   private createResultWindow(): HTMLElement {
     return Render.elementFactory(
@@ -169,7 +167,7 @@ export class PlayerPanel {
    */
   displayRollResult(
     diceResults: AnimalNames[],
-    playerGain: [AnimalNames, number][],
+    // playerGain: [AnimalNames, number][],
   ): void {
     const diceResult = Render.elementFactory(
       'div',
@@ -186,42 +184,42 @@ export class PlayerPanel {
     Render.render(
       '.player-panel__result',
       diceResult,
-      Render.elementFactory(
+      /*Render.elementFactory(
         'div',
         {},
         Render.elementFactory(
           'h3',
           { className: 'player-panel__result--gain' },
           `${this.player.theName} gains:`,
-        ),
-        ...this.convertAnimalsToHTML(
+        ),*/
+      /* ...this.convertAnimalsToHTML(
           playerGain.map(([animal, count]) => [
             ConvertAnimalName.toAnimalObject(animal),
             count,
-          ]),
-        ),
-      ),
+          ]),*/
+      // ),
+      // ),
     );
-    this.view.stopTimer();
-    setTimeout(() => this.hideTimer(), 10);
+    /*this.view.stopTimer();
+    setTimeout(() => this.hideTimer(), 10);*/
   }
 
-  private hideTimer(): void {
+  /*private hideTimer(): void {
     (document.querySelector(
       '#time-left',
     ) as HTMLElement).style.display = 'none';
-  }
+  }*/
 
   /**
    * Updates timer on player panel
    * @param timeLeft accepts number value for time left
    */
-  updateTime(timeLeft: number): void {
+  /*updateTime(timeLeft: number): void {
     const timer = document.querySelector('#time-left') as HTMLElement;
     timer.innerText = `Time left: ${timeLeft} sec.`;
-  }
+  }*/
 
-  turnAlert(): void {
+  /*turnAlert(): void {
     Render.render(
       '#sf-app',
       Render.elementFactory(
@@ -230,7 +228,7 @@ export class PlayerPanel {
         `${this.player.theName}'s turn has passed!`,
       ),
     );
-  }
+  }*/
 
   disableTrade(): void {
     (document.querySelector('#exchange') as HTMLElement).setAttribute(
