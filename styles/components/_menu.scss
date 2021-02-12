@@ -1,18 +1,10 @@
-.page__container {
-  display: flex;
-  height: 100vh;
-  background: url(/static/images/ui/background.png) no-repeat;
-  background-size: cover;
-}
-
 .menu-window {
   display: flex;
+  height: 100%;
   flex-direction: column;
-  justify-content: space-between;
-  margin: 80px 0 80px 80px;
+  padding: 80px;
   &__header {
-    font-family: Roboto;
-    font-weight: 700;
+    font-family: $font-family;
   }
 }
 
@@ -25,42 +17,39 @@
     border: none;
     margin-top: 50px;
     background: none;
-    font-family: Roboto;
-    font-size: 24px;
-    font-weight: 700;
+    font-family: $font-family;
+    font-size: $font-size;
+    font-weight: $font-weight;
     outline: none;
     text-align: start;
     &:hover {
-      color: #f00;
+      color: $color-hover;
       cursor: pointer;
     }
   }
 }
-.start-button {
-  width: 25%;
-  height: 13%;
-  align-self: flex-end;
+.button--start {
+  min-width: 350px;
+  align-self: center;
   border: none;
-  margin-bottom: 80px;
-  margin-left: 25%;
   background: #203739;
-  border-radius: 8px;
-  color: #fff;
-  font-family: Roboto;
+  border-radius: $border-radius;
+  color: $color-primary;
+  font-family: $font-family;
   font-size: 30px;
-  font-weight: 700;
-  letter-spacing: 0.3em;
+  font-weight: $font-weight;
+  letter-spacing: 0.3rem;
+  line-height: 8rem;
   outline: none;
-  text-align: center;
   &:hover {
-    background-color: #f00;
+    background-color: $color-hover;
     cursor: pointer;
   }
 }
 
 .footer {
-  color: #fff;
-  font-family: Roboto;
-  font-size: 24px;
-  font-weight: 700;
+  color: $color-primary;
+  font-family: $font-family;
+  font-size: $font-size;
+  font-weight: $font-weight;
 }

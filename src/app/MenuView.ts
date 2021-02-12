@@ -21,17 +21,11 @@ export class MenuView {
   private createLandingPage(): HTMLElement {
     return Render.elementFactory(
       'div',
-      {
-        className: 'page__container',
-      },
-      Render.elementFactory(
-        'div',
-        { className: 'menu-window' },
-        this.createHeading(),
-        this.createPageContent(),
-        this.createFooter(),
-      ),
+      { className: 'menu-window' },
+      this.createHeading(),
+      this.createPageContent(),
       this.createStartButton(),
+      this.createFooter(),
     );
   }
 
@@ -65,7 +59,7 @@ export class MenuView {
   private createStartButton(): HTMLElement {
     const startGameButton = Render.elementFactory(
       'button',
-      { className: 'start-button' },
+      { className: 'button--start' },
       'START',
     );
     startGameButton.addEventListener('click', () => {
