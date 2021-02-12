@@ -32,15 +32,19 @@ export class Alert {
     switch (alertType) {
       case AlertType.INFO:
         this.alert.style.borderColor = '#3E8Ed0';
+        this.alert.style.backgroundColor = '#3E8Ed0';
         break;
       case AlertType.WARN:
         this.alert.style.borderColor = '#FFE08A';
+        this.alert.style.backgroundColor = '#FFE08A';
         break;
       case AlertType.CRITICAL:
         this.alert.style.borderColor = '#F14668';
+        this.alert.style.backgroundColor = '#F14668';
         break;
       default:
         this.alert.style.borderColor = 'white';
+        this.alert.style.backgroundColor = 'transparent';
         break;
     }
     const icon = Render.elementFactory('img', {
