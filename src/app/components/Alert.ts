@@ -31,13 +31,13 @@ export class Alert {
     Render.removeAllChildren(this.alert);
     switch (alertType) {
       case AlertType.INFO:
-        this.alert.style.borderColor = 'blue';
+        this.alert.style.borderColor = '#3E8Ed0';
         break;
       case AlertType.WARN:
-        this.alert.style.borderColor = '#FFCA36';
+        this.alert.style.borderColor = '#FFE08A';
         break;
       case AlertType.CRITICAL:
-        this.alert.style.borderColor = '#ED3D25';
+        this.alert.style.borderColor = '#F14668';
         break;
       default:
         this.alert.style.borderColor = 'white';
