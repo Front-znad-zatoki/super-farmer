@@ -205,17 +205,11 @@ export class ModeView extends EmptyView {
     const colorInputs: HTMLElement[] = Object.values(Colors).reduce(
       (colorsElements: HTMLElement[], value, index) => {
         const indicator = `${numberOfPlayer}colorChoice_${index + 1}`;
-        const label = Render.elementFactory(
-          'label',
-          {
-            for: indicator,
-            className: 'mode-form__color-label',
-          },
-          Render.elementFactory('div', {
-            className: 'mode-form__color-label',
-            style: `background-color: ${value}`,
-          }),
-        );
+        const label = Render.elementFactory('label', {
+          for: indicator,
+          className: 'mode-form__color-label',
+          style: `background-color: ${value}`,
+        });
         const radio = Render.elementFactory('input', {
           type: 'radio',
           name: `color_${numberOfPlayer}`,
@@ -227,8 +221,8 @@ export class ModeView extends EmptyView {
           Render.elementFactory(
             'div',
             { className: 'mode-form__color-wrapper' },
-            label,
             radio,
+            label,
           ),
         );
         return colorsElements;
@@ -272,8 +266,8 @@ export class ModeView extends EmptyView {
           Render.elementFactory(
             'div',
             { className: 'mode-form__avatar-wrapper' },
-            label,
             radio,
+            label,
           ),
         );
         return avatarsElements;
@@ -294,7 +288,7 @@ export class ModeView extends EmptyView {
   ): HTMLElement {
     const fieldsWrapper = Render.elementFactory(
       'div',
-      {},
+      { className: 'mode-form__add-player' },
       this.generateNameInput(numberOfPlayer),
       this.generateAvatarInput(numberOfPlayer),
       this.generateColorInput(numberOfPlayer),
