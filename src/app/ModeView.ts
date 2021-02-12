@@ -3,10 +3,9 @@ import { PlayerDTO } from '~src/Interfaces/PlayerDTOInterface';
 import { CallbackOneParam } from '~src/Interfaces/CallbackOneParamInterface';
 import { Avatars } from '~src/Enums/AvatarsEnum';
 import { Colors } from '~src/Enums/ColorsEnum';
+import { View } from './View';
 
-export class ModeView {
-  private modeView: HTMLElement;
-  private modeViewContainer: HTMLElement;
+export class ModeView extends View {
   private modeForm: HTMLFormElement;
   private addPlayerButton: HTMLElement;
   private removePlayerButton: HTMLElement;
@@ -19,22 +18,7 @@ export class ModeView {
    * @param submitCallback - will be called onSubmit with PlayerDTO[] data in the argument
    */
   constructor(submitCallback: CallbackOneParam<PlayerDTO[]>) {
-    this.modeViewContainer = Render.elementFactory(
-      'div',
-      {
-        className: 'mode-view__container',
-      },
-      Render.elementFactory(
-        'h2',
-        { className: 'mode-view__heading' },
-        'Add your nick, choose avatar and color',
-      ),
-    );
-    this.modeView = Render.elementFactory(
-      'div',
-      { className: 'mode-view hidden' },
-      this.modeViewContainer,
-    );
+    super();
     this.addPlayerButton = Render.elementFactory(
       'button',
       {
@@ -56,11 +40,20 @@ export class ModeView {
     });
     this.modeForm = this.createForm();
     this.submitCallback = submitCallback;
+
+    const heading = Render.elementFactory(
+      'h2',
+      { className: 'mode-view__heading' },
+      'Add your nick, choose avatar and color',
+    );
+
     Render.childrenInjector(
-      this.modeViewContainer,
+      this.viewContainer,
+      heading,
       this.modeForm,
       this.generateButtons(),
     );
+
     this.addEventListeners();
   }
 
@@ -68,15 +61,7 @@ export class ModeView {
    * Returns ModeView as HTMLElement.
    */
   get theModeView(): HTMLElement {
-    return this.modeView;
-  }
-
-  hide(): void {
-    this.modeView.classList.add('hidden');
-  }
-
-  show(): void {
-    this.modeView.classList.remove('hidden');
+    return this.view;
   }
 
   private createForm(): HTMLFormElement {
