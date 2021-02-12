@@ -1,23 +1,30 @@
+import { PlayerDTO } from '~src/Interfaces/PlayerDTOInterface';
+import { EmptyView } from './EmptyView';
 import { ModeView } from './ModeView';
 import { Render } from './utils/Render';
 import { ViewController } from './ViewController';
 
-export class MenuView {
+export class MenuView extends EmptyView {
   private modeModal: ModeView;
-  constructor(private view: ViewController) {
-    this.modeModal = new ModeView((isDynamic, players) =>
-      this.view.launchGame(players),
-    );
+  constructor(private viewController: ViewController) {
+    super(false);
+    const backCallback = () => this.show();
+    const submitCallback = (
+      isDynamic: boolean,
+      players: PlayerDTO[],
+    ) => this.viewController.launchGame(players);
+    this.modeModal = new ModeView(backCallback, submitCallback);
     Render.render('body', this.modeModal.theModeView);
   }
 
   displayMenu(): void {
     Render.removeAllChildren('#sf-app');
-    Render.render(
-      '#sf-app',
+    Render.childrenInjector(
+      this.viewContainer,
       this.createLandingPage(),
       this.createFooter(),
     );
+    Render.render('#sf-app', this.view);
   }
 
   private createLandingPage(): HTMLElement {
@@ -80,6 +87,7 @@ export class MenuView {
       'NEW GAME',
     );
     startGameButton.addEventListener('click', () => {
+      this.hide();
       this.modeModal.show();
     });
     const settingsButton = Render.elementFactory(
