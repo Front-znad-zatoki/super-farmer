@@ -20,6 +20,10 @@ export class GameController {
     return this.game;
   }
 
+  get theGameProcessor(): GameProcessor {
+    return this.gameProcessor;
+  }
+
   /**
    * Starts the turn for the current player.
    * Displays alert when the time is over.

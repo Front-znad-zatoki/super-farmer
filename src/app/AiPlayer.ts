@@ -12,9 +12,13 @@ export class AiPlayer extends Player {
    */
   makeAMove(gameController: GameController): void {
     this.trade(gameController);
+    if (gameController.theGameProcessor.checkWin()) {
+      return;
+    }
     gameController.breed();
-    gameController.nextPlayer();
-    setTimeout(() => gameController.startTurn(), 50);
+    if (gameController.theGameProcessor.checkWin()) {
+      return;
+    }
   }
   private trade(gameController: GameController): void {
     //Try to win the game by trading one to many if possible
