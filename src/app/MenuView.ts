@@ -1,15 +1,15 @@
-import { ModeModal } from './components/ModeModal';
+import { ModeView } from './components/ModeView';
 import { Render } from './utils/Render';
 import { ViewController } from './ViewController';
 
 export class MenuView {
-  private modeModal: ModeModal;
+  private modeModal: ModeView;
   constructor(private view: ViewController) {
-    this.modeModal = new ModeModal((players) =>
+    this.modeModal = new ModeView((players) =>
       this.view.launchGame(players),
     );
-    this.modeModal.hideModal();
-    Render.render('body', this.modeModal.createModeModal());
+    // this.modeModal.hide();
+    Render.render('body', this.modeModal.theModeView);
   }
 
   displayMenu(): void {
@@ -81,7 +81,7 @@ export class MenuView {
       'NEW GAME',
     );
     startGameButton.addEventListener('click', () => {
-      this.modeModal.showModal();
+      this.modeModal.show();
     });
     const settingsButton = Render.elementFactory(
       'button',
