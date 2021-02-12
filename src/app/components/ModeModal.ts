@@ -4,6 +4,7 @@ import { PlayerDTO } from '~src/Interfaces/PlayerDTOInterface';
 import { CallbackOneParam } from '~src/Interfaces/CallbackOneParamInterface';
 import { Avatars } from '~src/Enums/AvatarsEnum';
 import { Colors } from '~src/Enums/ColorsEnum';
+import { check } from 'prettier';
 export class ModeModal extends BasicModal {
   private modeForm: HTMLFormElement;
   private addPlayerButton: HTMLElement;
@@ -172,13 +173,9 @@ export class ModeModal extends BasicModal {
           'label',
           {
             for: indicator,
-            className: 'mode-form__color-label',
+            className: `mode-form__color-label color-label${index + 1}`,
           },
-          Render.elementFactory('div', {
-            className: 'mode-form__color-label',
-            style: `background-color: ${value}`,
-          }),
-        );
+        )
         const radio = Render.elementFactory('input', {
           type: 'radio',
           name: `color_${numberOfPlayer}`,
@@ -186,12 +183,15 @@ export class ModeModal extends BasicModal {
           id: indicator,
           value: value,
         });
+        if(index===0){
+          radio.setAttribute('checked', '');
+        }
         colorsElements.push(
           Render.elementFactory(
             'div',
             { className: 'mode-form__color-wrapper' },
-            label,
             radio,
+            label,
           ),
         );
         return colorsElements;

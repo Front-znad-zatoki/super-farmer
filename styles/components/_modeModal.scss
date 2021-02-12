@@ -1,22 +1,53 @@
+.color-label1 {
+  background-color: #ED3D25;
+}
+
+.color-label2 {
+  background-color: #8D992B;
+}
+
+.color-label3 {
+  background-color: #203739;
+}
+
+.color-label4 {
+  background-color: #FFCA36;
+}
+
 .mode-form {
+  // Styles for avatars
+  &__avatars {
+    display: flex;
+    justify-content: center;
+  }
+
   &__avatar {
     width: 50px;
+    margin: 5px;
+
+    &-radio{
+      background-color: red;
+      border: 1px solid #203739;
+    }
   }
-  &__add-player-btn {
-  }
-  &__color-label {
-    width: 50px;
-    height: 50px;
-  }
-  &__color-radio {
-    // display: none;
-  }
+  // Styles for colors 
   &__colors {
     display: flex;
     justify-content: center;
   }
-  &__avatars {
+  &__color-wrapper {
     display: flex;
-    justify-content: center;
+  }
+  &__color-label {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%; 
+  }
+  
+  &__color-radio{
+    &:checked+.mode-form__color-label{
+      border: 2px solid black;
+      box-shadow: 0px 0px 0px 3px #fff inset;
+    }
   }
 }
