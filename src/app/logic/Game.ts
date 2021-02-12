@@ -13,7 +13,6 @@ import { HerdOwners } from '../../Enums/HerdOwnerEnum';
 export class Game {
   mode: GameModes;
   roundTimeInSeconds: number;
-  // totalGameTimeInSeconds: number;
   playersConfig: { name: string; path: string }[];
   playersHerdConfig: HerdConfigInterface[];
   banksHerdConfig: HerdConfigInterface[];
@@ -56,11 +55,7 @@ export class Game {
     );
     this.currentPlayerNumber = 0;
     this.bank = new Bank(this.banksHerdConfig);
-    // TODO: GET DICE DATA FROM CONFIG AFTER/ IF DICE REFACTOR
-    // TODO: CHECK IF NEEDED SINCE THEY ARE CALLED IN BREEDPROCESSOR
-    // this.dice = [new FirstDice(), new SecondDice()];
     this.timer = new Timer(roundTimeInSeconds);
-    // TO CHECK: SHOULD BREED PROCESSOR CREATE DICE INSTANCES?
     this.breedProcessor = new BreedProcessor(
       this.bank,
       predatorsConfig,
@@ -109,7 +104,6 @@ export class Game {
     return this.trade;
   }
 
-  // TODO: REFACTOR!
   preparePlayersHerdConfig(
     livestockConfig: LivestockConfigInterface[],
     protectorsConfig: ProtectorsConfigInterface[],

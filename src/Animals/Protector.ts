@@ -6,15 +6,15 @@ import { Animal, Value } from './Animal';
 export class Protector
   extends Animal
   implements ProtectHerdInterface {
-  protected _chasesAway: AnimalNames | undefined;
-  protected _exclamation: string | undefined;
+  protected _chasesAway: AnimalNames;
+  protected _exclamation: string;
   constructor(
     name: AnimalNames,
     imagePath: string,
     role: AnimalRoles = AnimalRoles.PREDATOR,
     value: Value,
-    chasesAway: AnimalNames | undefined,
-    exclamation: string | undefined,
+    chasesAway: AnimalNames,
+    exclamation: string,
   ) {
     super(name, imagePath, value, role);
     this._chasesAway = chasesAway;

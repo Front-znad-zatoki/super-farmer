@@ -1,5 +1,3 @@
-// import { Fox } from '../src/Animals/Fox';
-// import { Wolf } from '../src/Animals/Wolf';
 import { AnimalNames } from '../src/Enums/AnimalNamesEnum';
 import { Herd } from '../src/app/logic/Herd';
 import { mockHerdConfig } from './mock/mockHerdConfig';

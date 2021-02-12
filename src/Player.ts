@@ -9,7 +9,6 @@ export class Player {
   protected herd: Herd;
   protected color: string;
 
-  // TODO: set path to default avatar when it's available
   constructor(
     name: string,
     avatar = 'path to default avatar',

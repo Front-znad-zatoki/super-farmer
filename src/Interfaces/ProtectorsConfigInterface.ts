@@ -3,6 +3,6 @@ import { LivestockConfigInterface } from './LivestockConfigInterface';
 
 export interface ProtectorsConfigInterface
   extends LivestockConfigInterface {
-  chasesAway: AnimalNames | undefined;
-  exclamation: string | undefined;
+  chasesAway: AnimalNames;
+  exclamation: string;
 }

@@ -20,15 +20,17 @@ export class Herd {
         exclamation,
       }) => {
         if (role === AnimalRoles.GUARDIAN) {
-          const newAnimal = new Protector(
-            name,
-            path,
-            role,
-            tradeValue,
-            chasesAway,
-            exclamation,
-          );
-          return [newAnimal, inStock];
+          if (chasesAway && exclamation) {
+            const newAnimal = new Protector(
+              name,
+              path,
+              role,
+              tradeValue,
+              chasesAway,
+              exclamation,
+            );
+            return [newAnimal, inStock];
+          }
         }
         const newAnimal = new Animal(name, path, tradeValue, role);
         return [newAnimal, inStock];
@@ -147,7 +149,6 @@ export class Herd {
     const animalsToCull = attackingAnimal.kills;
     const protector = attackingAnimal.isChasedAwayBy;
     const hasProtector = this.getAnimalNumber(protector) > 0;
-    // console.log(JSON.parse(JSON.stringify(this.animals)));
     if (!hasProtector) {
       const isDynamicMode = mode === GameModes.DYNAMIC;
       const killsRabbits = animalsToCull.includes(AnimalNames.RABBIT);

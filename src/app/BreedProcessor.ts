@@ -46,7 +46,6 @@ export class BreedProcessor {
       (predator) => predator.theName === predatorName,
     );
     if (!attackingPredator) throw new Error('No such predator');
-    console.log(attackingPredator);
     return attackingPredator;
   }
 
@@ -111,7 +110,6 @@ export class BreedProcessor {
     const isDynamicMode = this.mode === GameModes.DYNAMIC;
     const killsRabbits = animalsToCull.includes(AnimalNames.RABBIT);
     if (hasProtector) {
-      console.log('has protector');
       return this.bank.theHerd.addAnimalsToHerd(protector, 1);
     }
 
@@ -125,7 +123,6 @@ export class BreedProcessor {
           count,
         );
       });
-
     if (isDynamicMode && killsRabbits) {
       this.bank.theHerd.removeAnimalsFromHerd(AnimalNames.RABBIT, 1);
     }

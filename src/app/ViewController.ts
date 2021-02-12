@@ -11,7 +11,6 @@ import { TradeModal } from './components/TradeModal';
 import { defaultGameConfiguration } from './logic/defaultGameConfiguration';
 import { PlayerDTO } from '../Interfaces/PlayerDTOInterface';
 import { Configuration } from './logic/Configuration';
-import { GameModes } from '../../src/Enums/GameModeEnums';
 import { dynamicGameConfiguration } from './logic/dynamicGameConfiguration';
 import { AnimalNames } from '../Enums/AnimalNamesEnum';
 
