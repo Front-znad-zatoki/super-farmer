@@ -155,7 +155,11 @@ export class TradeModal extends EmptyModal {
                 alt: animal.theName,
                 className: 'trade__player-herd--image',
               }),
-              `${animal.theName}: ${count}`,
+              Render.elementFactory(
+                'p',
+                { className: 'trade__player-herd--count' },
+                `: ${count}`,
+              ),
               Render.elementFactory('input', {
                 type: 'number',
                 id: `${isBank ? 'bank' : 'player'}_${animal.theName}`,
