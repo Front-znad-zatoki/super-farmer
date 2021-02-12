@@ -34,10 +34,10 @@ export class Alert {
         this.alert.style.borderColor = 'blue';
         break;
       case AlertType.WARN:
-        this.alert.style.borderColor = 'yellow';
+        this.alert.style.borderColor = '#FFCA36';
         break;
       case AlertType.CRITICAL:
-        this.alert.style.borderColor = 'red';
+        this.alert.style.borderColor = '#ED3D25';
         break;
       default:
         this.alert.style.borderColor = 'white';
