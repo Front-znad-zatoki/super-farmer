@@ -27,7 +27,6 @@ export class PlayersBoard {
       className: 'players__data__avatar',
       src: player.theAvatar,
     });
-
     const herdView: HTMLElement = Render.elementFactory('div', {
       className: 'players__herd',
     });
@@ -44,7 +43,9 @@ export class PlayersBoard {
         const animalImg: HTMLElement = Render.elementFactory('img', {
           className: 'players__herd__img',
           src: pathElement,
+          style: `filter: ${countElement}<=0?grayscale(100%):grayscale(0)`,
         });
+
 
         const animalCount: HTMLElement = Render.elementFactory(
           'div',
@@ -67,9 +68,10 @@ export class PlayersBoard {
     );
     Render.childrenInjector(
       playersBoardContainer,
-      playersDataPanel,
       herdView,
+      playersDataPanel,
     );
+    Render.render('#sf-app', playersBoardContainer);
     return playersBoardContainer;
   }
 }
