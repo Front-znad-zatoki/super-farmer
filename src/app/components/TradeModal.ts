@@ -13,6 +13,7 @@ export class TradeModal extends EmptyModal {
   private warning: HTMLElement;
   private backButton: HTMLElement;
   private player: Player;
+  private header: HTMLElement;
 
   /**
    * @param trade instance of Trade
@@ -32,6 +33,11 @@ export class TradeModal extends EmptyModal {
     this.bankView = Render.elementFactory('div', {
       className: 'trade__player-wrapper',
     });
+    this.header = Render.elementFactory(
+      'h2',
+      { className: 'trade__heading' },
+      'Pick the animals and the amount you want to exchange',
+    );
     this.tradeForm = Render.elementFactory(
       'form',
       {
@@ -50,9 +56,14 @@ export class TradeModal extends EmptyModal {
     this.warning = Render.elementFactory('p', {
       className: 'warning',
     });
-    this.backButton = Render.elementFactory('button', {}, 'back');
+    this.backButton = Render.elementFactory(
+      'button',
+      { className: 'trade__back' },
+      '+',
+    );
     Render.childrenInjector(
       this.modalContainer,
+      this.header,
       this.tradeForm,
       this.warning,
       this.backButton,
@@ -136,15 +147,15 @@ export class TradeModal extends EmptyModal {
             Render.elementFactory(
               'div',
               { className: 'trade__row' },
-              Render.elementFactory(
-                'label',
-                {
-                  for: `${isBank ? 'bank' : 'player'}_${
-                    animal.theName
-                  }`,
-                },
-                `${animal.theName}: ${count}`,
-              ),
+              Render.elementFactory('img', {
+                name: `${isBank ? 'bank' : 'player'}_${
+                  animal.theName
+                }`,
+                src: animal.theImagePath,
+                alt: animal.theName,
+                className: 'trade__player-herd--image',
+              }),
+              `${animal.theName}: ${count}`,
               Render.elementFactory('input', {
                 type: 'number',
                 id: `${isBank ? 'bank' : 'player'}_${animal.theName}`,

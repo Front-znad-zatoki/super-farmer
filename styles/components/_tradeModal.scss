@@ -3,23 +3,46 @@
   height: 100%;
   grid-template-columns: 2fr 1fr 2fr;
 
+  &__heading {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
   &__player-herd {
     display: flex;
     flex-direction: column;
     row-gap: 1em;
+
+    &--image {
+      height: 4rem;
+      width: auto;
+    }
   }
 
   &__row {
-    display: grid;
+    display: inline-flex;
   }
 
   &__player-heading {
     padding-bottom: 1em;
-    text-transform: uppercase;
   }
 
   &__submit {
     height: 4em;
+  }
+
+  &__back {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    transform: rotate(45deg);
+    border-radius: 50%;
+    border: none;
+    height: 2.1rem;
+    width: 2.1rem;
+    background-color: white;
   }
 }
 
