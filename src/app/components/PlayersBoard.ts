@@ -46,7 +46,6 @@ export class PlayersBoard {
           style: `filter: ${countElement}<=0?grayscale(100%):grayscale(0)`,
         });
 
-
         const animalCount: HTMLElement = Render.elementFactory(
           'div',
           { className: 'players__herd__count' },
