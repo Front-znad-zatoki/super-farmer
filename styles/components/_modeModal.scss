@@ -1,9 +1,9 @@
 .color-label1 {
-  background-color: #ED3D25;
+  background-color: #ed3d25;
 }
 
 .color-label2 {
-  background-color: #8D992B;
+  background-color: #8d992b;
 }
 
 .color-label3 {
@@ -11,7 +11,7 @@
 }
 
 .color-label4 {
-  background-color: #FFCA36;
+  background-color: #ffca36;
 }
 
 .mode-form {
@@ -23,29 +23,49 @@
 
   &__avatar {
     width: 50px;
-    margin: 5px;
+
+    &-wrapper{
+      margin: 5px;
+    }
+
+    &-label {
+      display: flex;
+      width: 80px;
+      height: 80px;
+      justify-content: center;
+    }
 
     &-radio{
-      background-color: red;
-      border: 1px solid #203739;
+      display: none;
+    }
+
+    &-radio:checked + .mode-form__avatar-label {
+      border: 2px solid black;
+      border-radius: 50%;
     }
   }
-  // Styles for colors 
+
+  // Styles for colors
   &__colors {
     display: flex;
     justify-content: center;
   }
   &__color-wrapper {
     display: flex;
+    margin: 5px;
   }
   &__color-label {
     width: 50px;
     height: 50px;
-    border-radius: 50%; 
+    border-radius: 50%;
   }
-  
+
   &__color-radio{
-    &:checked+.mode-form__color-label{
+    display: none;
+  }
+
+  &__color-radio {
+    &:checked + .mode-form__color-label {
       border: 2px solid black;
       box-shadow: 0px 0px 0px 3px #fff inset;
     }

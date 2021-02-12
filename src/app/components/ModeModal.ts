@@ -158,7 +158,7 @@ export class ModeModal extends BasicModal {
       type: 'text',
       id: indicator,
       name: indicator,
-      placeholder: `Player ${numberOfPlayer}`,
+      placeholder: `Janush ${numberOfPlayer}`,
       className: 'mode-form__input',
     });
 
@@ -169,13 +169,10 @@ export class ModeModal extends BasicModal {
     const colorInputs: HTMLElement[] = Object.values(Colors).reduce(
       (colorsElements: HTMLElement[], value, index) => {
         const indicator = `${numberOfPlayer}colorChoice_${index + 1}`;
-        const label = Render.elementFactory(
-          'label',
-          {
-            for: indicator,
-            className: `mode-form__color-label color-label${index + 1}`,
-          },
-        )
+        const label = Render.elementFactory('label', {
+          for: indicator,
+          className: `mode-form__color-label color-label${index + 1}`,
+        });
         const radio = Render.elementFactory('input', {
           type: 'radio',
           name: `color_${numberOfPlayer}`,
@@ -183,7 +180,7 @@ export class ModeModal extends BasicModal {
           id: indicator,
           value: value,
         });
-        if(index===0){
+        if (index === 0) {
           radio.setAttribute('checked', '');
         }
         colorsElements.push(
@@ -231,12 +228,15 @@ export class ModeModal extends BasicModal {
           id: indicator,
           value: value,
         });
+        if (index === 0) {
+          radio.setAttribute('checked', '');
+        }
         avatarsElements.push(
           Render.elementFactory(
             'div',
             { className: 'mode-form__avatar-wrapper' },
-            label,
             radio,
+            label,
           ),
         );
         return avatarsElements;
