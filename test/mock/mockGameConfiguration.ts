@@ -84,6 +84,7 @@ export const defaultGameConfiguration: GameConfigInterface = {
       playersInitialStock: 0,
       bankInitialStock: 4,
       chasesAway: AnimalNames.FOX,
+      exclamation: `Woof! Woof! I'm protecting all rabbits in the herd! Woof! Woof!`,
     },
     {
       name: AnimalNames.BIG_DOG,
@@ -93,6 +94,7 @@ export const defaultGameConfiguration: GameConfigInterface = {
       playersInitialStock: 0,
       bankInitialStock: 2,
       chasesAway: AnimalNames.WOLF,
+      exclamation: `WOOF! WOOF! I'm protecting the whole herd! WOOF! WOOF!`,
     },
   ],
   predatorsConfig: [

@@ -29,6 +29,7 @@ export class Herd {
               chasesAway,
               exclamation,
             );
+            console.log(newAnimal);
             return [newAnimal, inStock];
           }
         }
@@ -160,9 +161,9 @@ export class Herd {
     } else {
       this.removeAnimalsFromHerd(protector, 1);
       const protectorsIndex = this.findAnimalTupleIndex(protector);
-      (this.theAnimals[
-        protectorsIndex
-      ][0] as Protector).protectHerd();
+      const protectorsObject = this.theAnimals[protectorsIndex][0];
+      if (protectorsObject instanceof Protector)
+        protectorsObject.protectHerd();
     }
   }
 }
