@@ -9,4 +9,5 @@ export interface HerdConfigInterface {
   path: string;
   inStock: number;
   chasesAway?: AnimalNames;
+  exclamation?: string;
 }

@@ -1,5 +1,6 @@
+import { defaultPlayerHerdConfig } from './app/logic/defaultHerdConfig';
 import { Herd } from './app/logic/Herd';
-import { mockHerdConfig } from './app/logic/mockHerdConfig';
+// import { mockHerdConfig } from './app/logic/defaultHerdConfig';
 import { HerdConfigInterface } from './Interfaces/HerdConfigInterface';
 
 export class Player {
@@ -8,12 +9,11 @@ export class Player {
   protected herd: Herd;
   protected color: string;
 
-  // TODO: set path to default avatar when it's available
   constructor(
     name: string,
     avatar = 'path to default avatar',
     color = 'green',
-    herdConfig: HerdConfigInterface[] = mockHerdConfig,
+    herdConfig: HerdConfigInterface[] = defaultPlayerHerdConfig,
   ) {
     this.name = name;
     this.herd = new Herd(herdConfig);

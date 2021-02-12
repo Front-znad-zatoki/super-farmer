@@ -3,13 +3,12 @@ import { FirstDice } from './FirstDice';
 import { SecondDice } from './SecondDice';
 import { Player } from '../Player';
 import { AnimalNames } from '../Enums/AnimalNamesEnum';
-import { Fox } from '../Animals/Fox';
-import { Wolf } from '../Animals/Wolf';
 import { Herd } from './logic/Herd';
 import { add, divide, floor, min } from 'lodash';
-import { AnimalRoles } from '../Enums/AnimalRolesEnum';
 import { Bank } from './logic/Bank';
-import { ConvertAnimalName } from './utils/ConvertAnimalName';
+import { PredatorsConfigInterface } from '../Interfaces/PredatorsConfigInterface';
+import { GameModes } from '../Enums/GameModeEnums';
+import { Predator } from '../../src/Animals/Predator';
 
 export type RollResult = {
   rollResult: AnimalNames[];
@@ -19,10 +18,35 @@ export type RollResult = {
 export class BreedProcessor {
   randomResultInterfaceWolf: GetRandomValue;
   randomResultInterfaceFox: GetRandomValue;
-
-  constructor(private bank: Bank) {
+  mode: GameModes;
+  predators: Predator[];
+  constructor(
+    private bank: Bank,
+    predatorConfig: PredatorsConfigInterface[],
+    mode: GameModes,
+  ) {
     this.randomResultInterfaceWolf = new SecondDice();
     this.randomResultInterfaceFox = new FirstDice();
+    this.mode = mode;
+    this.predators = predatorConfig.map(
+      ({ name, path, roles, kills, isChasedAwayBy, exclamation }) => {
+        return new Predator(
+          name,
+          path,
+          roles,
+          kills,
+          isChasedAwayBy,
+          exclamation,
+        );
+      },
+    );
+  }
+  getPredatorByName(predatorName: AnimalNames): Predator {
+    const attackingPredator = this.predators.find(
+      (predator) => predator.theName === predatorName,
+    );
+    if (!attackingPredator) throw new Error('No such predator');
+    return attackingPredator;
   }
 
   processBreedPhase({ theHerd }: Player): RollResult {
@@ -36,11 +60,9 @@ export class BreedProcessor {
     }
     const gain: [AnimalNames, number][] = [];
     if (foxDiceResult === AnimalNames.FOX) {
-      const fox: Fox = ConvertAnimalName.toAnimalObject(
-        foxDiceResult,
-      ) as Fox;
+      const fox = this.getPredatorByName(AnimalNames.FOX);
       this.returnToBank(fox, theHerd);
-      theHerd.cullAnimals(fox);
+      theHerd.cullAnimals(fox, this.mode);
     } else {
       gain.push([
         foxDiceResult,
@@ -48,11 +70,9 @@ export class BreedProcessor {
       ]);
     }
     if (wolfDiceResult === AnimalNames.WOLF) {
-      const wolf = ConvertAnimalName.toAnimalObject(
-        wolfDiceResult,
-      ) as Wolf;
+      const wolf = this.getPredatorByName(AnimalNames.WOLF);
       this.returnToBank(wolf, theHerd);
-      theHerd.cullAnimals(wolf);
+      theHerd.cullAnimals(wolf, this.mode);
     } else {
       gain.push([
         wolfDiceResult,
@@ -83,35 +103,29 @@ export class BreedProcessor {
     return herdGrow;
   }
 
-  private returnToBank(predator: Wolf | Fox, herd: Herd): void {
-    if (predator instanceof Fox) {
-      if (herd.getAnimalNumber(AnimalNames.SMALL_DOG) > 0) {
-        this.bank.theHerd.addAnimalsToHerd(AnimalNames.SMALL_DOG, 1);
-        return;
-      }
-      const quantity = herd.getAnimalNumber(AnimalNames.RABBIT);
-      this.bank.theHerd.addAnimalsToHerd(
-        AnimalNames.RABBIT,
-        quantity,
-      );
-      return;
+  private returnToBank(predator: Predator, herd: Herd): void {
+    const animalsToCull = predator.kills;
+    const protector = predator.isChasedAwayBy;
+    const hasProtector = herd.getAnimalNumber(protector);
+    const isDynamicMode = this.mode === GameModes.DYNAMIC;
+    const killsRabbits = animalsToCull.includes(AnimalNames.RABBIT);
+    if (hasProtector) {
+      return this.bank.theHerd.addAnimalsToHerd(protector, 1);
     }
-    if (herd.getAnimalNumber(AnimalNames.BIG_DOG) > 0) {
-      this.bank.theHerd.addAnimalsToHerd(AnimalNames.BIG_DOG, 1);
-      return;
-    }
+
     herd.theAnimals
-      .filter(
-        ([animal]) =>
-          animal.hasRole(AnimalRoles.LIVESTOCK) &&
-          animal.theName !== AnimalNames.HORSE,
-      )
-      .forEach(([animal, count]) =>
+      .filter(([animal]) => {
+        return animalsToCull.includes(animal.theName as AnimalNames);
+      })
+      .forEach(([animal, count]) => {
         this.bank.theHerd.addAnimalsToHerd(
           animal.theName as AnimalNames,
           count,
-        ),
-      );
+        );
+      });
+    if (isDynamicMode && killsRabbits) {
+      this.bank.theHerd.removeAnimalsFromHerd(AnimalNames.RABBIT, 1);
+    }
   }
 
   private calculateHerdGrow(
