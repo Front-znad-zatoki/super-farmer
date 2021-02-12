@@ -1,4 +1,4 @@
-import { ModeView } from './components/ModeView';
+import { ModeView } from './ModeView';
 import { Render } from './utils/Render';
 import { ViewController } from './ViewController';
 

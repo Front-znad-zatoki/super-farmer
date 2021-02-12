@@ -1,4 +1,4 @@
-import { Render } from '../utils/Render';
+import { Render } from './utils/Render';
 import { PlayerDTO } from '~src/Interfaces/PlayerDTOInterface';
 import { CallbackOneParam } from '~src/Interfaces/CallbackOneParamInterface';
 import { Avatars } from '~src/Enums/AvatarsEnum';
