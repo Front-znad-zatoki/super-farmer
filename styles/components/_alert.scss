@@ -1,8 +1,5 @@
 .alert {
   display: flex;
-  border-width: 2px;
-  border-style: solid;
-  border-color: none;
   border-radius: 0.25rem;
   transition: all 0.7s ease-in-out;
 
@@ -15,7 +12,7 @@
   &__text {
     display: inline-flex;
     margin: 0.5rem;
-    font-size: 1.2rem;
+    font-size: 1rem;
     line-height: 2rem;
   }
 }
