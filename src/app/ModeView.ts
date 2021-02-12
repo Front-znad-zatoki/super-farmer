@@ -4,6 +4,7 @@ import { Avatars } from '~src/Enums/AvatarsEnum';
 import { Colors } from '~src/Enums/ColorsEnum';
 import { EmptyView } from './EmptyView';
 import { PlayerDTO } from '~src/Interfaces/PlayerDTOInterface';
+import { AnimalRoles } from '~src/Enums/AnimalRolesEnum';
 
 export class ModeView extends EmptyView {
   private modeForm: HTMLFormElement;
@@ -38,20 +39,13 @@ export class ModeView extends EmptyView {
       'remove player',
     );
     this.playerInputsWrapper = Render.elementFactory('div', {
-      className: 'mode-inputs-wrapper',
+      className: 'mode-players-wrapper',
     });
     this.modeForm = this.createForm();
     this.submitCallback = submitCallback;
 
-    const heading = Render.elementFactory(
-      'h2',
-      { className: 'mode-view__heading' },
-      'Add your nick, choose avatar and color',
-    );
-
     Render.childrenInjector(
       this.viewContainer,
-      heading,
       this.modeForm,
       this.generateButtons(),
     );
@@ -67,17 +61,42 @@ export class ModeView extends EmptyView {
   }
 
   private createForm(): HTMLFormElement {
-    Render.childrenInjector(this.playerInputsWrapper);
+    const heading = Render.elementFactory(
+      'h2',
+      { className: 'mode-view__heading' },
+      'Click to add new player',
+    );
 
+    const mode = Render.elementFactory(
+      'div',
+      {
+        className: 'mode-form__mode',
+      },
+      Render.elementFactory('input', {
+        className: 'mode-form__mode-input',
+        type: 'checkbox',
+        id: 'mode',
+        name: 'mode',
+      }),
+      Render.elementFactory(
+        'label',
+        {
+          className: 'mode-form__mode-input',
+          for: 'mode',
+        },
+        'dynamic mode',
+      ),
+    );
     const form = Render.elementFactory(
       'form',
       {
         id: 'mode-form',
         action: '',
         method: 'get',
-        className: 'mode-modal',
+        className: 'mode-form',
       },
-
+      heading,
+      mode,
       this.playerInputsWrapper,
       this.addPlayerButton,
       this.removePlayerButton,
@@ -168,7 +187,7 @@ export class ModeView extends EmptyView {
       type: 'text',
       id: indicator,
       name: indicator,
-      placeholder: `Player ${numberOfPlayer}`,
+      placeholder: 'type nickname here',
       className: 'mode-form__input',
     });
 
@@ -215,6 +234,7 @@ export class ModeView extends EmptyView {
           name: `color_${numberOfPlayer}`,
           className: 'mode-form__color-radio',
           id: indicator,
+          required: '',
           value: value,
         });
         colorsElements.push(
@@ -260,6 +280,7 @@ export class ModeView extends EmptyView {
           name: `path_${numberOfPlayer}`,
           className: 'mode-form__avatar-radio',
           id: indicator,
+          required: 'true',
           value: value,
         });
         avatarsElements.push(
@@ -305,7 +326,7 @@ export class ModeView extends EmptyView {
     formData: FormData,
   ): { isDynamic: boolean; players: PlayerDTO[] } {
     const players: PlayerDTO[] = [];
-    const isDynamic = false;
+    let isDynamic = false;
     for (const [formKey, formValue] of formData.entries()) {
       // TODO: remove before merge
       console.log(formKey, formValue);
@@ -317,8 +338,8 @@ export class ModeView extends EmptyView {
         case 'name': {
           players.push({
             name: '',
-            path: Avatars.FARMER1,
-            color: Colors.GREEN,
+            path: '',
+            color: '',
             isAI: false,
           } as PlayerDTO);
           players[index].name =
@@ -337,11 +358,16 @@ export class ModeView extends EmptyView {
         }
         case 'ai': {
           players[index].isAI = true;
+          break;
+        }
+        case 'mode': {
+          isDynamic = true;
+          break;
         }
       }
     }
     // TODO: remove before merge
-    console.log(players);
+    console.log({ isDynamic, players });
 
     return { isDynamic, players };
   }
