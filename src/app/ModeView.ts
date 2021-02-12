@@ -2,10 +2,10 @@ import { Render } from './utils/Render';
 import { CallbackTwoParam } from '~src/Interfaces/CallbackInterface';
 import { Avatars } from '~src/Enums/AvatarsEnum';
 import { Colors } from '~src/Enums/ColorsEnum';
-import { View } from './View';
+import { EmptyView } from './EmptyView';
 import { PlayerDTO } from '~src/Interfaces/PlayerDTOInterface';
 
-export class ModeView extends View {
+export class ModeView extends EmptyView {
   private modeForm: HTMLFormElement;
   private addPlayerButton: HTMLElement;
   private removePlayerButton: HTMLElement;
@@ -183,9 +183,13 @@ export class ModeView extends View {
       id: indicator,
       name: indicator,
     });
-    const label = Render.elementFactory('label', {
-      className: 'mode-form__ai-label',
-    });
+    const label = Render.elementFactory(
+      'label',
+      {
+        className: 'mode-form__ai-label',
+      },
+      'AI Player',
+    );
     const aiWrapper = Render.elementFactory(
       'div',
       {
@@ -294,8 +298,12 @@ export class ModeView extends View {
       this.generateNameInput(numberOfPlayer),
       this.generateAvatarInput(numberOfPlayer),
       this.generateColorInput(numberOfPlayer),
-      this.generateAICheckbox(numberOfPlayer),
     );
+    if (numberOfPlayer > 1) {
+      fieldsWrapper.appendChild(
+        this.generateAICheckbox(numberOfPlayer),
+      );
+    }
     return fieldsWrapper;
   }
 
@@ -305,6 +313,9 @@ export class ModeView extends View {
     const players: PlayerDTO[] = [];
     const isDynamic = false;
     for (const [formKey, formValue] of formData.entries()) {
+      // TODO: remove before merge
+      console.log(formKey, formValue);
+
       const value = formValue.toString();
       const [key, numberOfPlayer] = formKey.split('_');
       const index = +numberOfPlayer - 1;
@@ -330,8 +341,14 @@ export class ModeView extends View {
           players[index].color = value;
           break;
         }
+        case 'ai': {
+          players[index].isAI = true;
+        }
       }
     }
+    // TODO: remove before merge
+    console.log(players);
+
     return { isDynamic, players };
   }
 
