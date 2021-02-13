@@ -13,10 +13,12 @@ export class AiPlayer extends Player {
   makeAMove(gameController: GameController): void {
     this.trade(gameController);
     if (gameController.theGameProcessor.checkWin()) {
+      gameController.checkIfGameIsWon();
       return;
     }
     gameController.breed();
     if (gameController.theGameProcessor.checkWin()) {
+      gameController.checkIfGameIsWon();
       return;
     }
   }
@@ -61,7 +63,6 @@ export class AiPlayer extends Player {
         ) {
           return;
         }
-        //TODO trade a horse for all the animals left in the bank
       } else if (this.herd.getAnimalNumber(animalToSell) === 0) {
         break;
       }
@@ -95,13 +96,19 @@ export class AiPlayer extends Player {
     }
     //Cannot win game by trade. Check if buying dogs is worth it
     if (this.buyABigDog()) {
-      const offer = this.animalsForTrade();
-      const target: Offer[] = [[AnimalNames.BIG_DOG, 1]];
       if (
         gameController.theGame.theTrade.processOffer(
-          offer,
+          [[AnimalNames.PIG, 3]],
           this,
-          target,
+          [[AnimalNames.BIG_DOG, 1]],
+        )
+      ) {
+        return;
+      } else if (
+        gameController.theGame.theTrade.processOffer(
+          [[AnimalNames.COW, 1]],
+          this,
+          [[AnimalNames.BIG_DOG, 1]],
         )
       ) {
         return;
@@ -174,14 +181,14 @@ export class AiPlayer extends Player {
 
   private buyABigDog(): boolean {
     return (
-      this.herd.getAnimalNumber(AnimalNames.BIG_DOG) > 0 &&
+      this.herd.getAnimalNumber(AnimalNames.BIG_DOG) === 0 &&
       this.getAnimalsValue() >= 72
     );
   }
 
   private buyASmallDog(): boolean {
     return (
-      this.herd.getAnimalNumber(AnimalNames.SMALL_DOG) > 0 &&
+      this.herd.getAnimalNumber(AnimalNames.SMALL_DOG) === 0 &&
       this.herd.getAnimalNumber(AnimalNames.RABBIT) >= 12
     );
   }
