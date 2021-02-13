@@ -22,12 +22,21 @@
     border-bottom: 1px solid #9ca4a4;
     text-align: center;
   }
+<<<<<<< HEAD:styles/components/_modeModal.scss
 
   // Styles for avatars
   &__avatars {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+=======
+  &__color-wrapper {
+    display: flex;
+  }
+  &__color-label {
+    width: 50px;
+    height: 50px;
+>>>>>>> feature/#116-mode-view:styles/components/_modeView.scss
   }
 
   &__avatar {

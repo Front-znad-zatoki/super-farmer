@@ -1,24 +1,30 @@
-import { ModeModal } from './components/ModeModal';
+import { PlayerDTO } from '~src/Interfaces/PlayerDTOInterface';
+import { EmptyView } from './EmptyView';
+import { ModeView } from './ModeView';
 import { Render } from './utils/Render';
 import { ViewController } from './ViewController';
 
-export class MenuView {
-  private modeModal: ModeModal;
-  constructor(private view: ViewController) {
-    this.modeModal = new ModeModal((players) =>
-      this.view.launchGame(players),
-    );
-    this.modeModal.hideModal();
-    Render.render('body', this.modeModal.createModeModal());
+export class MenuView extends EmptyView {
+  private modeModal: ModeView;
+  constructor(private viewController: ViewController) {
+    super(false);
+    const backCallback = () => this.show();
+    const submitCallback = (
+      isDynamic: boolean,
+      players: PlayerDTO[],
+    ) => this.viewController.launchGame(players);
+    this.modeModal = new ModeView(backCallback, submitCallback);
+    Render.render('body', this.modeModal.theModeView);
   }
 
   displayMenu(): void {
     Render.removeAllChildren('#sf-app');
-    Render.render(
-      '#sf-app',
+    Render.childrenInjector(
+      this.viewContainer,
       this.createLandingPage(),
       this.createFooter(),
     );
+    Render.render('#sf-app', this.view);
   }
 
   private createLandingPage(): HTMLElement {
@@ -81,7 +87,8 @@ export class MenuView {
       'NEW GAME',
     );
     startGameButton.addEventListener('click', () => {
-      this.modeModal.showModal();
+      this.hide();
+      this.modeModal.show();
     });
     const settingsButton = Render.elementFactory(
       'button',
