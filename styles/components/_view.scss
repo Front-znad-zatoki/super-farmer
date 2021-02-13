@@ -74,13 +74,13 @@
 .endgame {
   width: 2rem;
   height: 2rem;
-  font-weight: 900;
-  font-size: large;
+  border: none;
   -webkit-appearance: none;
   -moz-appearance: none;
   background-color: transparent;
   border-radius: 50%;
-  border: none;
+  font-size: large;
+  font-weight: 900;
   &:hover {
     background-color: whitesmoke;
   }
