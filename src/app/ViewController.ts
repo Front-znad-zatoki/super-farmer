@@ -82,7 +82,7 @@ export class ViewController {
   updateRollResults({ rollResult, gain }: RollResult): void {
     this.gameView.displayRollResult(
       rollResult,
-      gain, 
+      gain,
       this.gameController.theGame.theCurrentPlayer,
     );
   }
