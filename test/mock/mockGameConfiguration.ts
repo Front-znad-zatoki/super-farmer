@@ -1,7 +1,7 @@
-import { AnimalNames } from '../../Enums/AnimalNamesEnum';
-import { AnimalRoles } from '../../Enums/AnimalRolesEnum';
-import { GameModes } from '../../Enums/GameModeEnums';
-import { GameConfigInterface } from '../../Interfaces/GameConfigInterface';
+import { AnimalNames } from '../../src/Enums/AnimalNamesEnum';
+import { AnimalRoles } from '../../src/Enums/AnimalRolesEnum';
+import { GameModes } from '../../src/Enums/GameModeEnums';
+import { GameConfigInterface } from '../../src/Interfaces/GameConfigInterface';
 
 export const defaultGameConfiguration: GameConfigInterface = {
   mode: GameModes.STATIC,
@@ -11,6 +11,11 @@ export const defaultGameConfiguration: GameConfigInterface = {
       name: 'Carlos Santanos',
       path: '../../static/images/avatars/small_dog.svg',
       color: 'blue',
+    },
+    {
+      name: 'Pablo Escofarmo',
+      path: '../../static/images/avatars/cow.svg',
+      color: 'green',
     },
   ],
 
@@ -95,8 +100,8 @@ export const defaultGameConfiguration: GameConfigInterface = {
   predatorsConfig: [
     {
       name: AnimalNames.FOX,
-      path: './static/images/avatars/fox.svg',
       roles: AnimalRoles.PREDATOR,
+      path: './static/images/avatars/fox.svg',
       kills: [AnimalNames.RABBIT],
       isChasedAwayBy: AnimalNames.SMALL_DOG,
       exclamation:

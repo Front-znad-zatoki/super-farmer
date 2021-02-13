@@ -1,11 +1,11 @@
 import { BasicModal } from './BasicModal';
 import { Render } from '../utils/Render';
-import { PlayerDTO } from '~src/Interfaces/PlayerDTOInterface';
-import { CallbackOneParam } from '~src/Interfaces/CallbackOneParamInterface';
-
+import { PlayerDTO } from '../../Interfaces/PlayerDTOInterface';
+import { CallbackOneParam } from '../../Interfaces/CallbackOneParamInterface';
+import { Avatars } from '../../Enums/AvatarsEnum';
+import { Colors } from '../../Enums/ColorsEnum';
 export class ModeModal extends BasicModal {
   private modeForm: HTMLFormElement;
-  private playerElements: HTMLElement[];
   private addPlayerButton: HTMLElement;
   private removePlayerButton: HTMLElement;
   private playerInputsWrapper: HTMLElement;
@@ -18,7 +18,6 @@ export class ModeModal extends BasicModal {
    */
   constructor(submitCallback: CallbackOneParam<PlayerDTO[]>) {
     super();
-    this.playerElements = [];
     this.addPlayerButton = Render.elementFactory(
       'button',
       {
@@ -57,10 +56,7 @@ export class ModeModal extends BasicModal {
   }
 
   private createForm(): HTMLFormElement {
-    Render.childrenInjector(
-      this.playerInputsWrapper,
-      ...this.playerElements,
-    );
+    Render.childrenInjector(this.playerInputsWrapper);
 
     const form = Render.elementFactory(
       'form',
@@ -100,7 +96,7 @@ export class ModeModal extends BasicModal {
     const numberOfPlayers = this.playerInputsWrapper.children.length;
     if (numberOfPlayers >= 4) return;
 
-    const playerInputRow = this.generatePlayerInput(
+    const playerInputRow = this.generateAddPlayerFields(
       numberOfPlayers + 1,
     );
 
@@ -155,17 +151,8 @@ export class ModeModal extends BasicModal {
     return buttonsWrapper;
   }
 
-  private generatePlayerInput(numberOfPlayer: number): HTMLElement {
+  private generateNameInput(numberOfPlayer: number): HTMLElement {
     const indicator = `name_${numberOfPlayer}`;
-    const label = Render.elementFactory(
-      'label',
-      { for: indicator, className: 'mode-modal__form-label' },
-      Render.elementFactory('img', {
-        className: 'mode-form__avatar',
-        src: './static/images/playerAvatars/woman.svg',
-      }),
-    );
-
     const input = Render.elementFactory('input', {
       type: 'text',
       id: indicator,
@@ -173,13 +160,109 @@ export class ModeModal extends BasicModal {
       placeholder: `Player ${numberOfPlayer}`,
       className: 'mode-form__input',
     });
-    const playerRow = Render.elementFactory(
-      'div',
-      { className: 'mode-form__row' },
-      label,
-      input,
+
+    return input;
+  }
+
+  private generateColorInput(numberOfPlayer: number): HTMLElement {
+    const colorInputs: HTMLElement[] = Object.values(Colors).reduce(
+      (colorsElements: HTMLElement[], value, index) => {
+        const indicator = `${numberOfPlayer}colorChoice_${index + 1}`;
+        const label = Render.elementFactory(
+          'label',
+          {
+            for: indicator,
+            className: 'mode-form__color-label',
+          },
+          Render.elementFactory('div', {
+            className: 'mode-form__color-label',
+            style: `background-color: ${value}`,
+          }),
+        );
+        const radio = Render.elementFactory('input', {
+          type: 'radio',
+          name: `color_${numberOfPlayer}`,
+          className: 'mode-form__color-radio',
+          id: indicator,
+          value: value,
+        });
+        colorsElements.push(
+          Render.elementFactory(
+            'div',
+            { className: 'mode-form__color-wrapper' },
+            label,
+            radio,
+          ),
+        );
+        return colorsElements;
+      },
+      [],
     );
-    return playerRow;
+    const colors = Render.elementFactory(
+      'div',
+      { className: 'mode-form__colors' },
+      ...colorInputs,
+    );
+
+    return colors;
+  }
+
+  private generateAvatarInput(numberOfPlayer: number): HTMLElement {
+    const avatarInputs: HTMLElement[] = Object.values(Avatars).reduce(
+      (avatarsElements: HTMLElement[], value, index) => {
+        const indicator = `${numberOfPlayer}avatarChoice_${
+          index + 1
+        }`;
+        const label = Render.elementFactory(
+          'label',
+          {
+            for: indicator,
+            className: 'mode-form__avatar-label',
+          },
+          Render.elementFactory('img', {
+            className: 'mode-form__avatar',
+            src: value,
+          }),
+        );
+        const radio = Render.elementFactory('input', {
+          type: 'radio',
+          name: `path_${numberOfPlayer}`,
+          className: 'mode-form__avatar-radio',
+          id: indicator,
+          value: value,
+        });
+        avatarsElements.push(
+          Render.elementFactory(
+            'div',
+            { className: 'mode-form__avatar-wrapper' },
+            label,
+            radio,
+          ),
+        );
+        return avatarsElements;
+      },
+      [],
+    );
+    const colors = Render.elementFactory(
+      'div',
+      { className: 'mode-form__avatars' },
+      ...avatarInputs,
+    );
+
+    return colors;
+  }
+
+  private generateAddPlayerFields(
+    numberOfPlayer: number,
+  ): HTMLElement {
+    const fieldsWrapper = Render.elementFactory(
+      'div',
+      {},
+      this.generateNameInput(numberOfPlayer),
+      this.generateAvatarInput(numberOfPlayer),
+      this.generateColorInput(numberOfPlayer),
+    );
+    return fieldsWrapper;
   }
 
   private convertDataFormToPlayersData(
@@ -187,31 +270,31 @@ export class ModeModal extends BasicModal {
   ): PlayerDTO[] {
     const playersData = [];
     for (const [formKey, formValue] of formData.entries()) {
-      const playerDTO: PlayerDTO = {
-        name: '',
-        path: './static/images/playerAvatars/woman.svg',
-        color: '#064a89',
-      };
       const value = formValue.toString();
-      const [key] = formKey.split('_');
+      const [key, numberOfPlayer] = formKey.split('_');
+      const index = +numberOfPlayer - 1;
       switch (key) {
         case 'name': {
-          playerDTO.name =
+          playersData.push({
+            name: '',
+            path: Avatars.FARMER1,
+            color: Colors.GREEN,
+          } as PlayerDTO);
+          playersData[index].name =
             value.trim().length > 0
               ? value
-              : `Janush ${playersData.length + 1}`;
+              : `Janush ${playersData.length}`;
           break;
         }
         case 'path': {
-          playerDTO.path = value;
+          playersData[index].path = value;
           break;
         }
         case 'color': {
-          playerDTO.color = value;
+          playersData[index].color = value;
           break;
         }
       }
-      playersData.push(playerDTO);
     }
     return playersData;
   }
