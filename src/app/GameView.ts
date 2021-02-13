@@ -37,27 +37,7 @@ export class GameView {
         gameBoardsAndPanel,
       ),
     );
-    // Render.render(
-    //   '#sf-app',
-    //   Render.elementFactory(
-    //     'div',
-    //     { className: 'game' },
-    //     alertPanel,
-    //     playersBoards,
-    //     playerPanel,
-    //     Render.elementFactory(
-    //       'div',
-    //       { className: 'bank__bar' },
-    //       endGameButton,
-    //       Render.elementFactory(
-    //         'div',
-    //         { id: 'bank-board' },
-    //         bankPanel,
-    //       ),
-    //     ),
-    //   ),
-    // );
-    // this.setBackground(currentPlayer);
+    this.setColorAccents(currentPlayer);
   }
 
   private createTopRow() {
@@ -100,6 +80,7 @@ export class GameView {
         Render.elementFactory(
           'div',
           {
+            // TODO: CHECK IF THIS DIV IS NECESSARY
             // id: `${player.theName}`,
             className: 'player-boards__board',
           },
@@ -139,11 +120,12 @@ export class GameView {
     return alertContainer;
   }
 
-  private setBackground(): void {
-    // private setBackground(player: Player): void {
-    // (document.querySelector(
-    //   '.page-container',
-    // ) as HTMLElement).style.background = player.theColor;
+  private setColorAccents(player: Player): void {
+    document
+      .querySelectorAll('.player-panel__buttons .button')
+      .forEach((element) => {
+        (element as HTMLElement).style.borderColor = player.theColor;
+      });
     // TODO: change to borders and font colors
   }
 
