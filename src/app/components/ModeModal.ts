@@ -251,30 +251,29 @@ export class ModeModal extends BasicModal {
 
     return colors;
   }
-  private generateAIPlayerInput():HTMLElement{
-    const checkbox = Render.elementFactory(
-      'input',{ 
-        type: 'checkbox',
-        name: `aiplayer`,
-        className: 'mode-form__ai-input',
-        id: 'aiplayer',
-      }
-    )
+  private generateAIPlayerInput(): HTMLElement {
+    const checkbox = Render.elementFactory('input', {
+      type: 'checkbox',
+      name: `aiplayer`,
+      className: 'mode-form__ai-input',
+      id: 'aiplayer',
+    });
 
     const label = Render.elementFactory(
-      'label', {
+      'label',
+      {
         className: 'mode-form__ai-label',
         for: 'aiplayer',
       },
-      'AI Player'
-    )
+      'AI Player',
+    );
 
     const AIPlayerInputs = Render.elementFactory(
       'div',
       { className: 'mode-form__ai-player' },
       checkbox,
       label,
-    )
+    );
     return AIPlayerInputs;
   }
 
@@ -283,7 +282,7 @@ export class ModeModal extends BasicModal {
   ): HTMLElement {
     const fieldsWrapper = Render.elementFactory(
       'div',
-      {className: 'add-player'},
+      { className: 'add-player' },
       this.generateNameInput(numberOfPlayer),
       this.generateAvatarInput(numberOfPlayer),
       this.generateColorInput(numberOfPlayer),
