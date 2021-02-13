@@ -1,18 +1,38 @@
 import { add, subtract } from 'lodash';
+import { Predator } from '../../Animals/Predator';
 import { Animal } from '../../Animals/Animal';
-import { Fox } from '../../Animals/Fox';
-import { Wolf } from '../../Animals/Wolf';
 import { AnimalNames } from '../../Enums/AnimalNamesEnum';
 import { HerdConfigInterface } from '../../Interfaces/HerdConfigInterface';
-import { mockHerdConfig } from './mockHerdConfig';
-
+import { GameModes } from '../../Enums/GameModeEnums';
+import { Protector } from '../../Animals/Protector';
+import { AnimalRoles } from '../../Enums/AnimalRolesEnum';
 export class Herd {
   protected animals: [Animal, number][];
-  constructor(
-    playersHerdConfig: HerdConfigInterface[] = mockHerdConfig,
-  ) {
+  constructor(playersHerdConfig: HerdConfigInterface[]) {
     this.animals = playersHerdConfig.map(
-      ({ name, tradeValue, role, path, inStock }) => {
+      ({
+        name,
+        tradeValue,
+        role,
+        path,
+        inStock,
+        chasesAway,
+        exclamation,
+      }) => {
+        if (role === AnimalRoles.GUARDIAN) {
+          if (chasesAway && exclamation) {
+            const newAnimal = new Protector(
+              name,
+              path,
+              role,
+              tradeValue,
+              chasesAway,
+              exclamation,
+            );
+            console.log(newAnimal);
+            return [newAnimal, inStock];
+          }
+        }
         const newAnimal = new Animal(name, path, tradeValue, role);
         return [newAnimal, inStock];
       },
@@ -28,7 +48,7 @@ export class Herd {
       if (animal.theName === animalName) return true;
     });
     if (indexOfAnimal === -1)
-      throw new Error(`Animal: ${animalName} not found`);
+      console.log(`Animal: ${animalName} not found`);
     return indexOfAnimal;
   }
 
@@ -75,7 +95,7 @@ export class Herd {
     const animalIndex = this.findAnimalTupleIndex(animalName);
     const animalTuple = this.animals[animalIndex];
     if (animalTuple[1] < numberToSubstract)
-      alert('not enough animals');
+      console.log('not enough animals: ', animalName);
     const newNumber = subtract(animalTuple[1], numberToSubstract);
     this.updateNumberOfAnimals(animalIndex, newNumber);
   }
@@ -124,40 +144,26 @@ export class Herd {
   /**
    * Depending on the attacking animal, it checks if there is a herd protector for the given type of attacker,
    * then reduces to zero the number of the animals in the herd or removes the protector, as is defined by game configuration.
-   * @param { Fox | Wolf } attackingAnimal The animal that is attacking the herd.
+   * @param { Predator } attackingAnimal The animal that is attacking the herd.
    */
-  // TODO: Check parameteres type. Create classes for protectors and predators if needed.
-  // TODO: Modify to use config? Define at refactor
-  cullAnimals(attackingAnimal: Fox | Wolf): void {
-    switch (attackingAnimal.theName) {
-      case AnimalNames.FOX: {
-        const hasSmallDog =
-          this.getAnimalNumber(AnimalNames.SMALL_DOG) > 0;
-        if (!hasSmallDog) {
-          attackingAnimal.attackHerd();
-          this.cullAllAnimalsOfOneType(AnimalNames.RABBIT);
-          return;
-        }
-        this.removeAnimalsFromHerd(AnimalNames.SMALL_DOG, 1);
-        // (this.animals[5][0] as SmallDog).protectHerd();
-        break;
+  cullAnimals(attackingAnimal: Predator, mode: GameModes): void {
+    const animalsToCull = attackingAnimal.kills;
+    const protector = attackingAnimal.isChasedAwayBy;
+    const hasProtector = this.getAnimalNumber(protector) > 0;
+    if (!hasProtector) {
+      const isDynamicMode = mode === GameModes.DYNAMIC;
+      const killsRabbits = animalsToCull.includes(AnimalNames.RABBIT);
+      this.cullAllAnimalsOfGivenTypes(animalsToCull);
+      if (isDynamicMode && killsRabbits) {
+        this.addAnimalsToHerd(AnimalNames.RABBIT, 1);
       }
-      case AnimalNames.WOLF: {
-        const hasBigDog =
-          this.getAnimalNumber(AnimalNames.BIG_DOG) > 0;
-        if (!hasBigDog) {
-          attackingAnimal.attackHerd();
-          this.cullAllAnimalsOfGivenTypes([
-            AnimalNames.COW,
-            AnimalNames.PIG,
-            AnimalNames.RABBIT,
-            AnimalNames.SHEEP,
-          ]);
-          return;
-        }
-        this.removeAnimalsFromHerd(AnimalNames.BIG_DOG, 1);
-        // (this.animals[6][0] as BigDog).protectHerd();
-      }
+      attackingAnimal.attackHerd();
+    } else {
+      this.removeAnimalsFromHerd(protector, 1);
+      const protectorsIndex = this.findAnimalTupleIndex(protector);
+      const protectorsObject = this.theAnimals[protectorsIndex][0];
+      if (protectorsObject instanceof Protector)
+        protectorsObject.protectHerd();
     }
   }
 }

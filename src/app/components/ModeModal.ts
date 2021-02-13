@@ -1,9 +1,9 @@
 import { BasicModal } from './BasicModal';
 import { Render } from '../utils/Render';
-import { PlayerDTO } from '~src/Interfaces/PlayerDTOInterface';
-import { CallbackOneParam } from '~src/Interfaces/CallbackOneParamInterface';
-import { Avatars } from '~src/Enums/AvatarsEnum';
-import { Colors } from '~src/Enums/ColorsEnum';
+import { PlayerDTO } from '../../Interfaces/PlayerDTOInterface';
+import { CallbackOneParam } from '../../Interfaces/CallbackOneParamInterface';
+import { Avatars } from '../../Enums/AvatarsEnum';
+import { Colors } from '../../Enums/ColorsEnum';
 export class ModeModal extends BasicModal {
   private modeForm: HTMLFormElement;
   private addPlayerButton: HTMLElement;

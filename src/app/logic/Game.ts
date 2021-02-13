@@ -3,13 +3,9 @@ import { GameModes } from '../../Enums/GameModeEnums';
 import { GameConfigInterface } from '../../Interfaces/GameConfigInterface';
 import { Player } from '../../Player';
 import { BreedProcessor } from '../BreedProcessor';
-import { Dice } from '../Dice';
-import { FirstDice } from '../FirstDice';
-import { SecondDice } from '../SecondDice';
 import { Timer } from '../Timer';
 import { Trade } from '../Trade';
 import { Bank } from './Bank';
-import { defaultGameConfiguration } from './defaultGameConfiguration';
 import { LivestockConfigInterface } from '../../Interfaces/LivestockConfigInterface';
 import { ProtectorsConfigInterface } from '../../Interfaces/ProtectorsConfigInterface';
 import { HerdOwners } from '../../Enums/HerdOwnerEnum';
@@ -17,13 +13,12 @@ import { HerdOwners } from '../../Enums/HerdOwnerEnum';
 export class Game {
   mode: GameModes;
   roundTimeInSeconds: number;
-  // totalGameTimeInSeconds: number;
   playersConfig: { name: string; path: string }[];
   playersHerdConfig: HerdConfigInterface[];
   banksHerdConfig: HerdConfigInterface[];
   players: Player[];
   bank: Bank;
-  dice: Dice[];
+  // dice: Dice[];
   timer: Timer;
   breedProcessor: BreedProcessor;
   trade: Trade;
@@ -34,8 +29,8 @@ export class Game {
     playersConfig,
     livestockConfig,
     protectorsConfig,
-  }: // predatorsConfig,
-  GameConfigInterface = defaultGameConfiguration) {
+    predatorsConfig,
+  }: GameConfigInterface) {
     this.mode = mode;
     this.roundTimeInSeconds = roundTimeInSeconds;
     this.playersConfig = playersConfig;
@@ -60,12 +55,12 @@ export class Game {
     );
     this.currentPlayerNumber = 0;
     this.bank = new Bank(this.banksHerdConfig);
-    // TODO: GET DICE DATA FROM CONFIG AFTER/ IF DICE REFACTOR
-    // TODO: CHECK IF NEEDED SINCE THEY ARE CALLED IN BREEDPROCESSOR
-    this.dice = [new FirstDice(), new SecondDice()];
     this.timer = new Timer(roundTimeInSeconds);
-    // TO CHECK: SHOULD BREED PROCESSOR CREATE DICE INSTANCES?
-    this.breedProcessor = new BreedProcessor(this.bank);
+    this.breedProcessor = new BreedProcessor(
+      this.bank,
+      predatorsConfig,
+      this.mode,
+    );
     this.trade = new Trade(
       this.bank,
       livestockConfig,
@@ -94,9 +89,9 @@ export class Game {
     return this.bank;
   }
 
-  get theDice(): Dice[] {
-    return this.dice;
-  }
+  // get theDice(): Dice[] {
+  //   return this.dice;
+  // }
   get theTimer(): Timer {
     return this.timer;
   }
@@ -109,7 +104,6 @@ export class Game {
     return this.trade;
   }
 
-  // TODO: REFACTOR!
   preparePlayersHerdConfig(
     livestockConfig: LivestockConfigInterface[],
     protectorsConfig: ProtectorsConfigInterface[],
@@ -145,6 +139,7 @@ export class Game {
         playersInitialStock,
         bankInitialStock,
         chasesAway,
+        exclamation,
       }) => {
         return {
           name,
@@ -152,6 +147,7 @@ export class Game {
           role,
           path,
           chasesAway,
+          exclamation,
           inStock:
             owner === HerdOwners.PLAYER
               ? playersInitialStock

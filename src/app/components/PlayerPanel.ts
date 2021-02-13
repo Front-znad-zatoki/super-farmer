@@ -13,6 +13,7 @@ export class PlayerPanel {
    * @param view accepts instance of View componenet
    */
   constructor(private view: GameView) {
+    // TODO: FIND OUT WHY IS THIS PANEL CREATED TOGETHER WITH THE LANDING PAGE
     this.player = new Player('', '', '');
   }
 
