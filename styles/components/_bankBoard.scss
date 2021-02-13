@@ -9,17 +9,17 @@
 
     &__container {
       display: flex;
-      justify-content: center;
       flex-basis: 50%;
+      justify-content: center;
       padding-bottom: 1rem;
     }
 
     &__count {
+      padding-top: 1rem;
+      padding-left: 0.5rem;
+      color: $color;
       font-family: $font-primary;
       font-weight: $font-weight;
-      color: $color;
-      padding-left: 0.5rem;
-      padding-top: 1rem;
     }
 
     &__img {
