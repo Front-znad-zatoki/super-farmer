@@ -3,6 +3,8 @@ import { AnimalNames } from '../../Enums/AnimalNamesEnum';
 import { BreedProcessor } from '../BreedProcessor';
 import { defaultGameConfiguration } from '../logic/defaultGameConfiguration';
 import { DiceBuilder } from '../DiceBuilder';
+import { mockPredatorConfig } from './mockPredatorConfig';
+import { GameModes } from '../../Enums/GameModeEnums';
 
 export class BreedPhaseDemo {
   static playDemo(): void {
@@ -19,7 +21,13 @@ export class BreedPhaseDemo {
       defaultGameConfiguration.predatorsConfig,
       defaultGameConfiguration.protectorsConfig,
     );
-    const bp = new BreedProcessor(bank, firstDice, secondDice);
+    const bp = new BreedProcessor(
+      bank,
+      firstDice,
+      secondDice,
+      mockPredatorConfig,
+      GameModes.STATIC,
+    );
     const player = new Player('player');
     for (let i = 0; i < 10; i++) {
       bp.processBreedPhase(player);

@@ -6,7 +6,6 @@ import { BreedProcessor } from '../BreedProcessor';
 import { Timer } from '../Timer';
 import { Trade } from '../Trade';
 import { Bank } from './Bank';
-import { defaultGameConfiguration } from './defaultGameConfiguration';
 import { LivestockConfigInterface } from '../../Interfaces/LivestockConfigInterface';
 import { ProtectorsConfigInterface } from '../../Interfaces/ProtectorsConfigInterface';
 import { HerdOwners } from '../../Enums/HerdOwnerEnum';
@@ -15,7 +14,6 @@ import { DiceBuilder } from '../DiceBuilder';
 export class Game {
   mode: GameModes;
   roundTimeInSeconds: number;
-  // totalGameTimeInSeconds: number;
   playersConfig: { name: string; path: string }[];
   playersHerdConfig: HerdConfigInterface[];
   banksHerdConfig: HerdConfigInterface[];
@@ -32,7 +30,7 @@ export class Game {
     livestockConfig,
     protectorsConfig,
     predatorsConfig,
-  }: GameConfigInterface = defaultGameConfiguration) {
+  }: GameConfigInterface) {
     this.mode = mode;
     this.roundTimeInSeconds = roundTimeInSeconds;
     this.playersConfig = playersConfig;
@@ -57,19 +55,18 @@ export class Game {
     );
     this.currentPlayerNumber = 0;
     this.bank = new Bank(this.banksHerdConfig);
-    // TODO: GET DICE DATA FROM CONFIG AFTER/ IF DICE REFACTOR
-    // TODO: CHECK IF NEEDED SINCE THEY ARE CALLED IN BREEDPROCESSOR
     const [firstDice, secondDice] = DiceBuilder.build(
       livestockConfig,
       predatorsConfig,
       protectorsConfig,
     );
     this.timer = new Timer(roundTimeInSeconds);
-    // TO CHECK: SHOULD BREED PROCESSOR CREATE DICE INSTANCES?
     this.breedProcessor = new BreedProcessor(
       this.bank,
       firstDice,
       secondDice,
+      predatorsConfig,
+      this.mode,
     );
     this.trade = new Trade(
       this.bank,
@@ -111,7 +108,6 @@ export class Game {
     return this.trade;
   }
 
-  // TODO: REFACTOR!
   preparePlayersHerdConfig(
     livestockConfig: LivestockConfigInterface[],
     protectorsConfig: ProtectorsConfigInterface[],
@@ -147,6 +143,7 @@ export class Game {
         playersInitialStock,
         bankInitialStock,
         chasesAway,
+        exclamation,
       }) => {
         return {
           name,
@@ -154,6 +151,7 @@ export class Game {
           role,
           path,
           chasesAway,
+          exclamation,
           inStock:
             owner === HerdOwners.PLAYER
               ? playersInitialStock
