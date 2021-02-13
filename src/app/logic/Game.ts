@@ -60,13 +60,18 @@ export class Game {
             this.playersHerdConfig,
           ),
       ),
-      new AiPlayer(
-        'AiPlayer',
-        undefined,
-        undefined,
-        this.playersHerdConfig,
-      ),
     ];
+    //TODO get AI Player from configuration and then delete this 'if'
+    if (this.players.length < 4) {
+      this.players.push(
+        new AiPlayer(
+          'AiPlayer',
+          './static/images/playerAvatars/woman.svg',
+          undefined,
+          this.playersHerdConfig,
+        ),
+      );
+    }
     this.currentPlayerNumber = 0;
     this.bank = new Bank(this.banksHerdConfig);
     // TODO: GET DICE DATA FROM CONFIG AFTER/ IF DICE REFACTOR
