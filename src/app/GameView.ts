@@ -20,7 +20,6 @@ export class GameView {
     currentPlayer: Player,
     bank: Bank,
   ): void {
-    console.log('rendering from scratch');
     const topRow = this.createTopRow();
     const gameBoardsAndPanel = this.createGameBoardsAndPanel(
       players,
