@@ -178,6 +178,7 @@ export class TradeModal extends EmptyModal {
                 ...this.createButtons(
                   isBank,
                   animal.theName.replace(' ', '_'),
+                  count,
                 ),
               ),
             ),
@@ -194,12 +195,13 @@ export class TradeModal extends EmptyModal {
   private createButtons(
     isBank: boolean,
     animal: string,
+    count: number,
   ): HTMLElement[] {
     const buttons: HTMLElement[] = [];
-    buttons.push(this.createSingleButton(1, isBank, animal));
-    buttons.push(this.createSingleButton(5, isBank, animal));
-    buttons.push(this.createSingleButton(-1, isBank, animal));
-    buttons.push(this.createSingleButton(-5, isBank, animal));
+    buttons.push(this.createSingleButton(1, isBank, animal, count));
+    buttons.push(this.createSingleButton(5, isBank, animal, count));
+    buttons.push(this.createSingleButton(-1, isBank, animal, count));
+    buttons.push(this.createSingleButton(-5, isBank, animal, count));
     return buttons;
   }
 
@@ -207,6 +209,7 @@ export class TradeModal extends EmptyModal {
     value: number,
     isBank: boolean,
     animal: string,
+    count: number,
   ): HTMLElement {
     const button = Render.elementFactory(
       'button',
@@ -217,7 +220,7 @@ export class TradeModal extends EmptyModal {
       `${value < 0 ? value : '+' + value}`,
     );
     button.addEventListener('click', () =>
-      this.changeValue(value, isBank, animal),
+      this.changeValue(value, isBank, animal, count),
     );
     return button;
   }
@@ -226,6 +229,7 @@ export class TradeModal extends EmptyModal {
     value: number,
     isBank: boolean,
     animal: string,
+    count: number,
   ): void {
     const input = document.querySelector(
       `#${isBank ? 'bank' : 'player'}_${animal}`,
@@ -236,7 +240,10 @@ export class TradeModal extends EmptyModal {
         input.value = `${inputValue + value}`;
       }
     } else {
-      input.value = `${value + inputValue}`;
+      const newValue = inputValue + value;
+      if (newValue <= count) {
+        input.value = `${value + inputValue}`;
+      }
     }
   }
 
