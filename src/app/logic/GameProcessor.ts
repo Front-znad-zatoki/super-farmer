@@ -53,6 +53,7 @@ export class GameProcessor {
   /**
    * @returns true if current player wins the game, false otherwise
    */
+  // TODO: Consider moving win conditions to configuration
   checkWin(): boolean {
     const animalsRequiredToWin: AnimalNames[] = [
       AnimalNames.RABBIT,

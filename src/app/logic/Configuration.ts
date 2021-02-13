@@ -3,7 +3,8 @@ import { PredatorsConfigInterface } from '../../Interfaces/PredatorsConfigInterf
 import { ProtectorsConfigInterface } from '../../Interfaces/ProtectorsConfigInterface';
 import { GameModes } from '../../Enums/GameModeEnums';
 import { GameConfigInterface } from '../../Interfaces/GameConfigInterface';
-import { AnimalNames } from '~src/Enums/AnimalNamesEnum';
+import { AnimalNames } from '../../Enums/AnimalNamesEnum';
+import { PlayerDTO } from '../../Interfaces/PlayerDTOInterface';
 
 export class Configuration implements GameConfigInterface {
   protected _mode: GameModes;
@@ -46,16 +47,9 @@ export class Configuration implements GameConfigInterface {
     this.roundTimeInSeconds = numberOfSeconds;
   }
   get roundTimeInSeconds(): number {
-    return this.roundTimeInSeconds;
+    return this._roundTimeInSeconds;
   }
-  //TODO: CREATE PLAYER CONFIG INTERFACE IF NECESSARY
-  set playersConfig(
-    newPlayersConfig: {
-      name: string;
-      path: string;
-      color: string;
-    }[],
-  ) {
+  set playersConfig(newPlayersConfig: PlayerDTO[]) {
     this._playersConfig = newPlayersConfig;
   }
   get playersConfig(): {
@@ -116,6 +110,4 @@ export class Configuration implements GameConfigInterface {
       (animal) => animal.name !== animaname,
     );
   }
-
-  // TODO: PREDATOR, PROTECTOR ETC WHEN GAME SETTINGS APPEAR.
 }

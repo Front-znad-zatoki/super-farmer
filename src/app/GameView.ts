@@ -9,7 +9,7 @@ import { ViewController } from './ViewController';
 
 export class GameView {
   private playerPanel: PlayerPanel;
-
+  // TODO: FIND OUT WHY THIS CREATES INSTANCE OF PLAYER PANEL IN CONTRUCTOR
   constructor(private view: ViewController) {
     this.playerPanel = new PlayerPanel(this);
   }

@@ -6,6 +6,7 @@ export class MenuView {
   private modeModal: ModeModal;
   constructor(private view: ViewController) {
     this.modeModal = new ModeModal((players) =>
+      // TODO: PASS INFO ABOUT MODE OR AI
       this.view.launchGame(players),
     );
     this.modeModal.hideModal();
@@ -14,92 +15,57 @@ export class MenuView {
 
   displayMenu(): void {
     Render.removeAllChildren('#sf-app');
-    Render.render(
-      '#sf-app',
-      this.createLandingPage(),
-      this.createFooter(),
-    );
+    Render.render('#sf-app', this.createLandingPage());
   }
 
   private createLandingPage(): HTMLElement {
     return Render.elementFactory(
       'div',
-      {
-        className: 'page__container menu-window',
-      },
+      { className: 'menu-window' },
       this.createHeading(),
       this.createPageContent(),
+      this.createStartButton(),
+      this.createFooter(),
     );
   }
 
   private createHeading(): HTMLElement {
     return Render.elementFactory(
-      'header',
+      'h1',
       { className: 'menu-window__header' },
-      Render.elementFactory(
-        'h1',
-        { className: 'menu-window__heading heading' },
-        'FARM TYCOON',
-      ),
-      Render.elementFactory(
-        'h2',
-        { className: 'menu-window__description text' },
-        'Breed animals, Do your math, Be quick, Plan ahead, Protect your herd, Predators are there to get your animals! Become a farmer and be the first to gather all the animals!',
-      ),
+      'SUPERFARMER',
     );
   }
 
   private createPageContent(): HTMLElement {
     return Render.elementFactory(
-      'div',
+      'nav',
       { className: 'menu' },
-      Render.elementFactory('div', {
-        className: 'menu__graphic-container',
-      }),
-      Render.elementFactory(
-        'div',
-        { className: 'menu__buttons' },
-        ...this.createMenuButtons(),
-      ),
-      Render.elementFactory('div', {
-        className: 'menu__graphic-container',
-      }),
-      Render.elementFactory(
-        'button',
-        {
-          className: 'menu__button--rules button',
-        },
-        'i',
-      ),
+      ...this.createMenuButtons(),
     );
   }
 
   private createMenuButtons(): HTMLElement[] {
+    const namesButtons: string[] = ['GAME RULES', 'AUTHORS'];
+    const menuButtons = namesButtons.map((button) => {
+      return Render.elementFactory(
+        'button',
+        { className: 'menu__button' },
+        button,
+      );
+    });
+    return menuButtons;
+  }
+  private createStartButton(): HTMLElement {
     const startGameButton = Render.elementFactory(
       'button',
-      { className: 'button' },
-      'NEW GAME',
+      { className: 'button--start' },
+      'START',
     );
     startGameButton.addEventListener('click', () => {
       this.modeModal.showModal();
     });
-    const settingsButton = Render.elementFactory(
-      'button',
-      {
-        className: 'button',
-      },
-      'SETTINGS',
-    );
-    settingsButton.setAttribute('disabled', 'true');
-    const authorsButton = Render.elementFactory(
-      'button',
-      {
-        className: 'button',
-      },
-      'AUTHORS',
-    );
-    authorsButton.setAttribute('disabled', 'true');
-    return [startGameButton, settingsButton, authorsButton];
+    return startGameButton;
   }
 
   private createFooter(): HTMLElement {
