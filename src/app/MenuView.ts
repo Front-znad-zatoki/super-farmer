@@ -39,7 +39,7 @@ export class MenuView {
 
   private createPageContent(): HTMLElement {
     return Render.elementFactory(
-      'div',
+      'nav',
       { className: 'menu' },
       ...this.createMenuButtons(),
     );

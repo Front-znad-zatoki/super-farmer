@@ -9,11 +9,9 @@
 }
 
 .menu {
-  display: flex;
-  flex-direction: column;
   flex-grow: 1;
-  text-align: start;
   &__button {
+    display: block;
     border: none;
     margin-top: 50px;
     background: none;
@@ -21,7 +19,6 @@
     font-size: $font-size;
     font-weight: $font-weight;
     outline: none;
-    text-align: start;
     &:hover {
       color: $color-hover;
       cursor: pointer;
@@ -48,6 +45,7 @@
 }
 
 .footer {
+  margin-top: 35px;
   color: $color-primary;
   font-family: $font-family;
   font-size: $font-size;
