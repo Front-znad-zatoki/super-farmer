@@ -7,109 +7,33 @@ import { ConvertAnimalName } from '../utils/ConvertAnimalName';
 import { Animal } from '../../Animals/Animal';
 
 export class PlayerPanel {
-  private player: Player;
+  // private player: Player | undefined;
   /**
    * Creates PlayerPanel based on data given
    * @param view accepts instance of View componenet
    */
   constructor(private view: GameView) {
     // TODO: FIND OUT WHY IS THIS PANEL CREATED TOGETHER WITH THE LANDING PAGE
-    this.player = new Player('', '', '');
+    // player = undefined;
   }
 
-  setPlayer(player: Player): void {
-    this.player = player;
-  }
+  // setPlayer(player: Player): void {
+  //   player = player;
+  // }
 
   /**
    * Creates player panel and returns it as HTMLElement
    */
-  createPlayerPanel(): HTMLElement {
+  createPlayerPanel(player: Player): HTMLElement {
+    // if (player) {
     return Render.elementFactory(
       'div',
       {
         className: 'player-panel',
-        style: `background-color: ${this.player.theColor};`,
+        style: `background-color: ${player.theColor};`,
       },
-      this.createPlayerBoard(),
       this.createResultWindow(),
       this.createButtonPanel(),
-    );
-  }
-
-  private createPlayerBoard(): HTMLElement {
-    return Render.elementFactory(
-      'div',
-      {
-        id: 'player-board',
-        className: 'player-panel__board',
-      },
-      ...this.createPanelBoard(),
-    );
-  }
-
-  refreshHerd(): void {
-    Render.removeAllChildren('#player-board');
-    Render.render('#player-board', ...this.createPanelBoard());
-  }
-
-  createPanelBoard(): HTMLElement[] {
-    return [
-      Render.elementFactory(
-        'div',
-        { className: 'player-panel__info' },
-        Render.elementFactory('img', {
-          src: this.player.theAvatar,
-          alt: `${this.player.theName}-avatar`,
-          className: 'avatar-icon',
-        }),
-        this.createPlayerDetails(),
-      ),
-      Render.elementFactory(
-        'div',
-        { id: 'time-left', className: 'player-panel__time' },
-        `Time left: `,
-      ),
-      this.createPlayerHerd(),
-    ];
-  }
-
-  private createPlayerDetails(): HTMLElement {
-    return Render.elementFactory(
-      'div',
-      { className: 'player-panel__details' },
-      Render.elementFactory('p', {}, 'Current player:'),
-      Render.elementFactory(
-        'p',
-        { className: 'player-panel__name' },
-        `${this.player.theName}`,
-      ),
-    );
-  }
-
-  private createPlayerHerd(): HTMLElement {
-    return Render.elementFactory(
-      'div',
-      { className: 'player-panel__herd' },
-      ...flatten(
-        this.convertAnimalsToHTML(this.player.theHerd.theAnimals),
-      ),
-    );
-  }
-
-  private convertAnimalsToHTML(
-    animals: [Animal, number][],
-  ): HTMLElement[] {
-    return animals.map(([animal, count]) =>
-      Render.elementFactory(
-        'div',
-        { className: 'player-panel__result--container' },
-        ConvertAnimalName.toHTMLElement(
-          animal.theName,
-          'player-panel__image',
-        ),
-        `x${count}`,
-      ),
     );
   }
 
@@ -171,6 +95,7 @@ export class PlayerPanel {
   displayRollResult(
     diceResults: AnimalNames[],
     playerGain: [AnimalNames, number][],
+    player: Player,
   ): void {
     const diceResult = Render.elementFactory(
       'div',
@@ -193,7 +118,7 @@ export class PlayerPanel {
         Render.elementFactory(
           'h3',
           { className: 'player-panel__result--gain' },
-          `${this.player.theName} gains:`,
+          `${player.theName} gains:`,
         ),
         ...this.convertAnimalsToHTML(
           playerGain.map(([animal, count]) => [
@@ -204,31 +129,31 @@ export class PlayerPanel {
       ),
     );
     this.view.stopTimer();
-    setTimeout(() => this.hideTimer(), 10);
+    // setTimeout(() => this.hideTimer(), 10);
+  }
+  private convertAnimalsToHTML(
+    animals: [Animal, number][],
+  ): HTMLElement[] {
+    return animals.map(([animal, count]) =>
+      Render.elementFactory(
+        'div',
+        { className: 'player-panel__result--container' },
+        ConvertAnimalName.toHTMLElement(
+          animal.theName,
+          'player-panel__image',
+        ),
+        `x${count}`,
+      ),
+    );
   }
 
-  private hideTimer(): void {
-    (document.querySelector(
-      '#time-left',
-    ) as HTMLElement).style.display = 'none';
-  }
-
-  /**
-   * Updates timer on player panel
-   * @param timeLeft accepts number value for time left
-   */
-  updateTime(timeLeft: number): void {
-    const timer = document.querySelector('#time-left') as HTMLElement;
-    timer.innerText = `Time left: ${timeLeft} sec.`;
-  }
-
-  turnAlert(): void {
+  turnAlert(player: Player): void {
     Render.render(
       '#sf-app',
       Render.elementFactory(
         'div',
         { className: 'exclamation' },
-        `${this.player.theName}'s turn has passed!`,
+        `${player.theName}'s turn has passed!`,
       ),
     );
   }

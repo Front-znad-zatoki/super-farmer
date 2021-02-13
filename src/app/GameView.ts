@@ -8,7 +8,7 @@ import { Render } from './utils/Render';
 import { ViewController } from './ViewController';
 
 export class GameView {
-  private playerPanel: PlayerPanel;
+  playerPanel: PlayerPanel;
   // TODO: FIND OUT WHY THIS CREATES INSTANCE OF PLAYER PANEL IN CONTRUCTOR
   constructor(private view: ViewController) {
     this.playerPanel = new PlayerPanel(this);
@@ -64,8 +64,10 @@ export class GameView {
   }
 
   private createPlayerPanel(player: Player): HTMLElement {
-    this.playerPanel.setPlayer(player);
-    return this.playerPanel.createPlayerPanel();
+    console.log(this.playerPanel);
+    console.log(player);
+    // this.playerPanel.setPlayer(player);
+    return this.playerPanel.createPlayerPanel(player);
   }
 
   private createEndGameButton() {
@@ -101,22 +103,27 @@ export class GameView {
   displayRollResult(
     diceResults: AnimalNames[],
     playerGain: [AnimalNames, number][],
+    player: Player,
   ): void {
-    this.playerPanel.displayRollResult(diceResults, playerGain);
-    this.renderPlayerPanel();
-  }
-
-  private renderPlayerPanel(): void {
-    Render.removeAllChildren('#player-board');
-    Render.render(
-      '#player-board',
-      ...this.playerPanel.createPanelBoard(),
+    this.playerPanel.displayRollResult(
+      diceResults,
+      playerGain,
+      player,
     );
+    // this.renderPlayerPanel();
   }
 
-  updateRemainingTime(timeLeft: number): void {
-    this.playerPanel.updateTime(timeLeft);
-  }
+  // private renderPlayerPanel(): void {
+  //   Render.removeAllChildren('#player-board');
+  //   Render.render(
+  //     '#player-board',
+  //     ...this.playerPanel.createPanelBoard(),
+  //   );
+  // }
+
+  // updateRemainingTime(timeLeft: number): void {
+  //   this.playerPanel.updateTime(timeLeft);
+  // }
 
   stopTimer(): void {
     this.view.stopTimer();
@@ -126,9 +133,9 @@ export class GameView {
     this.view.nextTurn();
   }
 
-  turnAlert(): void {
-    this.playerPanel.turnAlert();
-  }
+  // turnAlert(): void {
+  //   this.playerPanel.turnAlert();
+  // }
 
   pauseTurn(): void {
     this.view.pauseTurn();
@@ -138,9 +145,9 @@ export class GameView {
     this.playerPanel.disableTrade();
   }
 
-  refreshHerd(bank: Bank): void {
-    this.playerPanel.refreshHerd();
-    Render.removeAllChildren('#bank-board');
-    Render.render('#bank-board', this.createBankPanel(bank));
-  }
+  // refreshHerd(bank: Bank): void {
+  //   this.playerPanel.refreshHerd();
+  //   Render.removeAllChildren('#bank-board');
+  //   Render.render('#bank-board', this.createBankPanel(bank));
+  // }
 }

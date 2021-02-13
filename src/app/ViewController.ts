@@ -71,16 +71,20 @@ export class ViewController {
     this.gameController?.startTurn();
   }
 
-  updateRemainingTime(timeLeft: number): void {
-    this.gameView.updateRemainingTime(timeLeft);
-  }
+  // updateRemainingTime(timeLeft: number): void {
+  //   this.gameView.updateRemainingTime(timeLeft);
+  // }
 
   handleRoll(): void {
     this.gameController?.breed();
   }
 
   updateRollResults({ rollResult, gain }: RollResult): void {
-    this.gameView.displayRollResult(rollResult, gain);
+    this.gameView.displayRollResult(
+      rollResult,
+      gain, 
+      this.gameController.theGame.theCurrentPlayer,
+    );
   }
 
   handleTrade(): void {
@@ -91,9 +95,9 @@ export class ViewController {
     Render.render('body', this.winModal.createWinModal(player));
   }
 
-  turnAlert(): void {
-    this.gameView.turnAlert();
-  }
+  // turnAlert(): void {
+  //   this.gameView.turnAlert();
+  // }
 
   displayRulesModal(): void {
     // TODO: display rules

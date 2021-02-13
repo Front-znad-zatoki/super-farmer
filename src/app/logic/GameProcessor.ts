@@ -20,18 +20,18 @@ export class GameProcessor {
     const turnTimer = setInterval(() => {
       if (!this.game.theTimer.running) {
         clearInterval(turnTimer);
-        if (Math.round(this.game.theTimer.theTurnTimeLeft) === 0) {
-          this.gameController.turnAlert();
-        }
+        // if (Math.round(this.game.theTimer.theTurnTimeLeft) === 0) {
+        //   this.gameController.turnAlert();
+        // }
         if (!this.game.theTimer.hasGameEnded) {
           setTimeout(() => {
             this.gameController.nextPlayer();
           }, 3000);
         }
       }
-      this.gameController.updateTimeRemaining(
-        Math.round(this.game.theTimer.theTurnTimeLeft),
-      );
+      // this.gameController.updateTimeRemaining(
+      //   Math.round(this.game.theTimer.theTurnTimeLeft),
+      // );
     }, 100);
   }
 
