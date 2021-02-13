@@ -11,11 +11,15 @@
       display: flex;
       justify-content: center;
       flex-basis: 50%;
+      padding-bottom: 1rem;
     }
 
     &__count {
       font-family: $font-primary;
       font-weight: $font-weight;
+      color: $color;
+      padding-left: 0.5rem;
+      padding-top: 1rem;
     }
 
     &__img {
