@@ -2,7 +2,7 @@ import { RandomAnimalInterface } from '../Interfaces/RandomAnimalInterface';
 import { Player } from '../Player';
 import { AnimalNames } from '../Enums/AnimalNamesEnum';
 import { Herd } from './logic/Herd';
-import { add, divide, floor, min } from 'lodash';
+import { add, divide, floor, min, remove } from 'lodash';
 import { Bank } from './logic/Bank';
 import { PredatorsConfigInterface } from '../Interfaces/PredatorsConfigInterface';
 import { GameModes } from '../Enums/GameModeEnums';
@@ -103,7 +103,7 @@ export class BreedProcessor {
   }
 
   private isPredator(animal: AnimalNames): boolean {
-    return animal === AnimalNames.FOX || animal === AnimalNames.WOLF;
+    return this.predators.some(({ theName }) => theName === animal);
   }
 
   private returnToBank(predator: Predator, herd: Herd): boolean {
@@ -154,39 +154,8 @@ export class BreedProcessor {
     predator: Predator,
     animalsGain: [AnimalNames, number][],
   ): void {
-    if (predator.theName === AnimalNames.WOLF) {
-      const horseIndex = this.getAnimalIndex(
-        animalsGain,
-        AnimalNames.HORSE,
-      );
-      if (horseIndex === -1) {
-        animalsGain.splice(0);
-      } else {
-        animalsGain.splice(0, horseIndex);
-        animalsGain.splice(1, animalsGain.length);
-      }
-    }
-    if (predator.theName === AnimalNames.FOX) {
-      const rabbitIndex = this.getAnimalIndex(
-        animalsGain,
-        AnimalNames.RABBIT,
-      );
-      if (rabbitIndex !== -1) {
-        animalsGain.splice(rabbitIndex, 1);
-      }
-    }
-  }
-
-  private getAnimalIndex(
-    animalsGain: [AnimalNames, number][],
-    animal: AnimalNames,
-  ): number {
-    const animalCount = animalsGain
-      .filter(([animalName]) => animal === animalName)
-      .map(([, count]) => count)
-      .pop();
-    return animalCount !== undefined
-      ? animalsGain.indexOf([animal, animalCount])
-      : -1;
+    remove(animalsGain, ([animal]) => {
+      return predator.kills.includes(animal);
+    });
   }
 }
