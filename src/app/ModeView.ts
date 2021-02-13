@@ -30,9 +30,12 @@ export class ModeView extends EmptyView {
       'button',
       {
         type: 'button',
-        className: 'mode-form__add-player-btn',
+        className: 'mode-form__add-btn',
       },
-      'add next player',
+      Render.elementFactory('img', {
+        className: 'mode-form__add-btn-img',
+        src: '.\\static\\images\\ui\\plus-circle.svg',
+      }),
     );
     this.removePlayerButton = Render.elementFactory(
       'button',
