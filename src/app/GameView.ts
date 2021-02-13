@@ -100,23 +100,23 @@ export class GameView {
 
   displayRollResult(
     diceResults: AnimalNames[],
-    playerGain: [AnimalNames, number][],
+    // playerGain: [AnimalNames, number][],
   ): void {
-    this.playerPanel.displayRollResult(diceResults, playerGain);
-    this.renderPlayerPanel();
+    this.playerPanel.displayRollResult(diceResults);
+    // this.renderPlayerPanel();
   }
 
-  private renderPlayerPanel(): void {
-    Render.removeAllChildren('#player-board');
-    Render.render(
-      '#player-board',
-      ...this.playerPanel.createPanelBoard(),
-    );
-  }
+  // private renderPlayerPanel(): void {
+  // Render.removeAllChildren('#player-board');
+  // Render.render(
+  // '#player-board',
+  // ...this.playerPanel.createPanelBoard(),
+  // );
+  // }
 
-  updateRemainingTime(timeLeft: number): void {
-    this.playerPanel.updateTime(timeLeft);
-  }
+  // updateRemainingTime(timeLeft: number): void {
+  // this.playerPanel.updateTime(timeLeft);
+  // }
 
   stopTimer(): void {
     this.view.stopTimer();
@@ -126,9 +126,9 @@ export class GameView {
     this.view.nextTurn();
   }
 
-  turnAlert(): void {
-    this.playerPanel.turnAlert();
-  }
+  // turnAlert(): void {
+  // this.playerPanel.turnAlert();
+  // }
 
   pauseTurn(): void {
     this.view.pauseTurn();
@@ -139,7 +139,7 @@ export class GameView {
   }
 
   refreshHerd(bank: Bank): void {
-    this.playerPanel.refreshHerd();
+    // this.playerPanel.refreshHerd();
     Render.removeAllChildren('#bank-board');
     Render.render('#bank-board', this.createBankPanel(bank));
   }

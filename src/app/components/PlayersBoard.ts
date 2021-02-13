@@ -1,9 +1,9 @@
+import { Player } from '../../Player';
 import { Render } from '../utils/Render';
 import { flatten } from 'lodash';
-import { Player } from '../../Player';
 
 export class PlayersBoard {
-  /* returns player's board with player's name, avatar and herd */
+  /*returns player's board with player's name, avatar and herd */
   renderPlayersBoard(player: Player): HTMLElement {
     const playersBoardContainer: HTMLElement = Render.elementFactory(
       'div',
