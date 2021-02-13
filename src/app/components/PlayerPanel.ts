@@ -7,25 +7,16 @@ import { ConvertAnimalName } from '../utils/ConvertAnimalName';
 import { Animal } from '../../Animals/Animal';
 
 export class PlayerPanel {
-  // private player: Player | undefined;
   /**
    * Creates PlayerPanel based on data given
    * @param view accepts instance of View componenet
    */
-  constructor(private view: GameView) {
-    // TODO: FIND OUT WHY IS THIS PANEL CREATED TOGETHER WITH THE LANDING PAGE
-    // player = undefined;
-  }
-
-  // setPlayer(player: Player): void {
-  //   player = player;
-  // }
+  constructor(private view: GameView) {}
 
   /**
    * Creates player panel and returns it as HTMLElement
    */
   createPlayerPanel(player: Player): HTMLElement {
-    // if (player) {
     return Render.elementFactory(
       'div',
       {
