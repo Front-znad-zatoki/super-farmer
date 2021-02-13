@@ -27,6 +27,11 @@ export class PlayersBoard {
       className: 'players__data__avatar',
       src: player.theAvatar,
     });
+    const playerTimer: HTMLElement = Render.elementFactory(
+      'div',
+      { className: 'player-data__time' },
+      `Time left`,
+    );
 
     const herdView: HTMLElement = Render.elementFactory('div', {
       className: 'players__herd',
@@ -64,12 +69,50 @@ export class PlayersBoard {
       playersDataPanel,
       playerName,
       playerAvatar,
+      playerTimer,
     );
     Render.childrenInjector(
       playersBoardContainer,
       playersDataPanel,
       herdView,
     );
+    /*
+    this.view.stopTimer();
+    setTimeout(() => this.hideTimer(), 10);
+  }
+
+  private hideTimer(): void {
+    (document.querySelector(
+      '#time-left',
+    ) as HTMLElement).style.display = 'none';
+  }
+
+  /**
+   * Updates timer on player panel
+   * @param timeLeft accepts number value for time left
+   */
+    /*updateTime(timeLeft: number): void {
+    const timer = document.querySelector('#time-left') as HTMLElement;
+    timer.innerText = `Time left: ${timeLeft} sec.`;
+  }
+
+  turnAlert(): void {
+    Render.render(
+      '#sf-app',
+      Render.elementFactory(
+        'div',
+        { className: 'exclamation' },
+        `${player.}'s turn has passed!`,
+      ),
+    );
+  }
+
+  disableTrade(): void {
+    (document.querySelector('#exchange') as HTMLElement).setAttribute(
+      'disabled',
+      'true',
+    );
+  }*/
     return playersBoardContainer;
   }
 }
