@@ -22,7 +22,36 @@
 
     &--image {
       width: auto;
-      height: 4rem;
+      height: 3rem;
+      align-self: center;
+    }
+
+    &--input {
+      width: 2rem;
+      height: 2rem;
+      align-self: center;
+      margin-right: 2rem;
+      text-align: center;
+    }
+
+    &--buttons {
+      display: grid;
+      width: 5rem;
+      height: 5rem;
+      align-content: space-around;
+      justify-content: space-around;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    &--button {
+      width: 2rem;
+      height: 2rem;
+      border: none;
+      border-radius: 50%;
+
+      &:focus {
+        outline: none;
+      }
     }
   }
 
@@ -50,6 +79,10 @@
     font-size: 1.5rem;
     font-weight: 700;
     transform: rotate(45deg);
+
+    &:focus {
+      outline: none;
+    }
   }
 }
 

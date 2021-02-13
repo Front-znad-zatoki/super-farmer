@@ -158,17 +158,28 @@ export class TradeModal extends EmptyModal {
               Render.elementFactory(
                 'p',
                 { className: 'trade__player-herd--count' },
-                `: ${count}`,
+                `x ${count}`,
               ),
               Render.elementFactory('input', {
-                type: 'number',
-                id: `${isBank ? 'bank' : 'player'}_${animal.theName}`,
+                type: 'text',
+                id: `${
+                  isBank ? 'bank' : 'player'
+                }_${animal.theName.replace(' ', '_')}`,
                 name: `${isBank ? 'bank' : 'player'}_${
                   animal.theName
                 }`,
-                min: '0',
-                max: `${count}`,
+                className: 'trade__player-herd--input',
+                value: '0',
+                disabled: 'true',
               }),
+              Render.elementFactory(
+                'div',
+                { className: 'trade__player-herd--buttons' },
+                ...this.createButtons(
+                  isBank,
+                  animal.theName.replace(' ', '_'),
+                ),
+              ),
             ),
           );
         }
@@ -178,6 +189,55 @@ export class TradeModal extends EmptyModal {
     );
 
     return animalsRows;
+  }
+
+  private createButtons(
+    isBank: boolean,
+    animal: string,
+  ): HTMLElement[] {
+    const buttons: HTMLElement[] = [];
+    buttons.push(this.createSingleButton(1, isBank, animal));
+    buttons.push(this.createSingleButton(5, isBank, animal));
+    buttons.push(this.createSingleButton(-1, isBank, animal));
+    buttons.push(this.createSingleButton(-5, isBank, animal));
+    return buttons;
+  }
+
+  private createSingleButton(
+    value: number,
+    isBank: boolean,
+    animal: string,
+  ): HTMLElement {
+    const button = Render.elementFactory(
+      'button',
+      {
+        type: 'button',
+        className: 'trade__player-herd--button',
+      },
+      `${value < 0 ? value : '+' + value}`,
+    );
+    button.addEventListener('click', () =>
+      this.changeValue(value, isBank, animal),
+    );
+    return button;
+  }
+
+  private changeValue(
+    value: number,
+    isBank: boolean,
+    animal: string,
+  ): void {
+    const input = document.querySelector(
+      `#${isBank ? 'bank' : 'player'}_${animal}`,
+    ) as HTMLInputElement;
+    const inputValue = parseInt(input.value);
+    if (value < 0) {
+      if (inputValue > 0 && inputValue >= Math.abs(value)) {
+        input.value = `${inputValue + value}`;
+      }
+    } else {
+      input.value = `${value + inputValue}`;
+    }
   }
 
   private formDataIntoTuples(formData: FormData): [Offer[], Offer[]] {
