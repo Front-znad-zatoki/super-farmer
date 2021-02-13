@@ -138,6 +138,10 @@ export class GameView {
     this.playerPanel.disableTrade();
   }
 
+  disableRoll(): void {
+    this.playerPanel.disableRoll();
+  }
+
   refreshHerd(bank: Bank): void {
     this.playerPanel.refreshHerd();
     Render.removeAllChildren('#bank-board');

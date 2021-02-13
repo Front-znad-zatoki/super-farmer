@@ -77,9 +77,9 @@ export class GameController {
       this.game.theBank,
     );
     if (this.game.theCurrentPlayer instanceof AiPlayer) {
-      //TODO disable interface for the time of AiPlayers move
+      this.view.disableTrade();
+      this.view.disableRoll();
       this.game.theCurrentPlayer.makeAMove(this);
-      //TODO enable interface for the time of AiPlayers move
     }
   }
 
