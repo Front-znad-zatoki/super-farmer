@@ -58,7 +58,7 @@ export class GameView {
     //     ),
     //   ),
     // );
-    this.setBackground(currentPlayer);
+    // this.setBackground(currentPlayer);
   }
 
   private createTopRow() {
@@ -101,7 +101,7 @@ export class GameView {
         Render.elementFactory(
           'div',
           {
-            id: `${player.theName}`,
+            // id: `${player.theName}`,
             className: 'player-boards__board',
           },
           new PlayersBoard().renderPlayersBoard(player),
@@ -140,7 +140,8 @@ export class GameView {
     return alertContainer;
   }
 
-  private setBackground(player: Player): void {
+  private setBackground(): void {
+    // private setBackground(player: Player): void {
     // (document.querySelector(
     //   '.page-container',
     // ) as HTMLElement).style.background = player.theColor;

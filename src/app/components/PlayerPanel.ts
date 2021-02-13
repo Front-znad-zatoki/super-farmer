@@ -1,6 +1,6 @@
 import { Player } from '../../Player';
 import { Render } from '../utils/Render';
-import { flatten } from 'lodash';
+// import { flatten } from 'lodash';
 import { AnimalNames } from '../../Enums/AnimalNamesEnum';
 import { GameView } from '../GameView';
 import { ConvertAnimalName } from '../utils/ConvertAnimalName';

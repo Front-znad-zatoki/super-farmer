@@ -80,11 +80,13 @@ export class ViewController {
   }
 
   updateRollResults({ rollResult, gain }: RollResult): void {
-    this.gameView.displayRollResult(
-      rollResult,
-      gain,
-      this.gameController.theGame.theCurrentPlayer,
-    );
+    if (this.gameController) {
+      this.gameView.displayRollResult(
+        rollResult,
+        gain,
+        this.gameController.theGame.theCurrentPlayer,
+      );
+    }
   }
 
   handleTrade(): void {
