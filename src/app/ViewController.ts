@@ -119,7 +119,7 @@ export class ViewController {
 
   processAfterTrade(): void {
     this.runTimer();
-    this.refreshHerd();
+    // this.refreshHerd();
     this.disableTrade();
     this.checkIfGameIsWon();
   }
@@ -158,9 +158,9 @@ export class ViewController {
     this.gameView.disableTrade();
   }
 
-  refreshHerd(): void {
-    this.gameView.refreshHerd(this.gameController?.getBank() as Bank);
-  }
+  // refreshHerd(): void {
+  //   this.gameView.refreshHerd(this.gameController?.getBank() as Bank);
+  // }
 
   checkIfGameIsWon(): void {
     this.gameController?.checkIfGameIsWon();
