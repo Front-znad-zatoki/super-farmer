@@ -69,11 +69,17 @@ export class GameView {
   }
 
   private createEndGameButton() {
+    const crossSpanInButton = Render.elementFactory(
+      'span',
+      { 'aria-hidden': 'true' },
+      'x',
+    );
     const endGameButton = Render.elementFactory(
       'button',
-      { className: 'button endgame' },
-      'End game',
+      { className: 'button endgame', 'aria-label': 'Close' },
+      crossSpanInButton,
     );
+
     endGameButton.addEventListener('click', () => {
       this.view.endGame();
     });
