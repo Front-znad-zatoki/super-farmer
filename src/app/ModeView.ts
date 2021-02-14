@@ -5,15 +5,10 @@ import {
 } from '~src/Interfaces/CallbackInterface';
 import { Avatars } from '~src/Enums/AvatarsEnum';
 import { Colors } from '~src/Enums/ColorsEnum';
-<<<<<<< HEAD:src/app/components/ModeModal.ts
-import { check } from 'prettier';
-export class ModeModal extends BasicModal {
-=======
 import { EmptyView } from './EmptyView';
 import { PlayerDTO } from '~src/Interfaces/PlayerDTOInterface';
 
 export class ModeView extends EmptyView {
->>>>>>> feature/#116-mode-view:src/app/ModeView.ts
   private modeForm: HTMLFormElement;
   private addPlayerButton: HTMLElement;
   private removePlayerButton: HTMLElement;
@@ -200,11 +195,7 @@ export class ModeView extends EmptyView {
       type: 'text',
       id: indicator,
       name: indicator,
-<<<<<<< HEAD:src/app/components/ModeModal.ts
-      placeholder: `Janush ${numberOfPlayer}`,
-=======
       placeholder: 'type nickname here',
->>>>>>> feature/#116-mode-view:src/app/ModeView.ts
       className: 'mode-form__input',
     });
 
@@ -243,12 +234,8 @@ export class ModeView extends EmptyView {
         const indicator = `${numberOfPlayer}colorChoice_${index + 1}`;
         const label = Render.elementFactory('label', {
           for: indicator,
-<<<<<<< HEAD:src/app/components/ModeModal.ts
-          className: `mode-form__color-label color-label${index + 1}`,
-=======
           className: 'mode-form__color-label',
           style: `background-color: ${value}`,
->>>>>>> feature/#116-mode-view:src/app/ModeView.ts
         });
         const radio = Render.elementFactory('input', {
           type: 'radio',
@@ -330,46 +317,16 @@ export class ModeView extends EmptyView {
 
     return colors;
   }
-  private generateAIPlayerInput(): HTMLElement {
-    const checkbox = Render.elementFactory('input', {
-      type: 'checkbox',
-      name: `aiplayer`,
-      className: 'mode-form__ai-input',
-      id: 'aiplayer',
-    });
-
-    const label = Render.elementFactory(
-      'label',
-      {
-        className: 'mode-form__ai-label',
-        for: 'aiplayer',
-      },
-      'AI Player',
-    );
-
-    const AIPlayerInputs = Render.elementFactory(
-      'div',
-      { className: 'mode-form__ai-player' },
-      checkbox,
-      label,
-    );
-    return AIPlayerInputs;
-  }
-
+  
   private generateAddPlayerFields(
     numberOfPlayer: number,
   ): HTMLElement {
     const fieldsWrapper = Render.elementFactory(
       'div',
-<<<<<<< HEAD:src/app/components/ModeModal.ts
-      { className: 'add-player' },
-=======
       { className: 'mode-form__add-player' },
->>>>>>> feature/#116-mode-view:src/app/ModeView.ts
       this.generateNameInput(numberOfPlayer),
       this.generateAvatarInput(numberOfPlayer),
       this.generateColorInput(numberOfPlayer),
-      this.generateAIPlayerInput(),
     );
     if (numberOfPlayer > 1) {
       fieldsWrapper.appendChild(

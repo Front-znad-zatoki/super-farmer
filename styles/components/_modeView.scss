@@ -1,20 +1,25 @@
-.color-label1 {
-  background-color: #ed3d25;
+.mode-players-wrapper {
+  display: inline-flex;
+  
 }
-
-.color-label2 {
-  background-color: #8d992b;
-}
-
-.color-label3 {
-  background-color: #203739;
-}
-
-.color-label4 {
-  background-color: #ffca36;
-}
-
 .mode-form {
+  &__add-btn{
+    width: 312px;
+    height: 632px;
+    border-radius: 16px;
+    border: 1px dashed #555757;
+  }
+  &__add-player {
+    display: flex;
+    width: 400px;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+    border: 2px solid black;
+    margin: 5px;
+    background-color: #fefefe;
+    border-radius: 16px;
+  }
   // Styles for name input
   &__input {
     padding: 8px;
@@ -22,23 +27,18 @@
     border-bottom: 1px solid #9ca4a4;
     text-align: center;
   }
-<<<<<<< HEAD:styles/components/_modeModal.scss
-
-  // Styles for avatars
-  &__avatars {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-=======
   &__color-wrapper {
     display: flex;
   }
   &__color-label {
     width: 50px;
     height: 50px;
->>>>>>> feature/#116-mode-view:styles/components/_modeView.scss
   }
-
+  &__avatars {
+    display: flex;  
+    flex-wrap: wrap;
+    justify-content: center;
+  }
   &__avatar {
     width: 80px;
 
@@ -71,42 +71,31 @@
   }
   &__color-wrapper {
     display: flex;
-    margin: 10px 30px;
+    margin: 10px 20px;
   }
   &__color-label {
     width: 110px;
     height: 110px;
     border-radius: 50%;
   }
-
+  
   &__color-radio {
     display: none;
   }
-
+  
   &__color-radio {
     &:checked + .mode-form__color-label {
       border: 2px solid black;
       box-shadow: 0px 0px 0px 3px #fff inset;
     }
   }
-
+  
   // Styles for AI Player
   &__ai-input {
     margin: 10px 20px;
   }
 }
 
-.add-player {
-  display: flex;
-  width: 400px;
-  flex-direction: column;
-  justify-content: space-around;
-  padding: 30px;
-  border: 2px solid black;
-  margin: 5px;
-  background-color: #fefefe;
-  border-radius: 16px;
-}
 
 .mode-inputs-wrapper {
   display: flex;
