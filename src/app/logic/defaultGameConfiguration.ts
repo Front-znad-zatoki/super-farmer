@@ -5,7 +5,7 @@ import { GameConfigInterface } from '../../Interfaces/GameConfigInterface';
 
 export const defaultGameConfiguration: GameConfigInterface = {
   mode: GameModes.STATIC,
-  roundTimeInSeconds: 15000,
+  roundTimeInSeconds: 15,
   playersConfig: [
     {
       name: 'Carlos Santanos',

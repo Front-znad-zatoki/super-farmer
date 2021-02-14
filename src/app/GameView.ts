@@ -10,8 +10,8 @@ import { ViewController } from './ViewController';
 import { AlertType } from '../Enums/AlertEnum';
 
 export class GameView {
-  playerPanel: PlayerPanel;
-  constructor(private view: ViewController) {
+  protected playerPanel: PlayerPanel;
+  constructor(private viewController: ViewController) {
     this.playerPanel = new PlayerPanel(this);
   }
 
@@ -106,7 +106,7 @@ export class GameView {
     );
 
     endGameButton.addEventListener('click', () => {
-      this.view.endGame();
+      this.viewController.endGame();
     });
     return endGameButton;
   }
@@ -135,11 +135,11 @@ export class GameView {
   }
 
   handleRoll(): void {
-    this.view.handleRoll();
+    this.viewController.handleRoll();
   }
 
   handleTrade(): void {
-    this.view.handleTrade();
+    this.viewController.handleTrade();
   }
 
   displayRollResult(
@@ -159,11 +159,11 @@ export class GameView {
   // }
 
   stopTimer(): void {
-    this.view.stopTimer();
+    this.viewController.stopTimer();
   }
 
   nextTurn(): void {
-    this.view.nextTurn();
+    this.viewController.nextTurn();
   }
 
   // turnAlert(): void {
@@ -171,7 +171,7 @@ export class GameView {
   // }
 
   pauseTurn(): void {
-    this.view.pauseTurn();
+    this.viewController.pauseTurn();
   }
 
   disableTrade(): void {
