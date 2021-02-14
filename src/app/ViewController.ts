@@ -72,15 +72,21 @@ export class ViewController {
   }
 
   // updateRemainingTime(timeLeft: number): void {
-  // this.gameView.updateRemainingTime(timeLeft);
+  //   this.gameView.updateRemainingTime(timeLeft);
   // }
 
   handleRoll(): void {
     this.gameController?.breed();
   }
 
-  updateRollResults({ rollResult }: RollResult): void {
-    this.gameView.displayRollResult(rollResult);
+  updateRollResults({ rollResult, gain }: RollResult): void {
+    if (this.gameController) {
+      this.gameView.displayRollResult(
+        rollResult,
+        gain,
+        this.gameController.theGame.theCurrentPlayer,
+      );
+    }
   }
 
   handleTrade(): void {
@@ -92,7 +98,7 @@ export class ViewController {
   }
 
   // turnAlert(): void {
-  // this.gameView.turnAlert();
+  //   this.gameView.turnAlert();
   // }
 
   displayRulesModal(): void {
@@ -115,7 +121,7 @@ export class ViewController {
 
   processAfterTrade(): void {
     this.runTimer();
-    this.refreshHerd();
+    // this.refreshHerd();
     this.disableTrade();
     this.checkIfGameIsWon();
   }
@@ -154,9 +160,9 @@ export class ViewController {
     this.gameView.disableTrade();
   }
 
-  refreshHerd(): void {
-    this.gameView.refreshHerd(this.gameController?.getBank() as Bank);
-  }
+  // refreshHerd(): void {
+  //   this.gameView.refreshHerd(this.gameController?.getBank() as Bank);
+  // }
 
   checkIfGameIsWon(): void {
     this.gameController?.checkIfGameIsWon();
