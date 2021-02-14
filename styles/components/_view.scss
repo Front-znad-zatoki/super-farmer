@@ -33,7 +33,7 @@
   background: rgb(250, 250, 250);
   cursor: pointer;
   &:hover {
-    background: #71CFD7;
+    background: #71cfd7;
   }
 }
 
@@ -82,7 +82,6 @@
     outline-offset: -4px;
   }
   &__text {
-    
     transform: scaleX(1.25);
   }
 }

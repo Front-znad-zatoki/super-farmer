@@ -2,12 +2,12 @@
   &__board {
     position: relative;
     display: flex;
+    flex: 1;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 24px;
     background-color: white;
-    flex: 1;
 
     &__container {
       flex-basis: 50%;
