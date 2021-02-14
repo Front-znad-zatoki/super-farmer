@@ -13,6 +13,7 @@ import { PlayerDTO } from '../Interfaces/PlayerDTOInterface';
 import { Configuration } from './logic/Configuration';
 import { dynamicGameConfiguration } from './logic/dynamicGameConfiguration';
 import { AnimalNames } from '../Enums/AnimalNamesEnum';
+import { cloneDeep } from 'lodash';
 
 export class ViewController {
   private menuView: MenuView;
@@ -39,7 +40,7 @@ export class ViewController {
   launchGame(players: PlayerDTO[], isModeDynamic?: boolean): void {
     const config: Configuration =
       isModeDynamic === true
-        ? new Configuration(dynamicGameConfiguration)
+        ? new Configuration(cloneDeep(dynamicGameConfiguration))
         : new Configuration(defaultGameConfiguration);
     if (isModeDynamic) {
       const numberOfPlayers = players.length;
