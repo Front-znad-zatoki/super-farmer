@@ -5,16 +5,12 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="35"
    height="35"
    viewBox="0 0 35 35"
    fill="none"
    version="1.1"
-   id="svg5328"
-   sodipodi:docname="_big_dog.svg"
-   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)">
+   id="svg5328">
   <metadata
      id="metadata5334">
     <rdf:RDF>
@@ -29,26 +25,6 @@
   </metadata>
   <defs
      id="defs5332" />
-  <sodipodi:namedview
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1"
-     objecttolerance="10"
-     gridtolerance="10"
-     guidetolerance="10"
-     inkscape:pageopacity="0"
-     inkscape:pageshadow="2"
-     inkscape:window-width="1600"
-     inkscape:window-height="837"
-     id="namedview5330"
-     showgrid="false"
-     inkscape:zoom="19.142857"
-     inkscape:cx="17.5"
-     inkscape:cy="17.5"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="svg5328" />
   <path
      d="M17.5 19.5508H11.3477C11.3477 22.9434 14.1074 25.7031 17.5 25.7031C20.8926 25.7031 23.6523 22.9434 23.6523 19.5508H17.5Z"
      fill="#E6455A"
