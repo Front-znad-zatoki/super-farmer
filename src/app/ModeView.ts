@@ -335,10 +335,8 @@ export class ModeView extends EmptyView {
   ): { isDynamic: boolean; players: PlayerDTO[] } {
     const players: PlayerDTO[] = [];
     let isDynamic = false;
-    for (const [formKey, formValue] of formData.entries()) {
-      // TODO: remove before merge
-      console.log(formKey, formValue);
 
+    for (const [formKey, formValue] of formData.entries()) {
       const value = formValue.toString();
       const [key, numberOfPlayer] = formKey.split('_');
       const index = +numberOfPlayer - 1;
@@ -374,8 +372,6 @@ export class ModeView extends EmptyView {
         }
       }
     }
-    // TODO: remove before merge
-    console.log({ isDynamic, players });
 
     return { isDynamic, players };
   }
