@@ -6,24 +6,19 @@ import { ViewController } from './ViewController';
 
 export class MenuView extends EmptyView {
   private modeModal: ModeView;
+  private menuViewContent: HTMLElement;
   constructor(private viewController: ViewController) {
     super(false);
     const backCallback = () => this.show();
     const submitCallback = (
       isDynamic: boolean,
       players: PlayerDTO[],
-    ) => this.viewController.launchGame(players);
+    ) => {
+      Render.removeAllChildren('#sf-app');
+      this.viewController.launchGame(players);
+    };
     this.modeModal = new ModeView(backCallback, submitCallback);
-    Render.render('body', this.modeModal.theModeView);
-  }
-
-  displayMenu(): void {
-    Render.removeAllChildren('#sf-app');
-    Render.render('#sf-app', this.createLandingPage());
-  }
-
-  private createLandingPage(): HTMLElement {
-    return Render.elementFactory(
+    this.menuViewContent = Render.elementFactory(
       'div',
       { className: 'menu-window' },
       this.createHeading(),
@@ -31,6 +26,13 @@ export class MenuView extends EmptyView {
       this.createStartButton(),
       this.createFooter(),
     );
+    this.viewContainer.appendChild(this.menuViewContent);
+  }
+
+  displayMenu(): void {
+    Render.removeAllChildren('#sf-app');
+    this.show();
+    Render.render('#sf-app', this.view);
   }
 
   private createHeading(): HTMLElement {
@@ -68,6 +70,7 @@ export class MenuView extends EmptyView {
     );
     startGameButton.addEventListener('click', () => {
       this.hide();
+      Render.render('#sf-app', this.modeModal.theModeView);
       this.modeModal.show();
     });
     return startGameButton;
