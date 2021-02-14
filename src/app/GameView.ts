@@ -12,7 +12,7 @@ import { EmptyView } from './EmptyView';
 export class GameView extends EmptyView {
   protected playerPanel: PlayerPanel;
   constructor(private viewController: ViewController) {
-    super();
+    super(false);
     this.playerPanel = new PlayerPanel(this);
   }
 
@@ -38,6 +38,9 @@ export class GameView extends EmptyView {
         gameBoardsAndPanel,
       ),
     );
+    // this.viewContainer.append(topRow, gameBoardsAndPanel);
+    // Render.render('#sf-app', this.view);
+    // this.show();
     this.setColorAccents(currentPlayer);
   }
 
@@ -57,6 +60,7 @@ export class GameView extends EmptyView {
     currentPlayer: Player,
     bank: Bank,
   ) {
+    EmptyView.addOpacityToBackground();
     const playersBoards = this.createPlayersBoards(players);
     const playerPanel = this.createPlayerPanel(currentPlayer);
     const bankPanel = this.createBankPanel(bank);
@@ -97,12 +101,19 @@ export class GameView extends EmptyView {
   private createEndGameButton() {
     const crossSpanInButton = Render.elementFactory(
       'p',
-      { 'aria-hidden': 'true', className: 'endgame__text' },
-      'x',
+      {
+        'aria-hidden': 'true',
+        className: 'endgame__text',
+      },
+      'X',
     );
     const endGameButton = Render.elementFactory(
       'button',
-      { className: 'button endgame', 'aria-label': 'End game' },
+      {
+        className: 'button endgame',
+        'aria-label': 'End game',
+        'data-tooltip': 'END GAME',
+      },
       crossSpanInButton,
     );
 
@@ -179,6 +190,19 @@ export class GameView extends EmptyView {
     this.playerPanel.disableTrade();
   }
 
+  // static addOpacityToBackground(): void {
+  //   const sfApp = document.querySelector('#sf-app');
+  //   if (sfApp && !sfApp?.classList.contains('blurred')) {
+  //     sfApp?.classList.add('blurred');
+  //   }
+  // }
+
+  // static removeOpacityFromBackground(): void {
+  //   const sfApp = document.querySelector('#sf-app');
+  //   if (sfApp && sfApp?.classList.contains('blurred')) {
+  //     sfApp?.classList.remove('blurred');
+  //   }
+  // }
   // refreshHerd(bank: Bank): void {
   //   this.playerPanel.refreshHerd();
   //   Render.removeAllChildren('#bank-board');

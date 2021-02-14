@@ -1,4 +1,5 @@
 import { ModeModal } from './components/ModeModal';
+import { EmptyView } from './EmptyView';
 import { Render } from './utils/Render';
 import { ViewController } from './ViewController';
 
@@ -6,7 +7,6 @@ export class MenuView {
   private modeModal: ModeModal;
   constructor(private view: ViewController) {
     this.modeModal = new ModeModal((players) =>
-      // TODO: PASS INFO ABOUT MODE OR AI
       this.view.launchGame(players),
     );
     this.modeModal.hideModal();
@@ -19,6 +19,7 @@ export class MenuView {
   }
 
   private createLandingPage(): HTMLElement {
+    EmptyView.removeOpacityFromBackground();
     return Render.elementFactory(
       'div',
       { className: 'menu-window' },

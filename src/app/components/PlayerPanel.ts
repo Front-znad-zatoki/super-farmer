@@ -100,25 +100,25 @@ export class PlayerPanel {
         ConvertAnimalName.toHTMLElement(name, 'player-panel__image'),
       ),
     );
-    Render.render(
-      '.player-panel__result',
-      diceResult,
-      Render.elementFactory(
-        'div',
-        {},
-        Render.elementFactory(
-          'h3',
-          { className: 'player-panel__result--gain' },
-          `${player.theName} gains:`,
-        ),
-        ...this.convertAnimalsToHTML(
-          playerGain.map(([animal, count]) => [
-            ConvertAnimalName.toAnimalObject(animal),
-            count,
-          ]),
-        ),
-      ),
-    );
+    // Render.render(
+    //   '.player-panel__result',
+    //   diceResult,
+    //   Render.elementFactory(
+    //     'div',
+    //     {},
+    //     Render.elementFactory(
+    //       'h3',
+    //       { className: 'player-panel__result--gain' },
+    //       `${player.theName} gains:`,
+    //     ),
+    //     ...this.convertAnimalsToHTML(
+    //       playerGain.map(([animal, count]) => [
+    //         ConvertAnimalName.toAnimalObject(animal),
+    //         count,
+    //       ]),
+    //     ),
+    //   ),
+    // );
     this.view.stopTimer();
     // setTimeout(() => this.hideTimer(), 10);
   }

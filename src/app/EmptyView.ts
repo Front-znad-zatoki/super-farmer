@@ -22,4 +22,18 @@ export abstract class EmptyView {
   show(): void {
     this.view.classList.remove('hidden');
   }
+
+  static addOpacityToBackground(): void {
+    const sfApp = document.querySelector('#sf-app');
+    if (sfApp && !sfApp?.classList.contains('blurred')) {
+      sfApp?.classList.add('blurred');
+    }
+  }
+
+  static removeOpacityFromBackground(): void {
+    const sfApp = document.querySelector('#sf-app');
+    if (sfApp && sfApp?.classList.contains('blurred')) {
+      sfApp?.classList.remove('blurred');
+    }
+  }
 }

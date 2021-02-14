@@ -4,10 +4,20 @@
   margin: 0;
   font-family: 'Roboto', sans-serif;
 }
+
 #sf-app {
   height: 100vh;
-  background: url(/static/images/ui/background.png) no-repeat;
+  padding: 40px;
+  background: url('/static/images/ui/background.png') no-repeat;
   background-size: cover;
+}
+
+#sf-app.blurred {
+  background-image: linear-gradient(
+      rgba(255, 255, 255, 0.5),
+      rgba(255, 255, 255, 0.5)
+    ),
+    url('/static/images/ui/background.png');
 }
 
 .hidden {
