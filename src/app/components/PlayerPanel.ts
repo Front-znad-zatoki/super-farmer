@@ -4,32 +4,31 @@ import { Render } from '../utils/Render';
 import { AnimalNames } from '../../Enums/AnimalNamesEnum';
 import { GameView } from '../GameView';
 import { ConvertAnimalName } from '../utils/ConvertAnimalName';
-// import { Animal } from '../../Animals/Animal';
+import { Animal } from '../../Animals/Animal';
 
 export class PlayerPanel {
-  private player: Player;
+  // private player: Player;
   /**
    * Creates PlayerPanel based on data given
    * @param view accepts instance of View componenet
    */
-  constructor(private view: GameView) {
-    // TODO: FIND OUT WHY IS THIS PANEL CREATED TOGETHER WITH THE LANDING PAGE
-    this.player = new Player('', '', '');
-  }
+  constructor(private view: GameView) {}
+  // TODO: FIND OUT WHY IS THIS PANEL CREATED TOGETHER WITH THE LANDING PAGE
+  // this.player = new Player('', '', '');
 
-  setPlayer(player: Player): void {
-    this.player = player;
-  }
+  // setPlayer(player: Player): void {
+  // this.player = player;
+  // }
 
   /**
    * Creates player panel and returns it as HTMLElement
    */
-  createPlayerPanel(): HTMLElement {
+  createPlayerPanel(player: Player): HTMLElement {
     return Render.elementFactory(
       'div',
       {
         className: 'player-panel',
-        // style: `background-color: ${this.player.theColor};`,
+        style: `background-color: ${player.theColor};`,
       },
       // this.createPlayerBoard(),
       this.createResultWindow(),
@@ -95,7 +94,7 @@ export class PlayerPanel {
     );
   }*/
 
-  /*private convertAnimalsToHTML(
+  private convertAnimalsToHTML(
     animals: [Animal, number][],
   ): HTMLElement[] {
     return animals.map(([animal, count]) =>
@@ -109,7 +108,7 @@ export class PlayerPanel {
         `x${count}`,
       ),
     );
-  }*/
+  }
 
   private createResultWindow(): HTMLElement {
     return Render.elementFactory(
@@ -168,7 +167,8 @@ export class PlayerPanel {
    */
   displayRollResult(
     diceResults: AnimalNames[],
-    // playerGain: [AnimalNames, number][],
+    playerGain: [AnimalNames, number][],
+    player: Player,
   ): void {
     const diceResult = Render.elementFactory(
       'div',
@@ -185,24 +185,24 @@ export class PlayerPanel {
     Render.render(
       '.player-panel__result',
       diceResult,
-      /*Render.elementFactory(
+      Render.elementFactory(
         'div',
         {},
         Render.elementFactory(
           'h3',
           { className: 'player-panel__result--gain' },
-          `${this.player.theName} gains:`,
-        ),*/
-      /* ...this.convertAnimalsToHTML(
+          `${player.theName} gains:`,
+        ),
+        ...this.convertAnimalsToHTML(
           playerGain.map(([animal, count]) => [
             ConvertAnimalName.toAnimalObject(animal),
             count,
-          ]),*/
-      // ),
-      // ),
+          ]),
+        ),
+      ),
     );
-    /*this.view.stopTimer();
-    setTimeout(() => this.hideTimer(), 10);*/
+    this.view.stopTimer();
+    // setTimeout(() => this.hideTimer(), 10);
   }
 
   /*private hideTimer(): void {
@@ -220,16 +220,16 @@ export class PlayerPanel {
     timer.innerText = `Time left: ${timeLeft} sec.`;
   }*/
 
-  /*turnAlert(): void {
+  turnAlert(player: Player): void {
     Render.render(
       '#sf-app',
       Render.elementFactory(
         'div',
         { className: 'exclamation' },
-        `${this.player.theName}'s turn has passed!`,
+        `${player.theName}'s turn has passed!`,
       ),
     );
-  }*/
+  }
 
   disableTrade(): void {
     (document.querySelector('#exchange') as HTMLElement).setAttribute(

@@ -12,7 +12,7 @@ export class PlayerPanelDemo {
       '#44AF95',
     );
     const pp = new PlayerPanel(viewController.theGameView);
-    pp.setPlayer(player);
-    Render.render('#sf-app', pp.createPlayerPanel());
+    // pp.setPlayer(player);
+    Render.render('#sf-app', pp.createPlayerPanel(player));
   }
 }
