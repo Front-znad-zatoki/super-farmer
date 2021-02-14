@@ -40,7 +40,7 @@ export class Configuration implements GameConfigInterface {
     return this._mode;
   }
   set roundTimeInSeconds(numberOfSeconds: number) {
-    this.roundTimeInSeconds = numberOfSeconds;
+    this._roundTimeInSeconds = numberOfSeconds;
   }
   get roundTimeInSeconds(): number {
     return this._roundTimeInSeconds;
