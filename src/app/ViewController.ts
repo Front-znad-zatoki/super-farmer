@@ -36,8 +36,6 @@ export class ViewController {
     this.menuView.displayMenu();
   }
 
-  /*TODO: CHECK IF AI NEEDED, CONNECT WITH CALLBACK THAT PASSES PLAYERS*/
-  /* TODO: CONSIDER USING DEFAULT CONFIG ALWAYS, JUST CHANGE ALREADY CREATED CONFIG IN CASE ITS A DYNAMIC MODE*/
   launchGame(players: PlayerDTO[], isModeDynamic?: boolean): void {
     const config: Configuration =
       isModeDynamic === true
@@ -70,7 +68,7 @@ export class ViewController {
     this.gameView.renderGameView(players, currentPlayer, bank);
     this.gameController?.startTurn();
   }
-
+  // TODO: CHECK IF STILL NECESSARY
   // updateRemainingTime(timeLeft: number): void {
   //   this.gameView.updateRemainingTime(timeLeft);
   // }
@@ -96,7 +94,7 @@ export class ViewController {
   displayWinModal(player: Player): void {
     Render.render('body', this.winModal.createWinModal(player));
   }
-
+  // TODO: CHECK IF STILL NECESSARY
   // turnAlert(): void {
   //   this.gameView.turnAlert();
   // }
@@ -121,6 +119,7 @@ export class ViewController {
 
   processAfterTrade(): void {
     this.runTimer();
+    // TODO: CHECK IF STILL NECESSARY
     // this.refreshHerd();
     this.disableTrade();
     this.checkIfGameIsWon();
@@ -160,6 +159,7 @@ export class ViewController {
     this.gameView.disableTrade();
   }
 
+  // TODO: CHECK IF STILL NECESSARY
   // refreshHerd(): void {
   //   this.gameView.refreshHerd(this.gameController?.getBank() as Bank);
   // }
