@@ -12,7 +12,7 @@ export class ModeView extends EmptyView {
   private modeForm: HTMLFormElement;
   private addPlayerButton: HTMLElement;
   private removePlayerButton: HTMLElement;
-  private playerInputsWrapper: HTMLElement;
+  private addPanelsWrapper: HTMLElement;
   private backButton!: HTMLElement;
   private playButton!: HTMLElement;
   private submitCallback: CallbackTwoParam<boolean, PlayerDTO[]>;
@@ -45,7 +45,7 @@ export class ModeView extends EmptyView {
       },
       'remove player',
     );
-    this.playerInputsWrapper = Render.elementFactory('div', {
+    this.addPanelsWrapper = Render.elementFactory('div', {
       className: 'mode-players-wrapper',
     });
     this.modeForm = this.createForm();
@@ -89,7 +89,7 @@ export class ModeView extends EmptyView {
       Render.elementFactory(
         'label',
         {
-          className: 'mode-form__mode-input',
+          className: 'mode-form__mode-label',
           for: 'mode',
         },
         'dynamic mode',
@@ -105,9 +105,8 @@ export class ModeView extends EmptyView {
       },
       heading,
       mode,
-      this.playerInputsWrapper,
+      this.addPanelsWrapper,
       this.addPlayerButton,
-      this.removePlayerButton,
     );
     this.addPlayer();
 
@@ -131,7 +130,7 @@ export class ModeView extends EmptyView {
   }
 
   private addPlayer(): void {
-    const numberOfPlayers = this.playerInputsWrapper.children.length;
+    const numberOfPlayers = this.addPanelsWrapper.children.length;
     if (numberOfPlayers >= 4) return;
 
     const playerInputRow = this.generateAddPlayerFields(
@@ -141,21 +140,21 @@ export class ModeView extends EmptyView {
     if (numberOfPlayers >= 3) {
       this.addPlayerButton.classList.add('hidden');
     }
-    Render.childrenInjector(this.playerInputsWrapper, playerInputRow);
+    Render.childrenInjector(this.addPanelsWrapper, playerInputRow);
     if (numberOfPlayers === 1) {
       this.removePlayerButton.classList.remove('hidden');
     }
   }
 
   private removePlayer(): void {
-    const numberOfPlayers = this.playerInputsWrapper.children.length;
+    const numberOfPlayers = this.addPanelsWrapper.children.length;
     if (numberOfPlayers <= 1) return;
 
     if (numberOfPlayers === 4) {
       this.addPlayerButton.classList.remove('hidden');
     }
 
-    (this.playerInputsWrapper.lastElementChild as Element).remove();
+    (this.addPanelsWrapper.lastElementChild as Element).remove();
 
     if (numberOfPlayers === 2)
       this.removePlayerButton.classList.add('hidden');
@@ -181,7 +180,7 @@ export class ModeView extends EmptyView {
     const buttonsWrapper = Render.elementFactory(
       'div',
       {
-        className: 'modal__buttons',
+        className: 'mode__buttons',
       },
       this.backButton,
       this.playButton,
@@ -323,8 +322,10 @@ export class ModeView extends EmptyView {
       this.generateColorInput(numberOfPlayer),
     );
     if (numberOfPlayer > 1) {
-      fieldsWrapper.appendChild(
+      Render.childrenInjector(
+        fieldsWrapper,
         this.generateAICheckbox(numberOfPlayer),
+        this.removePlayerButton,
       );
     }
     return fieldsWrapper;
@@ -393,6 +394,9 @@ export class ModeView extends EmptyView {
 
   private handleClickRemovePlayer = (): void => {
     this.removePlayer();
+    this.addPanelsWrapper.lastChild?.appendChild(
+      this.removePlayerButton,
+    );
   };
 
   private handleClickBackButton = (): void => {
