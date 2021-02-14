@@ -3,13 +3,12 @@
     position: relative;
     display: flex;
     flex-wrap: wrap;
-    // width: 90vw;
-    // align-content: space-around;
-    // align-items: center;
+    align-items: center;
     justify-content: space-between;
-    padding: 32px;
-    background-color: white;
     margin-bottom: 24px;
+    background-color: white;
+    flex: 1;
+
     &__container {
       flex-basis: 50%;
       text-align: center;
@@ -19,7 +18,6 @@
       position: absolute;
       top: -32px;
       right: 0;
-      // display: inline;
       font-weight: 700;
     }
 

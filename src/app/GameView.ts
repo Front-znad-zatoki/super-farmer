@@ -80,8 +80,7 @@ export class GameView {
         Render.elementFactory(
           'div',
           {
-            // TODO: CHECK IF THIS DIV IS NECESSARY
-            // id: `${player.theName}`,
+            id: `${player.theName}`,
             className: 'player-boards__board',
           },
           new PlayersBoard().renderPlayersBoard(player),
@@ -96,13 +95,13 @@ export class GameView {
 
   private createEndGameButton() {
     const crossSpanInButton = Render.elementFactory(
-      'span',
-      { 'aria-hidden': 'true' },
+      'p',
+      { 'aria-hidden': 'true', className: 'endgame__text' },
       'x',
     );
     const endGameButton = Render.elementFactory(
       'button',
-      { className: 'button endgame', 'aria-label': 'Close' },
+      { className: 'button endgame', 'aria-label': 'End game' },
       crossSpanInButton,
     );
 
