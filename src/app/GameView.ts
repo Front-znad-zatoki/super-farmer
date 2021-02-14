@@ -99,7 +99,7 @@ export class GameView extends EmptyView {
   }
 
   private createEndGameButton() {
-    const crossSpanInButton = Render.elementFactory(
+    const crossInButton = Render.elementFactory(
       'p',
       {
         'aria-hidden': 'true',
@@ -114,7 +114,7 @@ export class GameView extends EmptyView {
         'aria-label': 'End game',
         'data-tooltip': 'END GAME',
       },
-      crossSpanInButton,
+      crossInButton,
     );
 
     endGameButton.addEventListener('click', () => {
@@ -190,19 +190,6 @@ export class GameView extends EmptyView {
     this.playerPanel.disableTrade();
   }
 
-  // static addOpacityToBackground(): void {
-  //   const sfApp = document.querySelector('#sf-app');
-  //   if (sfApp && !sfApp?.classList.contains('blurred')) {
-  //     sfApp?.classList.add('blurred');
-  //   }
-  // }
-
-  // static removeOpacityFromBackground(): void {
-  //   const sfApp = document.querySelector('#sf-app');
-  //   if (sfApp && sfApp?.classList.contains('blurred')) {
-  //     sfApp?.classList.remove('blurred');
-  //   }
-  // }
   // refreshHerd(bank: Bank): void {
   //   this.playerPanel.refreshHerd();
   //   Render.removeAllChildren('#bank-board');
