@@ -42,7 +42,6 @@ export class GameController {
 
   private isGameWon(): void {
     if (this.gameProcessor.checkWin()) {
-      this.gameProcessor.stopTurn();
       this.view.displayWinModal(this.game.theCurrentPlayer);
     }
   }

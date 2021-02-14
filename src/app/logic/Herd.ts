@@ -29,7 +29,6 @@ export class Herd {
               chasesAway,
               exclamation,
             );
-            console.log(newAnimal);
             return [newAnimal, inStock];
           }
         }
