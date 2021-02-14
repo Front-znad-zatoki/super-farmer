@@ -1,8 +1,7 @@
 .alert {
   display: flex;
   // width: 100%;
-  // width: 50%;
-  width: calc(((100% - 300px - 40px)/ 2));
+  width: calc(((100% - 300px - 24px) / 2));
   align-items: center;
   border-radius: 0.25rem;
   transition: all 0.7s ease-in-out;
