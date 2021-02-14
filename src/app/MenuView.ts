@@ -15,7 +15,7 @@ export class MenuView extends EmptyView {
       players: PlayerDTO[],
     ) => {
       Render.removeAllChildren('#sf-app');
-      this.viewController.launchGame(players);
+      this.viewController.launchGame(players, isDynamic);
     };
     this.modeModal = new ModeView(backCallback, submitCallback);
     this.menuViewContent = Render.elementFactory(
