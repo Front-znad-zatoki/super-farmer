@@ -95,11 +95,17 @@ export class GameView {
   }
 
   private createEndGameButton() {
+    const crossSpanInButton = Render.elementFactory(
+      'span',
+      { 'aria-hidden': 'true' },
+      'x',
+    );
     const endGameButton = Render.elementFactory(
       'button',
-      { className: 'button endgame' },
-      'End game',
+      { className: 'button endgame', 'aria-label': 'Close' },
+      crossSpanInButton,
     );
+
     endGameButton.addEventListener('click', () => {
       this.view.endGame();
     });
@@ -116,7 +122,7 @@ export class GameView {
     ) as HTMLElement;
     if (!alertContainer) alertContainer = Alert.createElement();
     // TODO: connect with other methods to display the right alert
-    Alert.updateAlert('Lorem ipsum dolor sei', AlertType.INFO);
+    Alert.updateAlert('Lorem ipsum dolor sei', AlertType.CRITICAL);
     return alertContainer;
   }
 
@@ -147,16 +153,7 @@ export class GameView {
       playerGain,
       player,
     );
-    // this.renderPlayerPanel();
   }
-
-  // private renderPlayerPanel(): void {
-  //   Render.removeAllChildren('#player-board');
-  //   Render.render(
-  //     '#player-board',
-  //     ...this.playerPanel.createPanelBoard(),
-  //   );
-  // }
 
   // updateRemainingTime(timeLeft: number): void {
   //   this.playerPanel.updateTime(timeLeft);

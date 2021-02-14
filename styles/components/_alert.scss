@@ -1,14 +1,14 @@
 .alert {
   display: flex;
   width: 100%;
+  align-items: center;
   border-radius: 0.25rem;
   transition: all 0.7s ease-in-out;
-  align-items: center;
-  
+
   &__icon {
     width: auto;
     height: 1.75rem;
-    margin: .5rem 1rem;
+    margin: 0.5rem 1rem;
   }
 
   &__text {
