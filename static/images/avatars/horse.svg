@@ -1,1 +1,96 @@
-<?xml version="1.0" ?><svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><defs><style>.cls-1{fill:#703f00;}.cls-2{fill:#965500;}.cls-3{fill:#2d2d2d;}.cls-4{fill:#3e2c27;}</style></defs><title/><g id="horse"><path class="cls-1" d="M21,51H43a0,0,0,0,1,0,0v4a6,6,0,0,1-6,6H27a6,6,0,0,1-6-6V51A0,0,0,0,1,21,51Z"/><path class="cls-1" d="M24,11.91A14,14,0,0,0,16.88,18a12.49,12.49,0,0,1-4-6.76L11,3a14,14,0,0,1,13,8.91Z"/><path class="cls-2" d="M49,25h0a45.38,45.38,0,0,1-2.11,13.68L43,51H21L17.11,38.68A45.38,45.38,0,0,1,15,25h0a13.85,13.85,0,0,1,1.88-7A14,14,0,0,1,24,11.91,13.49,13.49,0,0,1,28.21,11L29,15h6l.79-4a13.49,13.49,0,0,1,4.17.88A14,14,0,0,1,47.12,18,13.85,13.85,0,0,1,49,25Z"/><circle class="cls-3" cx="41.5" cy="29.5" r="1.5"/><circle class="cls-3" cx="22.5" cy="29.5" r="1.5"/><path class="cls-1" d="M53,3l-1.83,8.24A12.49,12.49,0,0,1,47.12,18,14,14,0,0,0,40,11.91,14,14,0,0,1,53,3Z"/><path class="cls-4" d="M36.52,7.39,35.79,11,35,15H29l-.79-4-.73-3.64a2,2,0,0,1,2-2.39h5.12A2,2,0,0,1,36.52,7.39Z"/><path class="cls-4" d="M27,58a1,1,0,0,1-1-1V55a1,1,0,0,1,2,0v2A1,1,0,0,1,27,58Z"/><path class="cls-4" d="M37,58a1,1,0,0,1-1-1V55a1,1,0,0,1,2,0v2A1,1,0,0,1,37,58Z"/></g></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   viewBox="0 0 64 64"
+   version="1.1"
+   id="svg2183"
+   sodipodi:docname="_horse.svg"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)">
+  <metadata
+     id="metadata2187">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1600"
+     inkscape:window-height="837"
+     id="namedview2185"
+     showgrid="false"
+     inkscape:zoom="5.234375"
+     inkscape:cx="12.856472"
+     inkscape:cy="30.706347"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2183" />
+  <defs
+     id="defs2160">
+    <style
+       id="style2158">.cls-1{fill:#703f00;}.cls-2{fill:#965500;}.cls-3{fill:#2d2d2d;}.cls-4{fill:#3e2c27;}</style>
+  </defs>
+  <g
+     id="horse"
+     transform="matrix(1.0952381,0,0,1.1034483,-3.0476191,-3.3103448)">
+    <path
+       class="cls-1"
+       d="m 21,51 h 22 v 4 a 6,6 0 0 1 -6,6 H 27 a 6,6 0 0 1 -6,-6 z"
+       id="path2164" />
+    <path
+       class="cls-1"
+       d="m 24,11.91 a 14,14 0 0 0 -7.12,6.09 12.49,12.49 0 0 1 -4,-6.76 L 11,3 a 14,14 0 0 1 13,8.91 z"
+       id="path2166" />
+    <path
+       class="cls-2"
+       d="m 49,25 v 0 A 45.38,45.38 0 0 1 46.89,38.68 L 43,51 H 21 L 17.11,38.68 A 45.38,45.38 0 0 1 15,25 v 0 A 13.85,13.85 0 0 1 16.88,18 14,14 0 0 1 24,11.91 13.49,13.49 0 0 1 28.21,11 L 29,15 h 6 l 0.79,-4 a 13.49,13.49 0 0 1 4.17,0.88 14,14 0 0 1 7.16,6.12 13.85,13.85 0 0 1 1.88,7 z"
+       id="path2168" />
+    <circle
+       class="cls-3"
+       cx="41.5"
+       cy="29.5"
+       r="1.5"
+       id="circle2170" />
+    <circle
+       class="cls-3"
+       cx="22.5"
+       cy="29.5"
+       r="1.5"
+       id="circle2172" />
+    <path
+       class="cls-1"
+       d="m 53,3 -1.83,8.24 A 12.49,12.49 0 0 1 47.12,18 14,14 0 0 0 40,11.91 14,14 0 0 1 53,3 Z"
+       id="path2174" />
+    <path
+       class="cls-4"
+       d="M 36.52,7.39 35.79,11 35,15 H 29 L 28.21,11 27.48,7.36 a 2,2 0 0 1 2,-2.39 h 5.12 a 2,2 0 0 1 1.92,2.42 z"
+       id="path2176" />
+    <path
+       class="cls-4"
+       d="m 27,58 a 1,1 0 0 1 -1,-1 v -2 a 1,1 0 0 1 2,0 v 2 a 1,1 0 0 1 -1,1 z"
+       id="path2178" />
+    <path
+       class="cls-4"
+       d="m 37,58 a 1,1 0 0 1 -1,-1 v -2 a 1,1 0 0 1 2,0 v 2 a 1,1 0 0 1 -1,1 z"
+       id="path2180" />
+  </g>
+</svg>

@@ -1,1 +1,100 @@
-<?xml version="1.0" ?><svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><defs><style>.cls-1{fill:#d37b93;}.cls-2{fill:#2d2d2d;}.cls-3{fill:#edcad4;}.cls-4{fill:#9d5b6e;}</style></defs><title/><g id="pig"><path class="cls-1" d="M55.9,49a11.34,11.34,0,0,1-10.81,8H18.91A11.32,11.32,0,0,1,8.21,42l7.64-22.14A11,11,0,0,0,22,16.74L27.78,11h8.31l5.74,5.74a10.92,10.92,0,0,0,6.33,3.12L55.79,42A11.33,11.33,0,0,1,55.9,49Z"/><path class="cls-1" d="M55.9,49a11.34,11.34,0,0,1-10.81,8H18.91A11.32,11.32,0,0,1,8.21,42l7.64-22.14A11,11,0,0,0,22,16.74L27.78,11h8.31l5.74,5.74a10.92,10.92,0,0,0,6.33,3.12L55.79,42A11.33,11.33,0,0,1,55.9,49Z"/><circle class="cls-2" cx="22.5" cy="30.5" r="1.5"/><circle class="cls-2" cx="41.5" cy="30.5" r="1.5"/><path class="cls-3" d="M28.39,10.39l-.61.61L22,16.74a11,11,0,0,1-15.56,0l6.35-6.35A11,11,0,0,1,28.39,10.39Z"/><path class="cls-3" d="M57.39,16.74a11,11,0,0,1-15.56,0L36.09,11l-.61-.61a11,11,0,0,1,15.56,0Z"/><path class="cls-3" d="M27,38H37a6,6,0,0,1,6,6v0a9,9,0,0,1-9,9H30a9,9,0,0,1-9-9v0A6,6,0,0,1,27,38Z"/><circle class="cls-4" cx="27" cy="46" r="2"/><circle class="cls-4" cx="37" cy="46" r="2"/></g></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   viewBox="0 0 64 64"
+   version="1.1"
+   id="svg2806"
+   sodipodi:docname="_pig.svg"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)">
+  <metadata
+     id="metadata2810">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1600"
+     inkscape:window-height="837"
+     id="namedview2808"
+     showgrid="false"
+     inkscape:zoom="3.7012621"
+     inkscape:cx="-3.0259366"
+     inkscape:cy="14.066864"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2806" />
+  <defs
+     id="defs2783">
+    <style
+       id="style2781">.cls-1{fill:#d37b93;}.cls-2{fill:#2d2d2d;}.cls-3{fill:#edcad4;}.cls-4{fill:#9d5b6e;}</style>
+  </defs>
+  <g
+     id="pig"
+     transform="matrix(1.2561335,0,0,1.283756,-8.0894997,-9.1740898)">
+    <path
+       class="cls-1"
+       d="M 55.9,49 A 11.34,11.34 0 0 1 45.09,57 H 18.91 A 11.32,11.32 0 0 1 8.21,42 L 15.85,19.86 A 11,11 0 0 0 22,16.74 L 27.78,11 h 8.31 l 5.74,5.74 a 10.92,10.92 0 0 0 6.33,3.12 L 55.79,42 a 11.33,11.33 0 0 1 0.11,7 z"
+       id="path2787" />
+    <path
+       class="cls-1"
+       d="M 55.9,49 A 11.34,11.34 0 0 1 45.09,57 H 18.91 A 11.32,11.32 0 0 1 8.21,42 L 15.85,19.86 A 11,11 0 0 0 22,16.74 L 27.78,11 h 8.31 l 5.74,5.74 a 10.92,10.92 0 0 0 6.33,3.12 L 55.79,42 a 11.33,11.33 0 0 1 0.11,7 z"
+       id="path2789" />
+    <circle
+       class="cls-2"
+       cx="22.5"
+       cy="30.5"
+       r="1.5"
+       id="circle2791" />
+    <circle
+       class="cls-2"
+       cx="41.5"
+       cy="30.5"
+       r="1.5"
+       id="circle2793" />
+    <path
+       class="cls-3"
+       d="M 28.39,10.39 27.78,11 22,16.74 a 11,11 0 0 1 -15.56,0 l 6.35,-6.35 a 11,11 0 0 1 15.6,0 z"
+       id="path2795" />
+    <path
+       class="cls-3"
+       d="m 57.39,16.74 a 11,11 0 0 1 -15.56,0 L 36.09,11 35.48,10.39 a 11,11 0 0 1 15.56,0 z"
+       id="path2797" />
+    <path
+       class="cls-3"
+       d="m 27,38 h 10 a 6,6 0 0 1 6,6 v 0 a 9,9 0 0 1 -9,9 h -4 a 9,9 0 0 1 -9,-9 v 0 a 6,6 0 0 1 6,-6 z"
+       id="path2799" />
+    <circle
+       class="cls-4"
+       cx="27"
+       cy="46"
+       r="2"
+       id="circle2801" />
+    <circle
+       class="cls-4"
+       cx="37"
+       cy="46"
+       r="2"
+       id="circle2803" />
+  </g>
+</svg>
