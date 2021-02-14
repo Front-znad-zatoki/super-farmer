@@ -8,10 +8,11 @@ import { Bank } from './logic/Bank';
 import { Render } from './utils/Render';
 import { ViewController } from './ViewController';
 import { AlertType } from '../Enums/AlertEnum';
-
-export class GameView {
+import { EmptyView } from './EmptyView';
+export class GameView extends EmptyView {
   protected playerPanel: PlayerPanel;
   constructor(private viewController: ViewController) {
+    super();
     this.playerPanel = new PlayerPanel(this);
   }
 
