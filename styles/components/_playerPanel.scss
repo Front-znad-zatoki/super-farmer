@@ -3,9 +3,8 @@
   height: 100%;
   flex: 1;
   flex-direction: column;
-  flex-direction: column;
   justify-content: space-between;
-  justify-content: space-between;
+  margin-top: 40px;
   &__title {
     padding-left: 0.5em;
     color: $color-title;
@@ -36,13 +35,13 @@
   }
   &__image {
     width: auto;
-    height: 4rem;
+    height: 8rem;
     padding: 0 20px;
   }
 
   &__result {
     display: flex;
-    min-height: 120px;
+    min-height: 250px;
     align-items: center;
     justify-content: space-around;
     background-color: white;
@@ -75,6 +74,8 @@
   padding: 10% 0;
   border-radius: $border-radius;
   outline: none;
+  background-color: $color-primary;
+  border-color: transparent;
   &__img {
     height: 2rem;
     padding-right: 10px;
@@ -83,8 +84,9 @@
   &__text {
     display: flex;
     flex-direction: column;
+    text-transform: uppercase;
     &--big {
-      font-size: 16px;
+      font-size: 28px;
       font-weight: $font-weight-primary;
     }
   }
