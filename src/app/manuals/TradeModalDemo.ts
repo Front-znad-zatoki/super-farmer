@@ -23,7 +23,6 @@ export class TradeModalDemo {
     player.theHerd.addAnimalsToHerd(AnimalNames.RABBIT, 20);
     player.theHerd.addAnimalsToHerd(AnimalNames.SHEEP, 5);
     player.theHerd.addAnimalsToHerd(AnimalNames.PIG, 5);
-    player.theHerd.addAnimalsToHerd(AnimalNames.COW, 2);
     player.theHerd.addAnimalsToHerd(AnimalNames.HORSE, 1);
     const modal = new TradeModal(
       trade,
