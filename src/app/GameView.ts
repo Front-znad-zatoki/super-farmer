@@ -139,13 +139,13 @@ export class GameView {
 
   displayRollResult(
     diceResults: AnimalNames[],
-    // playerGain: [AnimalNames, number][],
-    // player: Player,
+    playerGain: [AnimalNames, number][],
+    player: Player,
   ): void {
     this.playerPanel.displayRollResult(
       diceResults,
-      // playerGain,
-      // player,
+      playerGain,
+      player,
     );
     // this.renderPlayerPanel();
   }
