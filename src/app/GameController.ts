@@ -1,15 +1,15 @@
 import { GameProcessor } from './logic/GameProcessor';
 import { ViewController } from './ViewController';
 import { Game } from './logic/Game';
-import { defaultGameConfiguration } from './logic/defaultGameConfiguration';
 import { Bank } from './logic/Bank';
+import { Configuration } from './logic/Configuration';
 
 export class GameController {
   private game: Game;
   private gameProcessor: GameProcessor;
   constructor(
     private view: ViewController,
-    private config = defaultGameConfiguration,
+    private config: Configuration,
   ) {
     this.game = new Game(config);
     this.gameProcessor = new GameProcessor(this.game, this);
@@ -42,7 +42,6 @@ export class GameController {
 
   private isGameWon(): void {
     if (this.gameProcessor.checkWin()) {
-      this.gameProcessor.stopTurn();
       this.view.displayWinModal(this.game.theCurrentPlayer);
     }
   }

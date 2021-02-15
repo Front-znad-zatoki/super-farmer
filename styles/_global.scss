@@ -5,6 +5,11 @@
   margin: 0;
   font-family: $font-primary;
 }
+#sf-app {
+  height: 100vh;
+  background: url(/static/images/ui/background.png) no-repeat;
+  background-size: cover;
+}
 
 .hidden {
   display: none;

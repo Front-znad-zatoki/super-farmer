@@ -1,0 +1,25 @@
+.mode-form {
+  &__avatar {
+    width: 50px;
+  }
+  &__add-player-btn {
+  }
+  &__color-wrapper {
+    display: flex;
+  }
+  &__color-label {
+    width: 50px;
+    height: 50px;
+  }
+  &__color-radio {
+    // display: none;
+  }
+  &__colors {
+    display: flex;
+    justify-content: center;
+  }
+  &__avatars {
+    display: flex;
+    justify-content: center;
+  }
+}
