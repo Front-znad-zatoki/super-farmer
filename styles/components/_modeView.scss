@@ -1,7 +1,6 @@
 .mode {
   &-view {
     &__heading {
-      // position: absolute;
       top: 2rem;
       left: 2rem;
     }
@@ -13,8 +12,6 @@
     display: inline-flex;
   }
   &__buttons {
-    // position: absolute;
-    // width: 100%;
     display: flex;
     justify-content: space-between;
     margin: 6rem 0 0 0;
@@ -37,12 +34,11 @@
   &-form {
     display: flex;
     flex-direction: column;
-    &__content-wrapper{
+    &__content-wrapper {
       display: inline-flex;
       justify-content: center;
     }
-    &__heading-wrapper{
-      // margin:0 1.3rem 0 1.3rem;
+    &__heading-wrapper {
       display: flex;
       justify-content: space-between;
     }
@@ -60,7 +56,6 @@
       }
     }
     &__mode {
-      // position: absolute;
       top: 2rem;
       right: 2rem;
       display: flex;
@@ -184,8 +179,6 @@
 
     // Styles for AI Player
     &__ai {
-      // position: absolute;
-      // bottom: 2rem;
       &-input {
         margin: 0 1rem;
       }
