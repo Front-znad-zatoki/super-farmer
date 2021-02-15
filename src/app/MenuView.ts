@@ -26,7 +26,7 @@ export class MenuView extends EmptyView {
       this.createStartButton(),
       this.createFooter(),
     );
-    this.viewContainer.appendChild(this.menuViewContent);
+    this.view.appendChild(this.menuViewContent);
   }
 
   displayMenu(): void {

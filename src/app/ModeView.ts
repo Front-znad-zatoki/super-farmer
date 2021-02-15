@@ -53,7 +53,7 @@ export class ModeView extends EmptyView {
     this.submitCallback = submitCallback;
 
     Render.childrenInjector(
-      this.viewContainer,
+      this.view,
       this.modeForm,
       this.generateButtons(),
     );
