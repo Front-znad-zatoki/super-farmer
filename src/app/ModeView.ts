@@ -25,7 +25,7 @@ export class ModeView extends EmptyView {
     backCallback: CallbackNoParam,
     submitCallback: CallbackTwoParam<boolean, PlayerDTO[]>,
   ) {
-    super();
+    super(true);
     this.addPlayerButton = Render.elementFactory(
       'button',
       {
@@ -43,7 +43,7 @@ export class ModeView extends EmptyView {
         type: 'button',
         className: 'mode-form__remove-player-btn hidden',
       },
-      'remove player',
+      '+',
     );
     this.addPanelsWrapper = Render.elementFactory('div', {
       className: 'mode-players-wrapper',
@@ -53,7 +53,7 @@ export class ModeView extends EmptyView {
     this.submitCallback = submitCallback;
 
     Render.childrenInjector(
-      this.viewContainer,
+      this.view,
       this.modeForm,
       this.generateButtons(),
     );
@@ -95,6 +95,14 @@ export class ModeView extends EmptyView {
         'dynamic mode',
       ),
     );
+
+    const modeHeader = Render.elementFactory(
+      'div',
+      { className: 'mode-form__heading-wrapper' },
+      heading,
+      mode,
+    );
+
     const form = Render.elementFactory(
       'form',
       {
@@ -103,10 +111,13 @@ export class ModeView extends EmptyView {
         method: 'get',
         className: 'mode-form',
       },
-      heading,
-      mode,
-      this.addPanelsWrapper,
-      this.addPlayerButton,
+      modeHeader,
+      Render.elementFactory(
+        'div',
+        { className: 'mode-form__content-wrapper' },
+        this.addPanelsWrapper,
+        this.addPlayerButton,
+      ),
     );
     this.addPlayer();
 
@@ -164,7 +175,7 @@ export class ModeView extends EmptyView {
     this.backButton = Render.elementFactory(
       'button',
       {
-        className: 'button',
+        className: 'mode__button',
       },
       'back',
     );
@@ -173,7 +184,7 @@ export class ModeView extends EmptyView {
       {
         type: 'submit',
         form: 'mode-form',
-        className: 'button',
+        className: 'mode__button',
       },
       'play',
     );
@@ -196,6 +207,7 @@ export class ModeView extends EmptyView {
       name: indicator,
       placeholder: 'type nickname here',
       className: 'mode-form__input',
+      maxLength: '15',
     });
 
     return input;
@@ -213,6 +225,7 @@ export class ModeView extends EmptyView {
       'label',
       {
         className: 'mode-form__ai-label',
+        for: indicator,
       },
       'AI Player',
     );

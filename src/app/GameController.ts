@@ -41,9 +41,9 @@ export class GameController {
     this.gameProcessor.pauseTurn();
   }
 
-  turnAlert(): void {
-    this.view.turnAlert();
-  }
+  // turnAlert(): void {
+  //   this.view.turnAlert();
+  // }
 
   private isGameWon(): boolean {
     const gameIsWon = this.gameProcessor.checkWin();
@@ -84,9 +84,9 @@ export class GameController {
     }
   }
 
-  updateTimeRemaining(timeLeft: number): void {
-    this.view.updateRemainingTime(timeLeft);
-  }
+  // updateTimeRemaining(timeLeft: number): void {
+  //   this.view.updateRemainingTime(timeLeft);
+  // }
 
   quitGame(): void {
     this.gameProcessor.quitGame();

@@ -31,13 +31,19 @@ export class Alert {
     Render.removeAllChildren(this.alert);
     switch (alertType) {
       case AlertType.INFO:
-        this.alert.style.backgroundColor = '#3E8Ed0';
+        this.alert.style.background =
+          // 'linear-gradient(to right, #3E8Ed0D4, #fff0)';
+          '#3E8Ed0D4';
         break;
       case AlertType.WARN:
-        this.alert.style.backgroundColor = '#FFE08A';
+        this.alert.style.background =
+          // 'linear-gradient(to right, #FFE08AD4, #fff0)';
+          '#FFE08AD4';
         break;
       case AlertType.CRITICAL:
-        this.alert.style.backgroundColor = '#F14668';
+        this.alert.style.background =
+          // 'linear-gradient(to right, #F14668D4, #fff0)';
+          '#F14668D4';
         break;
       default:
         this.alert.style.backgroundColor = 'transparent';
@@ -49,7 +55,7 @@ export class Alert {
       alt: `${alertType}-alert`,
     });
     const text = Render.elementFactory(
-      'div',
+      'p',
       { className: 'alert__text' },
       `${message}`,
     );
