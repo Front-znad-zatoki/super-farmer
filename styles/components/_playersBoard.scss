@@ -8,8 +8,8 @@
   &__data {
     display: flex;
     flex-basis: 30%;
-    align-items: center;
     flex-direction: column;
+    align-items: center;
     margin-top: 10px;
     &__avatar {
       display: flex;
@@ -43,6 +43,8 @@
   &__herd {
     display: flex;
     flex-wrap: wrap;
+    // align-items: center;
+    flex-wrap: wrap;
     align-items: flex-start;
     justify-content: space-between;
     &__item {
@@ -51,13 +53,11 @@
       align-items: center;
       font-family: $font-family;
       font-size: 20px;
-      
+
       &__img {
         height: 4rem;
       }
     }
-    // align-items: center;
-    flex-wrap: wrap;
     &__img {
       width: 2.5rem;
       margin-left: 50px;
