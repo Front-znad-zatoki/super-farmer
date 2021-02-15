@@ -1,4 +1,4 @@
-import { CallbackNoParam } from '../../Interfaces/CallbackNoParamInterface';
+import { CallbackNoParam } from '~src/Interfaces/CallbackInterface';
 import { AnimalNames } from '../../Enums/AnimalNamesEnum';
 import { Player } from '../../Player';
 import { Herd } from '../logic/Herd';

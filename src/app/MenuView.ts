@@ -1,26 +1,24 @@
-import { ModeModal } from './components/ModeModal';
+import { PlayerDTO } from '~src/Interfaces/PlayerDTOInterface';
 import { EmptyView } from './EmptyView';
+import { ModeView } from './ModeView';
 import { Render } from './utils/Render';
 import { ViewController } from './ViewController';
 
-export class MenuView {
-  private modeModal: ModeModal;
-  constructor(private view: ViewController) {
-    this.modeModal = new ModeModal((players) =>
-      this.view.launchGame(players),
-    );
-    this.modeModal.hideModal();
-    Render.render('body', this.modeModal.createModeModal());
-  }
-
-  displayMenu(): void {
-    Render.removeAllChildren('#sf-app');
-    Render.render('#sf-app', this.createLandingPage());
-  }
-
-  private createLandingPage(): HTMLElement {
-    EmptyView.removeOpacityFromBackground();
-    return Render.elementFactory(
+export class MenuView extends EmptyView {
+  private modeModal: ModeView;
+  private menuViewContent: HTMLElement;
+  constructor(private viewController: ViewController) {
+    super(false);
+    const backCallback = () => this.show();
+    const submitCallback = (
+      isDynamic: boolean,
+      players: PlayerDTO[],
+    ) => {
+      Render.removeAllChildren('#sf-app');
+      this.viewController.launchGame(players, isDynamic);
+    };
+    this.modeModal = new ModeView(backCallback, submitCallback);
+    this.menuViewContent = Render.elementFactory(
       'div',
       { className: 'menu-window' },
       this.createHeading(),
@@ -28,6 +26,13 @@ export class MenuView {
       this.createStartButton(),
       this.createFooter(),
     );
+    this.viewContainer.appendChild(this.menuViewContent);
+  }
+
+  displayMenu(): void {
+    Render.removeAllChildren('#sf-app');
+    this.show();
+    Render.render('#sf-app', this.view);
   }
 
   private createHeading(): HTMLElement {
@@ -64,7 +69,9 @@ export class MenuView {
       'START',
     );
     startGameButton.addEventListener('click', () => {
-      this.modeModal.showModal();
+      this.hide();
+      Render.render('#sf-app', this.modeModal.theModeView);
+      this.modeModal.show();
     });
     return startGameButton;
   }
