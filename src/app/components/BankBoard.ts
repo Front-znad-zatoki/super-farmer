@@ -5,26 +5,26 @@ export class BankBoard {
   /* returns Bank board with animals and counts */
   renderBankBoard(bank: Bank): HTMLElement {
     const bankView = Render.elementFactory('div', {
-      className: 'bank__board',
+      className: 'bank',
     });
-    const bankText = Render.elementFactory(
-      'div',
-      { className: 'bank__board__text' },
-      `BANK:`,
-    );
     const bankHerd = bank.theHerd.theAnimals.map(([animal, count]) =>
       Render.elementFactory(
         'div',
-        { className: 'bank__board__container' },
-        ConvertAnimalName.toHTMLElement(
-          animal.theName,
-          'bank__board__img',
+        { className: 'bank__item' },
+        Render.elementFactory('img', {
+          className: 'bank__img',
+          alt: animal.theName.toLowerCase(),
+          src: `${animal.theImagePath}`,
+        }),
+        Render.elementFactory(
+          'p',
+          { className: 'bank__count' },
+          `${count}`,
         ),
-        `x${count}`,
       ),
     );
 
-    Render.childrenInjector(bankView, bankText, ...bankHerd);
+    Render.childrenInjector(bankView, ...bankHerd);
     return bankView;
   }
 }

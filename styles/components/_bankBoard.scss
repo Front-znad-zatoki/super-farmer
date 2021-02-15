@@ -1,28 +1,25 @@
 .bank {
-  &__board {
-    display: inline-flex;
-    width: 90vw;
-    align-content: space-around;
-    align-items: center;
-    justify-content: space-around;
-    background-color: wheat;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  background-color: $color-primary;
+  border-radius: $border-radius;
 
-    &__container {
-    }
-
-    &__text {
-      display: inline;
-      font-weight: 700;
-    }
-
-    &__img {
-      height: 3rem;
-    }
+  &__item {
+    display: flex;
+    flex-basis: 50%;
+    justify-content: center;
+    padding-bottom: 1rem;
   }
-
-  &__bar {
-    position: absolute;
-    bottom: 0;
-    display: inline-flex;
+  &__count {
+    padding-top: 1rem;
+    padding-left: 0.5rem;
+    color: $color;
+    font-family: $font-family;
+    font-weight: $font-weight-secondary;
+  }
+  &__img {
+    height: 3rem;
   }
 }
