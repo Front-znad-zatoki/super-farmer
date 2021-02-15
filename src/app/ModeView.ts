@@ -312,7 +312,7 @@ export class ModeView extends EmptyView {
 
     return colors;
   }
-  
+
   private generateAddPlayerFields(
     numberOfPlayer: number,
   ): HTMLElement {
