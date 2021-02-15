@@ -1,5 +1,7 @@
+import { AlertType } from '~src/Enums/AlertEnum';
 import { AnimalNames } from '../../Enums/AnimalNamesEnum';
 import { RollResult } from '../BreedProcessor';
+import { Alert } from '../components/Alert';
 import { GameController } from '../GameController';
 import { Game } from './Game';
 
@@ -20,19 +22,27 @@ export class GameProcessor {
     const turnTimer = setInterval(() => {
       if (!this.game.theTimer.running) {
         clearInterval(turnTimer);
-        if (Math.round(this.game.theTimer.theTurnTimeLeft) === 0) {
-          this.gameController.turnAlert();
-        }
+        // TODO: CHECK IF UPDATE NEEDED FOR PLAYER BOARD
+        // if (Math.round(this.game.theTimer.theTurnTimeLeft) === 0) {
+        //   this.gameController.turnAlert();
+        // }
         if (!this.game.theTimer.hasGameEnded) {
           setTimeout(() => {
             this.gameController.nextPlayer();
           }, 3000);
         }
       }
-      this.gameController.updateTimeRemaining(
-        Math.round(this.game.theTimer.theTurnTimeLeft),
-      );
-    }, 100);
+      if (Math.round(this.game.theTimer.theTurnTimeLeft) === 5) {
+        Alert.updateAlert(
+          `${this.game.theCurrentPlayer.theName}'s turn is almost over.`,
+          AlertType.WARN,
+        );
+      }
+      // TODO: CHECK IF UPDATE NEEDED FOR PLAYER BOARD
+      // this.gameController.updateTimeRemaining(
+      //   Math.round(this.game.theTimer.theTurnTimeLeft),
+      // );
+    }, 50);
   }
 
   pauseTurn(): void {
@@ -51,29 +61,9 @@ export class GameProcessor {
   }
 
   /**
-   * Executes trade proposed by the player and checks win condition.
-   * @param offer made by the player
-   * @param target desired by the player
-   * @returns true if the trade was sucessful, false if the trade was not sucessful or the player run out of time
-   */
-  trade(
-    offer: [AnimalNames, number],
-    target: [AnimalNames, number],
-  ): boolean {
-    if (!this.hasTimeLeft()) {
-      return false;
-    }
-    const tradeResult = this.game.theTrade.processOffer(
-      offer,
-      this.game.theCurrentPlayer,
-      target,
-    );
-    return tradeResult;
-  }
-
-  /**
    * @returns true if current player wins the game, false otherwise
    */
+  // TODO: Consider moving win conditions to configuration
   checkWin(): boolean {
     const animalsRequiredToWin: AnimalNames[] = [
       AnimalNames.RABBIT,

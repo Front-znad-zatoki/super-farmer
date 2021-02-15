@@ -1,6 +1,10 @@
 import { Player } from '../../Player';
 import { AnimalNames } from '../../Enums/AnimalNamesEnum';
 import { BreedProcessor } from '../BreedProcessor';
+import { defaultGameConfiguration } from '../logic/defaultGameConfiguration';
+import { DiceBuilder } from '../DiceBuilder';
+import { mockPredatorConfig } from './mockPredatorConfig';
+import { GameModes } from '../../Enums/GameModeEnums';
 
 export class BreedPhaseDemo {
   static playDemo(): void {
@@ -12,7 +16,19 @@ export class BreedPhaseDemo {
     bank.theHerd.addAnimalsToHerd(AnimalNames.HORSE, 4);
     bank.theHerd.addAnimalsToHerd(AnimalNames.SMALL_DOG, 4);
     bank.theHerd.addAnimalsToHerd(AnimalNames.BIG_DOG, 2);
-    const bp = new BreedProcessor(bank);
+    const [firstDice, secondDice] = DiceBuilder.build(
+      defaultGameConfiguration.livestockConfig,
+      defaultGameConfiguration.predatorsConfig,
+      defaultGameConfiguration.protectorsConfig,
+    );
+    const bp = new BreedProcessor(
+      bank,
+      firstDice,
+      secondDice,
+      mockPredatorConfig,
+      defaultGameConfiguration.protectorsConfig,
+      GameModes.STATIC,
+    );
     const player = new Player('player');
     for (let i = 0; i < 10; i++) {
       bp.processBreedPhase(player);

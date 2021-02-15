@@ -8,7 +8,7 @@ export class BigDog extends Animal implements ProtectHerdInterface {
   constructor() {
     super(
       AnimalNames.BIG_DOG,
-      './static/images/avatars/dog.png',
+      './static/images/avatars/big_dog.svg',
       36,
       AnimalRoles.GUARDIAN,
     );

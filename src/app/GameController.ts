@@ -1,16 +1,18 @@
-import { AnimalNames } from '../Enums/AnimalNamesEnum';
 import { GameProcessor } from './logic/GameProcessor';
 import { ViewController } from './ViewController';
 import { Game } from './logic/Game';
-import { defaultGameConfiguration } from './logic/defaultGameConfiguration';
 import { Bank } from './logic/Bank';
+import { AiPlayer } from './AiPlayer';
+import { Configuration } from './logic/Configuration';
+import { Alert } from './components/Alert';
+import { AlertType } from '~src/Enums/AlertEnum';
 
 export class GameController {
   private game: Game;
   private gameProcessor: GameProcessor;
   constructor(
     private view: ViewController,
-    private config = defaultGameConfiguration,
+    private config: Configuration,
   ) {
     this.game = new Game(config);
     this.gameProcessor = new GameProcessor(this.game, this);
@@ -18,6 +20,10 @@ export class GameController {
 
   get theGame(): Game {
     return this.game;
+  }
+
+  get theGameProcessor(): GameProcessor {
+    return this.gameProcessor;
   }
 
   /**
@@ -38,30 +44,22 @@ export class GameController {
   }
 
   turnAlert(): void {
-    this.view.turnAlert();
+    Alert.updateAlert(
+      `${this.game.theCurrentPlayer.theName}'s turn has passed.`,
+      AlertType.CRITICAL,
+    );
   }
 
-  /**
-   * Executes trade proposed by the player and checks win condition.
-   * If player wins the game after the trade, stops the timer and tells the View to display the WinModal.
-   * @param offer made by the player
-   * @param target desired by the player
-   * @returns true if the trade was sucessful, false otherwise
-   */
-  trade(
-    offer: [AnimalNames, number],
-    target: [AnimalNames, number],
-  ): boolean {
-    const tradeResult = this.gameProcessor.trade(offer, target);
-    this.isGameWon();
-    return tradeResult;
-  }
-
-  private isGameWon(): void {
+  private isGameWon(): boolean {
+    const gameIsWon = this.gameProcessor.checkWin();
     if (this.gameProcessor.checkWin()) {
-      this.gameProcessor.stopTurn();
       this.view.displayWinModal(this.game.theCurrentPlayer);
     }
+    return gameIsWon;
+  }
+
+  checkIfGameIsWon(): boolean {
+    return this.isGameWon();
   }
 
   /**
@@ -79,16 +77,25 @@ export class GameController {
    */
   nextPlayer(): void {
     this.gameProcessor.nextPlayer();
+    Alert.updateAlert(
+      `${this.game.theCurrentPlayer.theName}'s turn has started.`,
+      AlertType.INFO,
+    );
     this.view.startGame(
       this.game.thePlayers,
       this.game.theCurrentPlayer,
       this.game.theBank,
     );
+    if (this.game.theCurrentPlayer instanceof AiPlayer) {
+      this.view.disableTrade();
+      this.view.disableRoll();
+      this.game.theCurrentPlayer.makeAMove(this);
+    }
   }
 
-  updateTimeRemaining(timeLeft: number): void {
-    this.view.updateRemainingTime(timeLeft);
-  }
+  // updateTimeRemaining(timeLeft: number): void {
+  //   this.view.updateRemainingTime(timeLeft);
+  // }
 
   quitGame(): void {
     this.gameProcessor.quitGame();
@@ -99,6 +106,7 @@ export class GameController {
     this.view.displayTradeModal(
       this.game.theCurrentPlayer,
       this.game.theTrade,
+      this.game.banksHerdConfig,
     );
   }
 

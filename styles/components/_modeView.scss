@@ -1,0 +1,201 @@
+.mode {
+  &-view {
+    &__heading {
+      top: 2rem;
+      left: 2rem;
+    }
+  }
+  &-inputs-wrapper {
+    display: flex;
+  }
+  &-players-wrapper {
+    display: inline-flex;
+  }
+  &__buttons {
+    display: flex;
+    justify-content: space-between;
+    margin: 6rem 0 0 0;
+  }
+  &__button {
+    width: 12rem;
+    height: 4rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-size: 1.3rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    &:first-child {
+      background: #fefefe;
+    }
+    &:last-child {
+      background: #71cfd7;
+    }
+  }
+  &-form {
+    display: flex;
+    flex-direction: column;
+    &__content-wrapper {
+      display: inline-flex;
+      justify-content: center;
+    }
+    &__heading-wrapper {
+      display: flex;
+      justify-content: space-between;
+    }
+    &__remove-player-btn {
+      position: absolute;
+      top: 0.5rem;
+      right: 1.2rem;
+      border: none;
+      background: none;
+      cursor: pointer;
+      font-size: 3rem;
+      transform: rotate(45deg);
+      &:focus {
+        outline: none;
+      }
+    }
+    &__mode {
+      top: 2rem;
+      right: 2rem;
+      display: flex;
+      height: 2.5rem;
+      align-items: center;
+      padding: 1rem;
+      background: #fefefe;
+      border-radius: 0.5rem;
+      &-input {
+        margin-right: 0.5rem;
+      }
+      &-label {
+        font-weight: bold;
+        text-transform: uppercase;
+      }
+    }
+    &__add-btn {
+      width: 25rem;
+      border: 3px dashed #555757;
+      margin: 3rem 1.3rem 0 1.3rem;
+      background: none;
+      border-radius: 16px;
+      cursor: pointer;
+      &:focus {
+        outline: none;
+      }
+    }
+    &__add-player {
+      position: relative;
+      display: flex;
+      width: 25rem;
+      height: 70vh;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+      border: 2px solid black;
+      margin: 3rem 1.3rem 0 1.3rem;
+      background-color: #fefefe;
+      border-radius: 1rem;
+    }
+    // Styles for name input
+    &__input {
+      padding: 0.5rem;
+      border: none;
+      border-bottom: 2px solid #9ca4a4;
+      margin-bottom: 1.3rem;
+      font-size: 1.2rem;
+      font-weight: bold;
+      outline: none;
+      text-align: center;
+      &:focus-within {
+        border-bottom: 2px solid black;
+      }
+    }
+
+    &__avatars {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 1rem 0;
+    }
+    &__avatar {
+      &-wrapper {
+        position: relative;
+      }
+      width: 4.3rem;
+      cursor: pointer;
+      &-label {
+        display: flex;
+        width: 110px;
+        height: 110px;
+        justify-content: center;
+        margin: 10px;
+      }
+
+      &-radio {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        opacity: 0;
+      }
+
+      &-radio:checked + .mode-form__avatar-label {
+        border: 2px solid black;
+        border-radius: 50%;
+      }
+    }
+
+    // Styles for colors
+    &__colors {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 1rem;
+    }
+    &__color-wrapper {
+      position: relative;
+      display: flex;
+      margin: 10px 20px;
+    }
+    &__color-label {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    &__color-radio {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      opacity: 0;
+    }
+
+    &__color-radio {
+      &:checked + .mode-form__color-label {
+        border: 2px solid black;
+        box-shadow: 0px 0px 0px 3px #fff inset;
+      }
+    }
+
+    // Styles for AI Player
+    &__ai {
+      &-input {
+        margin: 0 1rem;
+      }
+      &-label {
+        font-size: 1.5rem;
+      }
+    }
+  }
+}
+
+.hidden-element {
+  cursor: initial;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.grey-background {
+  background: white;
+  opacity: 0.7;
+}

@@ -1,0 +1,19 @@
+.alert {
+  position: absolute;
+  top: -72px;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  border-radius: 0.25rem;
+  transition: all 0.7s ease-in-out;
+  // flex: 5;
+  &__icon {
+    width: auto;
+    height: 1.75rem;
+    margin: 0.5rem 1rem;
+  }
+
+  &__text {
+    font-size: 1rem;
+  }
+}

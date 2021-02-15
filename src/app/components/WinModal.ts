@@ -1,38 +1,60 @@
 import { Player } from '../../Player';
 import { Render } from '../utils/Render';
 import { ViewController } from '../ViewController';
-import { BasicModal } from './BasicModal';
+import { EmptyModal } from './EmptyModal';
 
-export class WinModal extends BasicModal {
+export class WinModal extends EmptyModal {
   constructor(private view: ViewController) {
     super();
   }
 
   createWinModal(player: Player): HTMLElement {
-    this.renderBasicModal(
-      'CONGRATULATIONS!',
-      `${player.theName} has won!`,
-      this.createImage(player),
+    const heading = Render.elementFactory(
+      'h2',
+      { className: 'modal__heading' },
+      'Congratulations!',
     );
-    this.addButton();
-    return this.modal;
-  }
-
-  private addButton(): void {
-    const handleEnd = () => {
-      Render.removeElement('.modal');
-      this.view.displayMenuView();
-    };
-    this.createAndAppendButtonsRow(
-      'End game - back to menu',
-      handleEnd,
+    const image = Render.elementFactory(
+      'div',
+      {
+        className: 'modal__image--win-container',
+        style: `border-color: ${player.theColor};`,
+      },
+      Render.elementFactory('img', {
+        className: 'modal__image--win-avatar',
+        src: player.theAvatar,
+        alt: `${player.theName}-avatar`,
+      }),
+      Render.elementFactory('img', {
+        className: 'modal__image--win-medal',
+        src: './static/images/ui/medal.svg',
+        alt: 'medal',
+      }),
     );
-  }
-
-  private createImage({ theName, theAvatar }: Player): HTMLElement {
-    return Render.elementFactory('img', {
-      src: theAvatar,
-      alt: `${theName}-avatar`,
+    const text = Render.elementFactory(
+      'div',
+      {
+        className: 'modal__text--win',
+        style: `color: ${player.theColor};`,
+      },
+      `${player.theName} wins`,
+    );
+    const button = Render.elementFactory(
+      'button',
+      { type: 'button', className: 'modal__button--win' },
+      'MENU',
+    );
+    button.addEventListener('click', () => {
+      this.view.endGame();
+      this.hideModal();
     });
+    Render.childrenInjector(
+      this.modalContainer,
+      heading,
+      image,
+      text,
+      button,
+    );
+    return this.modal;
   }
 }

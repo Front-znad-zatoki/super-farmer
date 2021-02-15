@@ -9,13 +9,9 @@ export const defaultGameConfiguration: GameConfigInterface = {
   playersConfig: [
     {
       name: 'Carlos Santanos',
-      path: '../../static/images/avatars/dog.png',
+      path: '../../static/images/avatars/small_dog.svg',
       color: 'blue',
-    },
-    {
-      name: 'Pablo Escofarmo',
-      path: '../../static/images/avatars/cow.png',
-      color: 'green',
+      isAI: false,
     },
   ],
 
@@ -23,7 +19,7 @@ export const defaultGameConfiguration: GameConfigInterface = {
     {
       name: AnimalNames.RABBIT,
       tradeValue: 1,
-      path: './static/images/avatars/rabbit.png',
+      path: './static/images/avatars/rabbit.svg',
       role: AnimalRoles.LIVESTOCK,
       playersInitialStock: 0,
       bankInitialStock: 60,
@@ -35,7 +31,7 @@ export const defaultGameConfiguration: GameConfigInterface = {
     {
       name: AnimalNames.SHEEP,
       tradeValue: 6,
-      path: './static/images/avatars/sheep.png',
+      path: './static/images/avatars/sheep.svg',
       role: AnimalRoles.LIVESTOCK,
       playersInitialStock: 0,
       bankInitialStock: 24,
@@ -47,7 +43,7 @@ export const defaultGameConfiguration: GameConfigInterface = {
     {
       name: AnimalNames.PIG,
       tradeValue: 12,
-      path: './static/images/avatars/pig.png',
+      path: './static/images/avatars/pig.svg',
       role: AnimalRoles.LIVESTOCK,
       playersInitialStock: 0,
       bankInitialStock: 20,
@@ -59,7 +55,7 @@ export const defaultGameConfiguration: GameConfigInterface = {
     {
       name: AnimalNames.COW,
       tradeValue: 36,
-      path: './static/images/avatars/cow.png',
+      path: './static/images/avatars/cow.svg',
       role: AnimalRoles.LIVESTOCK,
       playersInitialStock: 0,
       bankInitialStock: 12,
@@ -68,7 +64,7 @@ export const defaultGameConfiguration: GameConfigInterface = {
     {
       name: AnimalNames.HORSE,
       tradeValue: 72,
-      path: './static/images/avatars/horse.png',
+      path: './static/images/avatars/horse.svg',
       role: AnimalRoles.LIVESTOCK,
       playersInitialStock: 0,
       bankInitialStock: 4,
@@ -79,40 +75,47 @@ export const defaultGameConfiguration: GameConfigInterface = {
     {
       name: AnimalNames.SMALL_DOG,
       tradeValue: 6,
-      path: './static/images/avatars/dog.png',
+      path: './static/images/avatars/small_dog.svg',
       role: AnimalRoles.GUARDIAN,
       playersInitialStock: 0,
       bankInitialStock: 4,
       chasesAway: AnimalNames.FOX,
+      exclamation: `Woof! Woof! I'm protecting all rabbits in the herd! Woof! Woof!`,
     },
     {
       name: AnimalNames.BIG_DOG,
       tradeValue: 36,
-      path: './static/images/avatars/dog.png', // TODO: CHANGE TO BIG/SMALL DOG
+      path: './static/images/avatars/big_dog.svg',
       role: AnimalRoles.GUARDIAN,
       playersInitialStock: 0,
       bankInitialStock: 2,
       chasesAway: AnimalNames.WOLF,
+      exclamation: `WOOF! WOOF! I'm protecting the whole herd! WOOF! WOOF!`,
     },
   ],
   predatorsConfig: [
     {
       name: AnimalNames.FOX,
-      path: './static/images/avatars/fox.png',
+      path: './static/images/avatars/fox.svg',
+      roles: AnimalRoles.PREDATOR,
       kills: [AnimalNames.RABBIT],
-      isChasedAwayBy: [AnimalNames.SMALL_DOG],
+      isChasedAwayBy: AnimalNames.SMALL_DOG,
+      exclamation:
+        'Ring-ding-ding-ding-dingeringeding! Wa-pa-pa-pa-pa-pa-pow!',
       dice: [{ diceNumber: 1, probability: 1 }],
     },
     {
       name: AnimalNames.WOLF,
-      path: './static/images/avatars/wolf.png',
+      roles: AnimalRoles.PREDATOR,
+      path: './static/images/avatars/wolf.svg',
       kills: [
         AnimalNames.RABBIT,
         AnimalNames.SHEEP,
         AnimalNames.PIG,
         AnimalNames.COW,
       ],
-      isChasedAwayBy: [AnimalNames.BIG_DOG],
+      isChasedAwayBy: AnimalNames.BIG_DOG,
+      exclamation: 'Auuuuuu!Grrrrr!',
       dice: [{ diceNumber: 2, probability: 1 }],
     },
   ],
