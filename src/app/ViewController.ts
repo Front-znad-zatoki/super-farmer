@@ -16,6 +16,7 @@ import { AnimalNames } from '../Enums/AnimalNamesEnum';
 import { cloneDeep } from 'lodash';
 import { Alert } from './components/Alert';
 import { AlertType } from '~src/Enums/AlertEnum';
+import { HerdConfigInterface } from '~src/Interfaces/HerdConfigInterface';
 
 export class ViewController {
   private menuView: MenuView;
@@ -102,13 +103,18 @@ export class ViewController {
     // TODO: display rules
   }
 
-  displayTradeModal(player: Player, trade: Trade): void {
+  displayTradeModal(
+    player: Player,
+    trade: Trade,
+    animalConfig: HerdConfigInterface[],
+  ): void {
     if (this.tradeModal) {
       this.tradeModal.setNextPlayer(player);
     } else {
       this.tradeModal = new TradeModal(
         trade,
         player,
+        animalConfig,
         () => this.runTimer(),
         () => this.processAfterTrade(),
       );

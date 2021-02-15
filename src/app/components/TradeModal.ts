@@ -1,6 +1,7 @@
 import { Animal } from '~src/Animals/Animal';
 import { AlertType } from '~src/Enums/AlertEnum';
 import { CallbackNoParam } from '~src/Interfaces/CallbackInterface';
+import { HerdConfigInterface } from '~src/Interfaces/HerdConfigInterface';
 import { AnimalNames } from '../../Enums/AnimalNamesEnum';
 import { Player } from '../../Player';
 import { Herd } from '../logic/Herd';
@@ -17,6 +18,7 @@ export class TradeModal extends EmptyModal {
   private backButton: HTMLElement;
   private player: Player;
   private header: HTMLElement;
+  private tradeValues: HTMLElement;
 
   /**
    * @param trade instance of Trade
@@ -25,6 +27,7 @@ export class TradeModal extends EmptyModal {
   constructor(
     private trade: Trade,
     firstPlayer: Player,
+    private animalConfig: HerdConfigInterface[],
     private backCallback: CallbackNoParam,
     private succesCallback: CallbackNoParam,
   ) {
@@ -35,6 +38,9 @@ export class TradeModal extends EmptyModal {
     });
     this.bankView = Render.elementFactory('div', {
       className: 'trade__player-wrapper',
+    });
+    this.tradeValues = Render.elementFactory('div', {
+      clasName: 'trade__player-wrapper',
     });
     this.header = Render.elementFactory(
       'h2',
@@ -62,6 +68,8 @@ export class TradeModal extends EmptyModal {
         Render.elementFactory('p', {}, 'Exchange'),
       ),
       this.bankView,
+      ``,
+      this.tradeValues,
     );
     this.warning = Render.elementFactory('p', {
       className: 'warning',
@@ -92,6 +100,10 @@ export class TradeModal extends EmptyModal {
       this.playerView,
       this.createHerdView(this.player),
     );
+    Render.childrenInjector(
+      this.tradeValues,
+      this.createTradeValuesView(),
+    );
     this.tradeForm.addEventListener('submit', this.handleSubmit);
     this.modal.addEventListener('keydown', this.clearWarning);
     this.modal.addEventListener('click', this.clearWarning);
@@ -100,6 +112,48 @@ export class TradeModal extends EmptyModal {
       this.backCallback();
     });
     return this.modal;
+  }
+
+  private createTradeValuesView(): HTMLElement {
+    const herdElement = Render.elementFactory(
+      'div',
+      {
+        className: 'trade__player-herd',
+      },
+      ...this.generateTradeValuesRows(),
+    );
+    const container = Render.elementFactory(
+      'div',
+      {
+        className: 'trade__player',
+      },
+      Render.elementFactory(
+        'H2',
+        { className: 'trade__player-heading' },
+        `Animals trade values:`,
+      ),
+      herdElement,
+    );
+    return container;
+  }
+
+  private generateTradeValuesRows(): HTMLElement[] {
+    return this.animalConfig.map(({ name, path, tradeValue }) =>
+      Render.elementFactory(
+        'div',
+        { className: 'trade__row--hints' },
+        Render.elementFactory('img', {
+          className: 'trade__player-herd--image',
+          src: path,
+          alt: name,
+        }),
+        Render.elementFactory(
+          'p',
+          { className: 'trade__player-herd--hints' },
+          ` = ${tradeValue}`,
+        ),
+      ),
+    );
   }
 
   /**

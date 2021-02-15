@@ -94,6 +94,7 @@ export class GameController {
     this.view.displayTradeModal(
       this.game.theCurrentPlayer,
       this.game.theTrade,
+      this.game.banksHerdConfig,
     );
   }
 
