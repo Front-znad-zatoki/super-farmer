@@ -39,7 +39,7 @@ https://github.com/Front-znad-zatoki/super-farmer/wiki
 
 :man_technologist: Sebastian https://github.com/Enessetere
 
-Special thanks for our mentor Aleksander!
+Special thanks to our mentor Aleksander!
 
 :man_teacher: https://github.com/Rednaxela700
 
