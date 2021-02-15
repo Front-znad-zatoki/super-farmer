@@ -81,7 +81,6 @@ export class GameView {
           'div',
           {
             // TODO: CHECK IF THIS DIV IS NECESSARY
-            // id: `${player.theName}`,
             className: 'player-boards__board',
           },
           new PlayersBoard().renderPlayersBoard(player),
@@ -137,26 +136,9 @@ export class GameView {
     this.view.handleTrade();
   }
 
-  displayRollResult(
-    diceResults: AnimalNames[],
-    // playerGain: [AnimalNames, number][],
-    // player: Player,
-  ): void {
-    this.playerPanel.displayRollResult(
-      diceResults,
-      // playerGain,
-      // player,
-    );
-    // this.renderPlayerPanel();
+  displayRollResult(diceResults: AnimalNames[]): void {
+    this.playerPanel.displayRollResult(diceResults);
   }
-
-  // private renderPlayerPanel(): void {
-  //   Render.removeAllChildren('#player-board');
-  //   Render.render(
-  //     '#player-board',
-  //     ...this.playerPanel.createPanelBoard(),
-  //   );
-  // }
 
   updateRemainingTime(timeLeft: number): void {
     new PlayersBoard().updateTime(timeLeft);
@@ -181,10 +163,4 @@ export class GameView {
   disableTrade(): void {
     this.playerPanel.disableTrade();
   }
-
-  // refreshHerd(bank: Bank): void {
-  //   this.playerPanel.refreshHerd();
-  //   Render.removeAllChildren('#bank-board');
-  //   Render.render('#bank-board', this.createBankPanel(bank));
-  // }
 }

@@ -1,3 +1,4 @@
+import { Player } from '~src/Player';
 import { AnimalNames } from '../../Enums/AnimalNamesEnum';
 import { RollResult } from '../BreedProcessor';
 import { GameController } from '../GameController';
@@ -17,21 +18,21 @@ export class GameProcessor {
    */
   startTurn(): void {
     this.game.theTimer.countdown();
-    const turnTimer = setInterval(() => {
+    const turnTimer = setInterval((player: Player) => {
       if (!this.game.theTimer.running) {
         clearInterval(turnTimer);
-        // if (Math.round(this.game.theTimer.theTurnTimeLeft) === 0) {
-        // this.gameController.turnAlert();
-        // }
+        if (Math.round(this.game.theTimer.theTurnTimeLeft) === 0) {
+          this.gameController.turnAlert(player);
+        }
         if (!this.game.theTimer.hasGameEnded) {
           setTimeout(() => {
             this.gameController.nextPlayer();
           }, 3000);
         }
       }
-      // this.gameController.updateTimeRemaining(
-      // Math.round(this.game.theTimer.theTurnTimeLeft),
-      // );
+      this.gameController.updateTimeRemaining(
+        Math.round(this.game.theTimer.theTurnTimeLeft),
+      );
     }, 100);
   }
 

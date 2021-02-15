@@ -3,6 +3,7 @@ import { ViewController } from './ViewController';
 import { Game } from './logic/Game';
 import { Bank } from './logic/Bank';
 import { Configuration } from './logic/Configuration';
+import { Player } from '~src/Player';
 
 export class GameController {
   private game: Game;
@@ -36,9 +37,9 @@ export class GameController {
     this.gameProcessor.pauseTurn();
   }
 
-  // turnAlert(): void {
-  // this.view.turnAlert();
-  // }
+  turnAlert(player: Player): void {
+    this.view.turnAlert(player);
+  }
 
   private isGameWon(): void {
     if (this.gameProcessor.checkWin()) {
@@ -73,9 +74,9 @@ export class GameController {
     );
   }
 
-  // updateTimeRemaining(timeLeft: number): void {
-  // this.view.updateRemainingTime(timeLeft);
-  // }
+  updateTimeRemaining(timeLeft: number): void {
+    this.view.updateRemainingTime(timeLeft);
+  }
 
   quitGame(): void {
     this.gameProcessor.quitGame();

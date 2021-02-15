@@ -1,8 +1,6 @@
 import { Player } from '../../Player';
 import { Render } from '../utils/Render';
-// import { flatten } from 'lodash';
 import { ConvertAnimalName } from '../utils/ConvertAnimalName';
-import { GameView } from '../GameView';
 
 export class PlayersBoard {
   /*returns player's board with player's name, avatar and herd */
@@ -35,10 +33,6 @@ export class PlayersBoard {
       { id: 'time-left', className: 'players__data__time' },
       `Time left`,
     );
-
-    // const herdView: HTMLElement = Render.elementFactory('div', {
-    // className: 'players__herd',
-    // });
     const herdView = Render.elementFactory('div', {
       className: 'players__herd',
     });
@@ -54,33 +48,6 @@ export class PlayersBoard {
           `${count}`,
         ),
     );
-    /*[
-      string,
-      number,
-    ][] = player.theHerd.theAnimals.map(([animal, count]) => [
-      animal.theImagePath,
-      count,
-    ]);
-    const herdImagesAndCounts: HTMLElement[][] = playerHerd.map(
-      ([pathElement, countElement]) => {
-        const animalImg: HTMLElement = Render.elementFactory('img', {
-          className: 'players__herd__img',
-          src: pathElement,
-        });
-
-        const animalCount: HTMLElement = Render.elementFactory(
-          'div',
-          { className: 'players__herd__count' },
-          `x${countElement}`,
-        );
-
-        return [animalImg, animalCount];
-      },
-    );*/
-    // Render.childrenInjector(
-    // herdView,
-    // ...flatten(herdImagesAndCounts),
-    // )
     Render.childrenInjector(
       playersDataPanel,
       playerName,
@@ -93,29 +60,15 @@ export class PlayersBoard {
       herdView,
       playersDataPanel,
     );
-    /*stopTimer();
-    setTimeout(() => this.hideTimer(), 10);
-  }
-
-  private hideTimer(): void {
-    (document.querySelector(
-      '#time-left',
-    ) as HTMLElement).style.display = 'none';
-  }*/
-
-    /**
-     * Updates timer on players board
-     * @param timeLeft accepts number value for time left
-     */
-    // updateTime(timeLeft: number): void {
-    // const timer = document.querySelector('#time-left') as HTMLElement;
-    // timer.innerText = `Time left: ${timeLeft} sec.`;
-    // }
 
     return playersBoardContainer;
   }
+  /*updates timer on players board*/
   updateTime(timeLeft: number): void {
     const timer = document.querySelector('#time-left') as HTMLElement;
     timer.innerText = `Time left: ${timeLeft} sec.`;
+    if (timeLeft <= 0) {
+      timer.style.display = 'none';
+    }
   }
 }
