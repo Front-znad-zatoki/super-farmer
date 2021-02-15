@@ -3,9 +3,9 @@ import { Render } from './utils/Render';
 export abstract class EmptyView {
   protected view: HTMLElement;
 
-  constructor(isMilked = false) {
+  constructor(isPale = false) {
     this.view = Render.elementFactory('div', {
-      className: `view${isMilked ? ' view--pale' : ''}`,
+      className: `view${isPale ? ' view--pale' : ''}`,
     });
   }
 
