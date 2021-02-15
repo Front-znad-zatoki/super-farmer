@@ -33,7 +33,7 @@ export class GameProcessor {
       }
       if (Math.round(this.game.theTimer.theTurnTimeLeft) === 5) {
         Alert.updateAlert(
-          `${this.game.theCurrentPlayer.theName}'s turn has nearly passed out.`,
+          `${this.game.theCurrentPlayer.theName}'s turn is almost over.`,
           AlertType.WARN,
         );
       }
