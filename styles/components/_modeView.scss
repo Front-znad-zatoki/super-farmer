@@ -69,7 +69,7 @@
     &__add-btn {
       width: 25rem;
       border: 3px dashed #555757;
-      margin: 8rem 0 0 1rem;
+      margin: 8rem 0 0 2.5rem;
       background: none;
       border-radius: 16px;
       cursor: pointer;
@@ -86,19 +86,23 @@
       align-items: center;
       padding: 2rem;
       border: 2px solid black;
-      margin: 8rem 0 0 1rem;
+      margin: 8rem 0 0 2.5rem;
       background-color: #fefefe;
       border-radius: 1rem;
     }
     // Styles for name input
     &__input {
+      outline: none;
       padding: 0.5rem;
       border: none;
-      border-bottom: 1px solid #9ca4a4;
+      border-bottom: 2px solid #9ca4a4;
       margin-bottom: 1.3rem;
       font-size: 1.2rem;
       font-weight: bold;
       text-align: center;
+        &:focus-within{
+          border: 1px solid black;
+        }
     }
 
     &__avatars {
@@ -108,7 +112,7 @@
       margin: 1rem 0;
     }
     &__avatar {
-      &-wrapper{
+      &-wrapper {
         position: relative;
       }
       width: 4.3rem;
@@ -123,8 +127,8 @@
 
       &-radio {
         position: absolute;
-        left: 50%;
         top: 50%;
+        left: 50%;
         opacity: 0;
       }
 
@@ -155,8 +159,8 @@
 
     &__color-radio {
       position: absolute;
-      left: 50%;
       top: 50%;
+      left: 50%;
       opacity: 0;
     }
 
@@ -168,12 +172,15 @@
     }
 
     // Styles for AI Player
-    
-    &__ai-input {
-      margin: 0 1rem;
-    }
-    &__ai-label {
-      font-size: 1.5rem;
+    &__ai{
+      // position: absolute;
+      // bottom: 2rem;
+      &-input {
+        margin: 0 1rem;
+      }
+      &-label {
+        font-size: 1.5rem;
+      }
     }
   }
 }
