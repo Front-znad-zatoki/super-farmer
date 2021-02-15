@@ -1,16 +1,16 @@
 .player-panel {
   display: flex;
   height: 100%;
+  flex: 1;
   flex-direction: column;
+  flex-direction: column;
+  justify-content: space-between;
   justify-content: space-between;
   &__title {
     padding-left: 0.5em;
     color: $color-title;
     font-family: $font-family;
   }
-  flex: 1;
-  flex-direction: column;
-  justify-content: space-between;
 
   &__board {
     position: relative;
