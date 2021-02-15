@@ -28,7 +28,7 @@ export class GameView extends EmptyView {
       bank,
     );
 
-    Render.removeAllChildren('#sf-app');
+    Render.removeAllChildren(this.view);
     this.view.appendChild(
       Render.elementFactory(
         'div',
