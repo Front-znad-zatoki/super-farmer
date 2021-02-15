@@ -156,22 +156,20 @@ export class AiPlayer extends Player {
   private animalsForTrade(
     targetAnimal: AnimalNames = AnimalNames.HORSE,
   ): [AnimalNames, number][] {
-    return this.herd.theAnimals
-      .filter(([animal, count]) => {
+    const animalsForTrade: [AnimalNames, number][] = [];
+    this.herd.theAnimals.forEach(([animal, count]) => {
+      if (
         count > 1 &&
-          animal.theValue < this.getValue(targetAnimal) &&
-          !animal.theRoles.includes(AnimalRoles.GUARDIAN);
-      })
-      .reduce(
-        (
-          animals: [AnimalNames, number][],
-          animal: [Animal, number],
-        ): [AnimalNames, number][] => [
-          ...animals,
-          [animal[0].theName as AnimalNames, animal[1] - 1],
-        ],
-        [],
-      );
+        animal.theValue < this.getValue(targetAnimal) &&
+        !animal.theRoles.includes(AnimalRoles.GUARDIAN)
+      ) {
+        animalsForTrade.push([
+          animal.theName as AnimalNames,
+          count - 1,
+        ]);
+      }
+    });
+    return animalsForTrade;
   }
 
   private getValue(animalName: AnimalNames): number {
