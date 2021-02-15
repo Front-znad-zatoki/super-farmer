@@ -1,4 +1,3 @@
-import { Animal } from '~src/Animals/Animal';
 import { AnimalNames } from '~src/Enums/AnimalNamesEnum';
 import { AnimalRoles } from '~src/Enums/AnimalRolesEnum';
 import { HerdConfigInterface } from '~src/Interfaces/HerdConfigInterface';
