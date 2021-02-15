@@ -88,10 +88,10 @@
     border: none;
     background-color: white;
     border-radius: 50%;
+    cursor: pointer;
     font-size: 1.5rem;
     font-weight: 700;
     transform: rotate(45deg);
-    cursor: pointer;
 
     &:focus {
       outline: none;
