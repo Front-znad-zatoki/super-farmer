@@ -9,7 +9,6 @@ export class PlayersBoard {
       'div',
       {
         className: 'board-container',
-        style: `border:4 px solid${player.theColor}`,
       },
     );
     const playersDataPanel: HTMLElement = Render.elementFactory(

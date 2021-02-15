@@ -45,7 +45,7 @@
   &__container {
     position: relative;
     display: grid;
-    gap: 24px 24px;
+    gap: 32px 32px;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(2, 1fr);
   }
@@ -71,7 +71,7 @@
 
 .endgame {
   position: absolute;
-  top: -52px;
+  top: -58px;
   right: 8px;
   border: none;
   -webkit-appearance: none;
@@ -127,7 +127,7 @@
   height: 100%;
   flex-direction: column;
   justify-content: space-between;
-  padding-top: 40px;
+  padding-top: 60px;
   &__top-row,
   &__main {
     display: flex;
