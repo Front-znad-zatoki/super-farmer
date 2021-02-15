@@ -60,7 +60,6 @@ export class GameView extends EmptyView {
     currentPlayer: Player,
     bank: Bank,
   ) {
-    EmptyView.addOpacityToBackground();
     const playersBoards = this.createPlayersBoards(players);
     const playerPanel = this.createPlayerPanel(currentPlayer);
     const bankPanel = this.createBankPanel(bank);

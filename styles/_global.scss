@@ -12,14 +12,6 @@
   background-size: cover;
 }
 
-#sf-app.blurred {
-  background-image: linear-gradient(
-      rgba(255, 255, 255, 0.5),
-      rgba(255, 255, 255, 0.5)
-    ),
-    url('/static/images/ui/background.png');
-}
-
 .hidden {
   display: none;
 }
