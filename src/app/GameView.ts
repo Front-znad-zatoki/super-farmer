@@ -121,8 +121,6 @@ export class GameView extends EmptyView {
       '.alert',
     ) as HTMLElement;
     if (!alertContainer) alertContainer = Alert.createElement();
-    // TODO: connect with other methods to display the right alert
-    Alert.updateAlert('Lorem ipsum dolor sei', AlertType.CRITICAL);
     return alertContainer;
   }
 
@@ -170,5 +168,4 @@ export class GameView extends EmptyView {
   disableRoll(): void {
     this.playerPanel.disableRoll();
   }
-
 }
