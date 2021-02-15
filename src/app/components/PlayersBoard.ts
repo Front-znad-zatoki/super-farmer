@@ -1,8 +1,8 @@
 import { Player } from '../../Player';
 import { Render } from '../utils/Render';
-import { flatten } from 'lodash';
+// import { flatten } from 'lodash';
 import { ConvertAnimalName } from '../utils/ConvertAnimalName';
-// import { GameView } from '../GameView';
+import { GameView } from '../GameView';
 
 export class PlayersBoard {
   /*returns player's board with player's name, avatar and herd */
@@ -32,7 +32,7 @@ export class PlayersBoard {
     });
     const playerTimer: HTMLElement = Render.elementFactory(
       'div',
-      { className: 'players__data__time' },
+      { id: 'time-left', className: 'players__data__time' },
       `Time left`,
     );
 
@@ -113,5 +113,9 @@ export class PlayersBoard {
     // }
 
     return playersBoardContainer;
+  }
+  updateTime(timeLeft: number): void {
+    const timer = document.querySelector('#time-left') as HTMLElement;
+    timer.innerText = `Time left: ${timeLeft} sec.`;
   }
 }

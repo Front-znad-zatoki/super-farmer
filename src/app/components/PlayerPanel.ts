@@ -23,7 +23,7 @@ export class PlayerPanel {
   /**
    * Creates player panel and returns it as HTMLElement
    */
-  createPlayerPanel(player: Player): HTMLElement {
+  createPlayerPanel(currentPlayer: Player): HTMLElement {
     return Render.elementFactory(
       'div',
       {
@@ -33,8 +33,8 @@ export class PlayerPanel {
       // this.createPlayerBoard(),
       this.createResultTitle(),
       this.createResultWindow(),
-      this.createExchangeButton(player),
-      this.createDiceButton(player),
+      this.createExchangeButton(currentPlayer),
+      this.createDiceButton(currentPlayer),
       // this.createButtonPanel(player),
     );
   }
@@ -206,7 +206,7 @@ export class PlayerPanel {
   displayRollResult(
     diceResults: AnimalNames[],
     // playerGain: [AnimalNames, number][],
-    // player: Player,
+    // currentPlayer: Player,
   ): void {
     const diceResult = Render.elementFactory(
       'div',

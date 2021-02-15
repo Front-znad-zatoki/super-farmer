@@ -139,13 +139,13 @@ export class GameView {
 
   displayRollResult(
     diceResults: AnimalNames[],
-    playerGain: [AnimalNames, number][],
-    player: Player,
+    // playerGain: [AnimalNames, number][],
+    // player: Player,
   ): void {
     this.playerPanel.displayRollResult(
       diceResults,
-      playerGain,
-      player,
+      // playerGain,
+      // player,
     );
     // this.renderPlayerPanel();
   }
@@ -158,9 +158,9 @@ export class GameView {
   //   );
   // }
 
-  // updateRemainingTime(timeLeft: number): void {
-  //   this.playerPanel.updateTime(timeLeft);
-  // }
+  updateRemainingTime(timeLeft: number): void {
+    new PlayersBoard().updateTime(timeLeft);
+  }
 
   stopTimer(): void {
     this.view.stopTimer();
@@ -170,9 +170,9 @@ export class GameView {
     this.view.nextTurn();
   }
 
-  // turnAlert(): void {
-  //   this.playerPanel.turnAlert();
-  // }
+  turnAlert(player: Player): void {
+    this.playerPanel.turnAlert(player);
+  }
 
   pauseTurn(): void {
     this.view.pauseTurn();
