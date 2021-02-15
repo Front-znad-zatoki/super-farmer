@@ -29,8 +29,7 @@ export class GameView extends EmptyView {
     );
 
     Render.removeAllChildren('#sf-app');
-    Render.render(
-      '#sf-app',
+    this.view.appendChild(
       Render.elementFactory(
         'div',
         { className: 'game' },
@@ -38,6 +37,7 @@ export class GameView extends EmptyView {
         gameBoardsAndPanel,
       ),
     );
+    Render.render('#sf-app', this.view);
     // this.viewContainer.append(topRow, gameBoardsAndPanel);
     // Render.render('#sf-app', this.view);
     // this.show();
