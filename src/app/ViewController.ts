@@ -10,6 +10,10 @@ import { Trade } from './Trade';
 import { TradeModal } from './components/TradeModal';
 import { defaultGameConfiguration } from './logic/defaultGameConfiguration';
 import { PlayerDTO } from '../Interfaces/PlayerDTOInterface';
+import { Configuration } from './logic/Configuration';
+import { dynamicGameConfiguration } from './logic/dynamicGameConfiguration';
+import { AnimalNames } from '../Enums/AnimalNamesEnum';
+import { cloneDeep } from 'lodash';
 
 export class ViewController {
   private menuView: MenuView;
@@ -33,8 +37,23 @@ export class ViewController {
     this.menuView.displayMenu();
   }
 
-  launchGame(players: PlayerDTO[]): void {
-    const config = defaultGameConfiguration;
+  /*TODO: CHECK IF AI NEEDED, CONNECT WITH CALLBACK THAT PASSES PLAYERS*/
+  /* TODO: CONSIDER USING DEFAULT CONFIG ALWAYS, JUST CHANGE ALREADY CREATED CONFIG IN CASE ITS A DYNAMIC MODE*/
+  launchGame(players: PlayerDTO[], isModeDynamic?: boolean): void {
+    const config: Configuration =
+      isModeDynamic === true
+        ? new Configuration(cloneDeep(dynamicGameConfiguration))
+        : new Configuration(defaultGameConfiguration);
+    if (isModeDynamic) {
+      const numberOfPlayers = players.length;
+      config.livestockConfig = config.livestockConfig.map(
+        (animal) => {
+          if (animal.name === AnimalNames.RABBIT)
+            animal.bankInitialStock -= numberOfPlayers;
+          return animal;
+        },
+      );
+    }
     config.playersConfig = players;
     this.gameController = new GameController(this, config);
     this.startGame(
