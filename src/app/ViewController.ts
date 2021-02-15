@@ -85,13 +85,9 @@ export class ViewController {
     this.gameController?.breed();
   }
 
-  updateRollResults({ rollResult, gain }: RollResult): void {
+  updateRollResults({ rollResult }: RollResult): void {
     if (this.gameController) {
-      this.gameView.displayRollResult(
-        rollResult,
-        gain,
-        this.gameController.theGame.theCurrentPlayer,
-      );
+      this.gameView.displayRollResult(rollResult);
     }
   }
 
@@ -128,8 +124,6 @@ export class ViewController {
 
   processAfterTrade(): void {
     this.runTimer();
-    // TODO: CHECK IF STILL NECESSARY
-    // this.refreshHerd();
     this.disableTrade();
     this.checkIfGameIsWon();
   }
@@ -171,11 +165,6 @@ export class ViewController {
   disableRoll(): void {
     this.gameView.disableRoll();
   }
-
-  // TODO: CHECK IF STILL NECESSARY
-  // refreshHerd(): void {
-  //   this.gameView.refreshHerd(this.gameController?.getBank() as Bank);
-  // }
 
   checkIfGameIsWon(): void {
     this.gameController?.checkIfGameIsWon();

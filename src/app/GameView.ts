@@ -38,23 +38,9 @@ export class GameView extends EmptyView {
       ),
     );
     Render.render('#sf-app', this.view);
-    // this.viewContainer.append(topRow, gameBoardsAndPanel);
-    // Render.render('#sf-app', this.view);
-    // this.show();
     this.setColorAccents(currentPlayer);
   }
 
-  // private createTopRow() {
-  //   const alertPanel = this.createAlertPanel();
-  //   const endGameButton = this.createEndGameButton();
-  //   const topRow = Render.elementFactory(
-  //     'div',
-  //     { className: 'game__top-row' },
-  //     alertPanel,
-  //     endGameButton,
-  //   );
-  //   return topRow;
-  // }
   private createGameBoardsAndPanel(
     players: Player[],
     currentPlayer: Player,
@@ -89,7 +75,6 @@ export class GameView extends EmptyView {
         Render.elementFactory(
           'div',
           {
-            id: `${player.theName}`,
             className: 'player-boards__board',
           },
           new PlayersBoard().renderPlayersBoard(player),
@@ -136,8 +121,6 @@ export class GameView extends EmptyView {
       '.alert',
     ) as HTMLElement;
     if (!alertContainer) alertContainer = Alert.createElement();
-    // TODO: connect with other methods to display the right alert
-    Alert.updateAlert('Lorem ipsum dolor sei', AlertType.CRITICAL);
     return alertContainer;
   }
 
@@ -158,21 +141,13 @@ export class GameView extends EmptyView {
     this.viewController.handleTrade();
   }
 
-  displayRollResult(
-    diceResults: AnimalNames[],
-    playerGain: [AnimalNames, number][],
-    player: Player,
-  ): void {
-    this.playerPanel.displayRollResult(
-      diceResults,
-      playerGain,
-      player,
-    );
+  displayRollResult(diceResults: AnimalNames[]): void {
+    this.playerPanel.displayRollResult(diceResults);
   }
 
-  // updateRemainingTime(timeLeft: number): void {
-  //   this.playerPanel.updateTime(timeLeft);
-  // }
+  updateRemainingTime(timeLeft: number): void {
+    new PlayersBoard().updateTime(timeLeft);
+  }
 
   stopTimer(): void {
     this.viewController.stopTimer();
@@ -193,10 +168,4 @@ export class GameView extends EmptyView {
   disableRoll(): void {
     this.playerPanel.disableRoll();
   }
-
-  // refreshHerd(bank: Bank): void {
-  //   this.playerPanel.refreshHerd();
-  //   Render.removeAllChildren('#bank-board');
-  //   Render.render('#bank-board', this.createBankPanel(bank));
-  // }
 }

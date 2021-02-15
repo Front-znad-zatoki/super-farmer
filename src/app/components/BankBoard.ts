@@ -6,6 +6,13 @@ export class BankBoard {
     const bankView = Render.elementFactory('div', {
       className: 'bank',
     });
+    const bankTitle = Render.elementFactory(
+      'p',
+      {
+        className: 'bank__title',
+      },
+      'Bank',
+    );
     const bankHerd = bank.theHerd.theAnimals.map(([animal, count]) =>
       Render.elementFactory(
         'div',
@@ -23,7 +30,7 @@ export class BankBoard {
       ),
     );
 
-    Render.childrenInjector(bankView, ...bankHerd);
+    Render.childrenInjector(bankView, bankTitle, ...bankHerd);
     return bankView;
   }
 }
