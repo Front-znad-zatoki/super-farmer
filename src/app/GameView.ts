@@ -21,7 +21,7 @@ export class GameView extends EmptyView {
     currentPlayer: Player,
     bank: Bank,
   ): void {
-    const topRow = this.createTopRow();
+    // const topRow = this.createTopRow();
     const gameBoardsAndPanel = this.createGameBoardsAndPanel(
       players,
       currentPlayer,
@@ -34,7 +34,7 @@ export class GameView extends EmptyView {
       Render.elementFactory(
         'div',
         { className: 'game' },
-        topRow,
+        // topRow,
         gameBoardsAndPanel,
       ),
     );
@@ -44,17 +44,17 @@ export class GameView extends EmptyView {
     this.setColorAccents(currentPlayer);
   }
 
-  private createTopRow() {
-    const alertPanel = this.createAlertPanel();
-    const endGameButton = this.createEndGameButton();
-    const topRow = Render.elementFactory(
-      'div',
-      { className: 'game__top-row' },
-      alertPanel,
-      endGameButton,
-    );
-    return topRow;
-  }
+  // private createTopRow() {
+  //   const alertPanel = this.createAlertPanel();
+  //   const endGameButton = this.createEndGameButton();
+  //   const topRow = Render.elementFactory(
+  //     'div',
+  //     { className: 'game__top-row' },
+  //     alertPanel,
+  //     endGameButton,
+  //   );
+  //   return topRow;
+  // }
   private createGameBoardsAndPanel(
     players: Player[],
     currentPlayer: Player,
@@ -64,9 +64,12 @@ export class GameView extends EmptyView {
     const playersBoards = this.createPlayersBoards(players);
     const playerPanel = this.createPlayerPanel(currentPlayer);
     const bankPanel = this.createBankPanel(bank);
+    
+    const endGameButton = this.createEndGameButton();
     const banksAndPanel = Render.elementFactory(
       'div',
       { className: 'game__side-panel' },
+      endGameButton,
       bankPanel,
       playerPanel,
     );
@@ -78,9 +81,11 @@ export class GameView extends EmptyView {
     );
   }
   private createPlayersBoards(players: Player[]): HTMLElement {
+    const alertPanel = this.createAlertPanel();
     return Render.elementFactory(
       'div',
       { className: 'player-boards__container' },
+      alertPanel,
       ...players.map((player) =>
         Render.elementFactory(
           'div',

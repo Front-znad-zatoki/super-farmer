@@ -1,11 +1,12 @@
 .alert {
   display: flex;
-  // width: 100%;
-  width: calc(((100% - 300px - 24px) / 2));
+  position: absolute;
+  top: -62px;
+  width: 100%;
   align-items: center;
   border-radius: 0.25rem;
   transition: all 0.7s ease-in-out;
-
+  // flex: 5;
   &__icon {
     width: auto;
     height: 1.75rem;

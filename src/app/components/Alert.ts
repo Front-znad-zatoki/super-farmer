@@ -32,18 +32,18 @@ export class Alert {
     switch (alertType) {
       case AlertType.INFO:
         this.alert.style.background =
-          'linear-gradient(to right, #3E8Ed0D4, #fff0)';
-        // '#3E8Ed0D4';
+          // 'linear-gradient(to right, #3E8Ed0D4, #fff0)';
+        '#3E8Ed0D4';
         break;
       case AlertType.WARN:
         this.alert.style.background =
-          'linear-gradient(to right, #FFE08AD4, #fff0)';
-        // '#FFE08AD4';
+          // 'linear-gradient(to right, #FFE08AD4, #fff0)';
+        '#FFE08AD4';
         break;
       case AlertType.CRITICAL:
         this.alert.style.background =
-          'linear-gradient(to right, #F14668D4, #fff0)';
-        // '#F14668D4';
+          // 'linear-gradient(to right, #F14668D4, #fff0)';
+        '#F14668D4';
         break;
       default:
         this.alert.style.backgroundColor = 'transparent';
