@@ -108,6 +108,9 @@
       margin: 1rem 0;
     }
     &__avatar {
+      &-wrapper{
+        position: relative;
+      }
       width: 4.3rem;
       cursor: pointer;
       &-label {
@@ -119,7 +122,10 @@
       }
 
       &-radio {
-        display: none;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        opacity: 0;
       }
 
       &-radio:checked + .mode-form__avatar-label {
@@ -136,6 +142,7 @@
       margin: 1rem;
     }
     &__color-wrapper {
+      position: relative;
       display: flex;
       margin: 10px 20px;
     }
@@ -147,7 +154,10 @@
     }
 
     &__color-radio {
-      display: none;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      opacity: 0;
     }
 
     &__color-radio {
@@ -158,9 +168,7 @@
     }
 
     // Styles for AI Player
-    // &__ai{
-    //   margin-top: 1rem;
-    // }
+    
     &__ai-input {
       margin: 0 1rem;
     }
