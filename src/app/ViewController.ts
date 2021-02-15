@@ -98,10 +98,6 @@ export class ViewController {
     Render.render('body', this.winModal.createWinModal(player));
   }
 
-  turnAlert(): void {
-    this.gameView.turnAlert();
-  }
-
   displayRulesModal(): void {
     // TODO: display rules
   }

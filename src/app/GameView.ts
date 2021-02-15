@@ -128,10 +128,6 @@ export class GameView {
     this.view.nextTurn();
   }
 
-  turnAlert(): void {
-    this.playerPanel.turnAlert();
-  }
-
   pauseTurn(): void {
     this.view.pauseTurn();
   }
