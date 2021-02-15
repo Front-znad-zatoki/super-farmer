@@ -46,27 +46,22 @@ export class Game {
       HerdOwners.BANK,
     );
     this.players = [
-      ...playersConfig.map(
-        (player) =>
-          new Player(
-            player.name,
-            player.path,
-            player.color,
-            this.playersHerdConfig,
-          ),
+      ...playersConfig.map((player) =>
+        player.isAI
+          ? new AiPlayer(
+              player.name,
+              player.path,
+              player.color,
+              this.playersHerdConfig,
+            )
+          : new Player(
+              player.name,
+              player.path,
+              player.color,
+              this.playersHerdConfig,
+            ),
       ),
     ];
-    //TODO get AI Player from configuration and then delete this 'if'
-    if (this.players.length < 4) {
-      this.players.push(
-        new AiPlayer(
-          'AiPlayer',
-          './static/images/playerAvatars/woman.svg',
-          'blue',
-          this.playersHerdConfig,
-        ),
-      );
-    }
     this.currentPlayerNumber = 0;
     this.bank = new Bank(this.banksHerdConfig);
     const [firstDice, secondDice] = DiceBuilder.build(
