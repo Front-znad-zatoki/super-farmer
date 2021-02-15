@@ -92,17 +92,17 @@
     }
     // Styles for name input
     &__input {
-      outline: none;
       padding: 0.5rem;
       border: none;
       border-bottom: 2px solid #9ca4a4;
       margin-bottom: 1.3rem;
       font-size: 1.2rem;
       font-weight: bold;
+      outline: none;
       text-align: center;
-        &:focus-within{
-          border: 1px solid black;
-        }
+      &:focus-within {
+        border: 1px solid black;
+      }
     }
 
     &__avatars {
@@ -172,7 +172,7 @@
     }
 
     // Styles for AI Player
-    &__ai{
+    &__ai {
       // position: absolute;
       // bottom: 2rem;
       &-input {
