@@ -1,6 +1,5 @@
 import { Render } from '../utils/Render';
 import { Bank } from '../logic/Bank';
-import { ConvertAnimalName } from '../utils/ConvertAnimalName';
 export class BankBoard {
   /* returns Bank board with animals and counts */
   renderBankBoard(bank: Bank): HTMLElement {
