@@ -53,7 +53,9 @@
       align-items: center;
       font-family: $font-family;
       font-size: 20px;
-
+      &__text {
+        margin-left: 12px;
+      }
       &__img {
         height: 4rem;
       }

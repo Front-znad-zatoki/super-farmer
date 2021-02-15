@@ -49,7 +49,11 @@ export class PlayersBoard {
             animal.theName,
             'players__herd__item__img',
           ),
-          `${count}`,
+          Render.elementFactory(
+            'p',
+            { className: 'players__herd__item__text' },
+            `${count}`,
+          ),
         ),
     );
     Render.childrenInjector(
