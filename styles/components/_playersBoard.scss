@@ -1,12 +1,15 @@
 .board-container {
   display: flex;
-  flex-direction: column;
+  border-radius: $border-radius;
+  height: 40vh;
+  // flex-direction: column;
   // justify-content: space-around;
-  flex-wrap: wrap;
+  // flex-wrap: wrap;
 }
 .players {
   &__data {
     display: flex;
+    flex-direction: column;
     margin: 50px;
     &__avatar {
       width: 4rem;
@@ -17,13 +20,15 @@
   }
   &__herd {
     display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+
     align-items: center;
-    &__img {
-      width: 2.5rem;
-      margin-left: 50px;
-    }
-    &__count {
-      font-size: 30px;
+    &__item {
+      display: flex;
+      &__img {
+        height: 4rem;
+      }
     }
   }
 }
