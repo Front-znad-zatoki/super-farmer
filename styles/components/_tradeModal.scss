@@ -4,7 +4,7 @@
   grid-template-columns: 2fr 1fr 2fr;
 
   &__heading {
-    margin-bottom: 1rem;
+    margin-bottom: 3.3rem;
     font-size: 1.5rem;
   }
 
@@ -65,6 +65,14 @@
 
   &__submit {
     height: 4em;
+    align-self: center;
+    border: none;
+    background-color: #71cfd7;
+    border-radius: 1rem;
+
+    &:focus {
+      outline: none;
+    }
   }
 
   &__back {
@@ -87,6 +95,10 @@
 }
 
 .warning {
-  background-color: yellow;
-  font-size: 26px;
+  position: absolute;
+  top: 5.5rem;
+  left: calc(50% - 14rem);
+  margin-bottom: 1rem;
+  background-color: #ffe08a;
+  font-size: 1.2rem;
 }

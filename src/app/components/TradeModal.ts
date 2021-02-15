@@ -1,3 +1,4 @@
+import { Animal } from '~src/Animals/Animal';
 import { CallbackNoParam } from '~src/Interfaces/CallbackInterface';
 import { AnimalNames } from '../../Enums/AnimalNamesEnum';
 import { Player } from '../../Player';
@@ -46,11 +47,18 @@ export class TradeModal extends EmptyModal {
         className: 'trade',
       },
       this.playerView,
-      Render.elementFactory('input', {
-        type: 'submit',
-        value: 'Trade',
-        className: 'trade__submit',
-      }),
+      Render.elementFactory(
+        'button',
+        {
+          type: 'submit',
+          className: 'trade__submit',
+        },
+        Render.elementFactory('img', {
+          alt: 'exchange',
+          src: './static/images/ui/exchange-dark.svg',
+        }),
+        Render.elementFactory('p', {}, 'Exchange'),
+      ),
       this.bankView,
     );
     this.warning = Render.elementFactory('p', {
@@ -64,8 +72,8 @@ export class TradeModal extends EmptyModal {
     Render.childrenInjector(
       this.modalContainer,
       this.header,
-      this.tradeForm,
       this.warning,
+      this.tradeForm,
       this.backButton,
     );
   }
@@ -160,18 +168,7 @@ export class TradeModal extends EmptyModal {
                 { className: 'trade__player-herd--count' },
                 `x ${count}`,
               ),
-              Render.elementFactory('input', {
-                type: 'text',
-                id: `${
-                  isBank ? 'bank' : 'player'
-                }_${animal.theName.replace(' ', '_')}`,
-                name: `${isBank ? 'bank' : 'player'}_${
-                  animal.theName
-                }`,
-                className: 'trade__player-herd--input',
-                value: '0',
-                disabled: 'true',
-              }),
+              this.createInputBox(isBank, animal, count),
               Render.elementFactory(
                 'div',
                 { className: 'trade__player-herd--buttons' },
@@ -190,6 +187,31 @@ export class TradeModal extends EmptyModal {
     );
 
     return animalsRows;
+  }
+
+  private createInputBox(
+    isBank: boolean,
+    animal: Animal,
+    count: number,
+  ): HTMLElement {
+    const input = Render.elementFactory('input', {
+      type: 'text',
+      id: `${isBank ? 'bank' : 'player'}_${animal.theName.replace(
+        ' ',
+        '_',
+      )}`,
+      name: `${isBank ? 'bank' : 'player'}_${animal.theName}`,
+      className: 'trade__player-herd--input',
+      value: '0',
+      pattern: '\\d+',
+    }) as HTMLInputElement;
+    input.addEventListener('change', () => {
+      const value = parseInt(input.value);
+      if (value > count) {
+        input.value = `${count}`;
+      }
+    });
+    return input;
   }
 
   private createButtons(
@@ -250,6 +272,7 @@ export class TradeModal extends EmptyModal {
   private formDataIntoTuples(formData: FormData): [Offer[], Offer[]] {
     const offer: Offer[] = [];
     const target: Offer[] = [];
+    console.log(formData);
     for (const [key, value] of formData.entries()) {
       const numberOfAnimals = parseInt(value.toString());
       const [player, animal] = key.split('_');
