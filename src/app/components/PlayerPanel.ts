@@ -115,26 +115,7 @@ export class PlayerPanel {
     );
     Render.render('.player-panel__result', diceResult);
     this.view.stopTimer();
-    // setTimeout(() => this.hideTimer(), 10);
   }
-
-  // private hideTimer(): void {
-  // (document.querySelector(
-  // '#time-left',
-  // ) as HTMLElement).style.display = 'none';
-  // }
-
-  /*turnAlert(player: Player): void {
-    Render.render(
-      '#sf-app',
-      Render.elementFactory(
-        'div',
-        { className: 'exclamation' },
-        `${player.theName}'s turn has passed!`,
-      ),
-    );
-  }*/
-
   disableTrade(): void {
     (document.querySelector('#exchange') as HTMLElement).setAttribute(
       'disabled',
