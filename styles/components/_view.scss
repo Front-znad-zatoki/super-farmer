@@ -43,10 +43,10 @@
 
 .player-boards {
   &__container {
+    position: relative;
     display: grid;
     gap: 24px 24px;
     grid-template-columns: repeat(2, 1fr);
-    position: relative;
   }
 
   &__board {
@@ -70,8 +70,8 @@
 
 .endgame {
   position: absolute;
-  right: 8px;
   top: -52px;
+  right: 8px;
   border: none;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -94,8 +94,8 @@
   }
   &[data-tooltip]:after {
     position: absolute;
-    bottom: 0;
     right: -6px;
+    bottom: 0;
     padding: 3px 30px 3px 8px;
     background: rgba(250, 250, 250, 0.5);
     -webkit-border-radius: 4px;
@@ -137,8 +137,8 @@
     margin-bottom: 20px;
   }
   &__main {
-    height: 100%;
     position: relative;
+    height: 100%;
     justify-content: space-between;
   }
   &__side-panel {

@@ -64,7 +64,7 @@ export class GameView extends EmptyView {
     const playersBoards = this.createPlayersBoards(players);
     const playerPanel = this.createPlayerPanel(currentPlayer);
     const bankPanel = this.createBankPanel(bank);
-    
+
     const endGameButton = this.createEndGameButton();
     const banksAndPanel = Render.elementFactory(
       'div',
