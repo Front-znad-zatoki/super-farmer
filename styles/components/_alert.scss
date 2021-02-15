@@ -1,9 +1,12 @@
 .alert {
+  position: absolute;
+  top: -62px;
   display: flex;
   width: 100%;
+  align-items: center;
   border-radius: 0.25rem;
   transition: all 0.7s ease-in-out;
-
+  // flex: 5;
   &__icon {
     width: auto;
     height: 1.75rem;
@@ -11,9 +14,6 @@
   }
 
   &__text {
-    display: inline-flex;
-    margin: 0.5rem;
     font-size: 1rem;
-    line-height: 2rem;
   }
 }

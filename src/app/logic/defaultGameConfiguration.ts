@@ -5,12 +5,13 @@ import { GameConfigInterface } from '../../Interfaces/GameConfigInterface';
 
 export const defaultGameConfiguration: GameConfigInterface = {
   mode: GameModes.STATIC,
-  roundTimeInSeconds: 15,
+  roundTimeInSeconds: 15000,
   playersConfig: [
     {
       name: 'Carlos Santanos',
       path: '../../static/images/avatars/small_dog.svg',
       color: 'blue',
+      isAI: false,
     },
   ],
 

@@ -13,6 +13,7 @@ import { PlayerDTO } from '../Interfaces/PlayerDTOInterface';
 import { Configuration } from './logic/Configuration';
 import { dynamicGameConfiguration } from './logic/dynamicGameConfiguration';
 import { AnimalNames } from '../Enums/AnimalNamesEnum';
+import { cloneDeep } from 'lodash';
 
 export class ViewController {
   private menuView: MenuView;
@@ -36,12 +37,10 @@ export class ViewController {
     this.menuView.displayMenu();
   }
 
-  /*TODO: CHECK IF AI NEEDED, CONNECT WITH CALLBACK THAT PASSES PLAYERS*/
-  /* TODO: CONSIDER USING DEFAULT CONFIG ALWAYS, JUST CHANGE ALREADY CREATED CONFIG IN CASE ITS A DYNAMIC MODE*/
   launchGame(players: PlayerDTO[], isModeDynamic?: boolean): void {
     const config: Configuration =
       isModeDynamic === true
-        ? new Configuration(dynamicGameConfiguration)
+        ? new Configuration(cloneDeep(dynamicGameConfiguration))
         : new Configuration(defaultGameConfiguration);
     if (isModeDynamic) {
       const numberOfPlayers = players.length;
@@ -70,10 +69,10 @@ export class ViewController {
     this.gameView.renderGameView(players, currentPlayer, bank);
     this.gameController?.startTurn();
   }
-
-  updateRemainingTime(timeLeft: number): void {
-    this.gameView.updateRemainingTime(timeLeft);
-  }
+  // TODO: CHECK IF STILL NECESSARY
+  // updateRemainingTime(timeLeft: number): void {
+  //   this.gameView.updateRemainingTime(timeLeft);
+  // }
 
   handleRoll(): void {
     this.gameController?.breed();
@@ -92,6 +91,10 @@ export class ViewController {
   displayWinModal(player: Player): void {
     Render.render('body', this.winModal.createWinModal(player));
   }
+  // TODO: CHECK IF STILL NECESSARY
+  // turnAlert(): void {
+  //   this.gameView.turnAlert();
+  // }
 
   displayRulesModal(): void {
     // TODO: display rules

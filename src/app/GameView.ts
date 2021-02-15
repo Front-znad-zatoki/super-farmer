@@ -8,10 +8,11 @@ import { Bank } from './logic/Bank';
 import { Render } from './utils/Render';
 import { ViewController } from './ViewController';
 import { AlertType } from '../Enums/AlertEnum';
-
-export class GameView {
-  playerPanel: PlayerPanel;
-  constructor(private view: ViewController) {
+import { EmptyView } from './EmptyView';
+export class GameView extends EmptyView {
+  protected playerPanel: PlayerPanel;
+  constructor(private viewController: ViewController) {
+    super(true);
     this.playerPanel = new PlayerPanel(this);
   }
 
@@ -20,37 +21,26 @@ export class GameView {
     currentPlayer: Player,
     bank: Bank,
   ): void {
-    const topRow = this.createTopRow();
+    // const topRow = this.createTopRow();
     const gameBoardsAndPanel = this.createGameBoardsAndPanel(
       players,
       currentPlayer,
       bank,
     );
 
-    Render.removeAllChildren('#sf-app');
-    Render.render(
-      '#sf-app',
+    Render.removeAllChildren(this.view);
+    this.view.appendChild(
       Render.elementFactory(
         'div',
         { className: 'game' },
-        topRow,
+        // topRow,
         gameBoardsAndPanel,
       ),
     );
+    Render.render('#sf-app', this.view);
     this.setColorAccents(currentPlayer);
   }
 
-  private createTopRow() {
-    const alertPanel = this.createAlertPanel();
-    const endGameButton = this.createEndGameButton();
-    const topRow = Render.elementFactory(
-      'div',
-      { className: 'game__top-row' },
-      alertPanel,
-      endGameButton,
-    );
-    return topRow;
-  }
   private createGameBoardsAndPanel(
     players: Player[],
     currentPlayer: Player,
@@ -59,9 +49,12 @@ export class GameView {
     const playersBoards = this.createPlayersBoards(players);
     const playerPanel = this.createPlayerPanel(currentPlayer);
     const bankPanel = this.createBankPanel(bank);
+
+    const endGameButton = this.createEndGameButton();
     const banksAndPanel = Render.elementFactory(
       'div',
       { className: 'game__side-panel' },
+      endGameButton,
       bankPanel,
       playerPanel,
     );
@@ -73,14 +66,15 @@ export class GameView {
     );
   }
   private createPlayersBoards(players: Player[]): HTMLElement {
+    const alertPanel = this.createAlertPanel();
     return Render.elementFactory(
       'div',
       { className: 'player-boards__container' },
+      alertPanel,
       ...players.map((player) =>
         Render.elementFactory(
           'div',
           {
-            // TODO: CHECK IF THIS DIV IS NECESSARY
             className: 'player-boards__board',
           },
           new PlayersBoard().renderPlayersBoard(player),
@@ -94,13 +88,26 @@ export class GameView {
   }
 
   private createEndGameButton() {
+    const crossInButton = Render.elementFactory(
+      'p',
+      {
+        'aria-hidden': 'true',
+        className: 'endgame__text',
+      },
+      'X',
+    );
     const endGameButton = Render.elementFactory(
       'button',
-      { className: 'button endgame' },
-      'End game',
+      {
+        className: 'button endgame',
+        'aria-label': 'End game',
+        'data-tooltip': 'END GAME',
+      },
+      crossInButton,
     );
+
     endGameButton.addEventListener('click', () => {
-      this.view.endGame();
+      this.viewController.endGame();
     });
     return endGameButton;
   }
@@ -115,7 +122,7 @@ export class GameView {
     ) as HTMLElement;
     if (!alertContainer) alertContainer = Alert.createElement();
     // TODO: connect with other methods to display the right alert
-    Alert.updateAlert('Lorem ipsum dolor sei', AlertType.INFO);
+    Alert.updateAlert('Lorem ipsum dolor sei', AlertType.CRITICAL);
     return alertContainer;
   }
 
@@ -129,11 +136,11 @@ export class GameView {
   }
 
   handleRoll(): void {
-    this.view.handleRoll();
+    this.viewController.handleRoll();
   }
 
   handleTrade(): void {
-    this.view.handleTrade();
+    this.viewController.handleTrade();
   }
 
   displayRollResult(diceResults: AnimalNames[]): void {
@@ -145,15 +152,15 @@ export class GameView {
   }
 
   stopTimer(): void {
-    this.view.stopTimer();
+    this.viewController.stopTimer();
   }
 
   nextTurn(): void {
-    this.view.nextTurn();
+    this.viewController.nextTurn();
   }
 
   pauseTurn(): void {
-    this.view.pauseTurn();
+    this.viewController.pauseTurn();
   }
 
   disableTrade(): void {

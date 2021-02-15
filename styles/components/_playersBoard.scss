@@ -53,5 +53,14 @@
         height: 4rem;
       }
     }
+    // align-items: center;
+    flex-wrap: wrap;
+    &__img {
+      width: 2.5rem;
+      margin-left: 50px;
+    }
+    &__count {
+      font-size: 30px;
+    }
   }
 }

@@ -9,6 +9,7 @@ import { Bank } from './Bank';
 import { LivestockConfigInterface } from '../../Interfaces/LivestockConfigInterface';
 import { ProtectorsConfigInterface } from '../../Interfaces/ProtectorsConfigInterface';
 import { HerdOwners } from '../../Enums/HerdOwnerEnum';
+import { DiceBuilder } from '../DiceBuilder';
 
 export class Game {
   mode: GameModes;
@@ -18,7 +19,6 @@ export class Game {
   banksHerdConfig: HerdConfigInterface[];
   players: Player[];
   bank: Bank;
-  // dice: Dice[];
   timer: Timer;
   breedProcessor: BreedProcessor;
   trade: Trade;
@@ -55,9 +55,16 @@ export class Game {
     );
     this.currentPlayerNumber = 0;
     this.bank = new Bank(this.banksHerdConfig);
+    const [firstDice, secondDice] = DiceBuilder.build(
+      livestockConfig,
+      predatorsConfig,
+      protectorsConfig,
+    );
     this.timer = new Timer(roundTimeInSeconds);
     this.breedProcessor = new BreedProcessor(
       this.bank,
+      firstDice,
+      secondDice,
       predatorsConfig,
       this.mode,
     );
@@ -89,9 +96,6 @@ export class Game {
     return this.bank;
   }
 
-  // get theDice(): Dice[] {
-  //   return this.dice;
-  // }
   get theTimer(): Timer {
     return this.timer;
   }

@@ -8,6 +8,32 @@
     color: $color-title;
     font-family: $font-family;
   }
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
+
+  &__board {
+    position: relative;
+    width: 60vw;
+    padding: 0.5rem;
+    border-right: 1px solid black;
+  }
+
+  &__details {
+    display: inline-block;
+    margin-left: 1rem;
+  }
+
+  &__name {
+    font-size: 1.7rem;
+    font-weight: 700;
+  }
+
+  &__time {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+  }
   &__image {
     width: auto;
     height: 4rem;
@@ -21,6 +47,18 @@
     justify-content: space-around;
     background-color: white;
     border-radius: $border-radius;
+    // position: absolute;
+    &--dice {
+      margin-top: 2rem;
+    }
+
+    &--gain {
+      margin-top: 2rem;
+    }
+
+    &--container {
+      display: inline;
+    }
   }
 
   &__buttons {
