@@ -12,7 +12,7 @@ import { EmptyView } from './EmptyView';
 export class GameView extends EmptyView {
   protected playerPanel: PlayerPanel;
   constructor(private viewController: ViewController) {
-    super();
+    super(true);
     this.playerPanel = new PlayerPanel(this);
   }
 

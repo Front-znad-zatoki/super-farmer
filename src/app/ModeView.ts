@@ -25,7 +25,7 @@ export class ModeView extends EmptyView {
     backCallback: CallbackNoParam,
     submitCallback: CallbackTwoParam<boolean, PlayerDTO[]>,
   ) {
-    super();
+    super(true);
     this.addPlayerButton = Render.elementFactory(
       'button',
       {
