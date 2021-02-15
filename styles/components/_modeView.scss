@@ -1,56 +1,121 @@
-.mode-players-wrapper {
-  display: inline-flex;
-  
-}
-.mode-form {
+.mode{
+  &-view {
+    &__heading{
+      position: absolute;
+      left: 2rem;
+      top: 2rem;
+    }
+  }
+  &-inputs-wrapper {
+    display: flex;
+  }
+  &-players-wrapper {
+    display: inline-flex;
+  }
+  &__buttons{
+    display: flex;
+    justify-content: space-between;
+    margin: 7rem 2rem 0 2rem;
+  }
+  &__button{
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    border-radius: 0.5rem;
+    width: 12rem;
+    height: 4rem;
+    cursor: pointer;
+    &:first-child {
+      background: #FEFEFE;
+    }
+    &:last-child {
+      background: #71CFD7;
+    }
+  }
+  &-form {
+  display: flex;
+  justify-content: center;
+  &__remove-player-btn{
+    position: absolute;
+    top: 0.5rem;
+    right: 1.2rem;
+    background: none;
+    border: none;
+    transform: rotate(45deg);
+    font-size: 3rem;
+    cursor: pointer;
+    &:focus {
+      outline: none;
+    }
+  }
+  &__mode{
+    position: absolute;
+    display: flex;
+    align-items: center;
+    top: 2rem;
+    right: 2rem;
+    background: #fefefe;
+    height: 2.5rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    &-input{
+      margin-right: 0.5rem;
+    }
+    &-label{
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+  }
   &__add-btn{
-    width: 312px;
-    height: 632px;
+    margin: 8rem 0 0 1rem;
+    width: 25rem;
     border-radius: 16px;
-    border: 1px dashed #555757;
+    border: 3px dashed #555757;
+    background: none;
+    cursor: pointer;
+    &:focus {
+      outline: none;
+    }
   }
   &__add-player {
+    position: relative;
     display: flex;
-    width: 400px;
+    width: 25rem;
+    height: 70vh;
     flex-direction: column;
     align-items: center;
-    padding: 30px;
+    padding: 2rem;
     border: 2px solid black;
-    margin: 5px;
+    margin: 8rem 0 0 1rem;
     background-color: #fefefe;
-    border-radius: 16px;
+    border-radius: 1rem;
   }
   // Styles for name input
   &__input {
-    padding: 8px;
+    padding: 0.5rem;
+    margin-bottom: 1.3rem;
     border: none;
     border-bottom: 1px solid #9ca4a4;
     text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
   }
-  &__color-wrapper {
-    display: flex;
-  }
-  &__color-label {
-    width: 50px;
-    height: 50px;
-  }
+
   &__avatars {
     display: flex;  
     flex-wrap: wrap;
     justify-content: center;
+    margin: 1rem 0;
   }
   &__avatar {
-    width: 80px;
-
-    &-wrapper {
-      margin: 0px 20px;
-    }
-
+    width: 4.3rem;
+    cursor: pointer;
     &-label {
       display: flex;
       width: 110px;
       height: 110px;
       justify-content: center;
+      margin: 10px;
     }
 
     &-radio {
@@ -68,6 +133,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    margin: 1rem;
   }
   &__color-wrapper {
     display: flex;
@@ -77,6 +143,7 @@
     width: 110px;
     height: 110px;
     border-radius: 50%;
+    cursor: pointer;
   }
   
   &__color-radio {
@@ -91,13 +158,25 @@
   }
   
   // Styles for AI Player
+  // &__ai{
+  //   margin-top: 1rem;
+  // }
   &__ai-input {
-    margin: 10px 20px;
+    margin: 0 1rem;
+  }
+  &__ai-label {
+    font-size: 1.5rem;
   }
 }
+}
 
+.hidden-element{
+  opacity: 0.3;
+  pointer-events:none;
+  cursor: initial;
+}
 
-.mode-inputs-wrapper {
-  display: flex;
-  height: 600px;
+.grey-background {
+  background: white;
+  opacity: 0.7;
 }

@@ -9,6 +9,13 @@
   background: url(/static/images/ui/background.png) no-repeat;
   background-size: cover;
 }
+#sf-app::after {
+  height: 100vh;
+  background: url(/static/images/ui/background.png) no-repeat;
+  background-size: cover;
+  opacity: 0.5;
+  z-index: -1;   
+}
 
 .hidden {
   display: none;

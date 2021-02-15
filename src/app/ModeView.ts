@@ -43,7 +43,7 @@ export class ModeView extends EmptyView {
         type: 'button',
         className: 'mode-form__remove-player-btn hidden',
       },
-      'remove player',
+      '+',
     );
     this.addPanelsWrapper = Render.elementFactory('div', {
       className: 'mode-players-wrapper',
@@ -164,7 +164,7 @@ export class ModeView extends EmptyView {
     this.backButton = Render.elementFactory(
       'button',
       {
-        className: 'button',
+        className: 'mode__button',
       },
       'back',
     );
@@ -173,7 +173,7 @@ export class ModeView extends EmptyView {
       {
         type: 'submit',
         form: 'mode-form',
-        className: 'button',
+        className: 'mode__button',
       },
       'play',
     );
@@ -196,6 +196,7 @@ export class ModeView extends EmptyView {
       name: indicator,
       placeholder: 'type nickname here',
       className: 'mode-form__input',
+      maxLength: '15',
     });
 
     return input;
@@ -213,6 +214,7 @@ export class ModeView extends EmptyView {
       'label',
       {
         className: 'mode-form__ai-label',
+        for: indicator,
       },
       'AI Player',
     );
@@ -244,9 +246,6 @@ export class ModeView extends EmptyView {
           required: '',
           value: value,
         });
-        if (index === 0) {
-          radio.setAttribute('checked', '');
-        }
         colorsElements.push(
           Render.elementFactory(
             'div',
@@ -293,9 +292,6 @@ export class ModeView extends EmptyView {
           required: 'true',
           value: value,
         });
-        if (index === 0) {
-          radio.setAttribute('checked', '');
-        }
         avatarsElements.push(
           Render.elementFactory(
             'div',
