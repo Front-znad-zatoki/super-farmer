@@ -162,7 +162,6 @@ export class ViewController {
     this.gameView.disableTrade();
   }
 
-
   disableRoll(): void {
     this.gameView.disableRoll();
   }

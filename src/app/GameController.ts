@@ -43,7 +43,6 @@ export class GameController {
     this.gameProcessor.pauseTurn();
   }
 
-
   turnAlert(): void {
     Alert.updateAlert(
       `${this.game.theCurrentPlayer.theName}'s turn has passed.`,
