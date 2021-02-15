@@ -1,31 +1,54 @@
 .board-container {
   display: flex;
   height: 40vh;
+  padding: 15px;
   border-radius: $border-radius;
-  // flex-direction: column;
-  // justify-content: space-around;
-  // flex-wrap: wrap;
 }
 .players {
   &__data {
     display: flex;
+    flex-basis: 30%;
     flex-direction: column;
-    margin: 50px;
+    margin-top: 10px;
     &__avatar {
-      width: 4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 15px;
+      background-color: #fafafa;
+      border-radius: 50%;
+
+      &--img {
+        height: 4rem;
+      }
     }
     &__name {
-      font-size: 50px;
+      padding-bottom: 10px;
+      font-family: $font-family;
+      font-size: $font-size;
+      text-align: center;
+    }
+    &__time {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      align-items: flex-end;
+      justify-content: flex-end;
+      padding-bottom: 10px;
+      font-family: $font-family;
+      font-size: 20px;
     }
   }
   &__herd {
     display: flex;
-    flex-direction: column;
     flex-wrap: wrap;
-
-    align-items: center;
     &__item {
       display: flex;
+      flex-basis: 30%;
+      align-items: center;
+      font-family: $font-family;
+      font-size: 20px;
+
       &__img {
         height: 4rem;
       }

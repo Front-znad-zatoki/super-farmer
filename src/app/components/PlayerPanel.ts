@@ -3,7 +3,6 @@ import { Render } from '../utils/Render';
 import { AnimalNames } from '../../Enums/AnimalNamesEnum';
 import { GameView } from '../GameView';
 import { ConvertAnimalName } from '../utils/ConvertAnimalName';
-// import { Animal } from '../../Animals/Animal';
 
 export class PlayerPanel {
   /**
@@ -14,7 +13,7 @@ export class PlayerPanel {
   /**
    * Creates player panel and returns it as HTMLElement
    */
-  createPlayerPanel(currentPlayer: Player): HTMLElement {
+  createPlayerPanel(player: Player): HTMLElement {
     return Render.elementFactory(
       'div',
       {
@@ -22,8 +21,8 @@ export class PlayerPanel {
       },
       this.createResultTitle(),
       this.createResultWindow(),
-      this.createExchangeButton(currentPlayer),
-      this.createDiceButton(currentPlayer),
+      this.createExchangeButton(),
+      this.createDiceButton(),
     );
   }
 
@@ -39,29 +38,28 @@ export class PlayerPanel {
       className: 'player-panel__result',
     });
   }
-  private createExchangeButton(player: Player): HTMLElement {
+  private createExchangeButton(): HTMLElement {
     const tradeBtn = Render.elementFactory(
       'button',
       {
         id: 'exchange',
-        className: 'btn button',
-        style: `border:1px solid ${player.theColor}`,
+        className: 'button button__trade',
       },
       Render.elementFactory('img', {
-        className: 'btn__img',
+        className: 'button__trade__img',
         src: 'static/images/ui/vector.png',
       }),
       Render.elementFactory(
         'div',
-        { className: 'btn__text' },
+        { className: 'button__trade__text' },
         Render.elementFactory(
           'p',
-          { className: 'btn__text--big' },
+          { className: 'button__trade__text--big' },
           'Exchange',
         ),
         Render.elementFactory(
           'p',
-          { className: 'btn__text--small' },
+          { className: 'button__trade__text--small' },
           'animals',
         ),
       ),
@@ -69,28 +67,27 @@ export class PlayerPanel {
     tradeBtn.addEventListener('click', () => this.view.handleTrade());
     return tradeBtn;
   }
-  private createDiceButton(player: Player): HTMLElement {
+  private createDiceButton(): HTMLElement {
     const rollBtn = Render.elementFactory(
       'button',
       {
         id: 'roll-dice',
-        className: 'btn button',
-        style: `border:1px solid ${player.theColor}`,
+        className: 'button button__dice',
       },
       Render.elementFactory('span', {
-        className: 'btn__img fas fa-dice',
+        className: 'button__dice__img fas fa-dice',
       }),
       Render.elementFactory(
         'div',
-        { className: 'btn__text' },
+        { className: 'button__dice__text' },
         Render.elementFactory(
           'p',
-          { className: 'btn__text--big' },
+          { className: 'button__dice__text--big' },
           'Roll',
         ),
         Render.elementFactory(
           'p',
-          { className: 'btn__text--small' },
+          { className: 'button__dice__text--small' },
           'the dice',
         ),
       ),
@@ -127,7 +124,7 @@ export class PlayerPanel {
   // ) as HTMLElement).style.display = 'none';
   // }
 
-  turnAlert(player: Player): void {
+  /*turnAlert(player: Player): void {
     Render.render(
       '#sf-app',
       Render.elementFactory(
@@ -136,7 +133,7 @@ export class PlayerPanel {
         `${player.theName}'s turn has passed!`,
       ),
     );
-  }
+  }*/
 
   disableTrade(): void {
     (document.querySelector('#exchange') as HTMLElement).setAttribute(

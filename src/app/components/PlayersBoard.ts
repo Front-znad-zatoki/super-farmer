@@ -20,19 +20,23 @@ export class PlayersBoard {
       'h3',
       {
         className: 'players__data__name',
-        style: `color:${player.theColor}`,
       },
       player.theName,
     );
-    const playerAvatar: HTMLElement = Render.elementFactory('img', {
-      className: 'players__data__avatar',
-      src: player.theAvatar,
-    });
-    const playerTimer: HTMLElement = Render.elementFactory(
+    const playerAvatar: HTMLElement = Render.elementFactory(
       'div',
-      { id: 'time-left', className: 'players__data__time' },
-      `Time left`,
+      {
+        className: 'players__data__avatar',
+      },
+      Render.elementFactory('img', {
+        className: 'players__data__avatar--img',
+        src: player.theAvatar,
+      }),
     );
+    const playerTimer: HTMLElement = Render.elementFactory('div', {
+      id: 'time-left',
+      className: 'players__data__time',
+    });
     const herdView = Render.elementFactory('div', {
       className: 'players__herd',
     });
@@ -66,9 +70,11 @@ export class PlayersBoard {
   /*updates timer on players board*/
   updateTime(timeLeft: number): void {
     const timer = document.querySelector('#time-left') as HTMLElement;
-    timer.innerText = `Time left: ${timeLeft} sec.`;
-    if (timeLeft <= 0) {
-      timer.style.display = 'none';
-    }
+    timer.innerHTML =
+      timeLeft < 10
+        ? `<h3>0:0${timeLeft}</h3><p>time left</p>`
+        : `<h3>0:${timeLeft}</h3><p>time left</p>`;
+    // if (timeLeft <= 0) {
+    // timer.style.display = 'none';
   }
 }
