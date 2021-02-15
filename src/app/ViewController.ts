@@ -160,6 +160,10 @@ export class ViewController {
     this.gameView.disableTrade();
   }
 
+  disableRoll(): void {
+    this.gameView.disableRoll();
+  }
+
   // TODO: CHECK IF STILL NECESSARY
   // refreshHerd(): void {
   //   this.gameView.refreshHerd(this.gameController?.getBank() as Bank);

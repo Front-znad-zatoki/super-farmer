@@ -9,6 +9,7 @@ import { Bank } from './Bank';
 import { LivestockConfigInterface } from '../../Interfaces/LivestockConfigInterface';
 import { ProtectorsConfigInterface } from '../../Interfaces/ProtectorsConfigInterface';
 import { HerdOwners } from '../../Enums/HerdOwnerEnum';
+import { AiPlayer } from '../AiPlayer';
 import { DiceBuilder } from '../DiceBuilder';
 
 export class Game {
@@ -44,15 +45,23 @@ export class Game {
       protectorsConfig,
       HerdOwners.BANK,
     );
-    this.players = playersConfig.map(
-      (player) =>
-        new Player(
-          player.name,
-          player.path,
-          player.color,
-          this.playersHerdConfig,
-        ),
-    );
+    this.players = [
+      ...playersConfig.map((player) =>
+        player.isAI
+          ? new AiPlayer(
+              player.name,
+              player.path,
+              player.color,
+              this.playersHerdConfig,
+            )
+          : new Player(
+              player.name,
+              player.path,
+              player.color,
+              this.playersHerdConfig,
+            ),
+      ),
+    ];
     this.currentPlayerNumber = 0;
     this.bank = new Bank(this.banksHerdConfig);
     const [firstDice, secondDice] = DiceBuilder.build(

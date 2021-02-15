@@ -2,6 +2,7 @@ import { GameProcessor } from './logic/GameProcessor';
 import { ViewController } from './ViewController';
 import { Game } from './logic/Game';
 import { Bank } from './logic/Bank';
+import { AiPlayer } from './AiPlayer';
 import { Configuration } from './logic/Configuration';
 
 export class GameController {
@@ -17,6 +18,10 @@ export class GameController {
 
   get theGame(): Game {
     return this.game;
+  }
+
+  get theGameProcessor(): GameProcessor {
+    return this.gameProcessor;
   }
 
   /**
@@ -40,14 +45,16 @@ export class GameController {
   //   this.view.turnAlert();
   // }
 
-  private isGameWon(): void {
+  private isGameWon(): boolean {
+    const gameIsWon = this.gameProcessor.checkWin();
     if (this.gameProcessor.checkWin()) {
       this.view.displayWinModal(this.game.theCurrentPlayer);
     }
+    return gameIsWon;
   }
 
-  checkIfGameIsWon(): void {
-    this.isGameWon();
+  checkIfGameIsWon(): boolean {
+    return this.isGameWon();
   }
 
   /**
@@ -70,6 +77,11 @@ export class GameController {
       this.game.theCurrentPlayer,
       this.game.theBank,
     );
+    if (this.game.theCurrentPlayer instanceof AiPlayer) {
+      this.view.disableTrade();
+      this.view.disableRoll();
+      this.game.theCurrentPlayer.makeAMove(this);
+    }
   }
 
   // updateTimeRemaining(timeLeft: number): void {
