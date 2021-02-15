@@ -8,7 +8,7 @@ export class MenuView extends EmptyView {
   private modeModal: ModeView;
   private menuViewContent: HTMLElement;
   constructor(private viewController: ViewController) {
-    super(false);
+    super();
     const backCallback = () => this.show();
     const submitCallback = (
       isDynamic: boolean,

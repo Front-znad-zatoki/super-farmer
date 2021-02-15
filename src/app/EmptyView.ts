@@ -3,9 +3,9 @@ import { Render } from './utils/Render';
 export abstract class EmptyView {
   protected view: HTMLElement;
 
-  constructor(isHidden = true) {
+  constructor() {
     this.view = Render.elementFactory('div', {
-      className: `view${isHidden ? ' hidden' : ''}`,
+      className: 'view',
     });
   }
 
