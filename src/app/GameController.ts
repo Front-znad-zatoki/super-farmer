@@ -4,6 +4,8 @@ import { Game } from './logic/Game';
 import { Bank } from './logic/Bank';
 import { AiPlayer } from './AiPlayer';
 import { Configuration } from './logic/Configuration';
+import { Alert } from './components/Alert';
+import { AlertType } from '~src/Enums/AlertEnum';
 
 export class GameController {
   private game: Game;
@@ -41,9 +43,12 @@ export class GameController {
     this.gameProcessor.pauseTurn();
   }
 
-  // turnAlert(): void {
-  //   this.view.turnAlert();
-  // }
+  turnAlert(): void {
+    Alert.updateAlert(
+      `${this.game.theCurrentPlayer.theName}'s turn has passed.`,
+      AlertType.CRITICAL,
+    );
+  }
 
   private isGameWon(): boolean {
     const gameIsWon = this.gameProcessor.checkWin();
@@ -72,6 +77,10 @@ export class GameController {
    */
   nextPlayer(): void {
     this.gameProcessor.nextPlayer();
+    Alert.updateAlert(
+      `${this.game.theCurrentPlayer.theName}'s turn has started.`,
+      AlertType.INFO,
+    );
     this.view.startGame(
       this.game.thePlayers,
       this.game.theCurrentPlayer,
@@ -97,6 +106,7 @@ export class GameController {
     this.view.displayTradeModal(
       this.game.theCurrentPlayer,
       this.game.theTrade,
+      this.game.banksHerdConfig,
     );
   }
 

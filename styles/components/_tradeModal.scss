@@ -2,7 +2,7 @@
   display: grid;
   height: 100%;
   column-gap: 1rem;
-  grid-template-columns: 2fr 1.5fr 2fr;
+  grid-template-columns: 2fr 1.5fr 2fr 2fr;
 
   &__heading {
     margin-bottom: 3.3rem;
@@ -55,11 +55,22 @@
         outline: none;
       }
     }
+
+    &--hints {
+      display: inline-block;
+      align-self: center;
+      justify-self: center;
+    }
   }
 
   &__row {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
+
+    &--hints {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
   }
 
   &__player-heading {

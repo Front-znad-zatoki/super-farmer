@@ -14,6 +14,9 @@ import { Configuration } from './logic/Configuration';
 import { dynamicGameConfiguration } from './logic/dynamicGameConfiguration';
 import { AnimalNames } from '../Enums/AnimalNamesEnum';
 import { cloneDeep } from 'lodash';
+import { Alert } from './components/Alert';
+import { AlertType } from '~src/Enums/AlertEnum';
+import { HerdConfigInterface } from '~src/Interfaces/HerdConfigInterface';
 
 export class ViewController {
   private menuView: MenuView;
@@ -59,6 +62,10 @@ export class ViewController {
       this.gameController.theGame.theCurrentPlayer,
       this.gameController.theGame.theBank,
     );
+    Alert.updateAlert(
+      `Game has started! ${this.gameController.theGame.theCurrentPlayer.theName}'s turn.`,
+      AlertType.INFO,
+    );
   }
 
   startGame(
@@ -95,22 +102,23 @@ export class ViewController {
   displayWinModal(player: Player): void {
     Render.render('body', this.winModal.createWinModal(player));
   }
-  // TODO: CHECK IF STILL NECESSARY
-  // turnAlert(): void {
-  //   this.gameView.turnAlert();
-  // }
 
   displayRulesModal(): void {
     // TODO: display rules
   }
 
-  displayTradeModal(player: Player, trade: Trade): void {
+  displayTradeModal(
+    player: Player,
+    trade: Trade,
+    animalConfig: HerdConfigInterface[],
+  ): void {
     if (this.tradeModal) {
       this.tradeModal.setNextPlayer(player);
     } else {
       this.tradeModal = new TradeModal(
         trade,
         player,
+        animalConfig,
         () => this.runTimer(),
         () => this.processAfterTrade(),
       );

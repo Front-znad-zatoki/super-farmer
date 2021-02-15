@@ -182,10 +182,6 @@ export class GameView extends EmptyView {
     this.viewController.nextTurn();
   }
 
-  // turnAlert(): void {
-  //   this.playerPanel.turnAlert();
-  // }
-
   pauseTurn(): void {
     this.viewController.pauseTurn();
   }
