@@ -22,9 +22,10 @@ export class GameProcessor {
     const turnTimer = setInterval(() => {
       if (!this.game.theTimer.running) {
         clearInterval(turnTimer);
-        if (Math.round(this.game.theTimer.theTurnTimeLeft) === 0) {
-          this.gameController.turnAlert();
-        }
+        // TODO: CHECK IF UPDATE NEEDED FOR PLAYER BOARD
+        // if (Math.round(this.game.theTimer.theTurnTimeLeft) === 0) {
+        //   this.gameController.turnAlert();
+        // }
         if (!this.game.theTimer.hasGameEnded) {
           setTimeout(() => {
             this.gameController.nextPlayer();
@@ -37,9 +38,10 @@ export class GameProcessor {
           AlertType.WARN,
         );
       }
-      this.gameController.updateTimeRemaining(
-        Math.round(this.game.theTimer.theTurnTimeLeft),
-      );
+      // TODO: CHECK IF UPDATE NEEDED FOR PLAYER BOARD
+      // this.gameController.updateTimeRemaining(
+      //   Math.round(this.game.theTimer.theTurnTimeLeft),
+      // );
     }, 50);
   }
 

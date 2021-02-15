@@ -81,9 +81,9 @@ export class GameController {
     );
   }
 
-  updateTimeRemaining(timeLeft: number): void {
-    this.view.updateRemainingTime(timeLeft);
-  }
+  // updateTimeRemaining(timeLeft: number): void {
+  //   this.view.updateRemainingTime(timeLeft);
+  // }
 
   quitGame(): void {
     this.gameProcessor.quitGame();
