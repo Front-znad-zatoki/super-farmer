@@ -9,11 +9,7 @@ import { PlayerDTO } from '../../Interfaces/PlayerDTOInterface';
 export class Configuration implements GameConfigInterface {
   protected _mode: GameModes;
   protected _roundTimeInSeconds: number;
-  protected _playersConfig: {
-    name: string;
-    path: string;
-    color: string;
-  }[];
+  protected _playersConfig: PlayerDTO[];
   protected _livestockConfig: LivestockConfigInterface[];
   protected _protectorsConfig: ProtectorsConfigInterface[];
   protected _predatorsConfig: PredatorsConfigInterface[];
@@ -44,7 +40,7 @@ export class Configuration implements GameConfigInterface {
     return this._mode;
   }
   set roundTimeInSeconds(numberOfSeconds: number) {
-    this.roundTimeInSeconds = numberOfSeconds;
+    this._roundTimeInSeconds = numberOfSeconds;
   }
   get roundTimeInSeconds(): number {
     return this._roundTimeInSeconds;
@@ -52,11 +48,7 @@ export class Configuration implements GameConfigInterface {
   set playersConfig(newPlayersConfig: PlayerDTO[]) {
     this._playersConfig = newPlayersConfig;
   }
-  get playersConfig(): {
-    name: string;
-    path: string;
-    color: string;
-  }[] {
+  get playersConfig(): PlayerDTO[] {
     return this._playersConfig;
   }
 
@@ -90,11 +82,7 @@ export class Configuration implements GameConfigInterface {
     return this._predatorsConfig;
   }
 
-  addNewPlayer(newPlayerConfig: {
-    name: string;
-    path: string;
-    color: string;
-  }): void {
+  addNewPlayer(newPlayerConfig: PlayerDTO): void {
     this._playersConfig.concat(newPlayerConfig);
   }
   removeLastPlayer(): void {

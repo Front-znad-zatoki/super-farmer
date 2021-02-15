@@ -1,5 +1,5 @@
 import { AnimalNames } from '../Enums/AnimalNamesEnum';
 
-export interface GetRandomValue {
+export interface RandomAnimalInterface {
   getRandomValue(): AnimalNames;
 }

@@ -47,8 +47,7 @@ export class GameController {
 
   private isGameWon(): boolean {
     const gameIsWon = this.gameProcessor.checkWin();
-    if (gameIsWon) {
-      this.gameProcessor.stopTurn();
+    if (this.gameProcessor.checkWin()) {
       this.view.displayWinModal(this.game.theCurrentPlayer);
     }
     return gameIsWon;
