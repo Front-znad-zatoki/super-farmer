@@ -11,6 +11,7 @@ export const dynamicGameConfiguration: GameConfigInterface = {
       name: 'Carlos Santanos',
       path: '../../static/images/avatars/small_dog.svg',
       color: 'blue',
+      isAI: false,
     },
   ],
 

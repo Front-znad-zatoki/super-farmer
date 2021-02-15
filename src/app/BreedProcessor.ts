@@ -1,10 +1,8 @@
-import { GetRandomValue } from '../Interfaces/DiceInterface';
-import { FirstDice } from './FirstDice';
-import { SecondDice } from './SecondDice';
+import { RandomAnimalInterface } from '../Interfaces/RandomAnimalInterface';
 import { Player } from '../Player';
 import { AnimalNames } from '../Enums/AnimalNamesEnum';
 import { Herd } from './logic/Herd';
-import { add, divide, floor, min } from 'lodash';
+import { add, divide, floor, min, remove } from 'lodash';
 import { Bank } from './logic/Bank';
 import { PredatorsConfigInterface } from '../Interfaces/PredatorsConfigInterface';
 import { GameModes } from '../Enums/GameModeEnums';
@@ -16,18 +14,15 @@ export type RollResult = {
 };
 
 export class BreedProcessor {
-  randomResultInterfaceWolf: GetRandomValue;
-  randomResultInterfaceFox: GetRandomValue;
-  mode: GameModes;
   predators: Predator[];
+
   constructor(
     private bank: Bank,
+    private firstDice: RandomAnimalInterface,
+    private secondDice: RandomAnimalInterface,
     predatorConfig: PredatorsConfigInterface[],
-    mode: GameModes,
+    private mode: GameModes,
   ) {
-    this.randomResultInterfaceWolf = new SecondDice();
-    this.randomResultInterfaceFox = new FirstDice();
-    this.mode = mode;
     this.predators = predatorConfig.map(
       ({ name, path, roles, kills, isChasedAwayBy, exclamation }) => {
         return new Predator(
@@ -41,6 +36,7 @@ export class BreedProcessor {
       },
     );
   }
+
   getPredatorByName(predatorName: AnimalNames): Predator {
     const attackingPredator = this.predators.find(
       (predator) => predator.theName === predatorName,
@@ -50,35 +46,38 @@ export class BreedProcessor {
   }
 
   processBreedPhase({ theHerd }: Player): RollResult {
-    const wolfDiceResult = this.randomResultInterfaceWolf.getRandomValue();
-    const foxDiceResult = this.randomResultInterfaceFox.getRandomValue();
-    const equalResult = foxDiceResult === wolfDiceResult;
-    const roll = [wolfDiceResult, foxDiceResult];
-    if (equalResult) {
-      const count = this.breedAnimals(foxDiceResult, theHerd, true);
-      return { rollResult: roll, gain: [[foxDiceResult, count]] };
+    const roll = [
+      this.firstDice.getRandomValue(),
+      this.secondDice.getRandomValue(),
+    ];
+    const [firstDice, secondDice] = roll;
+    if (firstDice === secondDice) {
+      const count = this.breedAnimals(firstDice, theHerd, true);
+      return {
+        rollResult: roll,
+        gain: count ? [[firstDice, count]] : [],
+      };
     }
     const gain: [AnimalNames, number][] = [];
-    if (foxDiceResult === AnimalNames.FOX) {
-      const fox = this.getPredatorByName(AnimalNames.FOX);
-      this.returnToBank(fox, theHerd);
-      theHerd.cullAnimals(fox, this.mode);
-    } else {
-      gain.push([
-        foxDiceResult,
-        this.breedAnimals(foxDiceResult, theHerd),
-      ]);
-    }
-    if (wolfDiceResult === AnimalNames.WOLF) {
-      const wolf = this.getPredatorByName(AnimalNames.WOLF);
-      this.returnToBank(wolf, theHerd);
-      theHerd.cullAnimals(wolf, this.mode);
-    } else {
-      gain.push([
-        wolfDiceResult,
-        this.breedAnimals(wolfDiceResult, theHerd),
-      ]);
-    }
+    roll
+      .filter((animal) => !this.isPredator(animal))
+      .forEach((animal) => {
+        const grow = this.breedAnimals(animal, theHerd);
+        if (grow) {
+          gain.push([animal, grow]);
+        }
+      });
+    roll
+      .filter((animal) => this.isPredator(animal))
+      .forEach((animal) => {
+        const predator = this.getPredatorByName(animal);
+        const isHerdCulled = this.returnToBank(predator, theHerd);
+        if (isHerdCulled && gain.length > 0) {
+          this.reduceGain(predator, gain);
+        }
+        predator.attackHerd();
+        theHerd.cullAnimals(predator, this.mode);
+      });
     return { rollResult: roll, gain: gain };
   }
 
@@ -103,29 +102,35 @@ export class BreedProcessor {
     return herdGrow;
   }
 
-  private returnToBank(predator: Predator, herd: Herd): void {
+  private isPredator(animal: AnimalNames): boolean {
+    return this.predators.some(({ theName }) => theName === animal);
+  }
+
+  private returnToBank(predator: Predator, herd: Herd): boolean {
     const animalsToCull = predator.kills;
     const protector = predator.isChasedAwayBy;
     const hasProtector = herd.getAnimalNumber(protector);
     const isDynamicMode = this.mode === GameModes.DYNAMIC;
     const killsRabbits = animalsToCull.includes(AnimalNames.RABBIT);
     if (hasProtector) {
-      return this.bank.theHerd.addAnimalsToHerd(protector, 1);
+      this.bank.theHerd.addAnimalsToHerd(protector, 1);
+      return false;
     }
 
     herd.theAnimals
-      .filter(([animal]) => {
-        return animalsToCull.includes(animal.theName as AnimalNames);
-      })
-      .forEach(([animal, count]) => {
+      .filter(([animal]) =>
+        animalsToCull.includes(animal.theName as AnimalNames),
+      )
+      .forEach(([animal, count]) =>
         this.bank.theHerd.addAnimalsToHerd(
           animal.theName as AnimalNames,
           count,
-        );
-      });
+        ),
+      );
     if (isDynamicMode && killsRabbits) {
       this.bank.theHerd.removeAnimalsFromHerd(AnimalNames.RABBIT, 1);
     }
+    return true;
   }
 
   private calculateHerdGrow(
@@ -143,5 +148,14 @@ export class BreedProcessor {
       diceResult,
     );
     return min([herdMaxGrow, bankContains]) as number;
+  }
+
+  private reduceGain(
+    predator: Predator,
+    animalsGain: [AnimalNames, number][],
+  ): void {
+    remove(animalsGain, ([animal]) => {
+      return predator.kills.includes(animal);
+    });
   }
 }

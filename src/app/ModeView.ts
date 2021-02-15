@@ -1,30 +1,41 @@
-import { BasicModal } from './BasicModal';
-import { Render } from '../utils/Render';
-import { PlayerDTO } from '../../Interfaces/PlayerDTOInterface';
-import { CallbackOneParam } from '../../Interfaces/CallbackOneParamInterface';
-import { Avatars } from '../../Enums/AvatarsEnum';
-import { Colors } from '../../Enums/ColorsEnum';
-export class ModeModal extends BasicModal {
+import { Render } from './utils/Render';
+import {
+  CallbackNoParam,
+  CallbackTwoParam,
+} from '~src/Interfaces/CallbackInterface';
+import { Avatars } from '~src/Enums/AvatarsEnum';
+import { Colors } from '~src/Enums/ColorsEnum';
+import { EmptyView } from './EmptyView';
+import { PlayerDTO } from '~src/Interfaces/PlayerDTOInterface';
+
+export class ModeView extends EmptyView {
   private modeForm: HTMLFormElement;
   private addPlayerButton: HTMLElement;
   private removePlayerButton: HTMLElement;
-  private playerInputsWrapper: HTMLElement;
+  private addPanelsWrapper: HTMLElement;
   private backButton!: HTMLElement;
   private playButton!: HTMLElement;
-  private submitCallback: CallbackOneParam<PlayerDTO[]>;
+  private submitCallback: CallbackTwoParam<boolean, PlayerDTO[]>;
+  private backCallback: CallbackNoParam;
 
   /**
-   * @param submitCallback - will be called onSubmit with PlayerDTO[] data in the argument
+   * @param submitCallback - will be called onSubmit with isDynamic and PlayerDTO[] data in the arguments
    */
-  constructor(submitCallback: CallbackOneParam<PlayerDTO[]>) {
+  constructor(
+    backCallback: CallbackNoParam,
+    submitCallback: CallbackTwoParam<boolean, PlayerDTO[]>,
+  ) {
     super();
     this.addPlayerButton = Render.elementFactory(
       'button',
       {
         type: 'button',
-        className: 'mode-form__add-player-btn',
+        className: 'mode-form__add-btn',
       },
-      'add next player',
+      Render.elementFactory('img', {
+        className: 'mode-form__add-btn-img',
+        src: '.\\static\\images\\ui\\plus-circle.svg',
+      }),
     );
     this.removePlayerButton = Render.elementFactory(
       'button',
@@ -34,42 +45,68 @@ export class ModeModal extends BasicModal {
       },
       'remove player',
     );
-    this.playerInputsWrapper = Render.elementFactory('div', {
-      className: 'mode-inputs-wrapper',
+    this.addPanelsWrapper = Render.elementFactory('div', {
+      className: 'mode-players-wrapper',
     });
     this.modeForm = this.createForm();
+    this.backCallback = backCallback;
     this.submitCallback = submitCallback;
-  }
 
-  /**
-   * Creates ModeModal and returns it as HTMLElement.
-   */
-  createModeModal(): HTMLElement {
-    this.renderBasicModal(
-      'Add your nick, choose avatar and color',
-      undefined,
+    Render.childrenInjector(
+      this.viewContainer,
       this.modeForm,
       this.generateButtons(),
     );
+
     this.addEventListeners();
-    return this.modal;
+  }
+
+  /**
+   * Returns ModeView as HTMLElement.
+   */
+  get theModeView(): HTMLElement {
+    return this.view;
   }
 
   private createForm(): HTMLFormElement {
-    Render.childrenInjector(this.playerInputsWrapper);
+    const heading = Render.elementFactory(
+      'h2',
+      { className: 'mode-view__heading' },
+      'Click to add new player',
+    );
 
+    const mode = Render.elementFactory(
+      'div',
+      {
+        className: 'mode-form__mode',
+      },
+      Render.elementFactory('input', {
+        className: 'mode-form__mode-input',
+        type: 'checkbox',
+        id: 'mode',
+        name: 'mode',
+      }),
+      Render.elementFactory(
+        'label',
+        {
+          className: 'mode-form__mode-label',
+          for: 'mode',
+        },
+        'dynamic mode',
+      ),
+    );
     const form = Render.elementFactory(
       'form',
       {
         id: 'mode-form',
         action: '',
         method: 'get',
-        className: 'mode-modal',
+        className: 'mode-form',
       },
-
-      this.playerInputsWrapper,
+      heading,
+      mode,
+      this.addPanelsWrapper,
       this.addPlayerButton,
-      this.removePlayerButton,
     );
     this.addPlayer();
 
@@ -93,7 +130,7 @@ export class ModeModal extends BasicModal {
   }
 
   private addPlayer(): void {
-    const numberOfPlayers = this.playerInputsWrapper.children.length;
+    const numberOfPlayers = this.addPanelsWrapper.children.length;
     if (numberOfPlayers >= 4) return;
 
     const playerInputRow = this.generateAddPlayerFields(
@@ -103,21 +140,21 @@ export class ModeModal extends BasicModal {
     if (numberOfPlayers >= 3) {
       this.addPlayerButton.classList.add('hidden');
     }
-    Render.childrenInjector(this.playerInputsWrapper, playerInputRow);
+    Render.childrenInjector(this.addPanelsWrapper, playerInputRow);
     if (numberOfPlayers === 1) {
       this.removePlayerButton.classList.remove('hidden');
     }
   }
 
   private removePlayer(): void {
-    const numberOfPlayers = this.playerInputsWrapper.children.length;
+    const numberOfPlayers = this.addPanelsWrapper.children.length;
     if (numberOfPlayers <= 1) return;
 
     if (numberOfPlayers === 4) {
       this.addPlayerButton.classList.remove('hidden');
     }
 
-    (this.playerInputsWrapper.lastElementChild as Element).remove();
+    (this.addPanelsWrapper.lastElementChild as Element).remove();
 
     if (numberOfPlayers === 2)
       this.removePlayerButton.classList.add('hidden');
@@ -143,7 +180,7 @@ export class ModeModal extends BasicModal {
     const buttonsWrapper = Render.elementFactory(
       'div',
       {
-        className: 'modal__buttons',
+        className: 'mode__buttons',
       },
       this.backButton,
       this.playButton,
@@ -157,41 +194,62 @@ export class ModeModal extends BasicModal {
       type: 'text',
       id: indicator,
       name: indicator,
-      placeholder: `Player ${numberOfPlayer}`,
+      placeholder: 'type nickname here',
       className: 'mode-form__input',
     });
 
     return input;
   }
 
+  private generateAICheckbox(numberOfPlayer: number): HTMLElement {
+    const indicator = `ai_${numberOfPlayer}`;
+    const checkbox = Render.elementFactory('input', {
+      className: 'mode-form__ai-input',
+      type: 'checkbox',
+      id: indicator,
+      name: indicator,
+    });
+    const label = Render.elementFactory(
+      'label',
+      {
+        className: 'mode-form__ai-label',
+      },
+      'AI Player',
+    );
+    const aiWrapper = Render.elementFactory(
+      'div',
+      {
+        className: 'mode-form__ai',
+      },
+      checkbox,
+      label,
+    );
+    return aiWrapper;
+  }
+
   private generateColorInput(numberOfPlayer: number): HTMLElement {
     const colorInputs: HTMLElement[] = Object.values(Colors).reduce(
       (colorsElements: HTMLElement[], value, index) => {
         const indicator = `${numberOfPlayer}colorChoice_${index + 1}`;
-        const label = Render.elementFactory(
-          'label',
-          {
-            for: indicator,
-            className: 'mode-form__color-label',
-          },
-          Render.elementFactory('div', {
-            className: 'mode-form__color-label',
-            style: `background-color: ${value}`,
-          }),
-        );
+        const label = Render.elementFactory('label', {
+          for: indicator,
+          className: 'mode-form__color-label',
+          style: `background-color: ${value}`,
+        });
         const radio = Render.elementFactory('input', {
           type: 'radio',
           name: `color_${numberOfPlayer}`,
           className: 'mode-form__color-radio',
           id: indicator,
+          required: '',
           value: value,
         });
         colorsElements.push(
           Render.elementFactory(
             'div',
             { className: 'mode-form__color-wrapper' },
-            label,
             radio,
+            label,
           ),
         );
         return colorsElements;
@@ -229,14 +287,15 @@ export class ModeModal extends BasicModal {
           name: `path_${numberOfPlayer}`,
           className: 'mode-form__avatar-radio',
           id: indicator,
+          required: 'true',
           value: value,
         });
         avatarsElements.push(
           Render.elementFactory(
             'div',
             { className: 'mode-form__avatar-wrapper' },
-            label,
             radio,
+            label,
           ),
         );
         return avatarsElements;
@@ -257,54 +316,75 @@ export class ModeModal extends BasicModal {
   ): HTMLElement {
     const fieldsWrapper = Render.elementFactory(
       'div',
-      {},
+      { className: 'mode-form__add-player' },
       this.generateNameInput(numberOfPlayer),
       this.generateAvatarInput(numberOfPlayer),
       this.generateColorInput(numberOfPlayer),
     );
+    if (numberOfPlayer > 1) {
+      Render.childrenInjector(
+        fieldsWrapper,
+        this.generateAICheckbox(numberOfPlayer),
+        this.removePlayerButton,
+      );
+    }
     return fieldsWrapper;
   }
 
   private convertDataFormToPlayersData(
     formData: FormData,
-  ): PlayerDTO[] {
-    const playersData = [];
+  ): { isDynamic: boolean; players: PlayerDTO[] } {
+    const players: PlayerDTO[] = [];
+    let isDynamic = false;
+
     for (const [formKey, formValue] of formData.entries()) {
       const value = formValue.toString();
       const [key, numberOfPlayer] = formKey.split('_');
       const index = +numberOfPlayer - 1;
       switch (key) {
         case 'name': {
-          playersData.push({
+          players.push({
             name: '',
-            path: Avatars.FARMER1,
-            color: Colors.GREEN,
+            path: '',
+            color: '',
+            isAI: false,
           } as PlayerDTO);
-          playersData[index].name =
+          players[index].name =
             value.trim().length > 0
               ? value
-              : `Janush ${playersData.length}`;
+              : `Janush ${players.length}`;
           break;
         }
         case 'path': {
-          playersData[index].path = value;
+          players[index].path = value;
           break;
         }
         case 'color': {
-          playersData[index].color = value;
+          players[index].color = value;
+          break;
+        }
+        case 'ai': {
+          players[index].isAI = true;
+          break;
+        }
+        case 'mode': {
+          isDynamic = true;
           break;
         }
       }
     }
-    return playersData;
+
+    return { isDynamic, players };
   }
 
   private handleSubmit = (event: Event): void => {
     event.preventDefault();
     const formData = new FormData(event.target as HTMLFormElement);
-    const playersData = this.convertDataFormToPlayersData(formData);
-    this.submitCallback(playersData);
-    this.hideModal();
+    const { isDynamic, players } = this.convertDataFormToPlayersData(
+      formData,
+    );
+    this.submitCallback(isDynamic, players);
+    this.hide();
     this.modeForm.reset();
   };
 
@@ -314,10 +394,14 @@ export class ModeModal extends BasicModal {
 
   private handleClickRemovePlayer = (): void => {
     this.removePlayer();
+    this.addPanelsWrapper.lastChild?.appendChild(
+      this.removePlayerButton,
+    );
   };
 
   private handleClickBackButton = (): void => {
-    this.hideModal();
+    this.hide();
+    this.backCallback();
     this.modeForm.reset();
   };
 }
