@@ -45,15 +45,17 @@ export class GameController {
     this.view.turnAlert();
   }
 
-  private isGameWon(): void {
-    if (this.gameProcessor.checkWin()) {
+  private isGameWon(): boolean {
+    const gameIsWon = this.gameProcessor.checkWin();
+    if (gameIsWon) {
       this.gameProcessor.stopTurn();
       this.view.displayWinModal(this.game.theCurrentPlayer);
     }
+    return gameIsWon;
   }
 
-  checkIfGameIsWon(): void {
-    this.isGameWon();
+  checkIfGameIsWon(): boolean {
+    return this.isGameWon();
   }
 
   /**

@@ -62,7 +62,7 @@ export class Game {
         new AiPlayer(
           'AiPlayer',
           './static/images/playerAvatars/woman.svg',
-          undefined,
+          'blue',
           this.playersHerdConfig,
         ),
       );

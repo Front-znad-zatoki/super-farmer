@@ -1,24 +1,31 @@
+import { Animal } from '~src/Animals/Animal';
 import { AnimalNames } from '~src/Enums/AnimalNamesEnum';
 import { AnimalRoles } from '~src/Enums/AnimalRolesEnum';
+import { HerdConfigInterface } from '~src/Interfaces/HerdConfigInterface';
 import { Player } from '../Player';
 import { GameController } from './GameController';
 import { Offer } from './Trade';
-import { ConvertAnimalName } from './utils/ConvertAnimalName';
 
 export class AiPlayer extends Player {
+  constructor(
+    name: string,
+    avatar: string,
+    color: string,
+    private herdConfig: HerdConfigInterface[],
+  ) {
+    super(name, avatar, color, herdConfig);
+  }
   /**
    * Makes a move for AI Player
    * @param gameController for the game that the player is participating in
    */
   makeAMove(gameController: GameController): void {
     this.trade(gameController);
-    if (gameController.theGameProcessor.checkWin()) {
-      gameController.checkIfGameIsWon();
+    if (gameController.checkIfGameIsWon()) {
       return;
     }
     gameController.breed();
-    if (gameController.theGameProcessor.checkWin()) {
-      gameController.checkIfGameIsWon();
+    if (gameController.checkIfGameIsWon()) {
       return;
     }
   }
@@ -52,6 +59,9 @@ export class AiPlayer extends Player {
       [AnimalNames.SHEEP, [[AnimalNames.RABBIT, 6]]],
     ];
     for (const [animalToSell, target] of oneToManyTrades) {
+      if (this.herd.getAnimalNumber(animalToSell) === 0) {
+        break;
+      }
       if (this.herd.getAnimalNumber(animalToSell) > 1) {
         const offer: Offer[] = [[animalToSell, 1]];
         if (
@@ -63,8 +73,6 @@ export class AiPlayer extends Player {
         ) {
           return;
         }
-      } else if (this.herd.getAnimalNumber(animalToSell) === 0) {
-        break;
       }
     }
 
@@ -148,21 +156,28 @@ export class AiPlayer extends Player {
   private animalsForTrade(
     targetAnimal: AnimalNames = AnimalNames.HORSE,
   ): [AnimalNames, number][] {
-    const animalsForTrade: [AnimalNames, number][] = [];
-    this.herd.theAnimals.forEach(([animal, count]) => {
-      if (
+    return this.herd.theAnimals
+      .filter(([animal, count]) => {
         count > 1 &&
-        animal.theValue <
-          ConvertAnimalName.toAnimalObject(targetAnimal).theValue &&
-        !animal.theRoles.includes(AnimalRoles.GUARDIAN)
-      ) {
-        animalsForTrade.push([
-          animal.theName as AnimalNames,
-          count - 1,
-        ]);
-      }
-    });
-    return animalsForTrade;
+          animal.theValue < this.getValue(targetAnimal) &&
+          !animal.theRoles.includes(AnimalRoles.GUARDIAN);
+      })
+      .reduce(
+        (
+          animals: [AnimalNames, number][],
+          animal: [Animal, number],
+        ): [AnimalNames, number][] => [
+          ...animals,
+          [animal[0].theName as AnimalNames, animal[1] - 1],
+        ],
+        [],
+      );
+  }
+
+  private getValue(animalName: AnimalNames): number {
+    return [...this.herdConfig].filter(
+      (animal) => animal.name === animalName,
+    )[0].tradeValue;
   }
 
   //Counts value of animals without horse and guardians to decide whether to buy a dog or not
