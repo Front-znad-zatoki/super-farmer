@@ -5,7 +5,10 @@
 # Super Farmer Game
   
 Welcome to our digital version of a fantastic family game Super Farmer!
-You are an animal herder, wishing to become a Super Farmer. Your animals breed and herd grows, bringing you profit. You can exchange your animals for other species if you find this exchange profitable. To become a Super Farmer you must gather livestock including at least one horse, cow, pig, sheep and rabbit. However, be warned! In neighborhood, the wolf and the fox are hunting for your animals.
+You are an animal herder, wishing to become a Super Farmer. Your animals breed and herd grows, bringing you profit. 
+You can exchange your animals for other species if you find this exchange profitable.
+To become a Super Farmer you must gather livestock including at least one horse, cow, pig, sheep and rabbit. 
+However, be warned! In the neighborhood, the wolf and the fox are hunting for your animals.
 
 Version 1.0
 ---
