@@ -68,6 +68,7 @@
 
 .button__trade,
 .button__dice {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -76,19 +77,18 @@
   background-color: $color-primary;
   border-radius: $border-radius;
   outline: none;
-  position: relative;
   &__img {
     position: absolute;
+    left: 40px;
     height: 4rem;
     padding-right: 10px;
     font-size: 4rem;
-    left: 40px;
   }
   &__text {
     display: flex;
     flex-direction: column;
-    text-transform: uppercase;
     font-size: 20px;
+    text-transform: uppercase;
     &--big {
       font-size: 28px;
       font-weight: $font-weight-primary;
