@@ -14,6 +14,8 @@ import { Configuration } from './logic/Configuration';
 import { dynamicGameConfiguration } from './logic/dynamicGameConfiguration';
 import { AnimalNames } from '../Enums/AnimalNamesEnum';
 import { cloneDeep } from 'lodash';
+import { Alert } from './components/Alert';
+import { AlertType } from '~src/Enums/AlertEnum';
 
 export class ViewController {
   private menuView: MenuView;
@@ -60,6 +62,10 @@ export class ViewController {
       this.gameController.theGame.thePlayers,
       this.gameController.theGame.theCurrentPlayer,
       this.gameController.theGame.theBank,
+    );
+    Alert.updateAlert(
+      `Game has started! ${this.gameController.theGame.theCurrentPlayer.theName}'s turn.`,
+      AlertType.INFO,
     );
   }
 

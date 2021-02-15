@@ -1,5 +1,6 @@
 import { AnimalNames } from '../Enums/AnimalNamesEnum';
 import { Player } from '../Player';
+import { Alert } from './components/Alert';
 import { BankBoard } from './components/BankBoard';
 import { PlayerPanel } from './components/PlayerPanel';
 import { PlayersBoard } from './components/PlayersBoard';
@@ -26,6 +27,7 @@ export class GameView {
     Render.removeAllChildren('#sf-app');
     Render.render(
       '#sf-app',
+      Alert.createElement(),
       Render.elementFactory(
         'div',
         { className: 'page-container' },

@@ -7,6 +7,10 @@ import { Bank } from './logic/Bank';
 import { PredatorsConfigInterface } from '../Interfaces/PredatorsConfigInterface';
 import { GameModes } from '../Enums/GameModeEnums';
 import { Predator } from '../../src/Animals/Predator';
+import { Alert } from './components/Alert';
+import { AlertType } from '~src/Enums/AlertEnum';
+import { Protector } from '~src/Animals/Protector';
+import { ProtectorsConfigInterface } from '~src/Interfaces/ProtectorsConfigInterface';
 
 export type RollResult = {
   rollResult: AnimalNames[];
@@ -15,12 +19,14 @@ export type RollResult = {
 
 export class BreedProcessor {
   predators: Predator[];
+  protectors: Protector[];
 
   constructor(
     private bank: Bank,
     private firstDice: RandomAnimalInterface,
     private secondDice: RandomAnimalInterface,
     predatorConfig: PredatorsConfigInterface[],
+    protectorConfig: ProtectorsConfigInterface[],
     private mode: GameModes,
   ) {
     this.predators = predatorConfig.map(
@@ -35,6 +41,17 @@ export class BreedProcessor {
         );
       },
     );
+    this.protectors = protectorConfig.map(
+      ({ name, path, role, tradeValue, chasesAway, exclamation }) =>
+        new Protector(
+          name,
+          path,
+          role,
+          tradeValue,
+          chasesAway,
+          exclamation,
+        ),
+    );
   }
 
   getPredatorByName(predatorName: AnimalNames): Predator {
@@ -45,7 +62,7 @@ export class BreedProcessor {
     return attackingPredator;
   }
 
-  processBreedPhase({ theHerd }: Player): RollResult {
+  processBreedPhase({ theName, theHerd }: Player): RollResult {
     const roll = [
       this.firstDice.getRandomValue(),
       this.secondDice.getRandomValue(),
@@ -53,6 +70,12 @@ export class BreedProcessor {
     const [firstDice, secondDice] = roll;
     if (firstDice === secondDice) {
       const count = this.breedAnimals(firstDice, theHerd, true);
+      Alert.updateAlert(
+        `${theName} gained ${
+          count + ' ' + firstDice + (count > 1 ? 's' : '')
+        }.`,
+        AlertType.INFO,
+      );
       return {
         rollResult: roll,
         gain: count ? [[firstDice, count]] : [],
@@ -75,9 +98,39 @@ export class BreedProcessor {
         if (isHerdCulled && gain.length > 0) {
           this.reduceGain(predator, gain);
         }
-        predator.attackHerd();
+        if (isHerdCulled) {
+          Alert.updateAlert(
+            `${theName}'s herd has been attacked: ${predator.attackHerd()}`,
+            AlertType.CRITICAL,
+          );
+        } else {
+          const protector = this.protectors.filter(
+            ({ theName }) => theName === predator.isChasedAwayBy[0],
+          )[0];
+          Alert.updateAlert(
+            `${theName}'s herd has been protected: ${protector.protectHerd()}.`,
+            AlertType.CRITICAL,
+          );
+        }
         theHerd.cullAnimals(predator, this.mode);
       });
+    if (
+      !(this.isPredator(firstDice) || this.isPredator(secondDice))
+    ) {
+      Alert.updateAlert(
+        `${theName} gained ${
+          gain.length
+            ? gain
+                .map(
+                  ([animal, count]) =>
+                    count + ' ' + animal + (count > 1 ? 's' : ''),
+                )
+                .join(' and ')
+            : 'nothing this turn'
+        }.`,
+        AlertType.INFO,
+      );
+    }
     return { rollResult: roll, gain: gain };
   }
 

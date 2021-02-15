@@ -3,6 +3,8 @@ import { ViewController } from './ViewController';
 import { Game } from './logic/Game';
 import { Bank } from './logic/Bank';
 import { Configuration } from './logic/Configuration';
+import { Alert } from './components/Alert';
+import { AlertType } from '~src/Enums/AlertEnum';
 
 export class GameController {
   private game: Game;
@@ -37,7 +39,10 @@ export class GameController {
   }
 
   turnAlert(): void {
-    this.view.turnAlert();
+    Alert.updateAlert(
+      `${this.game.theCurrentPlayer.theName}'s turn has passed.`,
+      AlertType.CRITICAL,
+    );
   }
 
   private isGameWon(): void {
@@ -65,6 +70,10 @@ export class GameController {
    */
   nextPlayer(): void {
     this.gameProcessor.nextPlayer();
+    Alert.updateAlert(
+      `${this.game.theCurrentPlayer.theName}'s turn has started.`,
+      AlertType.INFO,
+    );
     this.view.startGame(
       this.game.thePlayers,
       this.game.theCurrentPlayer,

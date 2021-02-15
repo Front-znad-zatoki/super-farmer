@@ -1,10 +1,12 @@
 import { Animal } from '~src/Animals/Animal';
+import { AlertType } from '~src/Enums/AlertEnum';
 import { CallbackNoParam } from '~src/Interfaces/CallbackInterface';
 import { AnimalNames } from '../../Enums/AnimalNamesEnum';
 import { Player } from '../../Player';
 import { Herd } from '../logic/Herd';
 import { Offer, Trade } from '../Trade';
 import { Render } from '../utils/Render';
+import { Alert } from './Alert';
 import { EmptyModal } from './EmptyModal';
 
 export class TradeModal extends EmptyModal {
@@ -319,6 +321,20 @@ export class TradeModal extends EmptyModal {
     const formData = new FormData(event.target as HTMLFormElement);
     const data = this.formDataIntoTuples(formData);
     if (this.processTrade(data)) {
+      Alert.updateAlert(
+        `${this.player.theName} exchanged ${data[0]
+          .map(
+            ([animal, count]) =>
+              count + ' ' + animal + (count > 1 ? 's' : ''),
+          )
+          .join(' and ')} for ${data[1]
+          .map(
+            ([animal, count]) =>
+              count + ' ' + animal + (count > 1 ? 's' : ''),
+          )
+          .join(' and ')}.`,
+        AlertType.INFO,
+      );
       this.hideModal();
       this.succesCallback();
     }

@@ -1,5 +1,7 @@
+import { AlertType } from '~src/Enums/AlertEnum';
 import { AnimalNames } from '../../Enums/AnimalNamesEnum';
 import { RollResult } from '../BreedProcessor';
+import { Alert } from '../components/Alert';
 import { GameController } from '../GameController';
 import { Game } from './Game';
 
@@ -28,6 +30,12 @@ export class GameProcessor {
             this.gameController.nextPlayer();
           }, 3000);
         }
+      }
+      if (Math.round(this.game.theTimer.theTurnTimeLeft) === 5) {
+        Alert.updateAlert(
+          `${this.game.theCurrentPlayer.theName}'s turn has nearly passed out.`,
+          AlertType.WARN,
+        );
       }
       this.gameController.updateTimeRemaining(
         Math.round(this.game.theTimer.theTurnTimeLeft),

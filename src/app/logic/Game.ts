@@ -66,6 +66,7 @@ export class Game {
       firstDice,
       secondDice,
       predatorsConfig,
+      protectorsConfig,
       this.mode,
     );
     this.trade = new Trade(
