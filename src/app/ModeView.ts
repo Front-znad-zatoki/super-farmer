@@ -95,6 +95,14 @@ export class ModeView extends EmptyView {
         'dynamic mode',
       ),
     );
+
+    const modeHeader = Render.elementFactory(
+      'div',
+      { className: 'mode-form__heading-wrapper' },
+      heading,
+      mode,
+    );
+
     const form = Render.elementFactory(
       'form',
       {
@@ -103,10 +111,13 @@ export class ModeView extends EmptyView {
         method: 'get',
         className: 'mode-form',
       },
-      heading,
-      mode,
-      this.addPanelsWrapper,
-      this.addPlayerButton,
+      modeHeader,
+      Render.elementFactory(
+        'div',
+        { className: 'mode-form__content-wrapper' },
+        this.addPanelsWrapper,
+        this.addPlayerButton,
+      ),
     );
     this.addPlayer();
 

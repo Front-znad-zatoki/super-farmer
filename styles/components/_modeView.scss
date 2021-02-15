@@ -1,7 +1,7 @@
 .mode {
   &-view {
     &__heading {
-      position: absolute;
+      // position: absolute;
       top: 2rem;
       left: 2rem;
     }
@@ -13,9 +13,11 @@
     display: inline-flex;
   }
   &__buttons {
+    // position: absolute;
+    // width: 100%;
     display: flex;
     justify-content: space-between;
-    margin: 7rem 2rem 0 2rem;
+    margin: 6rem 0 0 0;
   }
   &__button {
     width: 12rem;
@@ -34,7 +36,16 @@
   }
   &-form {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    &__content-wrapper{
+      display: inline-flex;
+      justify-content: center;
+    }
+    &__heading-wrapper{
+      // margin:0 1.3rem 0 1.3rem;
+      display: flex;
+      justify-content: space-between;
+    }
     &__remove-player-btn {
       position: absolute;
       top: 0.5rem;
@@ -49,7 +60,7 @@
       }
     }
     &__mode {
-      position: absolute;
+      // position: absolute;
       top: 2rem;
       right: 2rem;
       display: flex;
@@ -69,7 +80,7 @@
     &__add-btn {
       width: 25rem;
       border: 3px dashed #555757;
-      margin: 8rem 0 0 2.5rem;
+      margin: 3rem 1.3rem 0 1.3rem;
       background: none;
       border-radius: 16px;
       cursor: pointer;
@@ -86,7 +97,7 @@
       align-items: center;
       padding: 2rem;
       border: 2px solid black;
-      margin: 8rem 0 0 2.5rem;
+      margin: 3rem 1.3rem 0 1.3rem;
       background-color: #fefefe;
       border-radius: 1rem;
     }
@@ -101,7 +112,7 @@
       outline: none;
       text-align: center;
       &:focus-within {
-        border: 1px solid black;
+        border-bottom: 2px solid black;
       }
     }
 
