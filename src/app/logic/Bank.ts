@@ -6,6 +6,6 @@ export class Bank extends Player {
   constructor(
     banksHerdConfig: HerdConfigInterface[] = defaultBankConfig,
   ) {
-    super('bank', '', '', banksHerdConfig);
+    super('Bank', '', '', banksHerdConfig);
   }
 }
