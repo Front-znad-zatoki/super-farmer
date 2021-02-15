@@ -9,6 +9,7 @@ export class PlayersBoard {
       'div',
       {
         className: 'board-container',
+        style: `border-color:${player.theColor};`,
       },
     );
     const playersDataPanel: HTMLElement = Render.elementFactory(
@@ -19,6 +20,7 @@ export class PlayersBoard {
       'h3',
       {
         className: 'players__data__name',
+        'style.borderColor': player.theColor,
       },
       player.theName,
     );

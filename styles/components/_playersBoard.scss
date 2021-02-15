@@ -2,7 +2,10 @@
   display: flex;
   height: 100%;
   padding: 40px;
-  // border-radius: $border-radius;
+  border-radius: $border-radius;
+  border-color: transparent;
+  border-width: 2px;
+  border-style: solid;
 }
 .players {
   &__data {
