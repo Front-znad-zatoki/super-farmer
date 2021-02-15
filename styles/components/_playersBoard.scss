@@ -16,7 +16,8 @@
   }
   &__herd {
     display: flex;
-    align-items: center;
+    // align-items: center;
+    flex-wrap: wrap;
     &__img {
       width: 2.5rem;
       margin-left: 50px;

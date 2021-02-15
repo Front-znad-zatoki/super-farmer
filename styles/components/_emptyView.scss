@@ -1,6 +1,8 @@
 .view {
   height: 100vh;
-  &__container {
-    height: 100vh;
+  padding: 40px;
+
+  &--pale {
+    background-color: rgba(255, 255, 255, 0.8);
   }
 }
