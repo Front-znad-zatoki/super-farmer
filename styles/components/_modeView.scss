@@ -65,7 +65,25 @@
       background: #fefefe;
       border-radius: 0.5rem;
       &-input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
         margin-right: 0.5rem;
+        &:checked ~ .mode-form__mode-span{
+          background-color: #2196F3;
+          font-size: 1.2rem;
+          font-weight: 700;
+          color: white;
+        }
+      }
+      &-span{
+        font-size: 0;
+        margin-right: 0.5rem;
+        height: 20px;
+        width: 20px;
+        background-color: #ccc;
+        justify-content: center;
+        text-align: center;
       }
       &-label {
         font-weight: bold;
@@ -181,6 +199,7 @@
     &__ai {
       &-input {
         margin: 0 1rem;
+        cursor: pointer;
       }
       &-label {
         font-size: 1.5rem;

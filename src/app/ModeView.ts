@@ -74,7 +74,6 @@ export class ModeView extends EmptyView {
       { className: 'mode-view__heading' },
       'Click to add new player',
     );
-
     const mode = Render.elementFactory(
       'div',
       {
@@ -86,6 +85,11 @@ export class ModeView extends EmptyView {
         id: 'mode',
         name: 'mode',
       }),
+      Render.elementFactory(
+        'span',
+        { className: 'mode-form__mode-span' },
+        'X',
+      ),
       Render.elementFactory(
         'label',
         {
@@ -221,6 +225,10 @@ export class ModeView extends EmptyView {
       id: indicator,
       name: indicator,
     });
+    const span = Render.elementFactory(
+      'span',
+      { className: 'mode-form__ai-span' },
+    );
     const label = Render.elementFactory(
       'label',
       {
@@ -235,6 +243,7 @@ export class ModeView extends EmptyView {
         className: 'mode-form__ai',
       },
       checkbox,
+      span,
       label,
     );
     return aiWrapper;
