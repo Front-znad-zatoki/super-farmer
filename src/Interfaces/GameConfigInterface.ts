@@ -3,7 +3,6 @@ import { LivestockConfigInterface } from './LivestockConfigInterface';
 import { PlayerDTO } from './PlayerDTOInterface';
 import { PredatorsConfigInterface } from './PredatorsConfigInterface';
 import { ProtectorsConfigInterface } from './ProtectorsConfigInterface';
-import { PlayerDTO } from './PlayerDTOInterface';
 
 export interface GameConfigInterface {
   mode: GameModes;
