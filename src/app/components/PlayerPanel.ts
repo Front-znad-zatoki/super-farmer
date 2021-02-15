@@ -122,4 +122,10 @@ export class PlayerPanel {
       'true',
     );
   }
+
+  disableRoll(): void {
+    (document.querySelector(
+      '#roll-dice',
+    ) as HTMLElement).setAttribute('disabled', 'true');
+  }
 }

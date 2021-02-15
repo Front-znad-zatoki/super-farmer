@@ -166,4 +166,9 @@ export class GameView extends EmptyView {
   disableTrade(): void {
     this.playerPanel.disableTrade();
   }
+
+  disableRoll(): void {
+    this.playerPanel.disableRoll();
+  }
+
 }

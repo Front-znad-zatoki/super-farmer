@@ -26,6 +26,7 @@ export class BreedPhaseDemo {
       firstDice,
       secondDice,
       mockPredatorConfig,
+      defaultGameConfiguration.protectorsConfig,
       GameModes.STATIC,
     );
     const player = new Player('player');
