@@ -1,4 +1,8 @@
 .view {
   height: 100vh;
   padding: 40px;
+
+  &--milked {
+    background-color: rgba(255, 255, 255, 0.85);
+  }
 }
