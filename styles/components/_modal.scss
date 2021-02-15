@@ -16,6 +16,7 @@
 
   &__container {
     // Display & Box Model /
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

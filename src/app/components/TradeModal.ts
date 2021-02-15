@@ -1,3 +1,4 @@
+import { Animal } from '~src/Animals/Animal';
 import { CallbackNoParam } from '~src/Interfaces/CallbackInterface';
 import { AnimalNames } from '../../Enums/AnimalNamesEnum';
 import { Player } from '../../Player';
@@ -13,6 +14,7 @@ export class TradeModal extends EmptyModal {
   private warning: HTMLElement;
   private backButton: HTMLElement;
   private player: Player;
+  private header: HTMLElement;
 
   /**
    * @param trade instance of Trade
@@ -32,6 +34,11 @@ export class TradeModal extends EmptyModal {
     this.bankView = Render.elementFactory('div', {
       className: 'trade__player-wrapper',
     });
+    this.header = Render.elementFactory(
+      'h2',
+      { className: 'trade__heading' },
+      'Pick the animals and the amount you want to exchange',
+    );
     this.tradeForm = Render.elementFactory(
       'form',
       {
@@ -40,21 +47,33 @@ export class TradeModal extends EmptyModal {
         className: 'trade',
       },
       this.playerView,
-      Render.elementFactory('input', {
-        type: 'submit',
-        value: 'Trade',
-        className: 'trade__submit',
-      }),
+      Render.elementFactory(
+        'button',
+        {
+          type: 'submit',
+          className: 'trade__submit',
+        },
+        Render.elementFactory('img', {
+          alt: 'exchange',
+          src: './static/images/ui/exchange-dark.svg',
+        }),
+        Render.elementFactory('p', {}, 'Exchange'),
+      ),
       this.bankView,
     );
     this.warning = Render.elementFactory('p', {
       className: 'warning',
     });
-    this.backButton = Render.elementFactory('button', {}, 'back');
+    this.backButton = Render.elementFactory(
+      'button',
+      { className: 'trade__back' },
+      '+',
+    );
     Render.childrenInjector(
       this.modalContainer,
-      this.tradeForm,
+      this.header,
       this.warning,
+      this.tradeForm,
       this.backButton,
     );
   }
@@ -136,24 +155,29 @@ export class TradeModal extends EmptyModal {
             Render.elementFactory(
               'div',
               { className: 'trade__row' },
-              Render.elementFactory(
-                'label',
-                {
-                  for: `${isBank ? 'bank' : 'player'}_${
-                    animal.theName
-                  }`,
-                },
-                `${animal.theName}: ${count}`,
-              ),
-              Render.elementFactory('input', {
-                type: 'number',
-                id: `${isBank ? 'bank' : 'player'}_${animal.theName}`,
+              Render.elementFactory('img', {
                 name: `${isBank ? 'bank' : 'player'}_${
                   animal.theName
                 }`,
-                min: '0',
-                max: `${count}`,
+                src: animal.theImagePath,
+                alt: animal.theName,
+                className: 'trade__player-herd--image',
               }),
+              Render.elementFactory(
+                'p',
+                { className: 'trade__player-herd--count' },
+                `x ${count}`,
+              ),
+              this.createInputBox(isBank, animal, count),
+              Render.elementFactory(
+                'div',
+                { className: 'trade__player-herd--buttons' },
+                ...this.createButtons(
+                  isBank,
+                  animal.theName.replace(' ', '_'),
+                  count,
+                ),
+              ),
             ),
           );
         }
@@ -165,9 +189,90 @@ export class TradeModal extends EmptyModal {
     return animalsRows;
   }
 
+  private createInputBox(
+    isBank: boolean,
+    animal: Animal,
+    count: number,
+  ): HTMLElement {
+    const input = Render.elementFactory('input', {
+      type: 'text',
+      id: `${isBank ? 'bank' : 'player'}_${animal.theName.replace(
+        ' ',
+        '_',
+      )}`,
+      name: `${isBank ? 'bank' : 'player'}_${animal.theName}`,
+      className: 'trade__player-herd--input',
+      value: '0',
+      pattern: '\\d+',
+    }) as HTMLInputElement;
+    input.addEventListener('change', () => {
+      const value = parseInt(input.value);
+      if (value > count) {
+        input.value = `${count}`;
+      }
+    });
+    return input;
+  }
+
+  private createButtons(
+    isBank: boolean,
+    animal: string,
+    count: number,
+  ): HTMLElement[] {
+    const buttons: HTMLElement[] = [];
+    buttons.push(this.createSingleButton(1, isBank, animal, count));
+    buttons.push(this.createSingleButton(5, isBank, animal, count));
+    buttons.push(this.createSingleButton(-1, isBank, animal, count));
+    buttons.push(this.createSingleButton(-5, isBank, animal, count));
+    return buttons;
+  }
+
+  private createSingleButton(
+    value: number,
+    isBank: boolean,
+    animal: string,
+    count: number,
+  ): HTMLElement {
+    const button = Render.elementFactory(
+      'button',
+      {
+        type: 'button',
+        className: 'trade__player-herd--button',
+      },
+      `${value < 0 ? value : '+' + value}`,
+    );
+    button.addEventListener('click', () =>
+      this.changeValue(value, isBank, animal, count),
+    );
+    return button;
+  }
+
+  private changeValue(
+    value: number,
+    isBank: boolean,
+    animal: string,
+    count: number,
+  ): void {
+    const input = document.querySelector(
+      `#${isBank ? 'bank' : 'player'}_${animal}`,
+    ) as HTMLInputElement;
+    const inputValue = parseInt(input.value);
+    if (value < 0) {
+      if (inputValue > 0 && inputValue >= Math.abs(value)) {
+        input.value = `${inputValue + value}`;
+      }
+    } else {
+      const newValue = inputValue + value;
+      if (newValue <= count) {
+        input.value = `${value + inputValue}`;
+      }
+    }
+  }
+
   private formDataIntoTuples(formData: FormData): [Offer[], Offer[]] {
     const offer: Offer[] = [];
     const target: Offer[] = [];
+    console.log(formData);
     for (const [key, value] of formData.entries()) {
       const numberOfAnimals = parseInt(value.toString());
       const [player, animal] = key.split('_');
