@@ -24,7 +24,10 @@ export class RulesModal extends EmptyView {
       { type: 'button', className: 'button--start button--nav' },
       'BACK TO MENU',
     );
-    button.addEventListener('click', this.backCallback);
+    button.addEventListener('click', () => {
+      this.hide();
+      this.backCallback();
+    });
     Render.childrenInjector(this.view, heading, text, button);
   }
 

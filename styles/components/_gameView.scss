@@ -148,7 +148,9 @@
 }
 
 .button--nav {
-  display: block;
-  margin: 0 auto;
-  margin-top: 5rem;
+  position: absolute;
+  bottom: 104px;
+  left: 0;
+  right: 0;
+  margin: auto
 }
