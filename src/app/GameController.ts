@@ -70,6 +70,9 @@ export class GameController {
    * Sets the current player to the next player in order.
    */
   nextPlayer(): void {
+    if (this.game.theTimer.hasGameEnded) {
+      return;
+    }
     this.gameProcessor.nextPlayer();
     Alert.updateAlert(
       `${this.game.theCurrentPlayer.theName}'s turn has started.`,

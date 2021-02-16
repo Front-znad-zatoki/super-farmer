@@ -20,7 +20,6 @@ export class PlayersBoard {
       'h3',
       {
         className: 'players__data__name',
-        // style: `border-color: ${player.theColor};`,
       },
       player.theName,
     );
