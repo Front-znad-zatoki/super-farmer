@@ -43,9 +43,10 @@ export class GameProcessor {
         );
       }
       // TODO: CHECK IF UPDATE NEEDED FOR PLAYER BOARD
-      // this.gameController.updateTimeRemaining(
-      //   Math.round(this.game.theTimer.theTurnTimeLeft),
-      // );
+      this.gameController.updateTimeRemaining(
+        Math.round(this.game.theTimer.theTurnTimeLeft),
+        this.game.theCurrentPlayerNumber,
+      );
     }, 50);
   }
 

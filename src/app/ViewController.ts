@@ -77,9 +77,9 @@ export class ViewController {
     this.gameController?.startTurn();
   }
   // TODO: CHECK IF STILL NECESSARY
-  // updateRemainingTime(timeLeft: number): void {
-  //   this.gameView.updateRemainingTime(timeLeft);
-  // }
+  updateRemainingTime(timeLeft: number, currentPlayer: number): void {
+    this.gameView.updateRemainingTime(timeLeft, currentPlayer);
+  }
 
   handleRoll(): void {
     this.gameController?.breed();
