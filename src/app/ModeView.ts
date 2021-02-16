@@ -401,6 +401,7 @@ export class ModeView extends EmptyView {
     this.modeForm.reset();
     Render.removeAllChildren(this.addPanelsWrapper);
     this.addPlayer();
+    this.addPlayerButton.classList.remove('hidden');
   };
 
   private handleClickAddPlayer = (): void => {
