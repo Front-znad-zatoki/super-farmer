@@ -384,6 +384,7 @@ export class ModeView extends EmptyView {
         }
         case 'ai': {
           players[index].isAI = true;
+          players[index].name = 'AI ' + players[index].name;
           break;
         }
         case 'mode': {
