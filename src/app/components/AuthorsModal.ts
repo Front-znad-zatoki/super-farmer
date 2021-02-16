@@ -32,14 +32,15 @@ export class AuthorsModal extends EmptyView {
         ),
       );
     });
-    const logo = Render.elementFactory(
-      'img',
-      { className: 'logo',
-        src: './static/images/ui/logo.png',
-        alt: 'logo',
-       },
-    )
-    const mentor = ['Aleksander', 'https://github.com/aleksanderwalczuk'];
+    const logo = Render.elementFactory('img', {
+      className: 'logo',
+      src: './static/images/ui/logo.png',
+      alt: 'logo',
+    });
+    const mentor = [
+      'Aleksander',
+      'https://github.com/aleksanderwalczuk',
+    ];
     const thanks = Render.elementFactory(
       'li',
       { className: 'author' },

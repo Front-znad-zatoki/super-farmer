@@ -146,6 +146,11 @@ export class TradeModal extends EmptyModal {
           className: 'trade__player-herd--image',
           src: path,
           alt: name,
+          style: `${
+            name === 'small dog'
+              ? 'height: 2rem; width: auto; margin: .5rem;'
+              : ''
+          }`,
         }),
         Render.elementFactory(
           'p',
@@ -218,6 +223,11 @@ export class TradeModal extends EmptyModal {
                 src: animal.theImagePath,
                 alt: animal.theName,
                 className: 'trade__player-herd--image',
+                style: `${
+                  animal.theName === 'small dog'
+                    ? 'height: 2rem; width: auto; margin: .5rem;'
+                    : ''
+                }`,
               }),
               Render.elementFactory(
                 'p',
