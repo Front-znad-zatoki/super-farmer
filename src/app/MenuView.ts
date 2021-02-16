@@ -1,11 +1,13 @@
 import { PlayerDTO } from '~src/Interfaces/PlayerDTOInterface';
 import { EmptyView } from './EmptyView';
 import { ModeView } from './ModeView';
+import { RulesModal } from '../app/components/GameRulesModal';
 import { Render } from './utils/Render';
 import { ViewController } from './ViewController';
 
 export class MenuView extends EmptyView {
   private modeModal: ModeView;
+  private rulesModal: RulesModal;
   private menuViewContent: HTMLElement;
   constructor(private viewController: ViewController) {
     super();
@@ -18,6 +20,7 @@ export class MenuView extends EmptyView {
       this.viewController.launchGame(players, isDynamic);
     };
     this.modeModal = new ModeView(backCallback, submitCallback);
+    this.rulesModal = new RulesModal(backCallback);
     this.menuViewContent = Render.elementFactory(
       'div',
       { className: 'menu-window' },
@@ -52,15 +55,25 @@ export class MenuView extends EmptyView {
   }
 
   private createMenuButtons(): HTMLElement[] {
-    const namesButtons: string[] = ['GAME RULES', 'AUTHORS'];
-    const menuButtons = namesButtons.map((button) => {
-      return Render.elementFactory(
-        'button',
-        { className: 'menu__button' },
-        button,
-      );
+    // const namesButtons: string[] = ['GAME RULES', 'AUTHORS'];
+    const rulesButton = Render.elementFactory(
+      'button',
+      { className: 'menu__button' },
+      'GAME RULES',
+    );
+    rulesButton.addEventListener('click', () => {
+      this.hide();
+      Render.render('#sf-app', this.rulesModal.theRulesView);
+      this.rulesModal.show();
     });
-    return menuButtons;
+    // const menuButtons = namesButtons.map((button) => {
+    const authorsButton = Render.elementFactory(
+      'button',
+      { className: 'menu__button' },
+      'AUTHORS',
+    );
+    // });
+    return [rulesButton, authorsButton];
   }
   private createStartButton(): HTMLElement {
     const startGameButton = Render.elementFactory(

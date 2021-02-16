@@ -40,6 +40,13 @@
       color: #71cfd7;
       font-size: 2rem;
     }
+    &--rules {
+      font-size: 1.5rem;
+      padding: 2rem;
+      margin:2rem 0;
+      line-height: 2.5rem;
+      background-color: rgba(255, 255, 255, 0.5);
+    }
   }
 
   &__buttons {
