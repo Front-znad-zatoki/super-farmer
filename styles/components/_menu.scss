@@ -4,6 +4,7 @@
   flex-direction: column;
   &__header {
     font-family: $font-family;
+    font-size: 2.5rem;
   }
 }
 
@@ -49,4 +50,40 @@
   font-family: $font-family;
   font-size: $font-size;
   font-weight: $font-weight-primary;
+}
+
+.author {
+  font-weight: 600;
+  line-height: 3rem;
+  list-style: none;
+  text-transform: uppercase;
+  &:last-child {
+    margin-top: 5rem;
+  }
+  &a {
+    display: block;
+    padding: 0.5rem;
+    text-decoration: none;
+  }
+  a:link {
+    display: inline-block;
+    padding: 0.5rem;
+    color: black;
+  }
+  &a:visited {
+    color: black;
+  }
+  a:hover {
+    background-color: #83d8d5c7;
+    color: black;
+    cursor: pointer;
+  }
+
+  a:active {
+    color: black;
+  }
+
+  a:visited {
+    color: black;
+  }
 }
