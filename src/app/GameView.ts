@@ -126,7 +126,8 @@ export class GameView extends EmptyView {
 
   private setColorAccents(player: Player): void {
     document
-      .querySelectorAll('.player-panel__result, .player-panel button')
+      // .querySelectorAll('.player-panel__result, .player-panel button')
+      .querySelectorAll('.player-panel__result')
       .forEach((element) => {
         (element as HTMLElement).style.borderColor = player.theColor;
       });
@@ -168,4 +169,3 @@ export class GameView extends EmptyView {
     this.playerPanel.disableRoll();
   }
 }
- 
