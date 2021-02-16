@@ -84,7 +84,7 @@ export class PlayersBoard {
       timeLeft < 10
         ? `<h3>0:0${timeLeft}</h3><p>time left</p>`
         : `<h3>0:${timeLeft}</h3><p>time left</p>`;
-    if (timeLeft <= 0) {
+    if (timeLeft < 1 && timeLeft > 0) {
       timerToUpdate.style.display = 'none';
     }
   }
