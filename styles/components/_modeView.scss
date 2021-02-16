@@ -66,10 +66,12 @@
       border-radius: 0.5rem;
       &-input {
         margin-right: 0.5rem;
+        cursor: pointer;
       }
       &-label {
         font-weight: bold;
         text-transform: uppercase;
+        cursor: pointer;
       }
     }
     &__add-btn {
@@ -181,9 +183,11 @@
     &__ai {
       &-input {
         margin: 0 1rem;
+        cursor: pointer;
       }
       &-label {
         font-size: 1.5rem;
+        cursor: pointer;
       }
     }
   }
