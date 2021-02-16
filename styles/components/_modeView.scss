@@ -66,8 +66,10 @@
       border-radius: 0.5rem;
       &-input {
         margin-right: 0.5rem;
+        cursor: pointer;
       }
       &-label {
+        cursor: pointer;
         font-weight: bold;
         text-transform: uppercase;
       }
@@ -181,8 +183,10 @@
     &__ai {
       &-input {
         margin: 0 1rem;
+        cursor: pointer;
       }
       &-label {
+        cursor: pointer;
         font-size: 1.5rem;
       }
     }
