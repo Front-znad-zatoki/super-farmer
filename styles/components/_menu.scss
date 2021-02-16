@@ -53,38 +53,37 @@
 }
 
 .author {
+  font-weight: 600;
+  line-height: 3rem;
   list-style: none;
   text-transform: uppercase;
-  line-height: 3rem;
-  font-weight: 600;
   &:last-child {
     margin-top: 5rem;
-    
   }
   &a {
-    text-decoration: none;
-    padding: .5rem;
     display: block;
+    padding: 0.5rem;
+    text-decoration: none;
   }
   a:link {
-    color: black;
-    padding: .5rem;
     display: inline-block;
+    padding: 0.5rem;
+    color: black;
   }
   &a:visited {
     color: black;
   }
   a:hover {
-    cursor: pointer;
-    color: black;
     background-color: #83d8d5c7;
+    color: black;
+    cursor: pointer;
   }
-  
+
   a:active {
     color: black;
   }
-  
+
   a:visited {
     color: black;
-  }  
+  }
 }
