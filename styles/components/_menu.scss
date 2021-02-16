@@ -54,26 +54,26 @@
 
 .author {
   display: flex;
+  flex-basis: 50%;
   align-items: center;
   justify-content: center;
   font-weight: 600;
   line-height: 3rem;
   list-style: none;
   text-transform: uppercase;
-  flex-basis: 50%;
   &__img-wrapper {
     position: absolute;
-    height: 15rem;
+    top: 3.5rem;
     left: 50%;
+    height: 15rem;
     -webkit-transform: translateX(-50%);
     transform: translateX(-50%);
-    top: 3.5rem;
   }
   &__list {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
   }
   &__link {
     width: 12rem;
@@ -91,10 +91,10 @@
     }
   }
   &:last-child {
-    margin-top: 5rem;
-    flex-basis: 100%;
     display: flex;
+    flex-basis: 100%;
     flex-direction: column;
+    margin-top: 5rem;
   }
 
   a:link {
@@ -120,11 +120,11 @@
 }
 
 .logo {
+  height: 100%;
   // position: absolute;
   // top: 10%;
   // left: 10%;
   // width: 30rem;
   background-color: #83d8d5c7;
   border-radius: 50%;
-  height: 100%;
 }
