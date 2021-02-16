@@ -27,10 +27,12 @@ export class GameProcessor {
         //   this.gameController.turnAlert();
         // }
         if (!this.game.theTimer.hasGameEnded) {
-          Alert.updateAlert(
-            `${this.game.theCurrentPlayer.theName}'s turn has passed.`,
-            AlertType.CRITICAL,
-          );
+          if (Math.round(this.game.theTimer.theTurnTimeLeft) === 0) {
+            Alert.updateAlert(
+              `${this.game.theCurrentPlayer.theName}'s turn has passed.`,
+              AlertType.CRITICAL,
+            );
+          }
           setTimeout(() => {
             this.gameController.nextPlayer();
           }, 3000);
