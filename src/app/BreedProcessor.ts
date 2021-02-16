@@ -104,8 +104,8 @@ export class BreedProcessor {
             AlertType.CRITICAL,
           );
         } else {
-          const protector = this.protectors.filter(
-            ({ theName }) => theName === predator.isChasedAwayBy[0],
+          const protector = this.protectors.filter(({ theName }) =>
+            predator.isChasedAwayBy.includes(theName),
           )[0];
           Alert.updateAlert(
             `${theName}'s herd has been protected: ${protector.protectHerd()}.`,
