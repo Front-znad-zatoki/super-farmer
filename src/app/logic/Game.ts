@@ -93,6 +93,9 @@ export class Game {
   get theMode(): GameModes {
     return this.mode;
   }
+  get theCurrentPlayerNumber(): number {
+    return this.currentPlayerNumber;
+  }
 
   get thePlayers(): Player[] {
     return this.players;

@@ -35,7 +35,7 @@ export class PlayersBoard {
       }),
     );
     const playerTimer: HTMLElement = Render.elementFactory('div', {
-      id: 'time-left',
+      // id: 'time-left',
       className: 'players__data__time',
     });
     const herdView = Render.elementFactory('div', {
@@ -73,14 +73,19 @@ export class PlayersBoard {
     return playersBoardContainer;
   }
   /*updates timer on players board*/
-  updateTime(timeLeft: number): void {
-    const timer = document.querySelector('#time-left') as HTMLElement;
-    timer.innerHTML =
+  static updateTime(timeLeft: number, currentPlayer: number): void {
+    const timer = document.querySelectorAll(
+      `.player-boards__board .players__data__time`,
+    ) as NodeList;
+    const timerToUpdate: HTMLElement = timer[
+      currentPlayer
+    ] as HTMLElement;
+    timerToUpdate.innerHTML =
       timeLeft < 10
         ? `<h3>0:0${timeLeft}</h3><p>time left</p>`
         : `<h3>0:${timeLeft}</h3><p>time left</p>`;
     if (timeLeft <= 0) {
-      timer.style.display = 'none';
+      timerToUpdate.style.display = 'none';
     }
   }
 }
