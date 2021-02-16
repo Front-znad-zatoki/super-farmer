@@ -257,6 +257,9 @@ export class ModeView extends EmptyView {
           required: '',
           value: value,
         });
+        if (numberOfPlayer === index + 1) {
+          radio.setAttribute('checked', '');
+        }
         colorsElements.push(
           Render.elementFactory(
             'div',
@@ -303,6 +306,9 @@ export class ModeView extends EmptyView {
           required: 'true',
           value: value,
         });
+        if (numberOfPlayer === index + 1) {
+          radio.setAttribute('checked', '');
+        }
         avatarsElements.push(
           Render.elementFactory(
             'div',
