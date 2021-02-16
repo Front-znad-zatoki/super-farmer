@@ -328,7 +328,7 @@ export class TradeModal extends EmptyModal {
   private formDataIntoTuples(formData: FormData): [Offer[], Offer[]] {
     const offer: Offer[] = [];
     const target: Offer[] = [];
-    console.log(formData);
+
     for (const [key, value] of formData.entries()) {
       const numberOfAnimals = parseInt(value.toString());
       const [player, animal] = key.split('_');
