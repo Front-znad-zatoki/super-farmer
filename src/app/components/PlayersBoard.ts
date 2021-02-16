@@ -20,7 +20,6 @@ export class PlayersBoard {
       'h3',
       {
         className: 'players__data__name',
-        'style.borderColor': player.theColor,
       },
       player.theName,
     );
@@ -77,6 +76,7 @@ export class PlayersBoard {
     const timer = document.querySelectorAll(
       `.player-boards__board .players__data__time`,
     ) as NodeList;
+    console.log(timer);
     const timerToUpdate: HTMLElement = timer[
       currentPlayer
     ] as HTMLElement;
