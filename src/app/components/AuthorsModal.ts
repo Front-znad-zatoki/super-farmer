@@ -47,7 +47,7 @@ export class AuthorsModal extends EmptyView {
     const text = Render.elementFactory(
       'ul',
       {
-        className: 'modal__text--rules',
+        className: 'modal__text--authors',
       },
       ...authors,
       thanks,
