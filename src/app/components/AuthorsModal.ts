@@ -32,7 +32,14 @@ export class AuthorsModal extends EmptyView {
         ),
       );
     });
-    const mentor = ['Aleksander', 'https://github.com/Rednaxela700;'];
+    const logo = Render.elementFactory(
+      'img',
+      { className: 'logo',
+        src: './static/images/ui/logo.png',
+        alt: 'logo',
+       },
+    )
+    const mentor = ['Aleksander', 'https://github.com/aleksanderwalczuk'];
     const thanks = Render.elementFactory(
       'li',
       { className: 'author' },
@@ -49,6 +56,7 @@ export class AuthorsModal extends EmptyView {
       {
         className: 'modal__text--rules',
       },
+      logo,
       ...authors,
       thanks,
     );
