@@ -46,7 +46,7 @@
     justify-content: space-around;
     background-color: white;
     border-radius: $border-radius;
-    // position: absolute;
+    border: 1px solid transparent;
     &--dice {
       margin-top: 2rem;
     }
@@ -73,7 +73,7 @@
   align-items: center;
   justify-content: center;
   padding: 10% 0;
-  border-color: transparent;
+  border: 1px solid transparent;
   background-color: $color-primary;
   border-radius: $border-radius;
   outline: none;
