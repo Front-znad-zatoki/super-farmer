@@ -43,13 +43,6 @@ export class GameController {
     this.gameProcessor.pauseTurn();
   }
 
-  turnAlert(): void {
-    Alert.updateAlert(
-      `${this.game.theCurrentPlayer.theName}'s turn has passed.`,
-      AlertType.CRITICAL,
-    );
-  }
-
   private isGameWon(): boolean {
     const gameIsWon = this.gameProcessor.checkWin();
     if (this.gameProcessor.checkWin()) {
@@ -93,9 +86,9 @@ export class GameController {
     }
   }
 
-  // updateTimeRemaining(timeLeft: number): void {
-  //   this.view.updateRemainingTime(timeLeft);
-  // }
+  updateTimeRemaining(timeLeft: number, currentPlayer: number): void {
+    this.view.updateRemainingTime(timeLeft, currentPlayer);
+  }
 
   quitGame(): void {
     this.gameProcessor.quitGame();

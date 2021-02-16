@@ -126,11 +126,11 @@ export class GameView extends EmptyView {
 
   private setColorAccents(player: Player): void {
     document
-      .querySelectorAll('.player-panel__buttons .button')
+      // .querySelectorAll('.player-panel__result, .player-panel button')
+      .querySelectorAll('.player-panel__result')
       .forEach((element) => {
         (element as HTMLElement).style.borderColor = player.theColor;
       });
-    // TODO: change to borders and font colors
   }
 
   handleRoll(): void {
@@ -145,8 +145,8 @@ export class GameView extends EmptyView {
     this.playerPanel.displayRollResult(diceResults);
   }
 
-  updateRemainingTime(timeLeft: number): void {
-    new PlayersBoard().updateTime(timeLeft);
+  updateRemainingTime(timeLeft: number, currentPlayer: number): void {
+    PlayersBoard.updateTime(timeLeft, currentPlayer);
   }
 
   stopTimer(): void {

@@ -27,6 +27,10 @@ export class GameProcessor {
         //   this.gameController.turnAlert();
         // }
         if (!this.game.theTimer.hasGameEnded) {
+          Alert.updateAlert(
+            `${this.game.theCurrentPlayer.theName}'s turn has passed.`,
+            AlertType.CRITICAL,
+          );
           setTimeout(() => {
             this.gameController.nextPlayer();
           }, 3000);
@@ -39,9 +43,10 @@ export class GameProcessor {
         );
       }
       // TODO: CHECK IF UPDATE NEEDED FOR PLAYER BOARD
-      // this.gameController.updateTimeRemaining(
-      //   Math.round(this.game.theTimer.theTurnTimeLeft),
-      // );
+      this.gameController.updateTimeRemaining(
+        Math.round(this.game.theTimer.theTurnTimeLeft),
+        this.game.theCurrentPlayerNumber,
+      );
     }, 50);
   }
 
