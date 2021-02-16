@@ -32,11 +32,15 @@ export class AuthorsModal extends EmptyView {
         ),
       );
     });
-    const logo = Render.elementFactory('img', {
-      className: 'logo',
-      src: './static/images/ui/logo.png',
-      alt: 'logo',
-    });
+    const logo = Render.elementFactory(
+      'div',
+      { className: 'author__img-wrapper' },
+      Render.elementFactory('img', {
+        className: 'logo',
+        src: './static/images/ui/logo_nb.png',
+        alt: 'logo-fzz',
+      }),
+    );
     const mentor = [
       'Aleksander',
       'https://github.com/aleksanderwalczuk',
@@ -55,7 +59,7 @@ export class AuthorsModal extends EmptyView {
     const text = Render.elementFactory(
       'ul',
       {
-        className: 'modal__text--rules',
+        className: 'modal__text--rules author__list',
       },
       logo,
       ...authors,

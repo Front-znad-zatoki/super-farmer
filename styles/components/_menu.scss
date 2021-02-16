@@ -54,16 +54,31 @@
 
 .author {
   display: flex;
+  flex-basis: 50%;
   align-items: center;
   justify-content: center;
   font-weight: 600;
   line-height: 3rem;
   list-style: none;
   text-transform: uppercase;
+  &__img-wrapper {
+    position: absolute;
+    top: 3.5rem;
+    left: 50%;
+    height: 15rem;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+  }
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+  }
   &__link {
     width: 12rem;
     padding: 1rem;
-    margin: 10px 10px;
+    margin: 16px 16px;
     background-color: #fefefe;
     border-radius: 1rem;
     text-align: center;
@@ -76,6 +91,9 @@
     }
   }
   &:last-child {
+    display: flex;
+    flex-basis: 100%;
+    flex-direction: column;
     margin-top: 5rem;
   }
 
@@ -102,10 +120,11 @@
 }
 
 .logo {
-  position: absolute;
-  top: 10%;
-  left: 10%;
-  width: 30rem;
+  height: 100%;
+  // position: absolute;
+  // top: 10%;
+  // left: 10%;
+  // width: 30rem;
   background-color: #83d8d5c7;
   border-radius: 50%;
 }
