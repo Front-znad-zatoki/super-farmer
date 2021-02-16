@@ -20,7 +20,6 @@ export class PlayersBoard {
       'h3',
       {
         className: 'players__data__name',
-        'style.borderColor': player.theColor,
       },
       player.theName,
     );
@@ -45,11 +44,22 @@ export class PlayersBoard {
       ([animal, count]) =>
         Render.elementFactory(
           'div',
-          { className: 'players__herd__item' },
-          ConvertAnimalName.toHTMLElement(
-            animal.theName,
-            'players__herd__item__img',
-          ),
+          {
+            className: 'players__herd__item',
+            style: `${
+              animal.theName === 'small dog' ? 'padding: .5rem;' : ''
+            }`,
+          },
+          Render.elementFactory('img', {
+            className: 'players__herd__item__img',
+            src: animal.theImagePath,
+            alt: animal.theName,
+            style: `${
+              animal.theName === 'small dog'
+                ? 'height: 3rem; width: auto;'
+                : ''
+            }`,
+          }),
           Render.elementFactory(
             'p',
             { className: 'players__herd__item__text' },

@@ -47,6 +47,7 @@ export class GameController {
     const gameIsWon = this.gameProcessor.checkWin();
     if (this.gameProcessor.checkWin()) {
       this.view.displayWinModal(this.game.theCurrentPlayer);
+      this.pauseTurn();
     }
     return gameIsWon;
   }
@@ -69,6 +70,9 @@ export class GameController {
    * Sets the current player to the next player in order.
    */
   nextPlayer(): void {
+    if (this.game.theTimer.hasGameEnded) {
+      return;
+    }
     this.gameProcessor.nextPlayer();
     Alert.updateAlert(
       `${this.game.theCurrentPlayer.theName}'s turn has started.`,

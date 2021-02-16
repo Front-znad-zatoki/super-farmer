@@ -21,6 +21,11 @@ export class BankBoard {
           className: 'bank__img',
           alt: animal.theName.toLowerCase(),
           src: `${animal.theImagePath}`,
+          style: `${
+            animal.theName === 'small dog'
+              ? 'height: 2rem; width: auto; margin: .5rem;'
+              : ''
+          }`,
         }),
         Render.elementFactory(
           'p',

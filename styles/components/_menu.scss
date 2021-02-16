@@ -53,18 +53,32 @@
 }
 
 .author {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-weight: 600;
   line-height: 3rem;
   list-style: none;
   text-transform: uppercase;
+  &__link {
+    width: 12rem;
+    padding: 1rem;
+    margin: 10px 10px;
+    background-color: #fefefe;
+    border-radius: 1rem;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s ease-in-out;
+    &:hover {
+      background-color: #83d8d5c7;
+      color: black;
+      cursor: pointer;
+    }
+  }
   &:last-child {
     margin-top: 5rem;
   }
-  &a {
-    display: block;
-    padding: 0.5rem;
-    text-decoration: none;
-  }
+
   a:link {
     display: inline-block;
     padding: 0.5rem;
@@ -72,11 +86,6 @@
   }
   &a:visited {
     color: black;
-  }
-  a:hover {
-    background-color: #83d8d5c7;
-    color: black;
-    cursor: pointer;
   }
 
   a:active {
@@ -86,4 +95,17 @@
   a:visited {
     color: black;
   }
+}
+.modal__text--rules {
+  position: relative;
+  border-radius: 1rem;
+}
+
+.logo {
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  width: 30rem;
+  background-color: #83d8d5c7;
+  border-radius: 50%;
 }
