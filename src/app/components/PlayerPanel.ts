@@ -1,4 +1,3 @@
-import { Player } from '../../Player';
 import { Render } from '../utils/Render';
 import { AnimalNames } from '../../Enums/AnimalNamesEnum';
 import { GameView } from '../GameView';
@@ -13,7 +12,7 @@ export class PlayerPanel {
   /**
    * Creates player panel and returns it as HTMLElement
    */
-  createPlayerPanel(player: Player): HTMLElement {
+  createPlayerPanel(): HTMLElement {
     return Render.elementFactory(
       'div',
       {
@@ -94,9 +93,6 @@ export class PlayerPanel {
     );
     rollBtn.addEventListener('click', () => {
       this.view.handleRoll();
-      (document.querySelector(
-        '#roll-dice',
-      ) as HTMLElement).setAttribute('disabled', 'true');
     });
     return rollBtn;
   }
@@ -116,6 +112,7 @@ export class PlayerPanel {
     Render.render('.player-panel__result', diceResult);
     this.view.stopTimer();
   }
+
   disableTrade(): void {
     (document.querySelector('#exchange') as HTMLElement).setAttribute(
       'disabled',
@@ -127,5 +124,9 @@ export class PlayerPanel {
     (document.querySelector(
       '#roll-dice',
     ) as HTMLElement).setAttribute('disabled', 'true');
+  }
+
+  clearResults(): void {
+    Render.removeAllChildren('.player-panel__result');
   }
 }
