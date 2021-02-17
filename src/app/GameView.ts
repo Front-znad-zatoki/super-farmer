@@ -13,11 +13,12 @@ import { PlayersBoardBuilder } from './components/PlayerBoardBuilder';
 export class GameView extends EmptyView {
   protected playerPanel: PlayerPanel;
   private playersBoard: PlayersBoard[];
-  private bankBoard: BankBoard;
+  private bankBoard: BankBoard | undefined;
   constructor(private viewController: ViewController) {
     super(true);
     this.playerPanel = new PlayerPanel(this);
     this.playersBoard = [];
+    this.bankBoard = undefined;
   }
 
   renderGameView(
@@ -156,7 +157,7 @@ export class GameView extends EmptyView {
   ): void {
     this.playerPanel.displayRollResult(diceResults);
     this.updateBoard(playerIdx);
-    this.bankBoard.updateBank();
+    this.bankBoard?.updateBank();
     this.playersBoard[playerIdx].hideTimer();
   }
 
@@ -186,7 +187,7 @@ export class GameView extends EmptyView {
 
   updateBoard(playerIndex: number): void {
     this.playersBoard[playerIndex].updateBoard();
-    this.bankBoard.updateBank();
+    this.bankBoard?.updateBank();
   }
 
   changePlayer(playerIndex: number): void {
