@@ -2,24 +2,24 @@ import { Player } from '../../Player';
 import { Render } from '../utils/Render';
 
 export class PlayersBoard {
-  private playersBoard: HTMLElement;
   private playerTimer: HTMLElement;
+  private playersBoardContainer: HTMLElement;
   constructor(private player: Player) {
     this.playerTimer = Render.elementFactory('div', {
       className: 'players__data__time',
     });
-    this.playersBoard = this.renderPlayersBoard(this.player);
+    this.playersBoardContainer = Render.elementFactory('div', {
+      className: 'board-container',
+      style: `border-color: transparent;`,
+    });
+    this.renderPlayersBoard(player);
   }
 
   /*returns player's board with player's name, avatar and herd */
-  private renderPlayersBoard(player: Player): HTMLElement {
-    const playersBoardContainer: HTMLElement = Render.elementFactory(
-      'div',
-      {
-        className: 'board-container',
-        style: `border-color: transparent;`,
-      },
-    );
+  private renderPlayersBoard(player: Player): void {
+    if (this.playersBoardContainer.children) {
+      Render.removeAllChildren(this.playersBoardContainer);
+    }
     const playersDataPanel: HTMLElement = Render.elementFactory(
       'div',
       { className: 'players__data' },
@@ -79,12 +79,10 @@ export class PlayersBoard {
     );
     Render.childrenInjector(herdView, ...playerHerd);
     Render.childrenInjector(
-      playersBoardContainer,
+      this.playersBoardContainer,
       herdView,
       playersDataPanel,
     );
-
-    return playersBoardContainer;
   }
   /*updates timer on players board*/
   updateTime(timeLeft: number): void {
@@ -92,37 +90,36 @@ export class PlayersBoard {
       timeLeft < 10
         ? `<h3>0:0${timeLeft}</h3><p>time left</p>`
         : `<h3>0:${timeLeft}</h3><p>time left</p>`;
-    if (timeLeft < 1 && timeLeft > 0) {
-      this.playerTimer.style.display = 'none';
-    }
   }
 
   setBorderAndTimer(): void {
-    this.playersBoard.style.borderColor = `${this.player.theColor}`;
+    this.playerTimer.style.display = 'flex';
+    this.playersBoardContainer.style.borderColor = `${this.player.theColor}`;
     const buttons = document.querySelectorAll('.button');
     buttons.forEach(
       (button) =>
         ((button as HTMLElement).style.borderColor = `${this.player.theColor}`),
     );
-    this.playerTimer.style.display = 'flex';
   }
 
   removeBorderAndTimer(): void {
-    this.playersBoard.style.borderColor = `transparent`;
-    this.playerTimer.style.display = 'none';
+    this.playersBoardContainer.style.borderColor = `transparent`;
+    this.hideTimer();
   }
 
   updateBoard(): void {
-    this.playersBoard.innerHTML = this.renderPlayersBoard(
-      this.player,
-    ).innerHTML;
+    this.renderPlayersBoard(this.player);
   }
 
   get thePlayerBoard(): HTMLElement {
-    return this.playersBoard;
+    return this.playersBoardContainer;
   }
 
   get thePlayer(): Player {
     return this.player;
+  }
+
+  hideTimer(): void {
+    this.playerTimer.style.display = 'none';
   }
 }

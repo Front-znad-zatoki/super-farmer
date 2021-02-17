@@ -154,6 +154,7 @@ export class GameView extends EmptyView {
   ): void {
     this.playerPanel.displayRollResult(diceResults);
     this.updateBoard(playerIdx);
+    this.playersBoard[playerIdx].hideTimer();
   }
 
   updateRemainingTime(timeLeft: number, currentPlayer: number): void {
