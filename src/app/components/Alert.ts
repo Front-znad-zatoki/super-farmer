@@ -31,19 +31,13 @@ export class Alert {
     Render.removeAllChildren(this.alert);
     switch (alertType) {
       case AlertType.INFO:
-        this.alert.style.background =
-          // 'linear-gradient(to right, #3E8Ed0D4, #fff0)';
-          '#3E8Ed0D4';
+        this.alert.style.background = '#3E8Ed0D4';
         break;
       case AlertType.WARN:
-        this.alert.style.background =
-          // 'linear-gradient(to right, #FFE08AD4, #fff0)';
-          '#FFE08AD4';
+        this.alert.style.background = '#FFE08AD4';
         break;
       case AlertType.CRITICAL:
-        this.alert.style.background =
-          // 'linear-gradient(to right, #F14668D4, #fff0)';
-          '#F14668D4';
+        this.alert.style.background = '#F14668D4';
         break;
       default:
         this.alert.style.backgroundColor = 'transparent';
@@ -60,5 +54,9 @@ export class Alert {
       `${message}`,
     );
     Render.childrenInjector(this.alert, icon, text);
+    setTimeout(
+      () => (this.alert.style.backgroundColor = 'transparent'),
+      900,
+    );
   }
 }

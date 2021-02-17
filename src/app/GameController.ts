@@ -78,11 +78,7 @@ export class GameController {
       `${this.game.theCurrentPlayer.theName}'s turn has started.`,
       AlertType.INFO,
     );
-    this.view.startGame(
-      this.game.thePlayers,
-      this.game.theCurrentPlayer,
-      this.game.theBank,
-    );
+    this.view.changePlayer(this.game.theCurrentPlayerNumber);
     if (this.game.theCurrentPlayer instanceof AiPlayer) {
       this.view.disableTrade();
       this.view.disableRoll();
