@@ -17,6 +17,7 @@
     margin: 6rem 0 0 0;
   }
   &__button {
+    border: none;
     width: 12rem;
     height: 4rem;
     border-radius: 0.5rem;
@@ -65,7 +66,25 @@
       background: #fefefe;
       border-radius: 0.5rem;
       &-input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
         margin-right: 0.5rem;
+        &:checked ~ .mode-form__mode-span{
+          background-color: #2196F3;
+          font-size: 1.2rem;
+          font-weight: 700;
+          color: white;
+        }
+      }
+      &-span{
+        font-size: 0;
+        margin-right: 0.5rem;
+        height: 20px;
+        width: 20px;
+        background-color: #ccc;
+        justify-content: center;
+        text-align: center;
         cursor: pointer;
       }
       &-label {
@@ -93,7 +112,7 @@
       flex-direction: column;
       align-items: center;
       padding: 2rem;
-      border: 2px solid black;
+      border: 2px solid #ccc;
       margin: 3rem 1.3rem 0 1.3rem;
       background-color: #fefefe;
       border-radius: 1rem;

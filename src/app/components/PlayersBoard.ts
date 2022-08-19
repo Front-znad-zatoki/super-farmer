@@ -1,17 +1,25 @@
 import { Player } from '../../Player';
 import { Render } from '../utils/Render';
-import { ConvertAnimalName } from '../utils/ConvertAnimalName';
 
 export class PlayersBoard {
+  private playerTimer: HTMLElement;
+  private playersBoardContainer: HTMLElement;
+  constructor(private player: Player) {
+    this.playerTimer = Render.elementFactory('div', {
+      className: 'players__data__time',
+    });
+    this.playersBoardContainer = Render.elementFactory('div', {
+      className: 'board-container',
+      style: `border-color: transparent;`,
+    });
+    this.renderPlayersBoard(player);
+  }
+
   /*returns player's board with player's name, avatar and herd */
-  renderPlayersBoard(player: Player): HTMLElement {
-    const playersBoardContainer: HTMLElement = Render.elementFactory(
-      'div',
-      {
-        className: 'board-container',
-        style: `border-color:${player.theColor};`,
-      },
-    );
+  private renderPlayersBoard(player: Player): void {
+    if (this.playersBoardContainer.children) {
+      Render.removeAllChildren(this.playersBoardContainer);
+    }
     const playersDataPanel: HTMLElement = Render.elementFactory(
       'div',
       { className: 'players__data' },
@@ -33,10 +41,6 @@ export class PlayersBoard {
         src: player.theAvatar,
       }),
     );
-    const playerTimer: HTMLElement = Render.elementFactory('div', {
-      // id: 'time-left',
-      className: 'players__data__time',
-    });
     const herdView = Render.elementFactory('div', {
       className: 'players__herd',
     });
@@ -71,31 +75,51 @@ export class PlayersBoard {
       playersDataPanel,
       playerName,
       playerAvatar,
-      playerTimer,
+      this.playerTimer,
     );
     Render.childrenInjector(herdView, ...playerHerd);
     Render.childrenInjector(
-      playersBoardContainer,
+      this.playersBoardContainer,
       herdView,
       playersDataPanel,
     );
-
-    return playersBoardContainer;
   }
   /*updates timer on players board*/
-  static updateTime(timeLeft: number, currentPlayer: number): void {
-    const timer = document.querySelectorAll(
-      `.player-boards__board .players__data__time`,
-    ) as NodeList;
-    const timerToUpdate: HTMLElement = timer[
-      currentPlayer
-    ] as HTMLElement;
-    timerToUpdate.innerHTML =
+  updateTime(timeLeft: number): void {
+    this.playerTimer.innerHTML =
       timeLeft < 10
         ? `<h3>0:0${timeLeft}</h3><p>time left</p>`
         : `<h3>0:${timeLeft}</h3><p>time left</p>`;
-    if (timeLeft < 1 && timeLeft > 0) {
-      timerToUpdate.style.display = 'none';
-    }
+  }
+
+  setBorderAndTimer(): void {
+    this.playerTimer.style.display = 'flex';
+    this.playersBoardContainer.style.borderColor = `${this.player.theColor}`;
+    const buttons = document.querySelectorAll('.button');
+    buttons.forEach(
+      (button) =>
+        ((button as HTMLElement).style.borderColor = `${this.player.theColor}`),
+    );
+  }
+
+  removeBorderAndTimer(): void {
+    this.playersBoardContainer.style.borderColor = `transparent`;
+    this.hideTimer();
+  }
+
+  updateBoard(): void {
+    this.renderPlayersBoard(this.player);
+  }
+
+  get thePlayerBoard(): HTMLElement {
+    return this.playersBoardContainer;
+  }
+
+  get thePlayer(): Player {
+    return this.player;
+  }
+
+  hideTimer(): void {
+    this.playerTimer.style.display = 'none';
   }
 }
