@@ -2,7 +2,10 @@ import { GameProcessor } from './logic/GameProcessor';
 import { ViewController } from './ViewController';
 import { Game } from './logic/Game';
 import { Bank } from './logic/Bank';
+import { AiPlayer } from './AiPlayer';
 import { Configuration } from './logic/Configuration';
+import { Alert } from './components/Alert';
+import { AlertType } from '~src/Enums/AlertEnum';
 
 export class GameController {
   private game: Game;
@@ -17,6 +20,10 @@ export class GameController {
 
   get theGame(): Game {
     return this.game;
+  }
+
+  get theGameProcessor(): GameProcessor {
+    return this.gameProcessor;
   }
 
   /**
@@ -36,18 +43,17 @@ export class GameController {
     this.gameProcessor.pauseTurn();
   }
 
-  // turnAlert(): void {
-  //   this.view.turnAlert();
-  // }
-
-  private isGameWon(): void {
+  private isGameWon(): boolean {
+    const gameIsWon = this.gameProcessor.checkWin();
     if (this.gameProcessor.checkWin()) {
       this.view.displayWinModal(this.game.theCurrentPlayer);
+      this.pauseTurn();
     }
+    return gameIsWon;
   }
 
-  checkIfGameIsWon(): void {
-    this.isGameWon();
+  checkIfGameIsWon(): boolean {
+    return this.isGameWon();
   }
 
   /**
@@ -64,17 +70,25 @@ export class GameController {
    * Sets the current player to the next player in order.
    */
   nextPlayer(): void {
+    if (this.game.theTimer.hasGameEnded) {
+      return;
+    }
     this.gameProcessor.nextPlayer();
-    this.view.startGame(
-      this.game.thePlayers,
-      this.game.theCurrentPlayer,
-      this.game.theBank,
+    Alert.updateAlert(
+      `${this.game.theCurrentPlayer.theName}'s turn has started.`,
+      AlertType.INFO,
     );
+    this.view.changePlayer(this.game.theCurrentPlayerNumber);
+    if (this.game.theCurrentPlayer instanceof AiPlayer) {
+      this.view.disableTrade();
+      this.view.disableRoll();
+      this.game.theCurrentPlayer.makeAMove(this);
+    }
   }
 
-  // updateTimeRemaining(timeLeft: number): void {
-  //   this.view.updateRemainingTime(timeLeft);
-  // }
+  updateTimeRemaining(timeLeft: number, currentPlayer: number): void {
+    this.view.updateRemainingTime(timeLeft, currentPlayer);
+  }
 
   quitGame(): void {
     this.gameProcessor.quitGame();
@@ -85,6 +99,7 @@ export class GameController {
     this.view.displayTradeModal(
       this.game.theCurrentPlayer,
       this.game.theTrade,
+      this.game.banksHerdConfig,
     );
   }
 

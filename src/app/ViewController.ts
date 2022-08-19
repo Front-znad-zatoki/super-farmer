@@ -14,6 +14,9 @@ import { Configuration } from './logic/Configuration';
 import { dynamicGameConfiguration } from './logic/dynamicGameConfiguration';
 import { AnimalNames } from '../Enums/AnimalNamesEnum';
 import { cloneDeep } from 'lodash';
+import { Alert } from './components/Alert';
+import { AlertType } from '~src/Enums/AlertEnum';
+import { HerdConfigInterface } from '~src/Interfaces/HerdConfigInterface';
 
 export class ViewController {
   private menuView: MenuView;
@@ -59,6 +62,10 @@ export class ViewController {
       this.gameController.theGame.theCurrentPlayer,
       this.gameController.theGame.theBank,
     );
+    Alert.updateAlert(
+      `Game has started! ${this.gameController.theGame.theCurrentPlayer.theName}'s turn.`,
+      AlertType.INFO,
+    );
   }
 
   startGame(
@@ -69,21 +76,25 @@ export class ViewController {
     this.gameView.renderGameView(players, currentPlayer, bank);
     this.gameController?.startTurn();
   }
+
+  changePlayer(playerIdx: number): void {
+    this.gameView.changePlayer(playerIdx);
+    this.gameController?.startTurn();
+  }
   // TODO: CHECK IF STILL NECESSARY
-  // updateRemainingTime(timeLeft: number): void {
-  //   this.gameView.updateRemainingTime(timeLeft);
-  // }
+  updateRemainingTime(timeLeft: number, currentPlayer: number): void {
+    this.gameView.updateRemainingTime(timeLeft, currentPlayer);
+  }
 
   handleRoll(): void {
     this.gameController?.breed();
   }
 
-  updateRollResults({ rollResult, gain }: RollResult): void {
+  updateRollResults({ rollResult }: RollResult): void {
     if (this.gameController) {
       this.gameView.displayRollResult(
         rollResult,
-        gain,
-        this.gameController.theGame.theCurrentPlayer,
+        this.gameController.theGame.theCurrentPlayerNumber,
       );
     }
   }
@@ -95,22 +106,23 @@ export class ViewController {
   displayWinModal(player: Player): void {
     Render.render('body', this.winModal.createWinModal(player));
   }
-  // TODO: CHECK IF STILL NECESSARY
-  // turnAlert(): void {
-  //   this.gameView.turnAlert();
-  // }
 
   displayRulesModal(): void {
     // TODO: display rules
   }
 
-  displayTradeModal(player: Player, trade: Trade): void {
+  displayTradeModal(
+    player: Player,
+    trade: Trade,
+    animalConfig: HerdConfigInterface[],
+  ): void {
     if (this.tradeModal) {
       this.tradeModal.setNextPlayer(player);
     } else {
       this.tradeModal = new TradeModal(
         trade,
         player,
+        animalConfig,
         () => this.runTimer(),
         () => this.processAfterTrade(),
       );
@@ -120,10 +132,13 @@ export class ViewController {
 
   processAfterTrade(): void {
     this.runTimer();
-    // TODO: CHECK IF STILL NECESSARY
-    // this.refreshHerd();
     this.disableTrade();
     this.checkIfGameIsWon();
+    if (this.gameController) {
+      this.gameView.updateBoard(
+        this.gameController.theGame.theCurrentPlayerNumber,
+      );
+    }
   }
 
   displayAuthorsModal(): void {
@@ -160,10 +175,9 @@ export class ViewController {
     this.gameView.disableTrade();
   }
 
-  // TODO: CHECK IF STILL NECESSARY
-  // refreshHerd(): void {
-  //   this.gameView.refreshHerd(this.gameController?.getBank() as Bank);
-  // }
+  disableRoll(): void {
+    this.gameView.disableRoll();
+  }
 
   checkIfGameIsWon(): void {
     this.gameController?.checkIfGameIsWon();

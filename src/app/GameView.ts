@@ -7,13 +7,18 @@ import { PlayersBoard } from './components/PlayersBoard';
 import { Bank } from './logic/Bank';
 import { Render } from './utils/Render';
 import { ViewController } from './ViewController';
-import { AlertType } from '../Enums/AlertEnum';
 import { EmptyView } from './EmptyView';
+import { PlayersBoardBuilder } from './components/PlayerBoardBuilder';
+
 export class GameView extends EmptyView {
   protected playerPanel: PlayerPanel;
+  private playersBoard: PlayersBoard[];
+  private bankBoard: BankBoard | undefined;
   constructor(private viewController: ViewController) {
     super(true);
     this.playerPanel = new PlayerPanel(this);
+    this.playersBoard = [];
+    this.bankBoard = undefined;
   }
 
   renderGameView(
@@ -38,30 +43,16 @@ export class GameView extends EmptyView {
       ),
     );
     Render.render('#sf-app', this.view);
-    // this.viewContainer.append(topRow, gameBoardsAndPanel);
-    // Render.render('#sf-app', this.view);
-    // this.show();
     this.setColorAccents(currentPlayer);
   }
 
-  // private createTopRow() {
-  //   const alertPanel = this.createAlertPanel();
-  //   const endGameButton = this.createEndGameButton();
-  //   const topRow = Render.elementFactory(
-  //     'div',
-  //     { className: 'game__top-row' },
-  //     alertPanel,
-  //     endGameButton,
-  //   );
-  //   return topRow;
-  // }
   private createGameBoardsAndPanel(
     players: Player[],
     currentPlayer: Player,
     bank: Bank,
   ) {
     const playersBoards = this.createPlayersBoards(players);
-    const playerPanel = this.createPlayerPanel(currentPlayer);
+    const playerPanel = this.createPlayerPanel();
     const bankPanel = this.createBankPanel(bank);
 
     const endGameButton = this.createEndGameButton();
@@ -81,25 +72,30 @@ export class GameView extends EmptyView {
   }
   private createPlayersBoards(players: Player[]): HTMLElement {
     const alertPanel = this.createAlertPanel();
-    return Render.elementFactory(
+    this.playersBoard.splice(0);
+    this.playersBoard.push(
+      ...players.map((player) => PlayersBoardBuilder.build(player)),
+    );
+    const playersBoards = Render.elementFactory(
       'div',
       { className: 'player-boards__container' },
       alertPanel,
-      ...players.map((player) =>
+      ...this.playersBoard.map((playerBoard) =>
         Render.elementFactory(
           'div',
           {
-            id: `${player.theName}`,
             className: 'player-boards__board',
           },
-          new PlayersBoard().renderPlayersBoard(player),
+          playerBoard.thePlayerBoard,
         ),
       ),
     );
+    this.playersBoard[0].setBorderAndTimer();
+    return playersBoards;
   }
 
-  private createPlayerPanel(player: Player): HTMLElement {
-    return this.playerPanel.createPlayerPanel(player);
+  private createPlayerPanel(): HTMLElement {
+    return this.playerPanel.createPlayerPanel();
   }
 
   private createEndGameButton() {
@@ -128,7 +124,8 @@ export class GameView extends EmptyView {
   }
 
   private createBankPanel(bank: Bank): HTMLElement {
-    return new BankBoard().renderBankBoard(bank);
+    this.bankBoard = new BankBoard(bank);
+    return this.bankBoard.theBankView;
   }
 
   private createAlertPanel(): HTMLElement {
@@ -136,22 +133,18 @@ export class GameView extends EmptyView {
       '.alert',
     ) as HTMLElement;
     if (!alertContainer) alertContainer = Alert.createElement();
-    // TODO: connect with other methods to display the right alert
-    Alert.updateAlert('Lorem ipsum dolor sei', AlertType.CRITICAL);
     return alertContainer;
   }
 
   private setColorAccents(player: Player): void {
-    document
-      .querySelectorAll('.player-panel__buttons .button')
-      .forEach((element) => {
-        (element as HTMLElement).style.borderColor = player.theColor;
-      });
-    // TODO: change to borders and font colors
+    (document.querySelector(
+      '.player-panel__result',
+    ) as HTMLElement).style.borderColor = player.theColor;
   }
 
   handleRoll(): void {
     this.viewController.handleRoll();
+    this.disableButtons();
   }
 
   handleTrade(): void {
@@ -160,19 +153,17 @@ export class GameView extends EmptyView {
 
   displayRollResult(
     diceResults: AnimalNames[],
-    playerGain: [AnimalNames, number][],
-    player: Player,
+    playerIdx: number,
   ): void {
-    this.playerPanel.displayRollResult(
-      diceResults,
-      playerGain,
-      player,
-    );
+    this.playerPanel.displayRollResult(diceResults);
+    this.updateBoard(playerIdx);
+    this.bankBoard?.updateBank();
+    this.playersBoard[playerIdx].hideTimer();
   }
 
-  // updateRemainingTime(timeLeft: number): void {
-  //   this.playerPanel.updateTime(timeLeft);
-  // }
+  updateRemainingTime(timeLeft: number, currentPlayer: number): void {
+    this.playersBoard[currentPlayer].updateTime(timeLeft);
+  }
 
   stopTimer(): void {
     this.viewController.stopTimer();
@@ -182,10 +173,6 @@ export class GameView extends EmptyView {
     this.viewController.nextTurn();
   }
 
-  // turnAlert(): void {
-  //   this.playerPanel.turnAlert();
-  // }
-
   pauseTurn(): void {
     this.viewController.pauseTurn();
   }
@@ -194,9 +181,43 @@ export class GameView extends EmptyView {
     this.playerPanel.disableTrade();
   }
 
-  // refreshHerd(bank: Bank): void {
-  //   this.playerPanel.refreshHerd();
-  //   Render.removeAllChildren('#bank-board');
-  //   Render.render('#bank-board', this.createBankPanel(bank));
-  // }
+  disableRoll(): void {
+    this.playerPanel.disableRoll();
+  }
+
+  updateBoard(playerIndex: number): void {
+    this.playersBoard[playerIndex].updateBoard();
+    this.bankBoard?.updateBank();
+  }
+
+  changePlayer(playerIndex: number): void {
+    this.playersBoard[
+      playerIndex === 0
+        ? this.playersBoard.length - 1
+        : playerIndex - 1
+    ].removeBorderAndTimer();
+    this.playersBoard[playerIndex].setBorderAndTimer();
+    this.setColorAccents(this.playersBoard[playerIndex].thePlayer);
+    this.enableButtons();
+    this.playerPanel.clearResults();
+  }
+
+  disableButtons(): void {
+    (document.querySelector('#exchange') as HTMLElement).setAttribute(
+      'disabled',
+      'true',
+    );
+    (document.querySelector(
+      '#roll-dice',
+    ) as HTMLElement).setAttribute('disabled', 'true');
+  }
+
+  enableButtons(): void {
+    (document.querySelector(
+      '#exchange',
+    ) as HTMLElement).removeAttribute('disabled');
+    (document.querySelector(
+      '#roll-dice',
+    ) as HTMLElement).removeAttribute('disabled');
+  }
 }
