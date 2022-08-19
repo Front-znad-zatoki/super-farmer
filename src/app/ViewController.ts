@@ -76,6 +76,11 @@ export class ViewController {
     this.gameView.renderGameView(players, currentPlayer, bank);
     this.gameController?.startTurn();
   }
+
+  changePlayer(playerIdx: number): void {
+    this.gameView.changePlayer(playerIdx);
+    this.gameController?.startTurn();
+  }
   // TODO: CHECK IF STILL NECESSARY
   updateRemainingTime(timeLeft: number, currentPlayer: number): void {
     this.gameView.updateRemainingTime(timeLeft, currentPlayer);
@@ -87,7 +92,10 @@ export class ViewController {
 
   updateRollResults({ rollResult }: RollResult): void {
     if (this.gameController) {
-      this.gameView.displayRollResult(rollResult);
+      this.gameView.displayRollResult(
+        rollResult,
+        this.gameController.theGame.theCurrentPlayerNumber,
+      );
     }
   }
 
@@ -126,6 +134,11 @@ export class ViewController {
     this.runTimer();
     this.disableTrade();
     this.checkIfGameIsWon();
+    if (this.gameController) {
+      this.gameView.updateBoard(
+        this.gameController.theGame.theCurrentPlayerNumber,
+      );
+    }
   }
 
   displayAuthorsModal(): void {
